@@ -3,6 +3,6 @@ import UnoCSS from 'unocss/astro'
 
 export default defineConfig({
   integrations: [
-    UnoCSS({injectReset:true, }),
+    UnoCSS({injectReset:true}),
   ],
 })
