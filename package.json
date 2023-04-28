@@ -1,38 +1,34 @@
 {
-  "name": "portfolio",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@swup/a11y-plugin": "^3.0.0",
-    "@swup/head-plugin": "^1.3.0",
-    "@swup/progress-plugin": "^2.0.0",
-    "@swup/slide-theme": "^1.0.5",
-    "astro": "^2.3.1",
-    "scss": "^0.2.4",
-    "swup": "^3.0.6",
-    "zustand": "^4.3.7"
-  },
-  "devDependencies": {
-    "@astrojs/ts-plugin": "^0.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "@typescript-eslint/parser": "^5.59.1",
-    "@unocss/reset": "^0.51.8",
-    "autoprefixer": "^10.4.14",
-    "cssnano": "^6.0.0",
-    "eslint": "^8.39.0",
-    "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "prettier": "^2.8.8",
-    "prettier-plugin-astro": "^0.8.0",
-    "storybook": "^7.0.7",
-    "typescript": "^5.0.4",
-    "unocss": "^0.51.8"
-  }
+	"name": "portfolio",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"astro": "^2.3.1",
+		"flamethrower-router": "0.0.0-meme.12",
+		"scss": "^0.2.4",
+		"zustand": "^4.3.7"
+	},
+	"devDependencies": {
+		"@astrojs/ts-plugin": "^0.4.4",
+		"@typescript-eslint/eslint-plugin": "^5.59.1",
+		"@typescript-eslint/parser": "^5.59.1",
+		"@unocss/reset": "^0.51.8",
+		"autoprefixer": "^10.4.14",
+		"cssnano": "^6.0.0",
+		"eslint": "^8.39.0",
+		"eslint-config-airbnb-typescript": "^17.0.0",
+		"eslint-plugin-import": "^2.27.5",
+		"prettier": "^2.8.8",
+		"prettier-plugin-astro": "^0.8.0",
+		"storybook": "^7.0.7",
+		"typescript": "^5.0.4",
+		"unocss": "^0.51.8"
+	}
 }
