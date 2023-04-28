@@ -5,13 +5,13 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.59.1
   '@typescript-eslint/parser': ^5.59.1
   '@unocss/reset': ^0.51.8
+  '@unseenco/taxi': ^1.2.2
   astro: ^2.3.1
   autoprefixer: ^10.4.14
   cssnano: ^6.0.0
   eslint: ^8.39.0
   eslint-config-airbnb-typescript: ^17.0.0
   eslint-plugin-import: ^2.27.5
-  flamethrower-router: 0.0.0-meme.12
   prettier: ^2.8.8
   prettier-plugin-astro: ^0.8.0
   scss: ^0.2.4
@@ -21,8 +21,8 @@ specifiers:
   zustand: ^4.3.7
 
 dependencies:
+  '@unseenco/taxi': 1.2.2
   astro: 2.3.1
-  flamethrower-router: 0.0.0-meme.12
   scss: 0.2.4
   zustand: 4.3.7_react@18.2.0
 
@@ -2572,6 +2572,18 @@ packages:
       - rollup
     dev: true
 
+  /@unseenco/e/2.2.3:
+    resolution: {integrity: sha512-ntxSrExl+KRWjbD3D4U2AnDZAwD0BZyhowQ6y+bbPqvvEkKfFdTlGNUa/xCwezHvZe+YowJ+mHAGjxtvMtK73Q==}
+    dependencies:
+      selector-set: 1.1.5
+    dev: false
+
+  /@unseenco/taxi/1.2.2:
+    resolution: {integrity: sha512-dnbFai8n8872yxG8rqAOfhqTJ/98a24x9U9t1NAkzWFgyJ/Mr5MYZ8BdsNui7I7V6rp6+yQ8TQ/9xWPbZP6vqQ==}
+    dependencies:
+      '@unseenco/e': 2.2.3
+    dev: false
+
   /@vscode/emmet-helper/2.8.7:
     resolution: {integrity: sha512-y67wWaWBhlWKMX3FNOXcMPh83+xS31IqobBP6vi3HkMRxv14Bti3xgu+ya/c3oKZ0OM/QMvO+oBCwGWqbPv7Rw==}
     dependencies:
@@ -4410,10 +4422,6 @@ packages:
     dependencies:
       micromatch: 4.0.5
       pkg-dir: 4.2.0
-    dev: false
-
-  /flamethrower-router/0.0.0-meme.12:
-    resolution: {integrity: sha512-PWcNrjzItwk61RTk/SbbKJNcAgl6qCXH8xkZjGjUGV/dgKAnURci+k+Yk8emubUQWTdAd1kSqujy0VRjoeEgxg==}
     dev: false
 
   /flat-cache/3.0.4:
@@ -7279,6 +7287,10 @@ packages:
     dependencies:
       extend-shallow: 2.0.1
       kind-of: 6.0.3
+    dev: false
+
+  /selector-set/1.1.5:
+    resolution: {integrity: sha512-6SQw6yMew5iOZ8/cDHDEnJWRM4ot2mxP6szZyF5ptrBogw4AcS4EXRj/8BUfgAMwVfdL84qpModlBMOl2NVrsQ==}
     dev: false
 
   /semver/5.7.1:

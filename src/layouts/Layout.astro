@@ -1,5 +1,5 @@
 ---
-import { Router } from "flamethrower-router/dist/router";
+import Router from "@components/Router.astro";
 import Header from "../components/Header.astro";
 import SEO from "../components/SEO.astro";
 ---
@@ -13,9 +13,9 @@ import SEO from "../components/SEO.astro";
 		<SEO />
 	</head>
 	<body>
+		<Router />
 		<Header />
-		<main>
-			<Router />
+		<main data-taxi>
 			<slot />
 		</main>
 	</body>

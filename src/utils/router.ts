@@ -1,5 +1,5 @@
-import flamethrower from "flamethrower-router";
+import { Core } from "@unseenco/taxi";
 
-const router = flamethrower({ prefetch: "visible", pageTransitions: true });
+const router = new Core();
 
 export default router;

@@ -10,8 +10,8 @@
 		"astro": "astro"
 	},
 	"dependencies": {
+		"@unseenco/taxi": "^1.2.2",
 		"astro": "^2.3.1",
-		"flamethrower-router": "0.0.0-meme.12",
 		"scss": "^0.2.4",
 		"zustand": "^4.3.7"
 	},
