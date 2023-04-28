@@ -1,4 +1,3 @@
-// uno.config.ts
 import {
   defineConfig, presetAttributify, presetIcons,
   presetTypography, presetUno, presetWebFonts,
@@ -7,8 +6,8 @@ import {
 
 export default defineConfig({
   shortcuts: [
-    // ...
-  ],
+      // ...
+	],		
   theme: {
     colors: {
       // ...
@@ -20,8 +19,10 @@ export default defineConfig({
     presetIcons(),
     presetTypography(),
     presetWebFonts({
-      fonts: {
-        
+      provider: "google",
+			fonts: {
+        sans: "sora",
+				serif: "Poltawski Nowy"
       },
     }),
   ],
