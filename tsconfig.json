@@ -1,11 +1,17 @@
 {
-  "extends": "astro/tsconfigs/strict",
+	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
 		"importsNotUsedAsValues": "error",
-    "plugins": [
-      {
-        "name": "@astrojs/ts-plugin"
-      },
-    ],
-  },
+		"baseUrl": ".",
+		"plugins": [
+			{
+				"name": "@astrojs/ts-plugin"
+			}
+		],
+		"paths": {
+			"@components/*": ["src/components/*"],
+			"@layouts/*": ["src/layouts/*"],
+			"@utils/*": ["src/utils/*"]
+		}
+	}
 }
