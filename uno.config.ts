@@ -10,11 +10,19 @@ import {
 } from "unocss";
 
 export default defineConfig({
-	shortcuts: {},
+	shortcuts: {
+		section: "px-4 lg:px-36",
+	},
 	theme: {
 		colors: {
 			dblue: "#020417",
 			dviolet: "#090416",
+		},
+		fontSize: {
+			xl: "clamp(1.25rem, 1vw + 1rem, 10.24rem)",
+			"2xl": "clamp(1.5rem, 2vw + 1rem, 12.8rem)",
+			"3xl": "clamp(1.875rem, 3vw + 1rem, 16rem)",
+			"4xl": "clamp(2.25rem, 4vw + 1rem, 20rem)",
 		},
 	},
 	presets: [

@@ -13,8 +13,12 @@ import "@unocss/reset/tailwind-compat.css";
 		<meta name="generator" content={Astro.generator} />
 		<SEO />
 	</head>
-	<body>
-		<Router />
+	<body theme-default font-sans primary-100>
+		<div
+			class="-z-100 fixed inset-0 from-dblue to-dviolet min-h-screen"
+			bg-gradient="linear to-br"
+		>
+		</div>
 		<Header />
 		<main data-taxi>
 			<slot />
