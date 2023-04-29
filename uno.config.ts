@@ -11,7 +11,7 @@ import {
 
 export default defineConfig({
 	shortcuts: {
-		section: "px-4 lg:px-36",
+		section: "px-4 lg:px-36 h-screen flex items-center",
 	},
 	theme: {
 		colors: {
@@ -41,7 +41,7 @@ export default defineConfig({
 	transformers: [transformerDirectives(), transformerVariantGroup()],
 	rules: [
 		[
-			/theme-default/,
+			/^theme-default$/,
 			(_, { theme }) => {
 				const style: {
 					[k in `--${"primary" | "secondary" | "tertiary"}-${number}`]: string;
@@ -55,7 +55,7 @@ export default defineConfig({
 			},
 		],
 		[
-			/(?:primary|secondary|tertiary)-(?:50|100|200|300|400|500|600|700|800|900|950|1000)/,
+			/^(?:primary|secondary|tertiary)-(?:50|100|200|300|400|500|600|700|800|900|950|1000)$/,
 			([m]) => ({
 				color: `var(--${m})`,
 				transition: ".25s color ease-out",
