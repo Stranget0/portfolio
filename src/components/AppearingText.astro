@@ -126,11 +126,14 @@ const { text } = Astro.props;
 			&.word-first-visible ~ .appearing-word {
 				opacity: 1;
 			}
-			&.word-last-visible ~ .appearing-word {
-				opacity: 0;
-			}
 			&.last-finished-transition ~ .appearing-word {
 				display: inline;
+			}
+			&.word-last-visible ~ .appearing-word {
+				opacity: 0;
+				& + .appearing-word {
+					display: none;
+				}
 			}
 		}
 		&.has-finished-words .appearing-word {
