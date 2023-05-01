@@ -7,7 +7,8 @@ const { text } = Astro.props;
 ---
 
 <script>
-	// BETTER IDEA: P AND Q WORD CLASSES with parent playing state class
+	import createEventSequence from "@utils/sequencedEvents";
+
 	const stages = document.querySelectorAll<HTMLElement>(".appearing-stage");
 
 	play(stages[0]);
@@ -20,41 +21,84 @@ const { text } = Astro.props;
 		const word = stage.children.item(0) as HTMLElement;
 		let firstVisibleWord: HTMLElement | null = null;
 		let lastVisibleWord: HTMLElement | null = null;
+		let lastFinishedTransitionWord: HTMLElement | null = null;
 		stage.classList.add("playing");
+		stage.classList.remove("has-finished-words");
+
 		if (word) {
 			setTimeout(() => {
 				setFirstVisibleWord(word);
-				setLastVisibleWord(word);
 				playWord(word);
 			}, 250);
 		}
-		function setFirstVisibleWord(word: HTMLElement) {
-			if (firstVisibleWord === word) return;
-			firstVisibleWord?.classList.remove("word-first-visible");
-			word.classList.add("word-first-visible");
-			firstVisibleWord = word;
+		function setter(
+			currentValue: HTMLElement | null,
+			word: HTMLElement | null,
+			classToAdd: string,
+			classToRemove = classToAdd
+		) {
+			if (currentValue === word) return word;
+			currentValue?.classList.remove(classToRemove);
+			word?.classList.add(classToAdd);
+			return word;
 		}
-		function setLastVisibleWord(word: HTMLElement) {
-			if (lastVisibleWord === word) return;
-			lastVisibleWord?.classList.remove("word-last-visible");
-			word.classList.add("word-last-visible");
-			lastVisibleWord = word;
+
+		function setFirstVisibleWord(word: typeof firstVisibleWord) {
+			firstVisibleWord = setter(firstVisibleWord, word, "word-first-visible");
 		}
-		function playWord(word: HTMLElement) {
+
+		function setLastVisibleWord(word: typeof lastVisibleWord) {
+			lastVisibleWord = setter(lastVisibleWord, word, "word-last-visible");
+		}
+		function setLastFinishedTransitionWord(
+			word: typeof lastFinishedTransitionWord
+		) {
+			lastFinishedTransitionWord = setter(
+				lastFinishedTransitionWord,
+				word,
+				"last-finished-transition"
+			);
+			stage.classList.add("has-finished-words");
+		}
+
+		function showWord(word: HTMLElement | null, delay?: number) {
+			if (lastVisibleWord) {
+				lastVisibleWord.style.transitionDelay = "";
+			}
 			setLastVisibleWord(word);
-			word.addEventListener("transitionend", onTransitionEnd);
-			function onTransitionEnd() {
-				//TODO Handle cases for showind and hiding
-				word.removeEventListener("transitionend", onTransitionEnd);
-				const originalTransitionDuration = word.style.transitionDuration;
-				const nextWord = word.nextElementSibling as HTMLElement;
-				if (nextWord) {
-					const wordContent = word.textContent || "";
-					if (hasEndOfSentence(wordContent)) setFirstVisibleWord(nextWord);
-					playWord(nextWord);
-				}
+			if (word) {
+				word.style.display = "";
+				word.style.transitionDelay = delay ? delay + "ms" : "";
 			}
 		}
+
+		function playWord(word: HTMLElement) {
+			showWord(word);
+			const isEndOfSentence = hasEndOfSentence(word.textContent || "");
+			const nextWord = word.nextElementSibling as HTMLElement | null;
+			const wordDuration = getWordDuration(word);
+			const appearDuration = isEndOfSentence
+				? wordDuration * 0.6
+				: wordDuration;
+			const hideDuration = isEndOfSentence ? wordDuration * 0.4 : 0;
+
+			const controls = createEventSequence().wait(appearDuration, () => {
+				if (nextWord) playWord(nextWord);
+				if (isEndOfSentence) {
+					showWord(nextWord, hideDuration);
+					setFirstVisibleWord(nextWord);
+				}
+			});
+			if (hideDuration) {
+				controls.wait(hideDuration, () => {
+					setLastFinishedTransitionWord(word);
+				});
+			}
+			controls.run();
+		}
+	}
+	function getWordDuration(word: HTMLElement): number {
+		return parseFloat(word.dataset.wordDuration || "0");
 	}
 </script>
 <p class="appearing-stage" prose text-lg font-extralight leading-7>
@@ -63,7 +107,9 @@ const { text } = Astro.props;
 			return (
 				<span
 					class="appearing-word"
-					style={{ transitionDuration: `${wordDuration}ms` }}
+					transition-opacity
+					duration-500
+					data-word-duration={wordDuration}
 				>
 					{word}
 				</span>
@@ -83,9 +129,12 @@ const { text } = Astro.props;
 			&.word-last-visible ~ .appearing-word {
 				opacity: 0;
 			}
-			&.word-last-visible {
-				opacity: 1;
+			&.last-finished-transition ~ .appearing-word {
+				display: inline;
 			}
+		}
+		&.has-finished-words .appearing-word {
+			display: none;
 		}
 	}
 </style>
