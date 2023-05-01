@@ -19,6 +19,7 @@ export default function buildEventSequence() {
 		},
 		onFinish: (onFinishArg: VoidFunction) => {
 			onFinish = onFinishArg;
+			return factoryMethods;
 		},
 		run: () => sequenceMap.get(0)?.(),
 	};

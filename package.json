@@ -7,7 +7,8 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"astro": "astro"
+		"astro": "astro",
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@unseenco/taxi": "^1.2.2",
@@ -25,11 +26,14 @@
 		"eslint": "^8.39.0",
 		"eslint-config-airbnb-typescript": "^17.0.0",
 		"eslint-plugin-import": "^2.27.5",
+		"jsdom": "^21.1.2",
 		"prettier": "^2.8.8",
 		"prettier-plugin-astro": "^0.8.0",
 		"sass": "^1.62.1",
 		"storybook": "^7.0.7",
 		"typescript": "^5.0.4",
-		"unocss": "^0.51.8"
+		"unocss": "^0.51.8",
+		"vite": "^4.3.3",
+		"vitest": "^0.30.1"
 	}
 }
