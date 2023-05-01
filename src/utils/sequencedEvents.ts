@@ -64,8 +64,6 @@ export default function buildEventSequence() {
 		const sequenceIndex = sequenesLength;
 		sequenesLength++;
 		sequenceMap.set(sequenceIndex, () => {
-			console.log("instantiate sequence", sequenceIndex);
-
 			const timeoutId = setTimeout(() => {
 				sequenceMap.delete(sequenceIndex);
 				listener();
