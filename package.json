@@ -12,7 +12,6 @@
 	"dependencies": {
 		"@unseenco/taxi": "^1.2.2",
 		"astro": "^2.3.1",
-		"scss": "^0.2.4",
 		"zustand": "^4.3.7"
 	},
 	"devDependencies": {
@@ -28,6 +27,7 @@
 		"eslint-plugin-import": "^2.27.5",
 		"prettier": "^2.8.8",
 		"prettier-plugin-astro": "^0.8.0",
+		"sass": "^1.62.1",
 		"storybook": "^7.0.7",
 		"typescript": "^5.0.4",
 		"unocss": "^0.51.8"
