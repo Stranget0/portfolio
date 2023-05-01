@@ -9,11 +9,25 @@ import {
 	transformerVariantGroup,
 } from "unocss";
 
+function generateVariableColor(colorName: string) {
+	const validShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+	const shades: Record<number, string> = {};
+	for (const shade of validShades) {
+		shades[shade] = `var(--${colorName}-${shade})`;
+	}
+	return { [colorName]: shades };
+}
+
 export default defineConfig({
 	shortcuts: {
 		section: "px-4 lg:px-36 h-screen flex flex-col justify-center",
 	},
 	theme: {
+		colors: {
+			...generateVariableColor("primary"),
+			...generateVariableColor("secondary"),
+			...generateVariableColor("tertiary"),
+		},
 		fontSize: {
 			xl: "clamp(1.25rem, 1vw + 1rem, 10.24rem)",
 			"2xl": "clamp(1.5rem, 2vw + 1rem, 12.8rem)",
@@ -50,13 +64,6 @@ export default defineConfig({
 				}
 				return style;
 			},
-		],
-		[
-			/^(?:primary|secondary|tertiary)-(?:50|100|200|300|400|500|600|700|800|900|950|1000)$/,
-			([m]) => ({
-				color: `var(--${m})`,
-				transition: ".25s color ease-out",
-			}),
 		],
 	],
 });
