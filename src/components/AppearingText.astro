@@ -1,0 +1,91 @@
+---
+type TextData = [number, string, number][];
+interface Props {
+	text: TextData;
+}
+const { text } = Astro.props;
+---
+
+<script>
+	// BETTER IDEA: P AND Q WORD CLASSES with parent playing state class
+	const stages = document.querySelectorAll<HTMLElement>(".appearing-stage");
+
+	play(stages[0]);
+
+	function hasEndOfSentence(text: string) {
+		return /[.!?$]/.test(text);
+	}
+
+	function play(stage: HTMLElement) {
+		const word = stage.children.item(0) as HTMLElement;
+		let firstVisibleWord: HTMLElement | null = null;
+		let lastVisibleWord: HTMLElement | null = null;
+		stage.classList.add("playing");
+		if (word) {
+			setTimeout(() => {
+				setFirstVisibleWord(word);
+				setLastVisibleWord(word);
+				playWord(word);
+			}, 250);
+		}
+		function setFirstVisibleWord(word: HTMLElement) {
+			if (firstVisibleWord === word) return;
+			firstVisibleWord?.classList.remove("word-first-visible");
+			word.classList.add("word-first-visible");
+			firstVisibleWord = word;
+		}
+		function setLastVisibleWord(word: HTMLElement) {
+			if (lastVisibleWord === word) return;
+			lastVisibleWord?.classList.remove("word-last-visible");
+			word.classList.add("word-last-visible");
+			lastVisibleWord = word;
+		}
+		function playWord(word: HTMLElement) {
+			setLastVisibleWord(word);
+			word.addEventListener("transitionend", onTransitionEnd);
+			function onTransitionEnd() {
+				//TODO Handle cases for showind and hiding
+				word.removeEventListener("transitionend", onTransitionEnd);
+				const originalTransitionDuration = word.style.transitionDuration;
+				const nextWord = word.nextElementSibling as HTMLElement;
+				if (nextWord) {
+					const wordContent = word.textContent || "";
+					if (hasEndOfSentence(wordContent)) setFirstVisibleWord(nextWord);
+					playWord(nextWord);
+				}
+			}
+		}
+	}
+</script>
+<p class="appearing-stage" prose text-lg font-extralight leading-7>
+	{
+		text.map(([wordDuration, word]) => {
+			return (
+				<span
+					class="appearing-word"
+					style={{ transitionDuration: `${wordDuration}ms` }}
+				>
+					{word}
+				</span>
+			);
+		})
+	}
+</p>
+<style lang="scss">
+	.appearing-stage.playing {
+		.appearing-word {
+			opacity: 0;
+
+			&.word-first-visible,
+			&.word-first-visible ~ .appearing-word {
+				opacity: 1;
+			}
+			&.word-last-visible ~ .appearing-word {
+				opacity: 0;
+			}
+			&.word-last-visible {
+				opacity: 1;
+			}
+		}
+	}
+</style>
