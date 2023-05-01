@@ -101,14 +101,14 @@ const { text } = Astro.props;
 		return parseFloat(word.dataset.wordDuration || "0");
 	}
 </script>
+
 <p class="appearing-stage" prose text-lg font-extralight leading-7>
 	{
 		text.map(([wordDuration, word]) => {
 			return (
 				<span
-					class="appearing-word"
-					transition-opacity
-					duration-500
+					class="appearing-word 
+					motion-safe:transition-opacity motion-safe:duration-500"
 					data-word-duration={wordDuration}
 				>
 					{word}
