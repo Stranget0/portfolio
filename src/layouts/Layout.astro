@@ -10,11 +10,16 @@ import "@unocss/reset/tailwind-compat.css";
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<style is:global>
+			:where(button) {
+				background-color: transparent;
+			}
+		</style>
 		<SEO />
 	</head>
 	<body theme-default font-sans text-primary-100>
 		<div
-			class="-z-100 fixed inset-0 from-primary-950 to-secondary-950 filter brightness-40 min-h-screen"
+			class="-z-100 fixed inset-0 from-primary-950 to-accent-950 filter brightness-40 min-h-screen"
 			bg-gradient="linear to-br"
 		>
 		</div>

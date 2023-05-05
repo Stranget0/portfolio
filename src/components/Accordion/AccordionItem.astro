@@ -1,0 +1,68 @@
+---
+import { Image } from "@astrojs/image/components";
+---
+
+<li class="accordion-panel relative">
+	<button
+		class="accordion-trigger overflow-hidden absolute inset-0 rounded-15 items-center menu-opafocus-option opafocus-max-opacity-50"
+		flex="~ col"
+		aria-controls="ACCORDION-ID"
+		aria-expanded="true"
+	>
+		<h2 class="text-16 font-100" id="ACCORDION-HEADING">
+			<span>Title</span>
+			<!-- </button -->
+			<!-- > -->
+		</h2>
+		<p
+			class="accordion-content p-4 my-auto"
+			id="ACCORDION-ID"
+			aria-labelledby="ACCORDION-HEADING"
+			role="region"
+		>
+			Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, dolores
+			eaque eum nulla natus itaque saepe vitae doloremque sequi aperiam est quis
+			nesciunt sint debitis magni iste
+		</p>
+		<div class="accordion-bg absolute inset-0 -z-1">
+			<Image
+				src="/src/assets/WorldWar3.jpg"
+				alt=""
+				width={1152}
+				height={400}
+				fit="cover"
+			/>
+			<div
+				class="overlay bg-black absolute inset-0 opacity-25 motion-safe:transition-opacity"
+			>
+			</div>
+		</div>
+	</button>
+</li>
+
+<style lang="scss">
+	.accordion-bg > img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.accordion-content {
+		transform: translateY(2rem);
+	}
+
+	.accordion-panel {
+		flex-basis: 6.5rem;
+
+		&.expanded {
+			flex-basis: 25rem;
+
+			.accordion-trigger {
+				opacity: 1;
+			}
+
+			.accordion-content {
+				transform: none;
+			}
+		}
+	}
+</style>

@@ -7,6 +7,7 @@ import {
 	presetWebFonts,
 	transformerDirectives,
 	transformerVariantGroup,
+	toEscapedSelector as e,
 } from "unocss";
 
 function generateVariableColor(colorName: string) {
@@ -21,12 +22,15 @@ function generateVariableColor(colorName: string) {
 export default defineConfig({
 	shortcuts: {
 		section: "px-4 lg:px-36 h-screen flex flex-col justify-center",
+		"aspect-card": "aspect-[63/88]",
+		"aspect-card-rotated": "aspect-[88/63]",
 	},
 	theme: {
 		colors: {
 			...generateVariableColor("primary"),
 			...generateVariableColor("secondary"),
 			...generateVariableColor("tertiary"),
+			...generateVariableColor("accent"),
 		},
 		fontSize: {
 			xl: "clamp(1.25rem, 1vw + 1rem, 10.24rem)",
@@ -39,7 +43,12 @@ export default defineConfig({
 	presets: [
 		presetUno(),
 		presetAttributify(),
-		presetIcons({ autoInstall: true, prefix: "i-", warn: true }),
+		presetIcons({
+			extraProperties: {
+				display: "inline-block",
+				"vertical-align": "middle",
+			},
+		}),
 		presetTypography(),
 		presetWebFonts({
 			provider: "google",
@@ -55,15 +64,41 @@ export default defineConfig({
 			/^theme-default$/,
 			(_, { theme }) => {
 				const style: {
-					[k in `--${"primary" | "secondary" | "tertiary"}-${number}`]: string;
+					[k in `--${string}-${number}`]: string;
 				} = {};
 				for (let i = 50; i <= 1000; i += i >= 100 && i < 900 ? 100 : 50) {
 					style[`--primary-${i}`] = theme.colors.blue[i];
-					style[`--secondary-${i}`] = theme.colors.fuchsia[i];
-					style[`--tertiary-${i}`] = theme.colors.teal[i];
+					style[`--secondary-${i}`] = theme.colors.violet[i];
+					style[`--accent-${i}`] = theme.colors.fuchsia[i];
 				}
 				return style;
 			},
+		],
+		[
+			/^menu-opafocus(-option)?$/,
+			(_) => {
+				return `
+			@media (prefers-reduced-motion: no-preference){
+				:where(.menu-opafocus-option){
+					transition: opacity .15s cubic-bezier(0, 0, 0.2, 1);
+				}
+			}
+			:where(.menu-opafocus .menu-opafocus-option) {
+				opacity: 0.5;
+			}
+			:where(.menu-opafocus:is(:hover, :focus-within) .menu-opafocus-option) {
+				opacity: 0.25;
+			}
+			:where(.menu-opafocus .menu-opafocus-option:is(:hover, :focus-visible)) {
+				opacity: var(--opafocus-max-opacity, 1);
+			}`;
+			},
+		],
+		[
+			/^opafocus-max-opacity-(\d+)$/,
+			([_, opacity], {}) => ({
+				"--opafocus-max-opacity": `${parseInt(opacity) / 100}`,
+			}),
 		],
 	],
 });
