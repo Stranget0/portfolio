@@ -86,9 +86,6 @@ export default defineConfig({
 			:where(.menu-opafocus .menu-opafocus-option) {
 				opacity: 0.5;
 			}
-			:where(.menu-opafocus:is(:hover, :focus-within) .menu-opafocus-option) {
-				opacity: 0.25;
-			}
 			:where(.menu-opafocus .menu-opafocus-option:is(:hover, :focus-visible)) {
 				opacity: var(--opafocus-max-opacity, 1);
 			}`;

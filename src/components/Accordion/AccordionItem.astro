@@ -1,41 +1,36 @@
 ---
 import { Image } from "@astrojs/image/components";
+interface Props {
+	background: string;
+}
+const { background } = Astro.props;
 ---
 
-<li class="accordion-panel relative">
+<li
+	class="accordion-panel @container relative motion-safe:duration-150 ease-out"
+>
 	<button
-		class="accordion-trigger overflow-hidden absolute inset-0 rounded-15 items-center menu-opafocus-option opafocus-max-opacity-50"
+		class="accordion-trigger overflow-hidden absolute inset-0 rounded-15 items-center menu-opafocus-option opafocus-max-opacity-75 outline-offset-8"
 		flex="~ col"
 		aria-controls="ACCORDION-ID"
-		aria-expanded="true"
+		aria-expanded="false"
 	>
-		<h2 class="text-16 font-100" id="ACCORDION-HEADING">
+		<h2 class="accordion-title text-16 font-100" id="ACCORDION-HEADING">
 			<span>Title</span>
-			<!-- </button -->
-			<!-- > -->
 		</h2>
 		<p
-			class="accordion-content p-4 my-auto"
+			class="accordion-content p-4 my-auto font-100 motion-safe:duration-150 ease-out"
 			id="ACCORDION-ID"
 			aria-labelledby="ACCORDION-HEADING"
+			aria-hidden="true"
 			role="region"
 		>
-			Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, dolores
-			eaque eum nulla natus itaque saepe vitae doloremque sequi aperiam est quis
-			nesciunt sint debitis magni iste
+			<slot>-</slot>
 		</p>
-		<div class="accordion-bg absolute inset-0 -z-1">
-			<Image
-				src="/src/assets/WorldWar3.jpg"
-				alt=""
-				width={1152}
-				height={400}
-				fit="cover"
-			/>
-			<div
-				class="overlay bg-black absolute inset-0 opacity-25 motion-safe:transition-opacity"
-			>
-			</div>
+		<div
+			class="accordion-bg absolute inset-0 -z-1 motion-safe:transition-filter motion-safe:duration-300"
+		>
+			<Image src={background} alt="" width={1152} height={400} fit="cover" />
 		</div>
 	</button>
 </li>
@@ -47,21 +42,45 @@ import { Image } from "@astrojs/image/components";
 		object-fit: cover;
 	}
 	.accordion-content {
-		transform: translateY(2rem);
+		opacity: 0;
+		transform: translateY(10rem);
+		transition-property: opacity, transform;
+	}
+
+	@container (width < 20rem) {
+		.accordion-title {
+			opacity: 0;
+
+			@media (prefers-reduced-motion: no-preference) {
+				transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1);
+			}
+
+			.expanded & {
+				opacity: 1;
+				transition-delay: 150ms;
+			}
+		}
 	}
 
 	.accordion-panel {
 		flex-basis: 6.5rem;
+		transition-property: flex-basis, flex-grow;
 
 		&.expanded {
 			flex-basis: 25rem;
+			flex-grow: 1;
 
 			.accordion-trigger {
 				opacity: 1;
 			}
+			.accordion-bg {
+				filter: brightness(0.5);
+			}
 
 			.accordion-content {
+				opacity: 1;
 				transform: none;
+				transition-delay: 150ms;
 			}
 		}
 	}
