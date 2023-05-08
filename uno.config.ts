@@ -98,45 +98,64 @@ export default defineConfig({
 			}),
 		],
 		[
-			/^btn-smoosh-([a-z]+)-(\d+)$/,
-			([_, color, shade], { rawSelector, theme }) => {
-				const selector = e(rawSelector);
+			/^btn-dash-([a-z]+)-(\d+)$/,
+			([_, color, shade], { theme, rawSelector }) => {
 				const selectedColor = theme.colors[color];
 				const bgColor = selectedColor?.[shade];
 				const textColor = selectedColor[parseInt(shade) > 500 ? 100 : 950];
+				const selector = e(rawSelector);
+
 				return `
-			${selector} {
-				position: relative;
-				isolation: isolate;
-				overflow: hidden;
-				color: ${bgColor};
-
-				&::before,
-				&::after {
-					content: '';
-					position: absolute;
-					inset: 0;
-					background-color: ${bgColor};
-					z-index: -1;
-					
-					
-				}
-
-				@media (prefers-reduced-motion: no-preference){
-					&::before, &::after {
-						transition: transform 150ms ease-out;
+					${selector} {
+						--btn-dash-color: ${bgColor};
+						--btn-dash-color-inv: ${textColor};
 					}
-				}
+				`;
+			},
+		],
+		[
+			/^btn-dash$/,
+			() => {
+				return `
+				.btn-dash {
+					@apply relative overflow-hidden;
 
-				&::before { transform: translateY(-100%); }
-				&::after { transform: translateY(100%); }
-				
-				&:is(:hover, :focus-visible) {
-					color: ${textColor};
-					&::before { transform: translateY(-50%); }
-					&::after { transform: translateY(50%); }
- 			 	}
-			}
+					border: 2px solid var(--btn-dash-color);
+					border-left-width: 0;
+					border-right-width: 0;
+					color: var(--btn-dash-color);
+
+
+					@media (prefers-reduced-motion: no-preference){
+						&::after, &::before {
+							@apply transition-transform ease-out duration-300;
+						}
+					}
+					
+					&::after, &::before{
+						@apply absolute inset-0 opacity-10;
+						content: '';
+						background-color: var(--btn-dash-color);
+						transform: scaleX(.1) scaleY(.5);
+					}
+
+					&::before{
+						bottom: 50%;
+						transform-origin: top left;
+					}
+					
+					&::after{
+						top: 50%;
+						transform-origin: bottom right;
+					}
+
+					&:focus-visible, &:hover{
+						&::before, &::after{
+							transform: scale(1);
+						}
+					}
+					
+				}
 			`;
 			},
 		],

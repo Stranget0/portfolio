@@ -8,10 +8,10 @@ const { background, chips } = Astro.props;
 ---
 
 <li
-	class="accordion-panel @container relative motion-safe:duration-150 ease-out"
+	class="accordion-panel @container relative motion-safe:duration-150 ease-out before:rounded-45"
 >
 	<button
-		class="accordion-trigger overflow-hidden absolute inset-0 rounded-45 items-center menu-opafocus-option opafocus-max-opacity-20 opafocus-min-opacity-0 outline-offset-8"
+		class="accordion-trigger overflow-hidden absolute inset-0 rounded-45 items-center menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50 outline-offset-8"
 		flex="~ col"
 		aria-controls="ACCORDION-ID"
 		aria-expanded="false"
@@ -34,9 +34,7 @@ const { background, chips } = Astro.props;
 			{
 				chips?.map(({ label, className }) => {
 					return (
-						<strong class:list={["p-1 text-primary-950 rounded", className]}>
-							{label}
-						</strong>
+						<strong class:list={["p-1 rounded", className]}>{label}</strong>
 					);
 				})
 			}
