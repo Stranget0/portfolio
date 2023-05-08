@@ -8,10 +8,10 @@ const { background, chips } = Astro.props;
 ---
 
 <li
-	class="accordion-panel @container relative motion-safe:duration-150 ease-out before:rounded-45"
+	class="accordion-panel flex-basis-9xl @container relative motion-safe:duration-150 ease-out before:rounded-45"
 >
 	<button
-		class="accordion-trigger overflow-hidden absolute inset-0 rounded-45 items-center menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50 outline-offset-8"
+		class="accordion-trigger absolute inset-0 pt-2 rounded items-center menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50 outline-offset-8"
 		flex="~ col"
 		aria-controls="ACCORDION-ID"
 		aria-expanded="false"
@@ -29,7 +29,7 @@ const { background, chips } = Astro.props;
 			<slot>-</slot>
 		</p>
 		<div
-			class="accordion-chips mb-4 flex items-center gap-2 motion-safe:duration-150 opacity-75"
+			class="accordion-chips mb-4 flex items-center gap-2 motion-safe:duration-150 opacity-75 pointer-events-none"
 		>
 			{
 				chips?.map(({ label, className }) => {
@@ -76,12 +76,30 @@ const { background, chips } = Astro.props;
 	}
 
 	.accordion-panel {
-		flex-basis: 6.5rem;
 		transition-property: flex-basis, flex-grow;
+		$spacing: 1rem;
+		&::before,
+		&::after {
+			@apply bg-accent-400;
+			position: absolute;
+			width: 100%;
+			height: 0.1rem;
+		}
+		&::before {
+			top: -$spacing;
+		}
+		&::after {
+			bottom: -$spacing;
+		}
 
 		&.expanded {
 			flex-basis: 25rem;
 			flex-grow: 1;
+
+			&::before,
+			&::after {
+				content: "";
+			}
 
 			.accordion-trigger {
 				opacity: 1;
