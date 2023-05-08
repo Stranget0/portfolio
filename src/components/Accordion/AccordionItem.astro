@@ -2,15 +2,16 @@
 import { Image } from "@astrojs/image/components";
 interface Props {
 	background: string;
+	chips?: { label: string; className?: string }[];
 }
-const { background } = Astro.props;
+const { background, chips } = Astro.props;
 ---
 
 <li
 	class="accordion-panel @container relative motion-safe:duration-150 ease-out"
 >
 	<button
-		class="accordion-trigger overflow-hidden absolute inset-0 rounded-15 items-center menu-opafocus-option opafocus-max-opacity-75 outline-offset-8"
+		class="accordion-trigger overflow-hidden absolute inset-0 rounded-45 items-center menu-opafocus-option opafocus-max-opacity-20 opafocus-min-opacity-0 outline-offset-8"
 		flex="~ col"
 		aria-controls="ACCORDION-ID"
 		aria-expanded="false"
@@ -28,6 +29,19 @@ const { background } = Astro.props;
 			<slot>-</slot>
 		</p>
 		<div
+			class="accordion-chips mb-4 flex items-center gap-2 motion-safe:duration-150 opacity-75"
+		>
+			{
+				chips?.map(({ label, className }) => {
+					return (
+						<strong class:list={["p-1 text-primary-950 rounded", className]}>
+							{label}
+						</strong>
+					);
+				})
+			}
+		</div>
+		<div
 			class="accordion-bg absolute inset-0 -z-1 motion-safe:transition-filter motion-safe:duration-300"
 		>
 			<Image src={background} alt="" width={1152} height={400} fit="cover" />
@@ -41,7 +55,8 @@ const { background } = Astro.props;
 		height: 100%;
 		object-fit: cover;
 	}
-	.accordion-content {
+	.accordion-content,
+	.accordion-chips {
 		opacity: 0;
 		transform: translateY(10rem);
 		transition-property: opacity, transform;
@@ -65,7 +80,7 @@ const { background } = Astro.props;
 	.accordion-panel {
 		flex-basis: 6.5rem;
 		transition-property: flex-basis, flex-grow;
-		
+
 		&.expanded {
 			flex-basis: 25rem;
 			flex-grow: 1;
@@ -77,10 +92,14 @@ const { background } = Astro.props;
 				filter: brightness(0.5);
 			}
 
-			.accordion-content {
+			.accordion-content,
+			.accordion-chips {
 				opacity: 1;
 				transform: none;
 				transition-delay: 150ms;
+			}
+			.accordion-chips {
+				opacity: 0.5;
 			}
 		}
 	}

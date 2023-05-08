@@ -6,7 +6,10 @@ import AccordionItem from "./AccordionItem.astro";
 	class="accordion gap-6 max-w-6xl w-full md:(h-[calc(80vh+1rem)] min-h-xl) menu-opafocus justify-center md:flex-row"
 	flex="~ col"
 >
-	<AccordionItem background="/src/assets/WorldWar3.jpg">
+	<AccordionItem
+		background="/src/assets/WorldWar3.jpg"
+		chips={[{ label: "test", className: "bg-red" }]}
+	>
 		Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, dolores Lorem
 		ipsum dolor sit, amet consectetur adipisicing elit. Quo, dolores Lorem ipsum
 		dolor sit, amet consectetur adipisicing elit. Quo, dolores Lorem ipsum dolor

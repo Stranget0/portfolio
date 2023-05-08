@@ -84,7 +84,7 @@ export default defineConfig({
 				}
 			}
 			:where(.menu-opafocus .menu-opafocus-option) {
-				opacity: 0.5;
+				opacity: var(--opafocus-min-opacity, 0.5);
 			}
 			:where(.menu-opafocus .menu-opafocus-option:is(:hover, :focus-visible)) {
 				opacity: var(--opafocus-max-opacity, 1);
@@ -92,10 +92,53 @@ export default defineConfig({
 			},
 		],
 		[
-			/^opafocus-max-opacity-(\d+)$/,
-			([_, opacity], {}) => ({
-				"--opafocus-max-opacity": `${parseInt(opacity) / 100}`,
+			/^opafocus-(max|min)-opacity-(\d+)$/,
+			([_, type, opacity], {}) => ({
+				[`--opafocus-${type}-opacity`]: `${parseInt(opacity) / 100}`,
 			}),
+		],
+		[
+			/^btn-smoosh-([a-z]+)-(\d+)$/,
+			([_, color, shade], { rawSelector, theme }) => {
+				const selector = e(rawSelector);
+				const selectedColor = theme.colors[color];
+				const bgColor = selectedColor?.[shade];
+				const textColor = selectedColor[parseInt(shade) > 500 ? 100 : 950];
+				return `
+			${selector} {
+				position: relative;
+				isolation: isolate;
+				overflow: hidden;
+				color: ${bgColor};
+
+				&::before,
+				&::after {
+					content: '';
+					position: absolute;
+					inset: 0;
+					background-color: ${bgColor};
+					z-index: -1;
+					
+					
+				}
+
+				@media (prefers-reduced-motion: no-preference){
+					&::before, &::after {
+						transition: transform 150ms ease-out;
+					}
+				}
+
+				&::before { transform: translateY(-100%); }
+				&::after { transform: translateY(100%); }
+				
+				&:is(:hover, :focus-visible) {
+					color: ${textColor};
+					&::before { transform: translateY(-50%); }
+					&::after { transform: translateY(50%); }
+ 			 	}
+			}
+			`;
+			},
 		],
 	],
 });
