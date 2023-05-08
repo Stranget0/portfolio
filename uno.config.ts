@@ -31,8 +31,6 @@ export default defineConfig({
 	theme: {
 		colors: {
 			...generateVariableColor("primary"),
-			...generateVariableColor("secondary"),
-			...generateVariableColor("tertiary"),
 			...generateVariableColor("accent"),
 		},
 		fontSize: {
@@ -71,7 +69,6 @@ export default defineConfig({
 				} = {};
 				for (let i = 50; i <= 1000; i += i >= 100 && i < 900 ? 100 : 50) {
 					style[`--primary-${i}`] = theme.colors.blue[i];
-					style[`--secondary-${i}`] = theme.colors.violet[i];
 					style[`--accent-${i}`] = theme.colors.fuchsia[i];
 				}
 				return style;
