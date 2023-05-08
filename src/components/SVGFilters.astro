@@ -32,4 +32,19 @@
 			result="result6"></feComposite>
 		<feComposite in="result6" in2="result5"></feComposite>
 	</filter>
+	<svg>
+		<filter id="noise">
+			<feTurbulence
+				type="fractalNoise"
+				baseFrequency="6.29"
+				stitchTiles="stitch"
+			>
+				<animate
+					attributeName="seed"
+					values="0;100"
+					dur="5s"
+					repeatCount="indefinite"></animate>
+			</feTurbulence>
+		</filter>
+	</svg>
 </svg>

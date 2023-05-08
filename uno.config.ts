@@ -24,6 +24,9 @@ export default defineConfig({
 		section: "px-4 lg:px-36 h-screen flex flex-col justify-center",
 		"aspect-card": "aspect-[63/88]",
 		"aspect-card-rotated": "aspect-[88/63]",
+		"pseudo-full": "absolute inset-0 content",
+		"layer-noise":
+			"relative isolate after:(pseudo-full bg-black filter-noise mix-blend-screen opacity-30)",
 	},
 	theme: {
 		colors: {
@@ -72,6 +75,13 @@ export default defineConfig({
 					style[`--accent-${i}`] = theme.colors.fuchsia[i];
 				}
 				return style;
+			},
+		],
+		[/^content$/, () => ({ content: '""' })],
+		[
+			/^filter-(noise|grunge)$/,
+			([_, filterType]) => {
+				return { filter: `url(#${filterType})` };
 			},
 		],
 		[
