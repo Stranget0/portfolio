@@ -1,5 +1,27 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"button"> {
+	visualType?: "dash" | "simple";
+}
+
+const {
+	visualType = "simple",
+	type = "submit",
+	class: className,
+	...rest
+} = Astro.props;
+---
+
 <button
-	class="button p-4 btn-dash btn-dash-accent-400 border-2 border-accent-400"
+	class:list={[
+		"button p-4 relative mix-blend-screen",
+		visualType === "dash" && "btn-dash dash-accent-300 bg-accent-950",
+		visualType === "simple" &&
+			"color-accent-300 bg-accent-950 hover:(bg-accent-800)",
+		className,
+	]}
+	{...rest}
 >
-	LOREM IPSUM NIHIL NOVI
+	<slot>LOREM IPSUM NIHIL NOVI</slot>
 </button>

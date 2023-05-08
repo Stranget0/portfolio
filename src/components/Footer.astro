@@ -1,0 +1,34 @@
+---
+import Button from "./Button.astro";
+---
+
+<footer class="footer bg-primary-950 gap-24 p-16 mix-blend-screen grid">
+	<section class="flex md:(justify-end)">LOREM IPSUM</section>
+	<section flex="~ col" class="gap-4 max-w-xl">
+		<div flex="~ col" class="input-field">
+			<label for="footer-email">email</label>
+			<input
+				id="footer-email"
+				type="email"
+				name="email"
+				class="bg-transparent"
+			/>
+		</div>
+		<div flex="~ col" class="input-field">
+			<label for="footer-content">message</label>
+			<textarea
+				id="footer-content"
+				name="footer-content"
+				class="bg-transparent resize-none h-50"></textarea>
+		</div>
+		<Button />
+	</section>
+</footer>
+
+<style>
+	@media (width > 756px) {
+		.footer {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+</style>

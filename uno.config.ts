@@ -10,6 +10,8 @@ import {
 	toEscapedSelector as e,
 } from "unocss";
 
+import Color from "color";
+
 function generateVariableColor(colorName: string) {
 	const validShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 	const shades: Record<number, string> = {};
@@ -27,6 +29,8 @@ export default defineConfig({
 		"pseudo-full": "absolute inset-0 content",
 		"layer-noise":
 			"relative isolate after:(pseudo-full bg-black filter-noise mix-blend-screen opacity-30)",
+		"input-field":
+			"px-4 relative isolate before:(pseudo-full bg-primary-400 opacity-5 -z-1 pointer-events-none)",
 	},
 	theme: {
 		colors: {
@@ -64,12 +68,27 @@ export default defineConfig({
 		[
 			/^theme-default$/,
 			(_, { theme }) => {
+				function fixLightColor(color: string, shade: number): string {
+					const selectedColor = theme.colors[color][shade];
+					const isFixIgnored =
+						shade < 700 ||
+						["slate", "gray", "zinc", "neutral", "stone"].includes(
+							color.toLowerCase()
+						);
+
+					if (isFixIgnored) return selectedColor;
+					return Color(selectedColor)
+						.darken(shade / 1300)
+						.rgb()
+						.string();
+				}
+
 				const style: {
 					[k in `--${string}-${number}`]: string;
 				} = {};
 				for (let i = 50; i <= 1000; i += i >= 100 && i < 900 ? 100 : 50) {
-					style[`--primary-${i}`] = theme.colors.blue[i];
-					style[`--accent-${i}`] = theme.colors.fuchsia[i];
+					style[`--primary-${i}`] = fixLightColor("fuchsia", i);
+					style[`--accent-${i}`] = fixLightColor("cyan", i);
 				}
 				return style;
 			},
@@ -105,7 +124,7 @@ export default defineConfig({
 			}),
 		],
 		[
-			/^btn-dash-([a-z]+)-(\d+)$/,
+			/^dash-([a-z]+)-(\d+)$/,
 			([_, color, shade], { theme, rawSelector }) => {
 				const selectedColor = theme.colors[color];
 				const bgColor = selectedColor?.[shade];
@@ -114,10 +133,24 @@ export default defineConfig({
 
 				return `
 					${selector} {
-						--btn-dash-color: ${bgColor};
-						--btn-dash-color-inv: ${textColor};
+						--dash-color: ${bgColor};
+						--dash-color-inv: ${textColor};
 					}
 				`;
+			},
+		],
+		[
+			/^dash-(top|bottom|both)$/,
+			([_, type]) => {
+				const borderTop = "2px solid var(--dash-color)";
+				const borderBottom = "2px solid var(--dash-color)";
+
+				return {
+					"border-top": ["both", "top"].includes(type) ? borderTop : undefined,
+					"border-bottom": ["both", "bottom"].includes(type)
+						? borderBottom
+						: undefined,
+				};
 			},
 		],
 		[
@@ -126,11 +159,7 @@ export default defineConfig({
 				return `
 				.btn-dash {
 					@apply relative overflow-hidden;
-
-					border: 2px solid var(--btn-dash-color);
-					border-left-width: 0;
-					border-right-width: 0;
-					color: var(--btn-dash-color);
+					color: var(--dash-color);
 
 
 					@media (prefers-reduced-motion: no-preference){
@@ -142,7 +171,7 @@ export default defineConfig({
 					&::after, &::before{
 						@apply absolute inset-0 opacity-10;
 						content: '';
-						background-color: var(--btn-dash-color);
+						background-color: var(--dash-color);
 						transform: scaleX(.1) scaleY(.5);
 					}
 
