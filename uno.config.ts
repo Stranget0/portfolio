@@ -128,13 +128,11 @@ export default defineConfig({
 			([_, color, shade], { theme, rawSelector }) => {
 				const selectedColor = theme.colors[color];
 				const bgColor = selectedColor?.[shade];
-				const textColor = selectedColor[parseInt(shade) > 500 ? 100 : 950];
 				const selector = e(rawSelector);
 
 				return `
 					${selector} {
 						--dash-color: ${bgColor};
-						--dash-color-inv: ${textColor};
 					}
 				`;
 			},
@@ -159,8 +157,6 @@ export default defineConfig({
 				return `
 				.btn-dash {
 					@apply relative overflow-hidden;
-					color: var(--dash-color);
-
 
 					@media (prefers-reduced-motion: no-preference){
 						&::after, &::before {
