@@ -1,0 +1,21 @@
+---
+type Props = { label: string; for: string };
+const { label, for: forId } = Astro.props;
+---
+
+<div flex="~ col" class="input-wrapper input-field transition-interactive">
+	<label class="opacity-70 text-primary-400" for={forId}>{label}</label>
+	<slot />
+</div>
+
+<style is:global lang="scss">
+	.input-wrapper {
+		textarea,
+		input {
+			outline: none;
+		}
+		&:focus-within {
+			outline: 2px solid theme("colors.primary.400");
+		}
+	}
+</style>

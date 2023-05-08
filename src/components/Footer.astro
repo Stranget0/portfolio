@@ -1,35 +1,17 @@
 ---
 import Button from "./Button.astro";
+import Input from "./Input/Input.astro";
+import TextArea from "./Input/TextArea.astro";
 ---
 
-<footer class="footer bg-primary-950 gap-24 p-16 mix-blend-screen grid">
+<footer
+	class="footer bg-primary-950 gap-24 p-16 mix-blend-screen grid text-primary-300"
+>
 	<section class="flex md:(justify-end)">LOREM IPSUM</section>
 	<section flex="~ col" class="gap-4 max-w-xl">
-		<div flex="~ col" class="input-field">
-			<label for="footer-name">name</label>
-			<input
-				id="footer-name"
-				type="text"
-				name="footer-name"
-				class="bg-transparent"
-			/>
-		</div>
-		<div flex="~ col" class="input-field">
-			<label for="footer-email">email</label>
-			<input
-				id="footer-email"
-				type="email"
-				name="email"
-				class="bg-transparent"
-			/>
-		</div>
-		<div flex="~ col" class="input-field">
-			<label for="footer-content">message</label>
-			<textarea
-				id="footer-content"
-				name="footer-content"
-				class="bg-transparent resize-none h-50"></textarea>
-		</div>
+		<Input id="footer-name" label="name" />
+		<Input id="footer-email" label="email" type="email" />
+		<TextArea id="footer-message" label="message" />
 		<Button
 			visualType="dash"
 			type="submit"

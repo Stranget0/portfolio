@@ -30,7 +30,9 @@ export default defineConfig({
 		"layer-noise":
 			"relative isolate after:(pseudo-full bg-black filter-noise mix-blend-screen opacity-30)",
 		"input-field":
-			"px-4 relative isolate before:(pseudo-full bg-primary-400 opacity-5 -z-1 pointer-events-none)",
+			"rounded px-4 pb-2 relative isolate before:(pseudo-full rounded bg-primary-400 opacity-5 -z-1 pointer-events-none)",
+		"transition-interactive":
+			"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-30)",
 	},
 	theme: {
 		colors: {

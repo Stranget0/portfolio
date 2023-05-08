@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import InputWrapper from "./InputWrapper.astro";
+
+type Props = HTMLAttributes<"textarea"> & {
+	id: string;
+	label: string;
+};
+
+const { label, class: className, ...other } = Astro.props;
+
+const common = { name: other.id, ...other };
+---
+
+<InputWrapper for={common.id} label={label}>
+	<textarea
+		{...common}
+		class:list={["bg-transparent resize-none h-50", className]}></textarea>
+</InputWrapper>
