@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import SEO from "../components/SEO.astro";
 import "@unocss/reset/tailwind-compat.css";
 import Footer from "@components/Footer.astro";
+import Background from "@components/Background.astro";
 ---
 
 <!DOCTYPE html>
@@ -21,11 +22,7 @@ import Footer from "@components/Footer.astro";
 	</head>
 	<body theme-default font-sans text-primary-100>
 		<SVGFilters />
-		<div
-			class="-z-100 fixed inset-0 from-primary-950 to-accent-950 filter brightness-40 min-h-screen layer-noise"
-			bg-gradient="linear to-br"
-		>
-		</div>
+		<Background />
 		<Header />
 		<main data-taxi>
 			<slot />
