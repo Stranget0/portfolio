@@ -1,0 +1,10 @@
+---
+import { threeCanvasId } from "./constants";
+---
+
+<div class="inset-0 fixed -z-2">
+	<canvas id={threeCanvasId}></canvas>
+</div>
+<script>
+	requestIdleCallback(() => import("./heroThree"));
+</script>
