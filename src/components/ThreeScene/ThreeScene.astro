@@ -6,5 +6,7 @@ import { threeCanvasId } from "./constants";
 	<canvas id={threeCanvasId}></canvas>
 </div>
 <script>
-	requestIdleCallback(() => import("./heroThree"));
+	requestIdleCallback(() => {
+		import("./init").then(({ init }) => init());
+	});
 </script>
