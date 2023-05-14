@@ -1,5 +1,3 @@
-import type supportedLocales from "./supportedLocales";
-
 const seo = {
 	title: "Marcin Smarzewski frontend developer",
 	description:

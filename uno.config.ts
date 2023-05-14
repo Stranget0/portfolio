@@ -104,7 +104,7 @@ export default defineConfig({
 		],
 		[
 			/^menu-opafocus(-option)?$/,
-			(_) => {
+			() => {
 				return `
 			@media (prefers-reduced-motion: no-preference){
 				:where(.menu-opafocus-option){
@@ -121,7 +121,7 @@ export default defineConfig({
 		],
 		[
 			/^opafocus-(max|min)-opacity-(\d+)$/,
-			([_, type, opacity], {}) => ({
+			([_, type, opacity]) => ({
 				[`--opafocus-${type}-opacity`]: `${parseInt(opacity) / 100}`,
 			}),
 		],

@@ -5,12 +5,7 @@ interface Props extends HTMLAttributes<"button"> {
 	visualType?: "dash" | "simple";
 }
 
-const {
-	visualType = "simple",
-	type = "submit",
-	class: className,
-	...rest
-} = Astro.props;
+const { visualType = "simple", class: className, ...rest } = Astro.props;
 ---
 
 <button

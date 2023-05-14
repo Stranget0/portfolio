@@ -17,7 +17,7 @@ const heroThree = new ThreeController(
 );
 
 const removeOnResize = onResizeScreen(({ width, height }) => {
-	heroThree.resize(width, height);
+	heroThree.setSize(width, height);
 });
 
 heroThree.onDestroy(removeOnResize);

@@ -10,7 +10,7 @@ const text =
 const textMock = text.split(" ").reduce((acc, word, i) => {
 	if (!word.trim()) return acc;
 	const lastWordEnd = acc[i - 1]?.[2] || 0;
-	const lastChar = word.at(word.length - 1)!;
+	const lastChar = word.at(word.length - 1) || "";
 	const isEndSentence = /[.?!]/.test(lastChar);
 	const beginAt = lastWordEnd;
 	const additionalEnd = isEndSentence ? 500 : 200;

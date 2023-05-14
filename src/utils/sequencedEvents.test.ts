@@ -23,8 +23,8 @@ describe("build sequenced events", () => {
 	it("Should handle end event correctly", () => {
 		const fn = vitest.fn();
 		buildEventSequence()
-			.wait(500, () => {})
-			.wait(500, () => {})
+			.wait(500, () => null)
+			.wait(500, () => null)
 			.onFinish(fn)
 			.run();
 

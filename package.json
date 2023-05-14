@@ -8,7 +8,11 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"test": "vitest"
+		"test": "vitest",
+		"prepare": "husky install",
+		"prettier": "prettier --write ./src/**",
+		"lint": "eslint --fix",
+		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@astrojs/image": "^0.16.6",
@@ -38,6 +42,7 @@
 		"eslint-plugin-astro": "^0.27.0",
 		"eslint-plugin-import": "^2.27.5",
 		"eslint-plugin-jsx-a11y": "^6.7.1",
+		"husky": "^8.0.3",
 		"jsdom": "^21.1.2",
 		"prettier": "^2.8.8",
 		"prettier-plugin-astro": "^0.8.0",
