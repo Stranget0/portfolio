@@ -159,18 +159,12 @@ export default defineConfig({
 				return `
 				.btn-dash {
 					@apply relative overflow-hidden;
-
-					@media (prefers-reduced-motion: no-preference){
-						&::after, &::before {
-							@apply transition-transform ease-out duration-300;
-						}
-					}
 					
 					&::after, &::before{
 						@apply absolute inset-0 opacity-10;
 						content: '';
 						background-color: var(--dash-color);
-						transform: scaleX(.1) scaleY(.5);
+						transform: scaleX(.05) scaleY(.2);
 					}
 
 					&::before{
@@ -189,6 +183,13 @@ export default defineConfig({
 						}
 					}
 					
+					@media (prefers-reduced-motion: no-preference) {
+						&::after, &::before {
+							transition-property: transform;
+							transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+							transition-duration: 300ms;
+						}
+					}
 				}
 			`;
 			},
