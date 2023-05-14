@@ -10,5 +10,5 @@ export function loadDracoGLTF(path: string, onProgress?: OnProgress) {
 	const gltfLoader = new GLTFLoader();
 	gltfLoader.setDRACOLoader(draco);
 
-	return loadGLTF(path, onProgress);
+	return loadGLTF(path, onProgress, gltfLoader);
 }
