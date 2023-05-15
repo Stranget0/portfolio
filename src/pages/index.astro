@@ -1,6 +1,7 @@
 ---
 import AppearingText from "@components/AppearingText.astro";
 import Button from "@components/Button.astro";
+import Footer from "@components/Footer.astro";
 import Projects from "@components/Projects.astro";
 import ThreeScene from "@components/ThreeScene/ThreeScene.astro";
 import Layout from "@layouts/Layout.astro";
@@ -22,8 +23,12 @@ const textMock = text.split(" ").reduce((acc, word, i) => {
 
 <Layout>
 	<ThreeScene />
-	<div data-taxi-view w-full>
-		<section class="section items-end">
+	<div
+		data-taxi-view
+		class="w-full h-screen overflow-y-auto"
+		snap="y mandatory"
+	>
+		<section class="section py-20 items-center justify-between snap-center">
 			<h2 text-5xl font-extrabold>
 				Hi, I'm <span>Marcin!</span>
 			</h2>
@@ -31,13 +36,16 @@ const textMock = text.split(" ").reduce((acc, word, i) => {
 				A <span>Web Developer</span>
 			</h3>
 		</section>
-		<section class="section">
+		<section class="section snap-center">
 			<h2 text-xl font-bold>Testing</h2>
 			<AppearingText text={textMock} />
 		</section>
-		<Projects />
-		<section class="section">
+		<section class="section items-center snap-center">
+			<Projects />
+		</section>
+		<section class="section snap-center">
 			<Button visualType="dash" />
 		</section>
+		<Footer />
 	</div>
 </Layout>

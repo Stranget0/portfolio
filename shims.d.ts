@@ -4,6 +4,6 @@ declare global {
 	namespace astroHTML.JSX {
 		interface HTMLAttributes
 			extends AttributifyAttributes,
-				Partial<Record<"prose", string | boolean>> {}
+				Partial<Record<"prose" | "snap", string | boolean>> {}
 	}
 }

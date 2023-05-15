@@ -1,4 +1,4 @@
-<svg>
+<svg class="display-none">
 	<filter
 		id="grunge"
 		x="-.048"
@@ -32,19 +32,39 @@
 			result="result6"></feComposite>
 		<feComposite in="result6" in2="result5"></feComposite>
 	</filter>
-	<svg>
-		<filter id="noise">
-			<feTurbulence
-				type="fractalNoise"
-				baseFrequency="6.29"
-				stitchTiles="stitch"
+	<filter id="noise">
+		<feTurbulence type="fractalNoise" baseFrequency="6.29" stitchTiles="stitch">
+			<animate
+				attributeName="seed"
+				values="0;100"
+				dur="5s"
+				repeatCount="indefinite"></animate>
+		</feTurbulence>
+	</filter>
+	<filter id="noise-appear" filterUnits="userSpaceOnUse">
+		<feTurbulence
+			type="fractalNoise"
+			baseFrequency="0.995"
+			numOctaves="1"
+			seed="1"
+			stitchTiles="noStitch"
+			result="img"></feTurbulence>
+		<feDisplacementMap
+			in="SourceGraphic"
+			in2="img"
+			xChannelSelector="R"
+			yChannelSelector="G"
+			scale="500"
+		>
+			<animate
+				attributeName="scale"
+				values="600;0;0"
+				keyTimes="0;0.75;1"
+				begin="0s"
+				dur="1s"
+				fill="freeze"
 			>
-				<animate
-					attributeName="seed"
-					values="0;100"
-					dur="5s"
-					repeatCount="indefinite"></animate>
-			</feTurbulence>
-		</filter>
-	</svg>
+			</animate>
+		</feDisplacementMap>
+	</filter>
 </svg>
