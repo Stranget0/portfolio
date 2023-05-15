@@ -1,5 +1,4 @@
 import { Scene, PerspectiveCamera, WebGLRenderer } from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Observable from "./Observable";
 
 export default class ThreeController {
