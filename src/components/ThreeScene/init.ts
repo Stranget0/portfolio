@@ -2,20 +2,22 @@ import { addLocationControls } from "@utils/gui";
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
 
 export async function init() {
-	const [{ default: initHeroController }, foxGLTF] = await Promise.all([
+	const [{ default: initHeroController }, fox] = await Promise.all([
 		import("./heroThree"),
 		loadDracoGLTF("models/fox/foxNoAnimsDraco.glb"),
 	]);
 
-	foxGLTF.receiveShadow = true;
-	foxGLTF.castShadow = true;
+	fox.receiveShadow = true;
+	fox.castShadow = true;
+
+	fox.customDepthMaterial;
 
 	const heroController = initHeroController();
-	heroController.scene.add(foxGLTF);
+	heroController.scene.add(fox);
 	heroController.render();
 	heroController.renderer.domElement.classList.add("filter-noise-appear");
 
-	addLocationControls(foxGLTF, "fox");
+	addLocationControls(fox, "fox");
 
 	function animate() {
 		heroController.render();
