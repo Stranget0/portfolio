@@ -22,7 +22,7 @@ function generateVariableColor(colorName: string) {
 }
 
 export default defineConfig({
-	safelist: ["noise-appear"],
+	safelist: ["filter-noise-appear"],
 	shortcuts: {
 		section: "px-4 lg:px-36 h-screen flex flex-col justify-center",
 		"aspect-card": "aspect-[63/88]",

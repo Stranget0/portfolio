@@ -44,11 +44,13 @@
 	<filter id="noise-appear" filterUnits="userSpaceOnUse">
 		<feTurbulence
 			type="fractalNoise"
-			baseFrequency="0.995"
+			baseFrequency=".005"
 			numOctaves="1"
 			seed="1"
 			stitchTiles="noStitch"
-			result="img"></feTurbulence>
+			result="img"
+		>
+		</feTurbulence>
 		<feDisplacementMap
 			in="SourceGraphic"
 			in2="img"
