@@ -30,10 +30,10 @@ export default defineConfig({
 		"pseudo-full": "absolute inset-0 content",
 		"layer-noise":
 			"relative isolate after:(pseudo-full bg-black filter-noise mix-blend-screen opacity-30)",
-		"input-field":
-			"rounded px-4 pb-2 relative isolate before:(pseudo-full rounded bg-primary-400 opacity-5 -z-1 pointer-events-none)",
+		dialog:
+			"rounded px-4 pb-2 relative isolate before:(pseudo-full rounded bg-primary-800 op-15 -z-1 pointer-events-none)",
 		"transition-interactive":
-			"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-30)",
+			"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-75)",
 	},
 	theme: {
 		colors: {
@@ -71,7 +71,7 @@ export default defineConfig({
 		[
 			/^theme-default$/,
 			(_, { theme }) => {
-				function fixLightColor(color: string, shade: number): string {
+				function darkenDarkColors(color: string, shade: number): string {
 					const selectedColor = theme.colors[color][shade];
 					const isFixIgnored =
 						shade < 700 ||
@@ -90,8 +90,8 @@ export default defineConfig({
 					[k in `--${string}-${number}`]: string;
 				} = {};
 				for (let i = 50; i <= 1000; i += i >= 100 && i < 900 ? 100 : 50) {
-					style[`--primary-${i}`] = fixLightColor("fuchsia", i);
-					style[`--accent-${i}`] = fixLightColor("cyan", i);
+					style[`--primary-${i}`] = theme.colors.gray[1000 - i];
+					style[`--accent-${i}`] = theme.colors.gray[1000 - i];
 				}
 				return style;
 			},

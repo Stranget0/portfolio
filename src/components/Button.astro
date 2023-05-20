@@ -10,10 +10,9 @@ const { visualType = "simple", class: className, ...rest } = Astro.props;
 
 <button
 	class:list={[
-		"button rounded p-4 relative mix-blend-screen outline-offset-4 transition-interactive",
-		visualType === "dash" && "btn-dash dash-accent-300 bg-accent-950",
-		visualType === "simple" &&
-			"color-accent-300 bg-accent-950 hover:(bg-accent-800)",
+		"button rounded p-4 relative outline-offset-4 transition-interactive opacity-95  bg-accent-50 text-primary-950 mix-blend-luminosity",
+		visualType === "dash" && "btn-dash dash-accent-950",
+		visualType === "simple" && "color-accent-300 hover:(bg-accent-200)",
 		className,
 	]}
 	{...rest}
