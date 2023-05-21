@@ -86,7 +86,6 @@ const { text } = Astro.props;
 			if (nextWord) {
 				setTimeout(() => {
 					playWord(nextWord, word, isEndOfSentence);
-					console.log(Date.now() - nextWordStamp);
 				}, timeToNextWord1);
 			}
 			if (isEndOfSentence) {
@@ -102,7 +101,7 @@ const { text } = Astro.props;
 	}
 </script>
 
-<p class="appearing-stage" prose text-lg font-extralight leading-7>
+<p class="appearing-stage text-body prose">
 	{
 		text.map(([wordDuration, word]) => {
 			return (

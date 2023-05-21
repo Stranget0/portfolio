@@ -29,23 +29,22 @@ const textMock = text.split(" ").reduce((acc, word, i) => {
 		snap="y proximity"
 	>
 		<section class="section py-20 items-center justify-between snap-center">
-			<h2 text-5xl font-extrabold>
+			<h2 text-title-1>
 				Hi, I'm <span>Marcin!</span>
 			</h2>
-			<h3 text-4xl font-extrabold>
+			<h3 text-title-2>
 				A <span>Web Developer</span>
 			</h3>
 		</section>
 		<section class="section snap-center">
-			<h2 text-xl font-bold>Testing</h2>
+			<h2 text-subtitle>Testing</h2>
 			<AppearingText text={textMock} />
 		</section>
 		<section class="section items-center snap-center">
 			<Projects />
 		</section>
 		<section class="section snap-center">
-			<Button visualType="dash" />
-			<Button visualType="simple" />
+			<Button />
 		</section>
 		<Footer />
 	</div>

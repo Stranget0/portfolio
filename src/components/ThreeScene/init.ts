@@ -24,9 +24,9 @@ export async function init() {
 
 	addLocationControls(fox, "fox");
 
-	function animate() {
-		heroController.render();
-		requestAnimationFrame(animate);
-	}
-	animate();
+	// function animate() {
+	// 	heroController.render();
+	// 	requestAnimationFrame(animate);
+	// }
+	// animate();
 }

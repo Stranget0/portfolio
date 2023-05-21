@@ -5,20 +5,14 @@ import TextArea from "./Input/TextArea.astro";
 ---
 
 <footer
-	class="footer bg-primary-50 gap-24 p-16 grid text-primary-950 snap-center op-98 mix-blend-luminosity"
+	class="footer bg-primary-950 gap-24 p-16 grid text-primary-50 snap-center op-98"
 >
 	<section class="flex md:(justify-end)">LOREM IPSUM</section>
 	<section flex="~ col" class="gap-4 max-w-xl">
 		<Input id="footer-name" label="name" />
 		<Input id="footer-email" label="email" type="email" />
 		<TextArea id="footer-message" label="message" />
-		<Button
-			visualType="dash"
-			type="submit"
-			class="dash-both dash-accent-600 text-accent-300"
-		>
-			Submit
-		</Button>
+		<Button type="submit" visualType="outline">Submit</Button>
 	</section>
 </footer>
 

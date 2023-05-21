@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"button"> {
-	visualType?: "dash" | "simple";
+	visualType?: "simple" | "outline";
 }
 
 const { visualType = "simple", class: className, ...rest } = Astro.props;
@@ -10,9 +10,10 @@ const { visualType = "simple", class: className, ...rest } = Astro.props;
 
 <button
 	class:list={[
-		"button rounded p-4 relative outline-offset-4 transition-interactive opacity-95  bg-accent-50 text-primary-950 mix-blend-luminosity",
-		visualType === "dash" && "btn-dash dash-accent-950",
-		visualType === "simple" && "color-accent-300 hover:(bg-accent-200)",
+		"rounded p-4 relative outline-offset-4 transition-interactive text-body-u w-full mix-blend-difference",
+		visualType === "simple" &&
+			"bg-primary-100 text-primary-950 hover:bg-accent-50",
+		visualType === "outline" && "border-accent-200 border-2",
 		className,
 	]}
 	{...rest}

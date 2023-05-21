@@ -3,8 +3,14 @@ type Props = { label: string; for: string };
 const { label, for: forId } = Astro.props;
 ---
 
-<div flex="~ col" class="input-wrapper dialog transition-interactive">
-	<label class="opacity-70 text-primary-950" for={forId}>{label}</label>
+<div
+	flex="~ col"
+	class="input-wrapper dialog transition-interactive mix-blend-difference"
+>
+	<label
+		class="opacity-50 text-primary-50 uppercase tracking-2 text-xs"
+		for={forId}>{label}</label
+	>
 	<slot />
 </div>
 
