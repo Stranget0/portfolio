@@ -10,8 +10,6 @@ const { text } = Astro.props;
 ---
 
 <script>
-	import createEventSequence from "@utils/sequencedEvents";
-
 	const stages = document.querySelectorAll<HTMLElement>(".appearing-stage");
 
 	play(stages[0]);
@@ -21,19 +19,23 @@ const { text } = Astro.props;
 	}
 
 	function play(stage: HTMLElement) {
+		const start = Date.now();
+
+		let acc = 0;
+		for (const word of stage.children) {
+			(word as HTMLElement).dataset.startTime = `${start + acc}`;
+			acc += getWordDuration(word as HTMLElement);
+		}
+
 		const word = stage.children.item(0) as HTMLElement;
-		let firstVisibleWord: HTMLElement | null = null;
 		let lastVisibleWord: HTMLElement | null = null;
+		let hideBeforeWord: HTMLElement | null = null;
 		let lastFinishedTransitionWord: HTMLElement | null = null;
 		stage.classList.add("playing");
 		stage.classList.remove("has-finished-words");
+		stage.classList.remove("has-fading-words");
+		playWord(word);
 
-		if (word) {
-			setTimeout(() => {
-				setFirstVisibleWord(word);
-				playWord(word);
-			}, 250);
-		}
 		function setter(
 			currentValue: HTMLElement | null,
 			word: HTMLElement | null,
@@ -46,16 +48,16 @@ const { text } = Astro.props;
 			return word;
 		}
 
-		function setFirstVisibleWord(word: typeof firstVisibleWord) {
-			firstVisibleWord = setter(firstVisibleWord, word, "word-first-visible");
-		}
-
 		function setLastVisibleWord(word: typeof lastVisibleWord) {
 			lastVisibleWord = setter(lastVisibleWord, word, "word-last-visible");
+		}
+		function setHideBeforeWord(word: typeof hideBeforeWord) {
+			hideBeforeWord = setter(hideBeforeWord, word, "word-hide-before");
 		}
 		function setLastFinishedTransitionWord(
 			word: typeof lastFinishedTransitionWord
 		) {
+			stage.classList.add("has-fading-words");
 			lastFinishedTransitionWord = setter(
 				lastFinishedTransitionWord,
 				word,
@@ -65,41 +67,36 @@ const { text } = Astro.props;
 		}
 
 		function showWord(word: HTMLElement | null, delay?: number) {
-			if (lastVisibleWord) {
-				lastVisibleWord.style.transitionDelay = "";
-			}
 			setLastVisibleWord(word);
-			if (word) {
-				word.style.display = "";
-				word.style.transitionDelay = delay ? delay + "ms" : "";
-			}
 		}
 
-		function playWord(word: HTMLElement) {
+		function playWord(
+			word: HTMLElement,
+			lastWord: HTMLElement | null = null,
+			isNewSentence?: boolean
+		) {
 			showWord(word);
+			if (isNewSentence) setLastFinishedTransitionWord(lastWord);
 			const isEndOfSentence = hasEndOfSentence(word.textContent || "");
 			const nextWord = word.nextElementSibling as HTMLElement | null;
-			const wordDuration = getWordDuration(word);
-			const appearDuration = isEndOfSentence
-				? wordDuration * 0.6
-				: wordDuration;
-			const hideDuration = isEndOfSentence ? wordDuration * 0.4 : 0;
 
-			const controls = createEventSequence().wait(appearDuration, () => {
-				if (nextWord) playWord(nextWord);
-				if (isEndOfSentence) {
-					showWord(nextWord, hideDuration);
-					setFirstVisibleWord(nextWord);
-				}
-			});
-			if (hideDuration) {
-				controls.wait(hideDuration, () => {
-					setLastFinishedTransitionWord(word);
-				});
+			const nextWordStamp = parseInt(nextWord?.dataset.startTime || "0");
+			const timeToNextWord1 = nextWordStamp - Date.now();
+
+			if (nextWord) {
+				setTimeout(() => {
+					playWord(nextWord, word, isEndOfSentence);
+					console.log(Date.now() - nextWordStamp);
+				}, timeToNextWord1);
 			}
-			controls.run();
+			if (isEndOfSentence) {
+				setTimeout(() => {
+					setHideBeforeWord(nextWord);
+				}, timeToNextWord1 - 500);
+			}
 		}
 	}
+
 	function getWordDuration(word: HTMLElement): number {
 		return parseFloat(word.dataset.wordDuration || "0");
 	}
@@ -111,7 +108,7 @@ const { text } = Astro.props;
 			return (
 				<span
 					class="appearing-word 
-					motion-safe:transition-opacity motion-safe:duration-500"
+					motion:safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity"
 					data-word-duration={wordDuration}
 				>
 					{word}
@@ -122,25 +119,30 @@ const { text } = Astro.props;
 </p>
 <style lang="scss">
 	.appearing-stage.playing {
-		.appearing-word {
+		:where(&.has-fading-words .appearing-word) {
 			opacity: 0;
+		}
 
-			&.word-first-visible,
-			&.word-first-visible ~ .appearing-word {
+		&.has-finished-words .appearing-word {
+			display: none;
+		}
+
+		.appearing-word {
+			&.word-hide-before,
+			&.word-hide-before ~ .appearing-word {
 				opacity: 1;
 			}
+
 			&.last-finished-transition ~ .appearing-word {
 				display: inline;
 			}
+
 			&.word-last-visible ~ .appearing-word {
 				opacity: 0;
 				& + .appearing-word {
 					display: none;
 				}
 			}
-		}
-		&.has-finished-words .appearing-word {
-			display: none;
 		}
 	}
 </style>

@@ -1,4 +1,6 @@
-type Target = HTMLElement | Document | Window;
+import type { Target } from "./singleEvent";
+import addSingleEventListener from "./singleEvent";
+
 type Ref<T> = { current: T };
 
 export default function buildEventSequence() {
@@ -11,7 +13,7 @@ export default function buildEventSequence() {
 	};
 
 	const factoryMethods = {
-		addSingleEventListener,
+		addSingleEventListener: addSingleEventListenerSeq,
 		wait,
 		cancel: () => {
 			cancelRef.current();
@@ -35,7 +37,7 @@ export default function buildEventSequence() {
 		}
 	}
 
-	function addSingleEventListener(
+	function addSingleEventListenerSeq(
 		target: Target,
 		eventName: string,
 		listener: EventListener
@@ -44,16 +46,16 @@ export default function buildEventSequence() {
 		sequenesLength++;
 
 		const handleEvent = (e: Event): void => {
-			target.removeEventListener(eventName, handleEvent);
+			cancelRef.current();
 			sequenceMap.delete(sequenceIndex);
 			listener(e);
 			handleNextSequenceAfter(sequenceIndex);
 		};
 
 		sequenceMap.set(sequenceIndex, () => {
-			target.addEventListener(eventName, handleEvent);
+			const cancel = addSingleEventListener(target, eventName, handleEvent);
 			cancelRef.current = () => {
-				target.removeEventListener(eventName, handleEvent);
+				cancel();
 				sequenceMap.delete(sequenceIndex);
 			};
 		});
