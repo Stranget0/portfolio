@@ -6,6 +6,8 @@ specifiers:
   '@iconify/json': ^2.2.59
   '@types/color': ^3.0.3
   '@types/dat.gui': 0.7.7
+  '@types/lodash': ^4.14.194
+  '@types/ramda': ^0.29.1
   '@types/three': ^0.152.0
   '@typescript-eslint/eslint-plugin': ^5.13.0
   '@typescript-eslint/parser': ^5.0.0
@@ -26,9 +28,10 @@ specifiers:
   gltf-pipeline: ^4.1.0
   husky: ^8.0.3
   jsdom: ^21.1.2
+  lodash: ^4.17.21
   prettier: ^2.8.8
   prettier-plugin-astro: ^0.8.0
-  radash: ^10.8.1
+  ramda: ^0.29.0
   rollup-plugin-visualizer: ^5.9.0
   sass: ^1.62.1
   sharp: ^0.32.1
@@ -45,7 +48,8 @@ dependencies:
   '@unseenco/taxi': 1.2.2
   astro: 2.3.4_sass@1.62.1+sharp@0.32.1
   gltf-pipeline: 4.1.0
-  radash: 10.8.1
+  lodash: 4.17.21
+  ramda: 0.29.0
   sharp: 0.32.1
   three: 0.152.2
   zustand: 4.3.7_react@18.2.0
@@ -55,6 +59,8 @@ devDependencies:
   '@iconify/json': 2.2.59
   '@types/color': 3.0.3
   '@types/dat.gui': 0.7.7
+  '@types/lodash': 4.14.194
+  '@types/ramda': 0.29.1
   '@types/three': 0.152.0
   '@typescript-eslint/eslint-plugin': 5.13.0_5ru6247jdjcjlwszc2d2h564cq
   '@typescript-eslint/parser': 5.0.0_iacogk7kkaymxepzhgcbytyi7q
@@ -2357,6 +2363,10 @@ packages:
     resolution: {integrity: sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==}
     dev: false
 
+  /@types/lodash/4.14.194:
+    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
+    dev: true
+
   /@types/mdast/3.0.11:
     resolution: {integrity: sha512-Y/uImid8aAwrEA24/1tcRZwpxX3pIFTSilcNDKSPn+Y2iDywSEachzRuvgAYYLR3wpGXAsMbv5lvKLDZLeYPAw==}
     dependencies:
@@ -2421,6 +2431,12 @@ packages:
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+    dev: true
+
+  /@types/ramda/0.29.1:
+    resolution: {integrity: sha512-Ff5RRG9YRqMgWOqZVVavSjGEvYHUnXnGF0YPGbzIWhB3o8qiccSJZlFX2z8qm3G1H/IC5w0ozHmlezUeQCtGfQ==}
+    dependencies:
+      types-ramda: 0.29.2
     dev: true
 
   /@types/range-parser/1.2.4:
@@ -6323,7 +6339,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols/5.1.0:
     resolution: {integrity: sha512-l0x2DvrW294C9uDCoQe1VSU4gf529FkSZ6leBl4TiqZH/e+0R7hSfHQBNut2mNygDgHwvYHfFLn6Oxb3VWj2rA==}
@@ -7959,14 +7974,13 @@ packages:
     resolution: {integrity: sha512-RKJ22hX8mHe3Y6wH/N3wCM6BWtjaxIyyUIkpHOvfFnxdI4yD4tBXEBKSbriGujF6jnSVkJrffuo6vxACiSSxIw==}
     dev: false
 
-  /radash/10.8.1:
-    resolution: {integrity: sha512-NzYo3XgM9Tzjf5iFPIMG2l5+LSOCi2H7Axe3Ry/1PrhlvuqxUoiLsmcTBtw4CfKtzy5Fzo79STiEj9JZWMfDQg==}
-    engines: {node: '>=14.18.0'}
-    dev: false
-
   /ramda/0.28.0:
     resolution: {integrity: sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==}
     dev: true
+
+  /ramda/0.29.0:
+    resolution: {integrity: sha512-BBea6L67bYLtdbOqfp8f58fPMqEwx0doL+pAi8TZyp2YWz8R9G8z9x75CZI8W+ftqhFHCpEX2cRnUUXK130iKA==}
+    dev: false
 
   /range-parser/1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
@@ -9028,6 +9042,10 @@ packages:
     engines: {node: '>=6.10'}
     dev: true
 
+  /ts-toolbelt/9.6.0:
+    resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
+    dev: true
+
   /tsconfig-paths/3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
     dependencies:
@@ -9137,6 +9155,12 @@ packages:
 
   /typedarray/0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
+    dev: true
+
+  /types-ramda/0.29.2:
+    resolution: {integrity: sha512-HpLcR0ly2EfXQwG8VSI5ov6ml7PvtT+u+cp+7lZLu7q4nhnPDVW+rUTC1uy/SNs4aAyTUXri5M/LyhgvjEXJDg==}
+    dependencies:
+      ts-toolbelt: 9.6.0
     dev: true
 
   /typescript/5.0.4:

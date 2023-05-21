@@ -1,6 +1,6 @@
-import { addLocationControls } from "@utils/gui";
+// import { addLocationControls } from "@utils/gui";
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
-import { ShaderMaterial } from "three";
+// import { ShaderMaterial } from "three";
 
 export async function init() {
 	const [{ default: initHeroController }, fox] = await Promise.all([
@@ -16,13 +16,13 @@ export async function init() {
 	heroController.render();
 	heroController.renderer.domElement.classList.add("filter-noise-appear");
 
-	(fox as any).material = new ShaderMaterial({
-		uniforms: {
-			control: { value: heroController.camera.position },
-		},
-	});
+	// (fox as any).material = new ShaderMaterial({
+	// 	uniforms: {
+	// 		control: { value: heroController.camera.position },
+	// 	},
+	// });
 
-	addLocationControls(fox, "fox");
+	// addLocationControls(fox, "fox");
 
 	// function animate() {
 	// 	heroController.render();

@@ -11,7 +11,7 @@
 		"test": "vitest",
 		"prepare": "husky install",
 		"prettier": "prettier --write ./src/**",
-		"lint": "eslint */** --fix",
+		"lint": "eslint src/** --fix",
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
@@ -19,7 +19,8 @@
 		"@unseenco/taxi": "^1.2.2",
 		"astro": "^2.3.4",
 		"gltf-pipeline": "^4.1.0",
-		"radash": "^10.8.1",
+		"lodash": "^4.17.21",
+		"ramda": "^0.29.0",
 		"sharp": "^0.32.1",
 		"three": "^0.152.2",
 		"zustand": "^4.3.7"
@@ -29,6 +30,8 @@
 		"@iconify/json": "^2.2.59",
 		"@types/color": "^3.0.3",
 		"@types/dat.gui": "0.7.7",
+		"@types/lodash": "^4.14.194",
+		"@types/ramda": "^0.29.1",
 		"@types/three": "^0.152.0",
 		"@typescript-eslint/eslint-plugin": "^5.13.0",
 		"@typescript-eslint/parser": "^5.0.0",

@@ -14,8 +14,8 @@ import { colors, themeColorsRule } from "./unoUtils/colorsTheme";
 import { shake } from "./unoUtils/animations";
 
 const shortcuts = {
-	"text-title-1": "text-5xl font-extrabold tracking-5",
-	"text-title-2": "text-4xl font-extrabold tracking-5",
+	"text-title-1": "text-5xl font-extrabold tracking-5 uppercase",
+	"text-title-2": "text-4xl font-extrabold tracking-5 uppercase",
 	"text-subtitle": "text-xl font-bold tracking-3 leading-14",
 	"text-body": "text-lg font-extralight leading-7 tracking-1",
 	"text-body-u": "text-body uppercase",
