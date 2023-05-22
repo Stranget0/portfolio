@@ -1,7 +1,6 @@
 import { clamp } from "ramda";
 import { Vector2, Spherical, Vector3, Quaternion } from "three";
 import type ThreeController from "./ThreeController";
-import { throttle } from "lodash";
 
 export default function initOrbit(
 	controller: ThreeController,
@@ -61,10 +60,9 @@ export default function initOrbit(
 
 		const placeToMove = target.clone().add(offset);
 		const lerpFactor =
-			clamp(0, 1, 1 - initialPos.distanceTo(placeToMove) - 0.9) / 2;
+			clamp(0, 1, 1 - initialPos.distanceTo(placeToMove) - 0.4) / 10;
 		position.lerp(placeToMove, lerpFactor);
 		controller.camera.lookAt(target);
-		console.log(lerpFactor);
 
 		controller.render();
 

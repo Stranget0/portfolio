@@ -32,4 +32,3 @@ export const shake = {
 	},
 };
 
-`{from{transform-origin:left top;transform:rotate3d(0,0,1,45deg);opacity:0}to{transform-origin:left top;transform:translate3d(0,0,0);opacity:1}}`;
