@@ -60,7 +60,7 @@ export default function initOrbit(
 
 		const placeToMove = target.clone().add(offset);
 		const lerpFactor =
-			clamp(0, 1, 1 - initialPos.distanceTo(placeToMove) - 0.4) / 10;
+			clamp(0, 1, 1 - initialPos.distanceTo(placeToMove)) / 100;
 		position.lerp(placeToMove, lerpFactor);
 		controller.camera.lookAt(target);
 
