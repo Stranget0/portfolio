@@ -7,9 +7,8 @@ const { label, for: forId } = Astro.props;
 	flex="~ col"
 	class="input-wrapper dialog transition-interactive mix-blend-difference"
 >
-	<label
-		class="opacity-50 text-primary-50 uppercase tracking-2 text-xs"
-		for={forId}>{label}</label
+	<label class="opacity-50 text-primary-50 font-label" for={forId}
+		>{label}</label
 	>
 	<slot />
 </div>

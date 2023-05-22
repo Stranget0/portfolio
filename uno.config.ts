@@ -14,11 +14,13 @@ import { colors, themeColorsRule } from "./unoUtils/colorsTheme";
 import { shake } from "./unoUtils/animations";
 
 const shortcuts = {
-	"text-title-1": "text-5xl font-extrabold tracking-5 uppercase",
-	"text-title-2": "text-4xl font-extrabold tracking-5 uppercase",
-	"text-subtitle": "text-xl font-bold tracking-3 leading-14",
-	"text-body": "text-lg font-extralight leading-7 tracking-1",
+	"text-title-1": "font-serif text-5xl font-extrabold tracking-5 uppercase",
+	"text-title-2": "font-serif text-4xl font-extrabold tracking-5 uppercase",
+	"text-subtitle": "font-serif text-xl font-bold tracking-3 leading-14",
+	"text-button": "font-serif text-lg font-normal tracking-2",
+	"text-body": "text-base font-extralight leading-7 tracking-1",
 	"text-body-u": "text-body uppercase",
+	"font-label": "text-sm font-thin tracking-2 lowercase",
 	section: "px-4 lg:px-36 h-screen flex flex-col justify-center",
 	"aspect-card": "aspect-[63/88]",
 	"aspect-card-rotated": "aspect-[88/63]",
@@ -62,8 +64,8 @@ export default defineConfig({
 		presetWebFonts({
 			provider: "google",
 			fonts: {
-				sans: "sora",
-				serif: "Poltawski Nowy",
+				sans: "Sora",
+				serif: "Marcellus",
 			},
 		}),
 	],
