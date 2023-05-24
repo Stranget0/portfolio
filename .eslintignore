@@ -3,3 +3,6 @@ node_modules
 **/assets
 **/generated
 dist
+
+# This file crashes eslint somehow
+AppearingText.astro
