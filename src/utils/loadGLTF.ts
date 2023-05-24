@@ -7,11 +7,11 @@ export function loadGLTF(
 	onProgress?: OnProgress,
 	gltfLoader = new GLTFLoader()
 ) {
-	return new Promise<GLTF["scene"]>((resolve, reject) => {
+	return new Promise<any>((resolve, reject) => {
 		gltfLoader.load(
 			path,
 			(gltf: GLTF) => {
-				resolve(gltf.scene);
+				resolve(gltf);
 			},
 			onProgress,
 			reject

@@ -1,6 +1,6 @@
-import { clamp } from "ramda";
-import { Vector2, Spherical, Vector3, Quaternion } from "three";
+import { Vector2, Spherical, Vector3 } from "three";
 import type ThreeController from "./ThreeController";
+import { clamp } from "three/src/math/MathUtils";
 
 export default function initOrbit(
 	controller: ThreeController,
@@ -36,18 +36,10 @@ export default function initOrbit(
 
 		// ****************************************
 
-		const quat = new Quaternion().setFromUnitVectors(
-			controller.camera.up,
-			new Vector3(0, 1, 0)
-		);
-		const quatInverse = quat.clone().invert();
-
 		const position = controller.camera.position;
 		offset.copy(position).sub(target);
-		offset.applyQuaternion(quat);
 
 		spherical.setFromVector3(offset);
-
 		spherical.theta += sphericalDelta.theta;
 		spherical.phi += sphericalDelta.phi;
 
@@ -56,11 +48,9 @@ export default function initOrbit(
 		spherical.makeSafe();
 
 		offset.setFromSpherical(spherical);
-		offset.applyQuaternion(quatInverse);
 
 		const placeToMove = target.clone().add(offset);
-		const lerpFactor =
-			clamp(0, 1, 1 - initialPos.distanceTo(placeToMove)) / 100;
+		const lerpFactor = clamp(1 - initialPos.distanceTo(placeToMove), 0, 1) / 50;
 		position.lerp(placeToMove, lerpFactor);
 		controller.camera.lookAt(target);
 

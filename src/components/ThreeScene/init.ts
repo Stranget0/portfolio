@@ -1,32 +1,12 @@
-// import { addLocationControls } from "@utils/gui";
-import { loadDracoGLTF } from "@utils/loadDracoGLTF";
-// import { ShaderMaterial } from "three";
-
+import loadFox from "./models/fox";
+import loadLeafs from "./models/leaves";
 export async function init() {
-	const [{ default: initHeroController }, fox] = await Promise.all([
-		import("./heroThree"),
-		loadDracoGLTF("models/fox/foxNoAnimsDraco.glb"),
+	const [initHeroController, fox, leaves] = await Promise.all([
+		import("./heroThree").then(({ default: d }) => d),
+		loadFox(),
+		loadLeafs(30, 1, 2, 3),
 	]);
-
-	fox.receiveShadow = true;
-	fox.castShadow = true;
-
 	const heroController = initHeroController();
-	heroController.scene.add(fox);
+	heroController.scene.add(fox, ...leaves);
 	heroController.render();
-	heroController.renderer.domElement.classList.add("filter-noise-appear");
-
-	// (fox as any).material = new ShaderMaterial({
-	// 	uniforms: {
-	// 		control: { value: heroController.camera.position },
-	// 	},
-	// });
-
-	// addLocationControls(fox, "fox");
-
-	// function animate() {
-	// 	heroController.render();
-	// 	requestAnimationFrame(animate);
-	// }
-	// animate();
 }

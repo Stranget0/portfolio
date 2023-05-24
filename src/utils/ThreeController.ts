@@ -16,7 +16,6 @@ export default class ThreeController {
 		this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas });
 		this.renderer.setSize(width, height);
 		this.renderer.shadowMap.enabled = true;
-		// const controls = new OrbitControls(this.camera, this.renderer.domElement);
 		this.onDestroy(() => this.renderer.dispose());
 	}
 

@@ -3,12 +3,12 @@ import { threeCanvasId } from "./constants";
 import onResizeScreen from "@utils/resizer";
 
 import {
-	ACESFilmicToneMapping,
 	AxesHelper,
 	DirectionalLight,
 	DirectionalLightHelper,
 	HemisphereLight,
 	HemisphereLightHelper,
+	NoToneMapping,
 	Vector3,
 } from "three";
 import initOrbit from "@utils/orbit";
@@ -16,43 +16,44 @@ import initOrbit from "@utils/orbit";
 // import { addLocationControls } from "@utils/gui";
 
 export default function initHeroController() {
-	const heroThree = new ThreeController(
+	const heroController = new ThreeController(
 		`#${threeCanvasId}`,
 		window.innerWidth,
 		window.innerHeight
 	);
 
 	const removeOnResize = onResizeScreen(({ width, height }) => {
-		heroThree.setSize(width, height);
+		heroController.setSize(width, height);
 	});
 
-	heroThree.renderer.toneMapping = ACESFilmicToneMapping;
-	heroThree.renderer.autoClear = false;
+	heroController.renderer.shadowMap.enabled = true;
+	heroController.renderer.toneMapping = NoToneMapping;
+	// heroController.renderer.autoClear = false;
 
-	heroThree.onDestroy(removeOnResize);
+	heroController.onDestroy(removeOnResize);
 
-	heroThree.camera.position.set(-1, 1, 3);
+	heroController.camera.position.set(-1, 1, 3);
 
 	const hemiLight = new HemisphereLight(0xfefefe, 0x080820, 0.1);
 	const sun = new DirectionalLight(0xffffff, 1);
 	sun.castShadow = true;
-	sun.shadow.radius = 8;
+	sun.shadow.radius = 2;
 
 	sun.position.set(0, 1, 0);
 	sun.rotation.set(0, 0, 0);
 
-	const cameraTarget = new Vector3(-0.15, 0.3, 1);
+	const cameraTarget = new Vector3(0.5, -0.3, -1);
 	const sunHelper = new DirectionalLightHelper(sun, 0.2);
 	const hemiHelper = new HemisphereLightHelper(hemiLight, 0.5);
 	const targetHelper = new AxesHelper(1);
+
 	targetHelper.position.copy(cameraTarget);
+	heroController.camera.lookAt(cameraTarget);
 
-	heroThree.camera.lookAt(cameraTarget);
+	initOrbit(heroController, cameraTarget);
 
-	initOrbit(heroThree, cameraTarget);
+	heroController.scene.add(hemiLight, sun);
+	heroController.renderer.domElement.classList.add("filter-noise-appear");
 
-	heroThree.scene.add(sun, hemiLight, hemiHelper, sunHelper, targetHelper);
-	heroThree.render();
-
-	return heroThree;
+	return heroController;
 }
