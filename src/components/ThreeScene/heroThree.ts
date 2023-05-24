@@ -5,15 +5,11 @@ import onResizeScreen from "@utils/resizer";
 import {
 	AxesHelper,
 	DirectionalLight,
-	DirectionalLightHelper,
 	HemisphereLight,
-	HemisphereLightHelper,
 	NoToneMapping,
 	Vector3,
 } from "three";
 import initOrbit from "@utils/orbit";
-
-// import { addLocationControls } from "@utils/gui";
 
 export default function initHeroController() {
 	const heroController = new ThreeController(
@@ -28,7 +24,6 @@ export default function initHeroController() {
 
 	heroController.renderer.shadowMap.enabled = true;
 	heroController.renderer.toneMapping = NoToneMapping;
-	// heroController.renderer.autoClear = false;
 
 	heroController.onDestroy(removeOnResize);
 
@@ -43,8 +38,6 @@ export default function initHeroController() {
 	sun.rotation.set(0, 0, 0);
 
 	const cameraTarget = new Vector3(0.5, -0.3, -1);
-	const sunHelper = new DirectionalLightHelper(sun, 0.2);
-	const hemiHelper = new HemisphereLightHelper(hemiLight, 0.5);
 	const targetHelper = new AxesHelper(1);
 
 	targetHelper.position.copy(cameraTarget);
