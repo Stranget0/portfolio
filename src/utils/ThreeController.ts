@@ -14,6 +14,7 @@ export default class ThreeController {
 
 		this.camera = new PerspectiveCamera(75, width / height, 0.1, 1000);
 		this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas });
+		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.setSize(width, height);
 		this.renderer.shadowMap.enabled = true;
 		this.onDestroy(() => this.renderer.dispose());
