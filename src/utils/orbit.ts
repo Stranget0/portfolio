@@ -18,7 +18,6 @@ export default function initOrbit(
 	const { startLerp } = initLerpPositions(() => {
 		camera.position.setFromSpherical(spherical);
 		camera.lookAt(lookAtTarget);
-		controller.render();
 	});
 
 	function handleMouseMove(e: MouseEvent) {
