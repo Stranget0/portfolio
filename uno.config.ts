@@ -49,6 +49,7 @@ export default defineConfig({
 			durations: { shake: shake.duration },
 			counts: { shake: shake.count },
 			properties: { shake: shake.properties },
+			timingFns: { shake: shake.easing },
 		},
 	},
 	presets: [
@@ -75,12 +76,13 @@ export default defineConfig({
 		// ***************************************************************************************
 
 		[/^content$/, () => ({ content: '""' })],
-		// ***************************************************************************************
 		[
-			/^filter-(noise|grunge|noise-appear)$/,
-			([_, filterType]) => ({ filter: `url(#${filterType})` }),
+			/^bg-noise$/,
+			() => ({
+				"background-image": 'url("assets/Grainy 5 LOW - 256x256.jpg")',
+				"background-size": "175px",
+			}),
 		],
-
 		// ***************************************************************************************
 		[
 			/^menu-opafocus(-option)?$/,
@@ -115,8 +117,6 @@ export default defineConfig({
 				const bgColor = selectedColor?.[shade];
 				const selector = e(rawSelector);
 
-				// throw new Error(JSON.stringify(theme, null, 2));
-
 				return `
 					${selector} {
 						--dash-color: ${bgColor};
@@ -141,4 +141,3 @@ export default defineConfig({
 		],
 	],
 });
-("{40%{opacity:1;transform:scale3d(0.475,0.475,0.475) translate3d(0,-60px,0);animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19)}to{opacity:0;transform:scale3d(0.1,0.1,0.1) translate3d(0,2000px,0);transform-origin:center bottom;animation-timing-function:cubic-bezier(0.175,0.885,0.32,1)}}");

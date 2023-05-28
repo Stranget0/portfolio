@@ -25,10 +25,10 @@ const shakeKeyframes = `{0%{
 
 export const shake = {
 	keyframes: shakeKeyframes,
-	duration: "2s",
+	duration: "1s",
 	count: "infinite",
+	easing: "steps(2)",
 	properties: {
 		scale: "1.50",
 	},
 };
-
