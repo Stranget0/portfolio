@@ -18,7 +18,7 @@ const shortcuts = {
 	"text-title-2": "font-serif text-4xl font-extrabold tracking-5 uppercase",
 	"text-subtitle": "font-serif text-xl font-bold tracking-3 leading-14",
 	"text-button": "font-serif text-lg font-normal tracking-2",
-	"text-body": "text-base font-extralight leading-7 tracking-1",
+	"text-body": "text-base font-extralight leading-7 tracking-0.5",
 	"text-body-u": "text-body uppercase",
 	"font-label": "text-sm font-thin tracking-2 lowercase",
 	section: "px-4 lg:px-36 h-screen flex flex-col justify-center",
@@ -76,13 +76,6 @@ export default defineConfig({
 		// ***************************************************************************************
 
 		[/^content$/, () => ({ content: '""' })],
-		[
-			/^bg-noise$/,
-			() => ({
-				"background-image": 'url("assets/Grainy 5 LOW - 256x256.jpg")',
-				"background-size": "175px",
-			}),
-		],
 		// ***************************************************************************************
 		[
 			/^menu-opafocus(-option)?$/,

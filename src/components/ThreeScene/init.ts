@@ -1,20 +1,31 @@
-import { Clock } from "three";
-import loadFox from "./models/fox";
-import loadLeafs from "./models/leaves";
 export async function init() {
-	const [initHeroController, [fox, foxAnims], leaves] = await Promise.all([
-		import("./heroThree").then(({ default: d }) => d),
-		loadFox(),
-		loadLeafs(30, 1, 2, 3),
-	]);
-	const heroController = initHeroController();
-	heroController.scene.add(fox, ...leaves);
+	const onAnimates: VoidFunction[] = [];
 
-	const clock = new Clock();
+	const heroThree = import("./heroThree").then(
+		({ default: initHeroController }) => {
+			return initHeroController();
+		}
+	);
+
+	import("./models/fox").then(async ({ default: loadFox }) => {
+		const [fox, foxAnims] = await loadFox();
+		onAnimates.push(() => foxAnims.update());
+		const controller = await heroThree;
+		controller.scene.add(fox);
+	});
+
+	import("./models/leaves").then(async ({ default: loadLeaves }) => {
+		const leaves = await loadLeaves(30, 1, 2, 3);
+		const controller = await heroThree;
+		controller.scene.add(...leaves);
+	});
+
+	const controller = await heroThree;
+
 	function animate() {
 		requestAnimationFrame(animate);
-		heroController.render();
-		foxAnims.update(clock.getDelta());
+		controller.render();
+		onAnimates.forEach((f) => f());
 	}
 	animate();
 }

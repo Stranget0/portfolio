@@ -1,17 +1,11 @@
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
-import textureLoader from "@utils/textureLoader";
 import {
-	AdditiveAnimationBlendMode,
 	AnimationAction,
 	AnimationClip,
 	AnimationMixer,
-	BufferGeometry,
 	Clock,
 	LoopOnce,
 	LoopRepeat,
-	Mesh,
-	MeshStandardMaterial,
-	SRGBColorSpace,
 } from "three";
 
 export default async function loadFox() {
@@ -87,8 +81,9 @@ export default async function loadFox() {
 	earsIdle.play();
 	smile.play();
 
-	return [fox, mixer] as const;
+	return [fox, animationManager] as const;
 }
+
 function handleAction(
 	action: AnimationAction,
 	fadeDuration: number,

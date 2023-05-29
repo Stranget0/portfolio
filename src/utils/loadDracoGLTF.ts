@@ -1,7 +1,6 @@
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader";
 import { OnProgress, loadGLTF } from "./loadGLTF";
-import type { BufferGeometry, Mesh, MeshStandardMaterial } from "three";
 
 export function loadDracoGLTF(path: string, onProgress?: OnProgress) {
 	const draco = new DRACOLoader();
