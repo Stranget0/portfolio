@@ -105,11 +105,7 @@ const { text } = Astro.props;
 	{
 		text.map(([wordDuration, word]) => {
 			return (
-				<span
-					class="appearing-word 
-					motion:safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity"
-					data-word-duration={wordDuration}
-				>
+				<span class="appearing-word" data-word-duration={wordDuration}>
 					{word}
 				</span>
 			);
@@ -117,6 +113,9 @@ const { text } = Astro.props;
 	}
 </p>
 <style lang="scss">
+	.appearing-word {
+		@apply motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
+	}
 	.appearing-stage.playing {
 		:where(&.has-fading-words .appearing-word) {
 			opacity: 0;
