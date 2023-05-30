@@ -1,5 +1,5 @@
 import { Spherical, Vector3 } from "three";
-import randomBetween from "./randomFloat";
+import randomBetween from "./randomBetween";
 
 export default function randomSpherePointsFromTo(
 	count: number,

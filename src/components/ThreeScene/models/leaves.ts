@@ -15,7 +15,7 @@ import {
 } from "three";
 import textureLoader from "@utils/textureLoader";
 import mulberry32 from "@utils/seedableRandom";
-import randomBetween from "@utils/randomFloat";
+import randomBetween from "@utils/randomBetween";
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
 
 const goodLookingSeeds = [64, 342];

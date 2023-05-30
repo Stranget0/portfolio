@@ -8,8 +8,18 @@ export async function init() {
 	);
 
 	const fox = import("./models/fox").then(async ({ default: loadFox }) => {
-		const [fox, foxAnims] = await loadFox();
-		onAnimates.push(() => foxAnims.update());
+		const [fox, animationController] = await loadFox();
+		animationController.then((animationManager) => {
+			const { animations } = animationManager;
+			const blinkDuration = animations.blink.getClip().duration * 1000;
+			const sniffDuration = animations.sniff.getClip().duration * 1000;
+			animationManager.blink(() => Math.random() * 10000 + blinkDuration);
+			animationManager.sniff(() => Math.random() * 10000 + sniffDuration);
+			animationManager.attention(() => Math.random() * 20000 + 10000);
+			animationManager.shakeHead();
+
+			onAnimates.push(() => animationManager.update());
+		});
 		const controller = await heroThree;
 		controller.scene.add(fox);
 	});
