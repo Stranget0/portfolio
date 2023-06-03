@@ -1,9 +1,9 @@
 ---
-import SVGFilters from "@components/SVGFilters.astro";
 import Header from "../components/Header.astro";
 import SEO from "../components/SEO.astro";
 import "@unocss/reset/tailwind-compat.css";
 import Background from "@components/Background.astro";
+import LerpScrolling from "@components/LerpScrolling.astro";
 ---
 
 <!DOCTYPE html>
@@ -19,7 +19,8 @@ import Background from "@components/Background.astro";
 		</style>
 		<SEO />
 	</head>
-	<body theme-default text-primary-950 font-sans>
+	<body theme-default text-primary-950 font-sans overflow-auto>
+		<LerpScrolling/>
 		<Background />
 		<Header />
 		<main data-taxi>

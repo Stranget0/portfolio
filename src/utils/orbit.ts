@@ -1,6 +1,6 @@
 import { Vector3 } from "three";
 import type ThreeController from "./ThreeController";
-import initLerpPositions from "./lerpObjects";
+import initLerpPositions from "./lerpPositions";
 import SphericalLerpable from "./SphericalLerpable";
 
 export default function initOrbit(

@@ -20,9 +20,11 @@
 		"astro": "^2.3.4",
 		"gltf-pipeline": "^4.1.0",
 		"lodash": "^4.17.21",
+		"motion": "^10.16.2",
 		"ramda": "^0.29.0",
 		"sharp": "^0.32.1",
 		"three": "^0.152.2",
+		"zod": "^3.21.4",
 		"zustand": "^4.3.7"
 	},
 	"devDependencies": {
