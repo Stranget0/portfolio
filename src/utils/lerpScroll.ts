@@ -25,7 +25,11 @@ export default function initSmoothScroll(
 		yLerp.value = getScrollPos("y");
 		xLerp.value = getScrollPos("x");
 
-		const toY = clamp(yLerp.value + e.deltaY * strength, 0, getMaxPos("Height"));
+		const toY = clamp(
+			yLerp.value + e.deltaY * strength,
+			0,
+			getMaxPos("Height")
+		);
 		const toX = clamp(xLerp.value + e.deltaX * strength, 0, getMaxPos("Width"));
 		startLerpY(yLerp, toY, lerpAlpha);
 		startLerpX(xLerp, toX, lerpAlpha);
@@ -39,7 +43,7 @@ export default function initSmoothScroll(
 			default: { x: "scrollTop", y: "scrollLeft" },
 		} as const;
 
-		if(target instanceof Window){
+		if (target instanceof Window) {
 			return target[map.window[d]];
 		}
 		return target[map.default[d]];
@@ -47,9 +51,9 @@ export default function initSmoothScroll(
 
 	function getMaxPos(d: "Width" | "Height"): number {
 		let container;
-		if(target instanceof Window) container = document.documentElement;
+		if (target instanceof Window) container = document.documentElement;
 		else container = target;
-		return container[`scroll${d}`] - container[`client${d}`]
+		return container[`scroll${d}`] - container[`client${d}`];
 	}
 }
 
