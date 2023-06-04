@@ -31,13 +31,12 @@ export async function init() {
 			controller.scene.add(...leaves);
 		}
 	);
-	
+
 	const controller = await heroThree;
 	animate();
 
-	await Promise.all([fox,leaves])
-	controller.renderer.domElement.classList.remove("opacity-0")
-
+	await Promise.all([fox, leaves]);
+	controller.renderer.domElement.classList.remove("opacity-0");
 
 	function animate() {
 		requestAnimationFrame(animate);

@@ -3,12 +3,13 @@ import { threeCanvasId } from "./constants";
 import onResizeScreen from "@utils/resizer";
 
 import {
-	AxesHelper,
 	DirectionalLight,
 	HemisphereLight,
 	NoToneMapping,
 	Vector3,
+	Fog,
 } from "three";
+
 import initOrbit from "@utils/orbit";
 
 export default function initHeroController() {
@@ -31,21 +32,20 @@ export default function initHeroController() {
 
 	const hemiLight = new HemisphereLight(0xfefefe, 0x080820, 0.1);
 	const sun = new DirectionalLight(0xffffff, 1);
-	sun.castShadow = true;
-	sun.shadow.radius = 2;
 
 	sun.position.set(0, 1, 0);
 	sun.rotation.set(0, 0, 0);
 
-	const cameraTarget = new Vector3(0.5, -0.3, -1);
-	const targetHelper = new AxesHelper(1);
+	const fog = new Fog(0xffffff, 1, 5);
 
-	targetHelper.position.copy(cameraTarget);
+	const cameraTarget = new Vector3(0.5, -0.3, -1);
+
 	heroController.camera.lookAt(cameraTarget);
 
 	initOrbit(heroController, cameraTarget);
 
 	heroController.scene.add(hemiLight, sun);
+	heroController.scene.fog = fog
 	heroController.renderer.domElement.classList.add("filter-noise-appear");
 
 	return heroController;
