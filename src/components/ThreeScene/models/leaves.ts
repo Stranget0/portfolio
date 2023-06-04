@@ -95,9 +95,7 @@ function randomizeTransforms(
 		) {
 			randomizeMatrix(matrix, randomPositions[index]);
 			instancedLeafs.setMatrixAt(instanceIndex, matrix);
-			requestIdleCallback(() =>
-				startAnimate(instancedLeafs, matrix, instanceIndex)
-			);
+			startAnimate(instancedLeafs, matrix, instanceIndex);
 
 			index++;
 		}
@@ -117,35 +115,38 @@ function startAnimate(
 	const s = new Vector3().setFromMatrixScale(initialMatrix);
 	const m = initialMatrix.clone();
 	const stagger = -index;
-	animate(
-		(factor) => {
-			const value = factor * 2 - 1;
-			p.y = p_initial.y + value / 8;
-			update();
-		},
-		{
-			delay: -5 + stagger,
-			duration: 10,
-			repeat: Infinity,
-			direction: "alternate",
-		}
-	);
 
-	animate(
-		(factor) => {
-			r.x = r_initial.x + factor * 2;
-			r.y = r_initial.y + factor / 2;
-			r.z = r_initial.z + factor / 2;
-			q.setFromEuler(r);
-			update();
-		},
-		{
-			duration: 12.5,
-			delay: -stagger,
-			repeat: Infinity,
-			direction: "alternate",
-		}
-	);
+	requestIdleCallback(() => {
+		animate(
+			(factor) => {
+				const value = factor * 2 - 1;
+				p.y = p_initial.y + value / 8;
+				update();
+			},
+			{
+				delay: -5 + stagger,
+				duration: 10,
+				repeat: Infinity,
+				direction: "alternate",
+			}
+		);
+
+		animate(
+			(factor) => {
+				r.x = r_initial.x + factor * 2;
+				r.y = r_initial.y + factor / 2;
+				r.z = r_initial.z + factor / 2;
+				q.setFromEuler(r);
+				update();
+			},
+			{
+				duration: 12.5,
+				delay: -stagger,
+				repeat: Infinity,
+				direction: "alternate",
+			}
+		);
+	});
 
 	function update() {
 		m.compose(p, q, s);
