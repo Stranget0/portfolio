@@ -6,17 +6,20 @@ import {
 	DoubleSide,
 	Euler,
 	InstancedMesh,
+	Matrix3,
 	Matrix4,
 	Mesh,
 	MeshStandardMaterial,
 	Quaternion,
 	SRGBColorSpace,
 	Vector3,
+	VectorKeyframeTrack,
 } from "three";
 import textureLoader from "@utils/textureLoader";
 import mulberry32 from "@utils/seedableRandom";
 import randomBetween from "@utils/randomBetween";
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
+import { animate } from "motion";
 
 const goodLookingSeeds = [64, 342];
 const random = mulberry32(
@@ -94,8 +97,60 @@ function randomizeTransforms(
 		) {
 			randomizeMatrix(matrix, randomPositions[index]);
 			instancedLeafs.setMatrixAt(instanceIndex, matrix);
+			startAnimate(instancedLeafs, matrix, instanceIndex);
+
 			index++;
 		}
+	}
+}
+
+function startAnimate(
+	instances: InstancedMesh<BufferGeometry>,
+	initialMatrix: Matrix4,
+	index: number
+) {
+	const p = new Vector3().setFromMatrixPosition(initialMatrix);
+	const p_initial = p.clone();
+	const r = new Euler().setFromRotationMatrix(initialMatrix);
+	const r_initial = r.clone();
+	const q = new Quaternion();
+	const s = new Vector3().setFromMatrixScale(initialMatrix);
+	const m = initialMatrix.clone();
+	const stagger = -index;
+	animate(
+		(factor) => {
+			const value = factor * 2 - 1;
+			p.y = p_initial.y + value / 8;
+			update();
+		},
+		{
+			delay: -5 + stagger,
+			duration: 10,
+			repeat: Infinity,
+			direction: "alternate",
+		}
+	);
+
+	animate(
+		(factor) => {
+			r.x = r_initial.x + factor * 2;
+			r.y = r_initial.y + factor / 2;
+			r.z = r_initial.z + factor / 2;
+			q.setFromEuler(r);
+			update();
+		},
+		{
+			duration: 12.5,
+			delay: -stagger,
+			repeat: Infinity,
+			direction: "alternate",
+		}
+	);
+
+	function update() {
+		m.compose(p, q, s);
+		instances.setMatrixAt(index, m);
+		instances.instanceMatrix.needsUpdate = true;
 	}
 }
 
@@ -137,3 +192,9 @@ function randomizeMatrix(matrix: Matrix4, position: Vector3) {
 
 	matrix.compose(position, quaternion, scale);
 }
+
+// function makeAnimation(){
+// 	const posTrack =	new VectorKeyframeTrack(".position", [0,1], [0,0,0,1,1,1])
+// 	const clip
+// 	// return [posTrack]
+// }
