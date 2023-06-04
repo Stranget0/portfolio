@@ -59,7 +59,7 @@ async function loadSingleLeaf(num: string) {
 		t.colorSpace = SRGBColorSpace;
 	});
 
-	return new Mesh(
+	const leaf = new Mesh(
 		leafS.children[0].geometry,
 		new MeshStandardMaterial({
 			map: leafD,
@@ -70,6 +70,8 @@ async function loadSingleLeaf(num: string) {
 			alphaTest: 0.5,
 		})
 	);
+	leaf.matrixAutoUpdate = false;
+	return leaf;
 }
 
 function randomizeTransforms(
@@ -116,37 +118,35 @@ function startAnimate(
 	const m = initialMatrix.clone();
 	const stagger = -index;
 
-	requestIdleCallback(() => {
-		animate(
-			(factor) => {
-				const value = factor * 2 - 1;
-				p.y = p_initial.y + value / 8;
-				update();
-			},
-			{
-				delay: -5 + stagger,
-				duration: 10,
-				repeat: Infinity,
-				direction: "alternate",
-			}
-		);
+	animate(
+		(factor) => {
+			const value = factor * 2 - 1;
+			p.y = p_initial.y + value / 8;
+			update();
+		},
+		{
+			delay: -5 + stagger,
+			duration: 10,
+			repeat: Infinity,
+			direction: "alternate",
+		}
+	);
 
-		animate(
-			(factor) => {
-				r.x = r_initial.x + factor * 2;
-				r.y = r_initial.y + factor / 2;
-				r.z = r_initial.z + factor / 2;
-				q.setFromEuler(r);
-				update();
-			},
-			{
-				duration: 12.5,
-				delay: -stagger,
-				repeat: Infinity,
-				direction: "alternate",
-			}
-		);
-	});
+	animate(
+		(factor) => {
+			r.x = r_initial.x + factor * 2;
+			r.y = r_initial.y + factor / 2;
+			r.z = r_initial.z + factor / 2;
+			q.setFromEuler(r);
+			update();
+		},
+		{
+			duration: 12.5,
+			delay: -stagger,
+			repeat: Infinity,
+			direction: "alternate",
+		}
+	);
 
 	function update() {
 		m.compose(p, q, s);

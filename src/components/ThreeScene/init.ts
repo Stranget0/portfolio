@@ -31,13 +31,17 @@ export async function init() {
 			controller.scene.add(...leaves);
 		}
 	);
+	
+	const controller = await heroThree;
+	animate();
 
-	const [controller] = await Promise.all([heroThree, fox, leaves]);
+	await Promise.all([fox,leaves])
+	controller.renderer.domElement.classList.remove("opacity-0")
+
 
 	function animate() {
 		requestAnimationFrame(animate);
 		controller.render();
 		onAnimates.forEach((f) => f());
 	}
-	animate();
 }

@@ -4,6 +4,7 @@ import type { BufferGeometry, Mesh, MeshStandardMaterial } from "three";
 export default async function loadFox() {
 	const foxGLTF = await loadDracoGLTF("models/fox/foxLowNoAnimsDraco.glb");
 	const fox = foxGLTF.scene as Mesh<BufferGeometry, MeshStandardMaterial>;
+	fox.matrixAutoUpdate = false;
 
 	const animationManagerP = Promise.all([
 		loadDracoGLTF("models/fox/foxAnimations.glb"),
