@@ -7,6 +7,8 @@ interface Props {
 	background: string;
 	chips?: { label: string; className?: string }[];
 }
+export type AccordionItemProps = Props;
+
 const { background, chips } = Astro.props;
 ---
 

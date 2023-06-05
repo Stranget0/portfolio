@@ -45,7 +45,7 @@ export default function initHeroController() {
 	initOrbit(heroController, cameraTarget);
 
 	heroController.scene.add(hemiLight, sun);
-	heroController.scene.fog = fog
+	heroController.scene.fog = fog;
 	heroController.renderer.domElement.classList.add("filter-noise-appear");
 
 	return heroController;

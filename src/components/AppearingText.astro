@@ -2,11 +2,16 @@
 /* eslint-disable astro/no-unused-css-selector */
 // Disable eslint for css selectors, as some selectors are used in other components
 
-type TextData = [number, string, number][];
-interface Props {
+export type TextData = [number, string, number][];
+export type Tag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+
+interface Props  {
 	text: TextData;
+	tag?: Tag
+	class?: string;
 }
-const { text } = Astro.props;
+export type AppearingTextProps = Props;
+const { text, tag: Element="p",class:className, ...other } = Astro.props;
 ---
 
 <script>
@@ -101,7 +106,7 @@ const { text } = Astro.props;
 	}
 </script>
 
-<p class="appearing-stage text-body prose">
+<Element class:list={["appearing-stage text-body prose", className]} {...other}>
 	{
 		text.map(([wordDuration, word]) => {
 			return (
@@ -111,7 +116,8 @@ const { text } = Astro.props;
 			);
 		})
 	}
-</p>
+</Element>
+
 <style lang="scss">
 	.appearing-word {
 		@apply motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;

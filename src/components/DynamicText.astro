@@ -1,0 +1,18 @@
+---
+import AppearingText, { TextData, Tag } from "@components/AppearingText.astro";
+
+interface Props {
+	text: string | TextData;
+	tag?: Tag;
+	class?: string;
+}
+const { text, tag: Element = "p", ...other } = Astro.props;
+---
+
+{
+	typeof text === "string" ? (
+		<Element {...other}>{text}</Element>
+	) : (
+		<AppearingText text={text} tag={Element} {...other} />
+	)
+}

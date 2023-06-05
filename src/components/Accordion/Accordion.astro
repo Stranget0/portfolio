@@ -1,26 +1,8 @@
----
-import AccordionItem from "./AccordionItem.astro";
----
-
 <ul
-	class="accordion text-primary-50 gap-2 md:gap-4 max-w-6xl w-full h-4xl menu-opafocus justify-center md:flex-row"
+	class="accordion text-primary-50 gap-2 md:gap-4 max-w-6xl w-full h-4xl menu-opafocus justify-center md:flex-row sticky"
 	flex="~ col"
 >
-	<AccordionItem
-		background="/src/assets/WorldWar3.jpg"
-		chips={[{ label: "test", className: "border-red text-red border-2" }]}
-	>
-		Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, dolores Lorem
-		ipsum dolor sit, amet consectetur adipisicing elit. Quo, dolores Lorem ipsum
-		dolor sit, amet consectetur adipisicing elit. Quo, dolores Lorem ipsum dolor
-		sit, amet consectetur adipisicing elit. Quo, dolores
-	</AccordionItem>
-	<AccordionItem background="/src/assets/WorldWar3.jpg">
-		eaque eum nulla natus itaque saepe vitae doloremque sequi aperiam est quis
-	</AccordionItem>
-	<AccordionItem background="/src/assets/WorldWar3.jpg">
-		nesciunt sint debitis magni iste
-	</AccordionItem>
+	<slot/>
 </ul>
 
 <script>

@@ -1,5 +1,33 @@
 ---
 import Accordion from "./Accordion/Accordion.astro";
+import AccordionItem, {
+	AccordionItemProps,
+} from "./Accordion/AccordionItem.astro";
+import type { TextData } from "./AppearingText.astro";
+import DynamicText from "./DynamicText.astro";
+
+interface Project {
+	name: string | TextData;
+	description: string | TextData;
+	accordions: AccordionItemProps[];
+}
+interface Props extends HTMLElement {
+	projects: Project[];
+}
+
+const { projects } = Astro.props;
 ---
 
-<Accordion />
+{
+	projects.map(({ name, description, accordions }) => {
+		<div class="sticky top-0">
+			<DynamicText tag="h3" text={name}/>
+			<DynamicText text={description}/>
+			<Accordion>
+				{accordions.map(({ background, chips }) => {
+					<AccordionItem background={background} chips={chips} />;
+				})}
+			</Accordion>
+		</div>;
+	})
+}
