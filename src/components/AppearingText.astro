@@ -5,13 +5,13 @@
 export type TextData = [number, string, number][];
 export type Tag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
 
-interface Props  {
+interface Props {
 	text: TextData;
-	tag?: Tag
+	tag?: Tag;
 	class?: string;
 }
 export type AppearingTextProps = Props;
-const { text, tag: Element="p",class:className, ...other } = Astro.props;
+const { text, tag: Element = "p", class: className, ...other } = Astro.props;
 ---
 
 <script>

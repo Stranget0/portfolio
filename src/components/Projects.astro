@@ -21,8 +21,8 @@ const { projects } = Astro.props;
 {
 	projects.map(({ name, description, accordions }) => {
 		<div class="sticky top-0">
-			<DynamicText tag="h3" text={name}/>
-			<DynamicText text={description}/>
+			<DynamicText tag="h3" text={name} />
+			<DynamicText text={description} />
 			<Accordion>
 				{accordions.map(({ background, chips }) => {
 					<AccordionItem background={background} chips={chips} />;
