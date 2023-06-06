@@ -36,7 +36,7 @@ export default function initHeroController() {
 	sun.position.set(0, 1, 0);
 	sun.rotation.set(0, 0, 0);
 
-	const fog = new Fog(0xffffff, 1, 5);
+	const fog = new Fog(0xffffff, 1, 7);
 
 	const cameraTarget = new Vector3(0.5, -0.3, -1);
 
