@@ -19,18 +19,21 @@ export default function initSmoothScroll(
 		target.scrollTo({ left: xLerp.value });
 	}, EPS);
 
+	let lastToX = xLerp.value;
+	let lastToY = yLerp.value;
+
 	const onWheel = (e: WheelEvent | Event): void => {
 		if (!(e instanceof WheelEvent)) throw new Error("Invalid event type");
 		e.preventDefault();
 		yLerp.value = getScrollPos("y");
 		xLerp.value = getScrollPos("x");
 
-		const toY = clamp(
-			yLerp.value + e.deltaY * strength,
+		const toY = lastToY = clamp(
+			lastToY + e.deltaY * strength,
 			0,
 			getMaxPos("Height")
 		);
-		const toX = clamp(xLerp.value + e.deltaX * strength, 0, getMaxPos("Width"));
+		const toX = lastToX = clamp(lastToX + e.deltaX * strength, 0, getMaxPos("Width"));
 		startLerpY(yLerp, toY, lerpAlpha);
 		startLerpX(xLerp, toX, lerpAlpha);
 	};
