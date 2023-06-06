@@ -28,12 +28,16 @@ export default function initSmoothScroll(
 		yLerp.value = getScrollPos("y");
 		xLerp.value = getScrollPos("x");
 
-		const toY = lastToY = clamp(
+		const toY = (lastToY = clamp(
 			lastToY + e.deltaY * strength,
 			0,
 			getMaxPos("Height")
-		);
-		const toX = lastToX = clamp(lastToX + e.deltaX * strength, 0, getMaxPos("Width"));
+		));
+		const toX = (lastToX = clamp(
+			lastToX + e.deltaX * strength,
+			0,
+			getMaxPos("Width")
+		));
 		startLerpY(yLerp, toY, lerpAlpha);
 		startLerpX(xLerp, toX, lerpAlpha);
 	};
