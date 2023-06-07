@@ -70,7 +70,10 @@ async function loadSingleLeaf(num: string) {
 			alphaTest: 0.5,
 		})
 	);
-	leaf.matrixAutoUpdate = false;
+
+	leaf.castShadow = true;
+	leaf.receiveShadow = true;
+
 	return leaf;
 }
 

@@ -41,7 +41,7 @@ export default function startFoxAnimations(root: Mesh, clips: AnimationClip[]) {
 
 	const idleActions = [earsIdle, furIdle];
 	const blockGroups = [
-		[earsIdle, hearFront, hearRight],
+		[earsIdle, hearFront, hearRight, shakeHead],
 		[grimase, smile],
 	];
 
