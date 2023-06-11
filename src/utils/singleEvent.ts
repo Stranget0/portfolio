@@ -1,14 +1,14 @@
-type Handler<E> = (e: E) => any;
-type EventListener<E = unknown> = (name: string, handler: Handler<E>) => any;
-type Target = {
-	addEventListener: EventListener;
-	removeEventListener: EventListener;
+type EventHandler<E> = (e: E) => void;
+type EventListener<E> = (e: string, handler: EventHandler<E>) => void;
+type Target<E> = {
+	addEventListener: EventListener<E>;
+	removeEventListener: EventListener<E>;
 };
 
-export default function addSingleEventListener<T extends Target>(
+export default function addSingleEventListener<T extends Target<E>, E>(
 	target: T,
 	eventName: string,
-	listener: Handler<Parameters<Parameters<T["addEventListener"]>[1]>[0]>,
+	listener: (e: E) => void,
 	shouldClean: (e: Parameters<typeof listener>[0]) => boolean = () => true
 ) {
 	const handleEvent: typeof listener = (e) => {

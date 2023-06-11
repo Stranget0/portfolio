@@ -80,16 +80,14 @@ export function addSingleListenerForAction(
 	eventName: string,
 	listener: Parameters<AnimationMixer["addEventListener"]>[1]
 ) {
-	type HasSameAction = Parameters<
-		typeof addSingleEventListener<AnimationMixer>
-	>[3];
+	type EventType = Parameters<typeof listener>[0];
 
-	const hasSameAction: HasSameAction = (e) => e.action === action;
+	const hasSameAction = (e: EventType) => e.action === action;
 
 	return addSingleEventListener(
 		action.getMixer(),
 		eventName,
-		(e) => {
+		(e: EventType) => {
 			if (hasSameAction(e)) listener(e);
 		},
 		hasSameAction
