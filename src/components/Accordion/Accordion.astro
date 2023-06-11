@@ -1,11 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types";
+type Props = HTMLAttributes<"ul">;
+const { class: className, ...other } = Astro.props;
+---
+
 <ul
-	class="accordion text-primary-50 gap-2 md:gap-4 max-w-6xl w-full h-4xl menu-opafocus justify-center md:flex-row sticky"
+	{...other}
+	is="accordion-container"
+	class:list={[
+		"text-primary-50 gap-2 md:gap-4 h-160 w-full menu-opafocus justify-center md:flex-row",
+		className,
+	]}
 	flex="~ col"
 >
 	<slot />
 </ul>
 
 <script>
+	class Accordion extends HTMLUListElement {
+		connectedCallback() {
+			if (!this.isConnected) return;
+
+			const option = this.querySelector<HTMLElement>(".expanded");
+
+			const activeAccordion = createAccordionOptionState(option);
+
+			this.addEventListener("click", (e) => {
+				const target = e.target as HTMLElement | null;
+				const pressedAccordionOption =
+					target?.closest<HTMLElement>(".accordion-panel");
+
+				if (!pressedAccordionOption) return;
+
+				activeAccordion.setOption(pressedAccordionOption);
+			});
+		}
+	}
+
+	customElements.define("accordion-container", Accordion, { extends: "ul" });
+
 	function switchAttribute(
 		from: HTMLElement | undefined | null,
 		to: HTMLElement | undefined | null,
@@ -37,22 +70,5 @@
 				console.assert(content, "No content found for accordion");
 			},
 		};
-	}
-
-	const accordions = document.querySelectorAll(".accordion");
-	for (const accordion of accordions) {
-		const option = accordion.querySelector<HTMLElement>(".expanded");
-
-		const activeAccordion = createAccordionOptionState(option);
-
-		accordion.addEventListener("click", (e) => {
-			const target = e.target as HTMLElement | null;
-			const pressedAccordionOption =
-				target?.closest<HTMLElement>(".accordion-panel");
-
-			if (!pressedAccordionOption) return;
-
-			activeAccordion.setOption(pressedAccordionOption);
-		});
 	}
 </script>

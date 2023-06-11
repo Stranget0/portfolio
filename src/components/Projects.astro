@@ -10,24 +10,71 @@ interface Project {
 	name: string | TextData;
 	description: string | TextData;
 	accordions: AccordionItemProps[];
+	class?: string;
 }
-interface Props extends HTMLElement {
+interface Props {
+	title: string | TextData;
 	projects: Project[];
 }
 
-const { projects } = Astro.props;
+const { projects, title } = Astro.props;
 ---
 
-{
-	projects.map(({ name, description, accordions }) => {
-		<div class="sticky top-0">
-			<DynamicText tag="h3" text={name} />
-			<DynamicText text={description} />
-			<Accordion>
-				{accordions.map(({ background, chips }) => {
-					<AccordionItem background={background} chips={chips} />;
-				})}
-			</Accordion>
-		</div>;
-	})
-}
+<div class="text-primary-100 text-center pt-4">
+	<DynamicText
+		tag="h2"
+		text={title}
+		class="sticky z-12 top-0 text-subtitle-1 mb-4 mix-blend-difference"
+	/>
+	{
+		projects.map(({ name, description, accordions, class: className }, i) => {
+			const nextClass = projects[i + 1]?.class;
+			return (
+				<div class:list={["relative p-16 min-h-150vh -mt-1px", className]}>
+					{nextClass && (
+						<div
+							class:list={[
+								"mask",
+								"absolute bottom-0 w-full h-30vh",
+								nextClass,
+							]}
+						/>
+					)}
+
+					<div class:list={["sticky top-0 pt-font-4xl z-3", className]}>
+						<DynamicText
+							tag="h3"
+							text={name}
+							class="text-subtitle-2 mix-blend-difference"
+						/>
+					</div>
+					<div
+						class:list={[
+							"relative flex flex-col items-center justify-center w-full isolate z-2",
+							className,
+						]}
+					>
+						<Accordion>
+							{accordions.map(({ background, chips }) => {
+								return <AccordionItem background={background} chips={chips} />;
+							})}
+						</Accordion>
+					</div>
+					<DynamicText
+						text={description}
+						class="sticky bottom-25vh text-body mix-blend-difference"
+					/>
+				</div>
+			);
+		})
+	}
+</div>
+
+<style lang="scss">
+	.mask {
+		display: none;
+		@media (height > theme("breakpoints.md")) {
+			display: block;
+		}
+	}
+</style>

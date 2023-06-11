@@ -17,7 +17,7 @@ const { background, chips } = Astro.props;
 >
 	<div class="relative w-full h-full">
 		<button
-			class="accordion-trigger absolute inset-0 rounded items-center menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50 outline-offset-8"
+			class="accordion-trigger absolute inset-0 w-full rounded items-center menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50 outline-offset-8"
 			flex="~ col"
 			aria-controls="ACCORDION-ID"
 			aria-expanded="false"
@@ -86,11 +86,10 @@ const { background, chips } = Astro.props;
 		transition-property: flex-basis, flex-grow, transform;
 
 		&.expanded {
-			@apply dash-both flex-grow flex-basis-100;
+			@apply dash-both flex-grow flex-basis-100%;
 			transform: scale(1);
 			opacity: 1;
 
-			flex-basis: 25rem;
 			flex-grow: 1;
 
 			.accordion-trigger {

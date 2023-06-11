@@ -167,7 +167,9 @@ function makeLeafInstances(
 	for (const leaf of leafMeshes) {
 		let variants = variantsPerType;
 		while (variants) {
-			leaf.material.color = new Color(randomColorBetween(0xffffff, 0xff5555));
+			leaf.material.color = new Color(
+				randomColorBetween(2 * 0xffffff, 0xffaaaa)
+			);
 			const amountToCreate = Math.floor(amountPerType / variantsPerType);
 			const leafInstance = new InstancedMesh(
 				leaf.geometry,
