@@ -2,52 +2,61 @@ import ThreeController from "@utils/ThreeController";
 import { threeCanvasId } from "./constants";
 import onResizeScreen from "@utils/resizer";
 
-import { DirectionalLight, HemisphereLight, Vector3, Fog } from "three";
+import {
+	DirectionalLight,
+	HemisphereLight,
+	Vector3,
+	Fog,
+	ACESFilmicToneMapping,
+	VSMShadowMap,
+	PerspectiveCamera,
+} from "three";
 
 import initOrbit from "@utils/orbit";
-import gui from "@utils/gui";
 
 export default function initHeroController() {
+	const camera = new PerspectiveCamera(
+		70,
+		window.innerWidth / window.innerHeight,
+		0.1,
+		1000
+	);
+	camera.position.set(-1, 1, 3);
+	const cameraTarget = new Vector3(0.5, -0.3, -1);
+	camera.lookAt(cameraTarget);
+
 	const heroController = new ThreeController(
 		`#${threeCanvasId}`,
 		window.innerWidth,
-		window.innerHeight
+		window.innerHeight,
+		camera
 	);
+	heroController.renderer.toneMapping = ACESFilmicToneMapping;
+	heroController.renderer.toneMappingExposure = 2;
+	heroController.renderer.shadowMap.type = VSMShadowMap;
 
 	const removeOnResize = onResizeScreen(({ width, height }) => {
 		heroController.setSize(width, height);
 	});
-	heroController.camera.fov = 10;
-	// heroController.renderer.toneMapping = ReinhardToneMapping;
 
 	heroController.onDestroy(removeOnResize);
 
-	heroController.camera.position.set(-1, 1, 3);
+	const hemiLight = new HemisphereLight(0xfefefe, 0x080000, 0.8);
+	const mainLight = new DirectionalLight(0xffffff, 1);
+	const subLight1 = new DirectionalLight(0xffffff, 0.5);
+	[mainLight, subLight1].forEach((l) => {
+		l.castShadow = true;
+		l.shadow.mapSize.width = 128;
+		l.shadow.mapSize.height = 128;
+	});
+	mainLight.position.set(-1, 1, 0);
+	subLight1.position.set(-1, 1, 3);
 
-	const hemiLight = new HemisphereLight(0xfefefe, 0x080000, 0.3);
-	const sun = new DirectionalLight(0xffffff, 1);
-
-	sun.castShadow = true;
-	sun.position.set(0, 1, 0);
-	sun.rotation.set(0, 0, 0);
-
-	const lightGUI = gui.addFolder("light");
-	lightGUI
-		.add(sun.shadow, "radius", 0)
-		.onChange((v) => (sun.shadow.radius = v));
-	lightGUI
-		.add(sun.shadow, "blurSamples", 0)
-		.onChange((v) => (sun.shadow.blurSamples = v));
-
-	const fog = new Fog(0xffffff, 1, 10);
-
-	const cameraTarget = new Vector3(0.5, -0.3, -1);
-
-	heroController.camera.lookAt(cameraTarget);
+	const fog = new Fog(0xffffff, 2.5, 5);
 
 	initOrbit(heroController, cameraTarget);
-	heroController.scene.add(sun, hemiLight);
-	// heroController.scene.fog = fog;
+	heroController.scene.add(mainLight, hemiLight, subLight1);
+	heroController.scene.fog = fog;
 
 	return heroController;
 }

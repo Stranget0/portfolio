@@ -1,21 +1,27 @@
-import { Scene, PerspectiveCamera, WebGLRenderer } from "three";
+import { Scene, WebGLRenderer } from "three";
+
+import type { PerspectiveCamera, OrthographicCamera } from "three";
+
 import Observable from "./Observable";
 
-export default class ThreeController {
+export default class ThreeController<
+	C extends PerspectiveCamera | OrthographicCamera =
+		| PerspectiveCamera
+		| OrthographicCamera
+> {
 	scene = new Scene();
-	camera: PerspectiveCamera;
+	camera: C;
 	renderer: WebGLRenderer;
 
 	private destroyObservable = new Observable(undefined);
 
-	constructor(selector: string, width: number, height: number) {
+	constructor(selector: string, width: number, height: number, camera: C) {
 		const canvas = document.querySelector(selector);
 		if (!canvas) throw new Error(`Can not find canvas ${selector}`);
 
-		this.camera = new PerspectiveCamera(75, width / height, 0.1, 1000);
+		this.camera = camera;
 		this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas });
-		this.renderer.setPixelRatio(window.devicePixelRatio);
-		this.renderer.setSize(width, height);
+		this.setSize(width, height);
 		this.renderer.shadowMap.enabled = true;
 		this.onDestroy(() => this.renderer.dispose());
 	}
@@ -25,9 +31,11 @@ export default class ThreeController {
 	}
 
 	setSize(width: number, height: number) {
-		this.camera.aspect = width / height;
-		this.camera.updateProjectionMatrix();
 		this.renderer.setPixelRatio(window.devicePixelRatio);
+		if ("aspect" in this.camera) {
+			this.camera.aspect = width / height;
+			this.camera.updateProjectionMatrix();
+		}
 		this.renderer.setSize(width, height);
 		this.render();
 	}
