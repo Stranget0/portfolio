@@ -1,6 +1,7 @@
 import { clamp } from "three/src/math/MathUtils";
 import NumberLerpable from "./NumberLerpable";
 import initLerpPositions from "./lerpPositions";
+import { onMiddleButtonScroll, onScrollbar } from "./eventHandlers";
 
 export default function initSmoothScroll(
 	target: Window | HTMLElement,
@@ -11,38 +12,104 @@ export default function initSmoothScroll(
 
 	const xLerp = new NumberLerpable(getScrollPos("x"));
 	const yLerp = new NumberLerpable(getScrollPos("y"));
-	const { startLerp: startLerpY } = initLerpPositions(() => {
+
+	let lastTargetX = xLerp.value;
+	let lastTargetY = yLerp.value;
+
+	const cleanArr: VoidFunction[] = [];
+
+	const { startLerp: startLerpY, cancel: cancelY } = initLerpPositions(() => {
 		target.scrollTo({ top: yLerp.value });
 	}, EPS);
+	cleanArr.push(cancelY);
 
-	const { startLerp: startLerpX } = initLerpPositions(() => {
+	const { startLerp: startLerpX, cancel: cancelX } = initLerpPositions(() => {
 		target.scrollTo({ left: xLerp.value });
 	}, EPS);
+	cleanArr.push(cancelX);
 
-	let lastToX = xLerp.value;
-	let lastToY = yLerp.value;
+	let isScrollbarActive = false;
+	const cleanScrollbarClick = onScrollbar((isActive) => {
+		isScrollbarActive = isActive;
+		if (isActive) {
+			cancelX();
+			cancelY();
+		}
+	});
+	cleanArr.push(cleanScrollbarClick);
 
-	const onWheel = (e: WheelEvent | Event): void => {
-		if (!(e instanceof WheelEvent)) throw new Error("Invalid event type");
-		e.preventDefault();
-		yLerp.value = getScrollPos("y");
-		xLerp.value = getScrollPos("x");
-
-		const toY = (lastToY = clamp(
-			lastToY + e.deltaY * strength,
-			0,
-			getMaxPos("Height")
-		));
-		const toX = (lastToX = clamp(
-			lastToX + e.deltaX * strength,
-			0,
-			getMaxPos("Width")
-		));
-		startLerpY(yLerp, toY, lerpAlpha);
-		startLerpX(xLerp, toX, lerpAlpha);
-	};
+	let isMiddleButtonScrolling = false;
+	const cleanMiddleButton = onMiddleButtonScroll((isScrolling) => {
+		isMiddleButtonScrolling = isScrolling;
+		if (isScrolling) {
+			cancelX();
+			cancelY();
+		}
+	});
+	cleanArr.push(cleanMiddleButton);
 
 	target.addEventListener("wheel", onWheel, { passive: false });
+	cleanArr.push(() => target.removeEventListener("wheel", onWheel));
+
+	return clean;
+
+	function onWheel(e: WheelEvent | Event): void {
+		if (!(e instanceof WheelEvent)) throw new Error("Invalid event type");
+		if (
+			e.ctrlKey ||
+			e.defaultPrevented ||
+			isScrollbarActive ||
+			isMiddleButtonScrolling
+		)
+			return;
+
+		const isLineMode = e.deltaMode === 1;
+		const multiplier = isLineMode ? 40 : 1;
+
+		e.preventDefault();
+
+		lastTargetX = handleDirection(
+			xLerp,
+			lastTargetX,
+			e.deltaX * multiplier,
+			startLerpX,
+			"x"
+		);
+		lastTargetY = handleDirection(
+			yLerp,
+			lastTargetY,
+			e.deltaY * multiplier,
+			startLerpY,
+			"y"
+		);
+
+		function handleDirection(
+			lerpObject: NumberLerpable,
+			lastTarget: number,
+			delta: number,
+			startLerp: ReturnType<typeof initLerpPositions>["startLerp"],
+			d: "x" | "y"
+		) {
+			lerpObject.value = getScrollPos(d);
+
+			// last target pos could be out of sync with current scroll position. If so use current scroll position instead
+
+			const from =
+				Math.abs(lerpObject.value - lastTarget) <= 1000
+					? lastTarget
+					: lerpObject.value;
+
+			const to = clamp(from + delta * strength, 0, getMaxPos(d));
+			startLerp(lerpObject, to, lerpAlpha);
+
+			return to;
+		}
+	}
+	function clean() {
+		while (cleanArr.length) {
+			cleanArr.pop()?.();
+		}
+	}
 
 	function getScrollPos(d: "x" | "y"): number {
 		const map = {
@@ -56,7 +123,8 @@ export default function initSmoothScroll(
 		return target[map.default[d]];
 	}
 
-	function getMaxPos(d: "Width" | "Height"): number {
+	function getMaxPos(direction: "x" | "y"): number {
+		const d = direction === "x" ? "Width" : "Height";
 		let container;
 		if (target instanceof Window) container = document.documentElement;
 		else container = target;
