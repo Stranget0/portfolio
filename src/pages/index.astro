@@ -26,7 +26,8 @@ const textMock = text.split(" ").reduce((acc, word, i) => {
 	<ThreeScene />
 	<div data-taxi-view class="w-full">
 		<section
-			class="section py-10 items-center justify-between text-center mix-blend-difference text-primary-200"
+			class="section h-screen py-10 items-center justify-between text-center mix-blend-difference text-primary-200"
+			data-static-vh="100vh"
 		>
 			<div>
 				<h2 text-title-1>My Website</h2>
@@ -37,11 +38,13 @@ const textMock = text.split(" ").reduce((acc, word, i) => {
 				<h3 text-title-1>Your choice</h3>
 			</div>
 		</section>
-		<section class="section">
+		<section class="section h-screen" 
+		data-static-vh="100vh"
+		>
 			<h2 text-subtitle-1>Testing</h2>
 			<AppearingText text={textMock} />
 		</section>
-		<section class="section h-auto bg-primary-50">
+		<section class="section bg-primary-50">
 			<Projects
 				title="Projects"
 				projects={[

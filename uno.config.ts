@@ -24,7 +24,7 @@ const shortcuts = {
 	"text-body": "text-base font-extralight leading-110% tracking-0.5",
 	"text-body-u": "text-body uppercase",
 	"font-label": "text-sm font-thin tracking-2 lowercase",
-	section: "px-4 lg:px-36 h-screen flex flex-col justify-center",
+	section: "px-4 lg:px-36 flex flex-col justify-center",
 	"aspect-card": "aspect-[63/88]",
 	"aspect-card-rotated": "aspect-[88/63]",
 	"pseudo-full": "absolute inset-0 content",

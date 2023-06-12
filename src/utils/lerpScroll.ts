@@ -93,7 +93,6 @@ export default function initSmoothScroll(
 			lerpObject.value = getScrollPos(d);
 
 			// last target pos could be out of sync with current scroll position. If so use current scroll position instead
-
 			const from =
 				Math.abs(lerpObject.value - lastTarget) <= 1000
 					? lastTarget

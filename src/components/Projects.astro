@@ -30,7 +30,11 @@ const { projects, title } = Astro.props;
 		projects.map(({ name, description, accordions, class: className }, i) => {
 			const nextClass = projects[i + 1]?.class;
 			return (
-				<div class:list={["relative p-16 min-h-150vh -mt-1px", className]}>
+				<div
+					class:list={["relative p-16 min-h-150vh -mt-1px", className]}
+					data-static-vh="150vh"
+					data-static-vh-type="min"
+				>
 					{nextClass && (
 						<div
 							class:list={[
@@ -38,6 +42,7 @@ const { projects, title } = Astro.props;
 								"absolute bottom-0 w-full h-30vh",
 								nextClass,
 							]}
+							data-static-vh="30vh"
 						/>
 					)}
 
