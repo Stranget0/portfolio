@@ -2,6 +2,7 @@
 /* eslint-disable astro/no-unused-css-selector */
 // Disable eslint for css selectors, as some selectors are used in other components
 import { Image } from "@astrojs/image/components";
+import Chip from "@components/Chip.astro";
 
 interface Props {
 	background: string;
@@ -40,7 +41,7 @@ const { background, chips } = Astro.props;
 				{
 					chips?.map(({ label, className }) => {
 						return (
-							<strong class:list={["p-1 rounded", className]}>{label}</strong>
+							<Chip class={className}>{label}</Chip>
 						);
 					})
 				}

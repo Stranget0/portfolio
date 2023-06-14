@@ -1,0 +1,8 @@
+---
+interface Props {
+	class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<strong class:list={["p-1 rounded", className]}><slot /></strong>
