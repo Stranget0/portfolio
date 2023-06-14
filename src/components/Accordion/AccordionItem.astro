@@ -39,11 +39,9 @@ const { background, chips } = Astro.props;
 				class="accordion-chips mb-4 flex items-center gap-2 motion-safe:duration-150 opacity-75 pointer-events-none"
 			>
 				{
-					chips?.map(({ label, className }) => {
-						return (
-							<Chip class={className}>{label}</Chip>
-						);
-					})
+					chips?.map(({ label, className }) => (
+						<Chip class={className}>{label}</Chip>
+					))
 				}
 			</div>
 			<div
