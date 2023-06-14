@@ -39,7 +39,7 @@
 				? window.innerHeight
 				: window.innerWidth;
 			const ratio = parseFloat(matchStr) / 100;
-			const value = ratio * dimension;
+			const value = ratio * dimension * window.devicePixelRatio;
 
 			viewportUnit = viewportUnit.replace(matchStr, `${value}px`);
 		}
