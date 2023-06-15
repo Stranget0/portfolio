@@ -8,26 +8,30 @@ interface Props {
 	background: string;
 	chips?: { label: string; className?: string }[];
 	title?: string;
+	class?: string;
 }
 export type AccordionItemProps = Props;
 
-const { background, chips, title } = Astro.props;
+const { background, chips, title, class: className } = Astro.props;
 ---
 
-<li
-	class="accordion-panel flex-basis-30 relative @container motion-safe:duration-150 ease-out before:rounded-45 py-2 transition-interactive before:(pseudo-full dash-primary-50 mix-blend-difference)"
->
+<li class:list={["accordion-panel", className]}>
 	<div class="relative w-full h-full">
 		<button
-			class="accordion-trigger absolute inset-0 w-full rounded items-center menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50 outline-offset-8"
+			class="accordion-trigger menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50"
 			flex="~ col"
 			aria-controls="ACCORDION-ID"
 			aria-expanded="false"
 		>
-			{title && <h2 class="accordion-title text-subtitle-2" id="ACCORDION-HEADING">{title}
-			</h2>}
+			{
+				title && (
+					<h2 class="accordion-title" id="ACCORDION-HEADING">
+						{title}
+					</h2>
+				)
+			}
 			<p
-				class="accordion-content p-4 my-auto font-100 motion-safe:duration-150 ease-out"
+				class="accordion-content"
 				id="ACCORDION-ID"
 				aria-labelledby={title && "ACCORDION-HEADING"}
 				aria-hidden="true"
@@ -35,15 +39,15 @@ const { background, chips, title } = Astro.props;
 			>
 				<slot />
 			</p>
-			{chips && <ul
-				class="accordion-chips mb-4 flex items-center gap-2 motion-safe:duration-150 opacity-75 pointer-events-none"
-			>
-				{
-					chips?.map(({ label, className }) => (
-						<Chip class={className}>{label}</Chip>
-					))
-				}
-			</ul>}
+			{
+				chips && (
+					<ul class="accordion-chips">
+						{chips?.map(({ label, className }) => (
+							<Chip class={className}>{label}</Chip>
+						))}
+					</ul>
+				)
+			}
 			<div
 				class="accordion-bg rounded-xl overflow-hidden absolute inset-0 -z-1 motion-safe:transition-filter motion-safe:duration-300"
 			>
@@ -54,6 +58,21 @@ const { background, chips, title } = Astro.props;
 </li>
 
 <style lang="scss">
+	:where(.accordion-panel) {
+		@apply flex-basis-30 relative @container motion-safe:duration-150 ease-out py-2 transition-interactive before:pseudo-full;
+	}
+	:where(.accordion-trigger) {
+		@apply absolute inset-0 w-full rounded items-center outline-offset-8;
+	}
+	:where(.accordion-content) {
+		@apply p-4 my-auto font-100 motion-safe:duration-150 ease-out;
+	}
+	:where(.accordion-title) {
+		@apply text-subtitle-2;
+	}
+	:where(.accordion-chips) {
+		@apply mb-4 flex items-center gap-2 motion-safe:duration-150 opacity-75 pointer-events-none;
+	}
 	.accordion-bg > img {
 		width: 100%;
 		height: 100%;
@@ -80,12 +99,11 @@ const { background, chips, title } = Astro.props;
 			}
 		}
 	}
-
 	.accordion-panel {
 		transition-property: flex-basis, flex-grow, transform;
 
 		&.expanded {
-			@apply dash-both flex-grow flex-basis-100%;
+			@apply before:dash-both flex-grow flex-basis-100%;
 			transform: scale(1);
 			opacity: 1;
 
