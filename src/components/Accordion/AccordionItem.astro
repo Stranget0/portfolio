@@ -3,6 +3,7 @@
 // Disable eslint for css selectors, as some selectors are used in other components
 import { Image } from "@astrojs/image/components";
 import Chip from "@components/Chip.astro";
+import { generateUUID } from "three/src/math/MathUtils";
 
 interface Props {
 	background: string;
@@ -13,6 +14,8 @@ interface Props {
 export type AccordionItemProps = Props;
 
 const { background, chips, title, class: className } = Astro.props;
+const id = generateUUID();
+const titleId = `heading-${id}` 
 ---
 
 <li class:list={["accordion-panel", className]}>
@@ -20,20 +23,20 @@ const { background, chips, title, class: className } = Astro.props;
 		<button
 			class="accordion-trigger menu-opafocus-option opafocus-max-opacity-75 opafocus-min-opacity-50"
 			flex="~ col"
-			aria-controls="ACCORDION-ID"
+			aria-controls={id}
 			aria-expanded="false"
 		>
 			{
 				title && (
-					<h2 class="accordion-title" id="ACCORDION-HEADING">
+					<h2 class="accordion-title" id={titleId}>
 						{title}
 					</h2>
 				)
 			}
 			<p
 				class="accordion-content"
-				id="ACCORDION-ID"
-				aria-labelledby={title && "ACCORDION-HEADING"}
+				id={id}
+				aria-labelledby={title && titleId}
 				aria-hidden="true"
 				role="region"
 			>

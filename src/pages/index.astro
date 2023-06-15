@@ -2,7 +2,7 @@
 import AppearingText from "@components/AppearingText.astro";
 import Button from "@components/Button.astro";
 import Footer from "@components/Footer.astro";
-import Projects from "@components/Projects.astro";
+import SlidedSection from "@components/SlidedSection/SlidedSection.astro";
 import ThreeScene from "@components/ThreeScene/ThreeScene.astro";
 import Layout from "@layouts/Layout.astro";
 import WW3Image from "@assets/WorldWar3.jpg";
@@ -41,10 +41,9 @@ const textMock = text.split(" ").reduce((acc, word, i) => {
 			<h2 text-subtitle-1>Testing</h2>
 			<AppearingText text={textMock} />
 		</section>
-		<section class="section bg-primary-50">
-			<Projects
+			<SlidedSection
 				title="Projects"
-				projects={[
+				sectionItems={[
 					{
 						name: "World War 3",
 						description: "I was building an interface for this game",
@@ -82,7 +81,6 @@ const textMock = text.split(" ").reduce((acc, word, i) => {
 					},
 				]}
 			/>
-		</section>
 		<section class="section">
 			<Button />
 		</section>
