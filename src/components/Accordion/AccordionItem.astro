@@ -7,14 +7,15 @@ import Chip from "@components/Chip.astro";
 interface Props {
 	background: string;
 	chips?: { label: string; className?: string }[];
+	title?: string;
 }
 export type AccordionItemProps = Props;
 
-const { background, chips } = Astro.props;
+const { background, chips, title } = Astro.props;
 ---
 
 <li
-	class="accordion-panel flex-basis-30 @container motion-safe:duration-150 ease-out before:rounded-45 py-2 dash-primary-50 transition-interactive"
+	class="accordion-panel flex-basis-30 relative @container motion-safe:duration-150 ease-out before:rounded-45 py-2 transition-interactive before:(pseudo-full dash-primary-50 mix-blend-difference)"
 >
 	<div class="relative w-full h-full">
 		<button
@@ -23,19 +24,18 @@ const { background, chips } = Astro.props;
 			aria-controls="ACCORDION-ID"
 			aria-expanded="false"
 		>
-			<h2 class="accordion-title text-subtitle-2" id="ACCORDION-HEADING">
-				<span>Title</span>
-			</h2>
+			{title && <h2 class="accordion-title text-subtitle-2" id="ACCORDION-HEADING">{title}
+			</h2>}
 			<p
 				class="accordion-content p-4 my-auto font-100 motion-safe:duration-150 ease-out"
 				id="ACCORDION-ID"
-				aria-labelledby="ACCORDION-HEADING"
+				aria-labelledby={title && "ACCORDION-HEADING"}
 				aria-hidden="true"
 				role="region"
 			>
-				<slot>-</slot>
+				<slot />
 			</p>
-			<div
+			{chips && <ul
 				class="accordion-chips mb-4 flex items-center gap-2 motion-safe:duration-150 opacity-75 pointer-events-none"
 			>
 				{
@@ -43,7 +43,7 @@ const { background, chips } = Astro.props;
 						<Chip class={className}>{label}</Chip>
 					))
 				}
-			</div>
+			</ul>}
 			<div
 				class="accordion-bg rounded-xl overflow-hidden absolute inset-0 -z-1 motion-safe:transition-filter motion-safe:duration-300"
 			>

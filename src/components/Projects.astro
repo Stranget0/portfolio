@@ -9,9 +9,10 @@ import DynamicText from "./DynamicText.astro";
 interface Project {
 	name: string | TextData;
 	description: string | TextData;
-	accordions: AccordionItemProps[];
-	class?: string;
+	accordions?: AccordionItemProps[];
+	bleedClass?: string;
 }
+
 interface Props {
 	title: string | TextData;
 	projects: Project[];
@@ -27,26 +28,26 @@ const { projects, title } = Astro.props;
 		class="sticky z-12 top-0 text-subtitle-1 mb-4 mix-blend-difference"
 	/>
 	{
-		projects.map(({ name, description, accordions, class: className }, i) => {
-			const nextClass = projects[i + 1]?.class;
+		projects.map(({ name, description, accordions, bleedClass: bleedClass }, i) => {
+			const nextBleed = projects[i + 1]?.bleedClass;
 			return (
 				<div
-					class:list={["relative p-16 min-h-150vh -mt-1px", className]}
+					class:list={["relative p-16 min-h-150vh -mt-1px", bleedClass]}
 					data-static-vh="150vh"
 					data-static-vh-type="min"
 				>
-					{nextClass && (
+					{nextBleed && (
 						<div
 							class:list={[
 								"mask",
 								"absolute bottom-0 w-full h-30vh",
-								nextClass,
+								nextBleed,
 							]}
 							data-static-vh="30vh"
 						/>
 					)}
 
-					<div class:list={["sticky top-0 pt-font-4xl z-3", className]}>
+					<div class:list={["sticky top-0 pt-font-4xl z-3 pb-4", bleedClass]}>
 						<DynamicText
 							tag="h3"
 							text={name}
@@ -55,19 +56,20 @@ const { projects, title } = Astro.props;
 					</div>
 					<div
 						class:list={[
-							"relative flex flex-col items-center justify-center w-full isolate z-2",
-							className,
+							"relative flex flex-col items-center justify-center w-full isolate z-2 pb-2",
+							bleedClass,
 						]}
 					>
-						<Accordion>
+						{accordions && <Accordion>
 							{accordions.map(({ background, chips }) => {
 								return <AccordionItem background={background} chips={chips} />;
 							})}
 						</Accordion>
+					}
 					</div>
 					<DynamicText
 						text={description}
-						class="sticky bottom-25vh text-body mix-blend-difference"
+						class="sticky bottom-25vh text-body mix-blend-difference mt-6"
 					/>
 				</div>
 			);
