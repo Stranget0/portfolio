@@ -2,16 +2,20 @@ import { clamp } from "three/src/math/MathUtils";
 import NumberLerpable from "./NumberLerpable";
 import initLerpPositions from "./lerpPositions";
 import { onMiddleButtonScroll, onScrollbar } from "./eventHandlers";
+import { getScrollPos } from "./getScrollPos";
+import { getMaxPos } from "./getMaxPos";
+
+export type Target = Window | HTMLElement;
 
 export default function initSmoothScroll(
-	target: Window | HTMLElement,
+	target: Target,
 	lerpAlpha: number,
 	strength: number
 ) {
 	const EPS = 1;
 
-	const xLerp = new NumberLerpable(getScrollPos("x"));
-	const yLerp = new NumberLerpable(getScrollPos("y"));
+	const xLerp = new NumberLerpable(getScrollPos(target, "x"));
+	const yLerp = new NumberLerpable(getScrollPos(target, "y"));
 
 	let lastTargetX = xLerp.value;
 	let lastTargetY = yLerp.value;
@@ -90,7 +94,7 @@ export default function initSmoothScroll(
 			startLerp: ReturnType<typeof initLerpPositions>["startLerp"],
 			d: "x" | "y"
 		) {
-			lerpObject.value = getScrollPos(d);
+			lerpObject.value = getScrollPos(target, d);
 
 			// last target pos could be out of sync with current scroll position. If so use current scroll position instead
 			const from =
@@ -98,7 +102,7 @@ export default function initSmoothScroll(
 					? lastTarget
 					: lerpObject.value;
 
-			const to = clamp(from + delta * strength, 0, getMaxPos(d));
+			const to = clamp(from + delta * strength, 0, getMaxPos(target, d));
 			startLerp(lerpObject, to, lerpAlpha);
 
 			return to;
@@ -109,30 +113,8 @@ export default function initSmoothScroll(
 			cleanArr.pop()?.();
 		}
 	}
-
-	function getScrollPos(d: "x" | "y"): number {
-		const map = {
-			window: { x: "scrollX", y: "scrollY" },
-			default: { x: "scrollTop", y: "scrollLeft" },
-		} as const;
-
-		if (target instanceof Window) {
-			return target[map.window[d]];
-		}
-		return target[map.default[d]];
-	}
-
-	function getMaxPos(direction: "x" | "y"): number {
-		const d = direction === "x" ? "Width" : "Height";
-		let container;
-		if (target instanceof Window) container = document.documentElement;
-		else container = target;
-		return container[`scroll${d}`] - container[`client${d}`];
-	}
 }
 
-// Less code and probably better performance, but slightly worse UX for now
-// export default function initSmoothScroll(
 // 	target: Window | HTMLElement,
 // 	lerpAlpha: number,
 // 	strength: number

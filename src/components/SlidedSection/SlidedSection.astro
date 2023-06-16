@@ -5,14 +5,14 @@ import AccordionItem, {
 } from "../Accordion/AccordionItem.astro";
 import type { TextData } from "../AppearingText.astro";
 import DynamicText from "../DynamicText.astro";
-import { Image } from "@astrojs/image/components";
+import ImagesCheckboard from "./ImagesCheckboard.astro";
 
 interface Project {
 	name: string | TextData;
 	description: string | TextData;
 	accordions?: AccordionItemProps[];
 	bleedClass?: string;
-	fixedImages?: string[];
+	fixedImages?: ([string, string] | string)[];
 }
 
 interface Props {
@@ -21,7 +21,6 @@ interface Props {
 }
 
 const { sectionItems, title } = Astro.props;
-
 ---
 
 <section class="section bg-primary-50">
@@ -33,27 +32,15 @@ const { sectionItems, title } = Astro.props;
 		/>
 		{
 			sectionItems.map(
-				({
-					name,
-					description,
-					accordions,
-					fixedImages,
-					bleedClass,
-				}) => {
+				({ name, description, accordions, fixedImages, bleedClass }) => {
 					return (
-						<div
-							class:list={[
-								"relative p-16 pt-0 min-h-150vh",
-								bleedClass,
-							]}
+						<scroll-reference
+							class:list={["relative p-16 pt-0 min-h-150vh w-full block", bleedClass]}
 							data-static-vh="150vh"
 							data-static-vh-type="min"
 						>
 							<div
-								class:list={[
-									"sticky top-0 pt-font-4xl z-5 pb-4",
-									bleedClass,
-								]}
+								class:list={["sticky top-0 pt-font-4xl z-5 pb-4", bleedClass]}
 							>
 								<DynamicText
 									tag="h3"
@@ -80,26 +67,22 @@ const { sectionItems, title } = Astro.props;
 							<DynamicText
 								text={description}
 								class:list={[
-									"sticky text-body mix-blend-difference mt-6 z-4 bottom-75vh",
-									
+									"sticky text-body mix-blend-difference mt-6 z-4 bottom-55vh",
 								]}
 							/>
 							{fixedImages && (
 								<div class="absolute inset-0 z-6 clip-full pointer-events-none">
-									<div class="fixed inset-0 bottom-4 left-4 right-4 lg:(right-36 left-36) flex justify-center">
-										<div class="w-full h-full max-w-250 flex flex-col gap-8 justify-end">
-											{fixedImages.map((src, i) => {
-												return (
-													<div
-														class:list={["rounded-2 overflow-hidden w-max w-fill",i%2===0 && "self-end"]}
-													>
-														<Image src={src} alt="" width={200} height={100} />
-													</div>
-												);
-											})}
-										</div>
+									<div class="fixed top-35% bottom-4 left-4 right-4 lg:(right-36 left-36 bottom-8) flex justify-center">
+										<ImagesCheckboard
+											images={[...fixedImages].reverse()}
+											class="justify-end"
+											imageProps={{ "data-scroll-target": true }}
+										/>
 									</div>
 								</div>
+									<div class="absolute inset-0 top-50% flex flex-col-reverse invisible">
+										{fixedImages.map(()=><div class='w-20 bg-red flex-grow-1' data-scroll-target-ref/>)}
+									</div>
 							)}
 						</div>
 					);
@@ -108,3 +91,40 @@ const { sectionItems, title } = Astro.props;
 		}
 	</div>
 </section>
+
+<script>
+	import { scroll, animate, spring, ScrollOptions } from "motion";
+
+	
+	class ScrollReference extends HTMLElement {
+		constructor() {
+			super();
+		}
+		clean: null | (() => void) = null;
+		connectedCallback() {
+			if (!this.isConnected) return;
+
+			
+			const targets = this.querySelectorAll<HTMLElement>("[data-scroll-target]");
+				const targetsRef = this.querySelectorAll<HTMLElement>("[data-scroll-target-ref]");
+
+			const cleanArr:(()=>void)[]= []
+			for(let i=0; i<targets.length; i++) {
+				const target = targets[i];
+				const targetRef = targetsRef[i]
+				const options:ScrollOptions= { target: targetRef, offset: [`start end`, `start 0.5`] };
+				const clean = scroll(animate(target, {scale:[0,1,0], opacity:[0,1,0]},{easing:"ease-in-out"}),options)
+				cleanArr.push(clean)
+			}
+			
+			this.clean = ()=>{while(cleanArr.length) cleanArr.pop()?.();}
+		}
+		disconnectedCallback() {
+			this.clean?.();
+			this.clean = null;
+		}
+	}
+
+	customElements.define("scroll-reference", ScrollReference);
+
+</script>
