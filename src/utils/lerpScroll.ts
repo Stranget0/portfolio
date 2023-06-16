@@ -4,6 +4,7 @@ import initLerpPositions from "./lerpPositions";
 import { onMiddleButtonScroll, onScrollbar } from "./eventHandlers";
 import { getScrollPos } from "./getScrollPos";
 import { getMaxPos } from "./getMaxPos";
+import createCleanFunction from "./createCleanFunction";
 
 export type Target = Window | HTMLElement;
 
@@ -20,17 +21,17 @@ export default function initSmoothScroll(
 	let lastTargetX = xLerp.value;
 	let lastTargetY = yLerp.value;
 
-	const cleanArr: VoidFunction[] = [];
+	const cleanMenago = createCleanFunction();
 
 	const { startLerp: startLerpY, cancel: cancelY } = initLerpPositions(() => {
 		target.scrollTo({ top: yLerp.value });
 	}, EPS);
-	cleanArr.push(cancelY);
+	cleanMenago.push(cancelY);
 
 	const { startLerp: startLerpX, cancel: cancelX } = initLerpPositions(() => {
 		target.scrollTo({ left: xLerp.value });
 	}, EPS);
-	cleanArr.push(cancelX);
+	cleanMenago.push(cancelX);
 
 	let isScrollbarActive = false;
 	const cleanScrollbarClick = onScrollbar((isActive) => {
@@ -40,7 +41,7 @@ export default function initSmoothScroll(
 			cancelY();
 		}
 	});
-	cleanArr.push(cleanScrollbarClick);
+	cleanMenago.push(cleanScrollbarClick);
 
 	let isMiddleButtonScrolling = false;
 	const cleanMiddleButton = onMiddleButtonScroll((isScrolling) => {
@@ -50,12 +51,12 @@ export default function initSmoothScroll(
 			cancelY();
 		}
 	});
-	cleanArr.push(cleanMiddleButton);
+	cleanMenago.push(cleanMiddleButton);
 
 	target.addEventListener("wheel", onWheel, { passive: false });
-	cleanArr.push(() => target.removeEventListener("wheel", onWheel));
+	cleanMenago.push(() => target.removeEventListener("wheel", onWheel));
 
-	return clean;
+	return cleanMenago.clean;
 
 	function onWheel(e: WheelEvent | Event): void {
 		if (!(e instanceof WheelEvent)) throw new Error("Invalid event type");
@@ -106,11 +107,6 @@ export default function initSmoothScroll(
 			startLerp(lerpObject, to, lerpAlpha);
 
 			return to;
-		}
-	}
-	function clean() {
-		while (cleanArr.length) {
-			cleanArr.pop()?.();
 		}
 	}
 }

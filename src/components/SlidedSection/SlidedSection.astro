@@ -93,35 +93,31 @@ const { sectionItems, title } = Astro.props;
 </section>
 
 <script>
-	import { scroll, animate, spring, ScrollOptions } from "motion";
+	import { scroll, animate, ScrollOptions } from "motion";
+	import createCleanFunction from "@utils/createCleanFunction";
 
 	
 	class ScrollReference extends HTMLElement {
 		constructor() {
 			super();
 		}
-		clean: null | (() => void) = null;
+		cleanMenago = createCleanFunction();
 		connectedCallback() {
 			if (!this.isConnected) return;
-
 			
 			const targets = this.querySelectorAll<HTMLElement>("[data-scroll-target]");
 				const targetsRef = this.querySelectorAll<HTMLElement>("[data-scroll-target-ref]");
 
-			const cleanArr:(()=>void)[]= []
 			for(let i=0; i<targets.length; i++) {
 				const target = targets[i];
 				const targetRef = targetsRef[i]
 				const options:ScrollOptions= { target: targetRef, offset: [`start end`, `start 0.5`] };
 				const clean = scroll(animate(target, {scale:[0,1,0], opacity:[0,1,0]},{easing:"ease-in-out"}),options)
-				cleanArr.push(clean)
+				this.cleanMenago.push(clean)
 			}
-			
-			this.clean = ()=>{while(cleanArr.length) cleanArr.pop()?.();}
 		}
 		disconnectedCallback() {
-			this.clean?.();
-			this.clean = null;
+			this.cleanMenago.clean();
 		}
 	}
 
