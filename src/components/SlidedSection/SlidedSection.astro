@@ -1,3 +1,4 @@
+
 ---
 import Accordion from "../Accordion/Accordion.astro";
 import AccordionItem, {
@@ -6,8 +7,9 @@ import AccordionItem, {
 import type { TextData } from "../AppearingText.astro";
 import DynamicText from "../DynamicText.astro";
 import ImagesCheckboard from "./ImagesCheckboard.astro";
+import type {HTMLAttributes} from "astro/types"
 
-interface Project {
+interface Project extends Omit<HTMLAttributes<"div">,"name"> {
 	name: string | TextData;
 	description: string | TextData;
 	accordions?: AccordionItemProps[];
@@ -15,15 +17,15 @@ interface Project {
 	fixedImages?: ([string, string] | string)[];
 }
 
-interface Props {
+interface Props extends Omit<HTMLAttributes<"div">,"title">{
 	title: string | TextData;
 	sectionItems: Project[];
 }
 
-const { sectionItems, title } = Astro.props;
+const { sectionItems, title,class:className,...other } = Astro.props;
 ---
 
-<section class="section bg-primary-50">
+<section class:list={["section bg-primary-50", className]} {...other}>
 	<div class="text-primary-100 text-center pt-4">
 		<DynamicText
 			tag="h2"
@@ -32,10 +34,10 @@ const { sectionItems, title } = Astro.props;
 		/>
 		{
 			sectionItems.map(
-				({ name, description, accordions, fixedImages, bleedClass }) => {
+				({ name, description, accordions, fixedImages, bleedClass, class:className, ...other }) => {
 					return (
 						<scroll-reference
-							class:list={["relative p-16 pt-0 min-h-150vh w-full block", bleedClass]}
+							class:list={["relative p-16 pt-0 min-h-150vh w-full block", bleedClass,className]} {...other}
 							data-static-vh="150vh"
 							data-static-vh-type="min"
 						>
