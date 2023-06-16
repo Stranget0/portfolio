@@ -152,5 +152,6 @@ export default defineConfig({
 			}`;
 			},
 		],
+		[/^clip-full$/, ()=>({"clip-path":"inset(0)"})]
 	],
 });
