@@ -2,7 +2,8 @@
 /* eslint-disable astro/no-unused-css-selector */
 // Disable eslint for css selectors, as some selectors are used in other components
 
-export type TextData = [number, string, number][];
+import type { TextData } from 'src/utilTypes/text';
+
 export type Tag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
 
 interface Props {

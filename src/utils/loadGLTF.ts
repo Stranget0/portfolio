@@ -1,3 +1,4 @@
+import type { GLTF } from "src/utilTypes/gltf";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader";
 
 export type OnProgress = (progress: number) => void;

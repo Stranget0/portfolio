@@ -1,0 +1,14 @@
+---
+import DynamicText from "@components/DynamicText.astro"
+import type { DynamicTextT } from "src/utilTypes/text";
+
+type Props = {text: DynamicTextT}
+
+const {text} = Astro.props
+---
+<DynamicText
+								text={text}
+								class:list={[
+									"sticky text-body mix-blend-difference mt-6 z-4 bottom-55vh",
+								]}
+							/>

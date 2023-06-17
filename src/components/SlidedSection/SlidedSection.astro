@@ -1,100 +1,55 @@
-
 ---
-import Accordion from "../Accordion/Accordion.astro";
-import AccordionItem, {
-	AccordionItemProps,
-} from "../Accordion/AccordionItem.astro";
-import type { TextData } from "../AppearingText.astro";
-import DynamicText from "../DynamicText.astro";
-import ImagesCheckboard from "./ImagesCheckboard.astro";
-import type {HTMLAttributes} from "astro/types"
+import Accordions, { AccordionProps } from "./_Accordions.astro";
+import SectionItemTitle from "./_SectionItemTitle.astro";
+import FloatingImages from "./_FloatingImages.astro";
+import SectionTitle from "./_SectionTitle.astro";
+import Description from "./_Description.astro";
 
-interface Project extends Omit<HTMLAttributes<"div">,"name"> {
-	name: string | TextData;
-	description: string | TextData;
-	accordions?: AccordionItemProps[];
+
+import type { HTMLAttributes } from "astro/types";
+import type { DynamicTextT } from "src/utilTypes/text";
+import type { ImageString } from "src/utilTypes/image";
+import SectionItem, {SectionItemProps} from "./_SectionItem.astro";
+
+interface SectionItemData extends SectionItemProps {
+	name: DynamicTextT;
+	description: DynamicTextT;
+	accordions?: AccordionProps["accordions"];
 	bleedClass?: string;
-	fixedImages?: ([string, string] | string)[];
+	fixedImages?: ImageString[];
 }
 
-interface Props extends Omit<HTMLAttributes<"div">,"title">{
-	title: string | TextData;
-	sectionItems: Project[];
+interface Props extends Omit<HTMLAttributes<"div">, "title"> {
+	title: DynamicTextT;
+	sectionItems: SectionItemData[];
 }
-
-const { sectionItems, title,class:className,...other } = Astro.props;
+const { sectionItems, title, class: className, ...other } = Astro.props;
 ---
 
 <section class:list={["section bg-primary-50", className]} {...other}>
 	<div class="text-primary-100 text-center pt-4">
-		<DynamicText
-			tag="h2"
-			text={title}
-			class="sticky z-12 top-0 text-subtitle-1 mb-4 mix-blend-difference mt-1px"
-		/>
+		<SectionTitle title={title} />
 		{
 			sectionItems.map(
-				({ name, description, accordions, fixedImages, bleedClass, class:className, ...other }) => {
-					return (
-						<scroll-reference
-							class:list={["relative p-16 pt-0 min-h-150vh w-full block", bleedClass,className]} {...other}
-							data-static-vh="150vh"
-							data-static-vh-type="min"
-						>
-							<div
-								class:list={["sticky top-0 pt-font-4xl z-5 pb-4", bleedClass]}
-							>
-								<DynamicText
-									tag="h3"
-									text={name}
-									class="text-subtitle-2 mix-blend-difference"
-								/>
-							</div>
-							{accordions && (
-								<div
-									class:list={[
-										"relative flex flex-col items-center justify-center w-full isolate z-2 pb-2",
-										bleedClass,
-									]}
-								>
-									<Accordion>
-										{accordions.map(({ background, chips }) => {
-											return (
-												<AccordionItem background={background} chips={chips} />
-											);
-										})}
-									</Accordion>
-								</div>
-							)}
-							<DynamicText
-								text={description}
-								class:list={[
-									"sticky text-body mix-blend-difference mt-6 z-4 bottom-55vh",
-								]}
-							/>
-							{fixedImages && (
-								<div class="absolute inset-0 z-6 clip-full pointer-events-none">
-									<div class="fixed top-35% bottom-4 left-4 right-4 lg:(right-36 left-36 bottom-8) flex justify-center">
-										<ImagesCheckboard
-											images={[...fixedImages].reverse()}
-											class="justify-end"
-											imageProps={{ "data-scroll-target": true }}
-										/>
-									</div>
-								</div>
-									<div class="absolute inset-0 top-50% flex flex-col-reverse invisible">
-										{fixedImages.map(()=><div class='w-20 bg-red flex-grow-1' data-scroll-target-ref/>)}
-									</div>
-							)}
-						</div>
-					);
-				}
+				({
+					name,
+					description,
+					accordions,
+					fixedImages,
+					bleedClass,
+					...other
+				}) => (
+					// TODO: Fix class err
+					<SectionItem bleedClass={bleedClass} {...other as any}>
+						<SectionItemTitle text={name} />
+						{accordions?.length && (
+							<Accordions accordions={accordions} class={bleedClass} />
+						)}
+						{description && <Description text={description} />}
+						{fixedImages?.length && <FloatingImages images={fixedImages} />}
+					</SectionItem>
+				)
 			)
 		}
 	</div>
 </section>
-
-<script>
-import importInView from "@utils/importInView/importInView"
-importInView("scroll-reference",()=>import("@components/_CustomElements/ScrollReference"))
-</script>

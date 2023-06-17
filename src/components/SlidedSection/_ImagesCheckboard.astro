@@ -6,7 +6,7 @@ type Attributes = HTMLAttributes<"div"> & {[k in `data-${string}`]: unknown};
 
 interface Props extends Attributes {
 	images: ([string, string] | string)[];
-	imageProps?: HTMLAttributes<"div">
+	imageProps?: Attributes
 }
 
 const { class: className, images, imageProps:{class:imageClass, ...otherImageProps} = {},...other } = Astro.props;
@@ -23,7 +23,7 @@ const { class: className, images, imageProps:{class:imageClass, ...otherImagePro
 			return (
 				<div
 					class:list={[
-						"rounded-2 overflow-hidden aspect-3/2 w-max  max-w-300px max-h-200px flex-grow-1",
+						"rounded-2 overflow-hidden aspect-3/2 w-max flex-grow-1",
 						i % 2 === 0 && "self-end",
 					imageClass]}{...otherImageProps}
 				>

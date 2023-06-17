@@ -1,0 +1,28 @@
+---
+import Accordion from "@components/Accordion/Accordion.astro"
+import AccordionItem,{AccordionItemProps} from "@components/Accordion/AccordionItem.astro"
+
+interface Props{
+	accordions: AccordionItemProps[];
+	class?: string
+}
+
+export type AccordionProps = Props
+
+const {accordions, class:className} = Astro.props
+---
+
+	<div
+		class:list={[
+			"relative flex flex-col items-center justify-center w-full isolate z-2 pb-2",
+			className,
+		]}
+	>
+		<Accordion>
+			{accordions.map(({ background, chips }) => {
+				return (
+					<AccordionItem background={background} chips={chips} />
+				);
+			})}
+		</Accordion>
+	</div>

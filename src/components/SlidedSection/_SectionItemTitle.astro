@@ -1,0 +1,18 @@
+---
+import DynamicText from "@components/DynamicText.astro";
+import type { DynamicTextT } from "src/utilTypes/text";
+
+interface Props {
+	text: DynamicTextT;
+	bleedClass?: string;
+}
+const { text, bleedClass } = Astro.props;
+---
+
+<div class:list={["sticky top-0 pt-font-4xl z-5 pb-4", bleedClass]}>
+	<DynamicText
+		tag="h3"
+		text={text}
+		class="text-subtitle-2 mix-blend-difference"
+	/>
+</div>

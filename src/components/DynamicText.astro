@@ -1,8 +1,9 @@
 ---
-import AppearingText, { TextData, Tag } from "@components/AppearingText.astro";
+import AppearingText, {  Tag } from "@components/AppearingText.astro";
+import type { DynamicTextT } from "src/utilTypes/text";
 
 interface Props {
-	text: string | TextData;
+	text: DynamicTextT;
 	tag?: Tag;
 	class?: string;
 }

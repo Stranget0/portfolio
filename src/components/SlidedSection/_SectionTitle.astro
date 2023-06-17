@@ -1,0 +1,14 @@
+---
+import DynamicText from "@components/DynamicText.astro"
+import type { DynamicTextT } from "src/utilTypes/text";
+
+type Props = {title:DynamicTextT}
+
+const {title} = Astro.props
+---
+
+<DynamicText
+			tag="h2"
+			text={title}
+			class="sticky z-12 top-0 text-subtitle-1 mb-4 mix-blend-difference mt-1px"
+		/>
