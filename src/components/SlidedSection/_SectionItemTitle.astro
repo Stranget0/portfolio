@@ -1,15 +1,16 @@
 ---
 import DynamicText from "@components/DynamicText.astro";
+
+import type {HTMLAttributes} from "astro/types"
 import type { DynamicTextT } from "src/utilTypes/text";
 
-interface Props {
+interface Props extends HTMLAttributes<"div"> {
 	text: DynamicTextT;
-	bleedClass?: string;
 }
-const { text, bleedClass } = Astro.props;
+const { text, class:className } = Astro.props;
 ---
 
-<div class:list={["sticky top-0 pt-font-4xl z-5 pb-4", bleedClass]}>
+<div class:list={["sticky top-0 pt-font-4xl z-5 pb-4", className]}>
 	<DynamicText
 		tag="h3"
 		text={text}

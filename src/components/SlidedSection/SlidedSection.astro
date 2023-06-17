@@ -41,7 +41,7 @@ const { sectionItems, title, class: className, ...other } = Astro.props;
 				}) => (
 					// TODO: Fix class err
 					<SectionItem bleedClass={bleedClass} {...other as any}>
-						<SectionItemTitle text={name} />
+						<SectionItemTitle text={name} class={bleedClass}/>
 						{accordions?.length && (
 							<Accordions accordions={accordions} class={bleedClass} />
 						)}
