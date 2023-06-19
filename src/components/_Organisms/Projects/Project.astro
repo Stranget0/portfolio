@@ -1,0 +1,35 @@
+---
+import SectionFloatingImages from "@components/SlidedSection/_SectionFloatingImages.astro";
+import SectionItem from "@components/SlidedSection/_SectionItem.astro";
+import SectionItemDescription from "@components/SlidedSection/_SectionItemDescription.astro";
+import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	frontmatter: CollectionEntry<"projects">;
+}
+
+const { frontmatter } = Astro.props;
+const { data, render, slug } = frontmatter;
+const {
+	fixedImages,
+	title,
+	description,
+	audioTextTimings,
+	class: className = "bleed-primary-50",
+} = data;
+const hasFixedImages = !!fixedImages?.length;
+const { Content } = await render();
+---
+
+<SectionItem
+	id={slug}
+	class={className}
+	data-scroll-feature-refs={hasFixedImages ? true : undefined}
+	data-text-timings={audioTextTimings}
+>
+	{title && <SectionItemTitle title={title} />}
+	{description && <SectionItemDescription text={description} />}
+	<Content />
+	{hasFixedImages && <SectionFloatingImages images={fixedImages} />}
+</SectionItem>

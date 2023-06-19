@@ -1,2 +1,1 @@
-export type TextData = [number, string, number][];
-export type DynamicTextT = TextData | string;
+export type TextTimings = number[];

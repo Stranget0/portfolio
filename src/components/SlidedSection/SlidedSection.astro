@@ -1,55 +1,17 @@
 ---
-import Accordions, { AccordionProps } from "./_Accordions.astro";
-import SectionItemTitle from "./_SectionItemTitle.astro";
-import FloatingImages from "./_FloatingImages.astro";
-import SectionTitle from "./_SectionTitle.astro";
-import Description from "./_Description.astro";
-
-
 import type { HTMLAttributes } from "astro/types";
-import type { DynamicTextT } from "src/utilTypes/text";
-import type { ImageString } from "src/utilTypes/image";
-import SectionItem, {SectionItemProps} from "./_SectionItem.astro";
+import SectionTitle from "./_SectionTitle.astro"
 
-interface SectionItemData extends SectionItemProps {
-	name: DynamicTextT;
-	description: DynamicTextT;
-	accordions?: AccordionProps["accordions"];
-	bleedClass?: string;
-	fixedImages?: ImageString[];
+interface Props extends HTMLAttributes<"div">{
+	title:string;
 }
 
-interface Props extends Omit<HTMLAttributes<"div">, "title"> {
-	title: DynamicTextT;
-	sectionItems: SectionItemData[];
-}
-const { sectionItems, title, class: className, ...other } = Astro.props;
+const { class: className, title, ...other } = Astro.props;
 ---
 
 <section class:list={["section bg-primary-50", className]} {...other}>
 	<div class="text-primary-100 text-center pt-4">
-		<SectionTitle title={title} />
-		{
-			sectionItems.map(
-				({
-					name,
-					description,
-					accordions,
-					fixedImages,
-					bleedClass,
-					...other
-				}) => (
-					// TODO: Fix class err
-					<SectionItem bleedClass={bleedClass} {...other as any}>
-						<SectionItemTitle text={name} class={bleedClass}/>
-						{accordions?.length && (
-							<Accordions accordions={accordions} class={bleedClass} />
-						)}
-						{description && <Description text={description} />}
-						{fixedImages?.length && <FloatingImages images={fixedImages} />}
-					</SectionItem>
-				)
-			)
-		}
+		<SectionTitle title={title}/>
+		<slot/>
 	</div>
 </section>

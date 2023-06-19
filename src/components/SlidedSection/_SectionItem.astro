@@ -1,22 +1,19 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"div"> {
-	bleedClass?: string;
-}
+type Props = HTMLAttributes<"div">;
 
 export type SectionItemProps = Props;
 
-const { class: className, bleedClass, ...other } = Astro.props;
+const { class: className,  ...other } = Astro.props;
 ---
 
 <scroll-reference
+{...other}
 	class:list={[
-		"relative p-16 pt-0 min-h-150vh w-full block",
-		bleedClass,
+		"relative p-16 pt-0 min-h-100vh w-full block bleed",
 		className,
 	]}
-	{...other}
-	data-static-vh="150vh"
+	data-static-vh="100vh"
 	data-static-vh-type="min"><slot /></scroll-reference
 >

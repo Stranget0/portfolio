@@ -1,0 +1,12 @@
+---
+import SlidedSection from "@components/SlidedSection/SlidedSection.astro";
+import Project from "./Project.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+---
+
+<SlidedSection title="Projects" id="projects">
+	{projects.sort(({data:a},{data:b})=>	a.startYear - b.startYear
+	).map((ft) => <Project frontmatter={ft} />)}
+</SlidedSection>

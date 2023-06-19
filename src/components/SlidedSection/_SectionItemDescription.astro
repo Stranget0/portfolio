@@ -1,0 +1,21 @@
+---
+import AppearingLine from '@components/AppearingText/AppearingLine.astro';
+import type {HTMLAttributes} from "astro/types"
+
+interface Props extends HTMLAttributes<"div">{ text?: string }
+
+const { text,class:className,...other } = Astro.props;
+const descClass = ["sticky text-body mix-blend-difference mt-6 z-4 bottom-55vh",className];
+---
+<!-- TODO: FIX TYPE -->
+{text && <AppearingLine
+{...other as any}
+	text={text}
+	class:list={descClass}
+	group="description"
+/>
+}
+{!text && <div class:list={descClass}>
+	<slot/>
+	</div>
+}

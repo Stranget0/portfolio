@@ -23,11 +23,11 @@ const { class: className, images, imageProps:{class:imageClass, ...otherImagePro
 			return (
 				<div
 					class:list={[
-						"rounded-2 overflow-hidden aspect-3/2 w-max flex-grow-1",
+						"rounded-2 overflow-hidden aspect-3/2 w-max max-w-full",
 						i % 2 === 0 && "self-end",
 					imageClass]}{...otherImageProps}
 				>
-					<Image src={src} alt={alt} width={300} height={200} />
+					<Image src={src} alt={alt||""} width={300} height={200} />
 				</div>
 			);
 		})

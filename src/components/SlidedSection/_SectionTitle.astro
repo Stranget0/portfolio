@@ -1,14 +1,16 @@
 ---
-import DynamicText from "@components/DynamicText.astro"
-import type { DynamicTextT } from "src/utilTypes/text";
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import type {HTMLAttributes} from "astro/types"
 
-type Props = {title:DynamicTextT}
+interface Props extends HTMLAttributes<"div">{ title: string }
 
-const {title} = Astro.props
+const { title, ...other } = Astro.props;
 ---
-
-<DynamicText
-			tag="h2"
-			text={title}
-			class="sticky z-12 top-0 text-subtitle-1 mb-4 mix-blend-difference mt-1px"
-		/>
+<!-- TODO: FIX TYPE -->
+<AppearingLine
+{...other as any}
+	tag="h2"
+	text={title}
+	class="sticky z-12 top-0 text-subtitle-1 mb-4 mix-blend-difference mt-1px"
+	group="title"
+/>

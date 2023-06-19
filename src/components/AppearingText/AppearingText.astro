@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+	tag: string;
+	wordTimings: number[];
+}
+
+const { tag: Element, wordTimings, ...other } = Astro.props;
+---
+
+<!-- TODO: Fix typing error -->
+<Element {...other as any} data-text-timings={wordTimings}>
+	<slot />
+</Element>

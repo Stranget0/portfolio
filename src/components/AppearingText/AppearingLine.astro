@@ -1,22 +1,71 @@
 ---
-/* eslint-disable astro/no-unused-css-selector */
-// Disable eslint for css selectors, as some selectors are used in other components
 
-import type { TextData } from 'src/utilTypes/text';
+import type {Tag} from './types'
+import type {HTMLAttributes} from 'astro/types'
 
-export type Tag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
-
-interface Props {
-	text: TextData;
+interface Props extends HTMLAttributes<"div">{
+	text: string;
 	tag?: Tag;
 	class?: string;
+	group?: string;
 }
 export type AppearingTextProps = Props;
-const { text, tag: Element = "p", class: className, ...other } = Astro.props;
+const {
+	tag: Element = "p",
+	class: className="text-body prose",
+	text,group,
+	...other
+} = Astro.props;
 ---
+<!-- TODO: FIX TYPE -->
+<Element
+	class:list={[className]}
+	data-appearing-group={group}
+	{...other as any}
+>
+	{
+		text.split(/(\s)/).map((w) => {
+			return <span class="appearing-word">{w}</span>;
+		})
+	}
+</Element>
+
+
+<style lang="scss" is:global>
+	.appearing-word {
+		@apply motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
+	}
+	[data-text-timings].playing {
+		:where(&.has-fading-words .appearing-word) {
+			opacity: 0;
+		}
+
+		&.has-finished-words .appearing-word {
+			display: none;
+		}
+
+		.appearing-word {
+			&.word-hide-before,
+			&.word-hide-before ~ .appearing-word {
+				opacity: 1;
+			}
+
+			&.last-finished-transition ~ .appearing-word {
+				display: inline;
+			}
+
+			&.word-last-visible ~ .appearing-word {
+				opacity: 0;
+				& + .appearing-word {
+					display: none;
+				}
+			}
+		}
+	}
+</style>
 
 <script>
-	const stages = document.querySelectorAll<HTMLElement>(".appearing-stage");
+	const stages = document.querySelectorAll<HTMLElement>("[data-text-timings]");
 
 	play(stages[0]);
 
@@ -105,49 +154,13 @@ const { text, tag: Element = "p", class: className, ...other } = Astro.props;
 	function getWordDuration(word: HTMLElement): number {
 		return parseFloat(word.dataset.wordDuration || "0");
 	}
+
+	function getWords(parent: HTMLElement) {
+		const res = [];
+		for (const child of parent.childNodes) {
+			if (child.nodeType === 3) {
+				res.push(child.textContent);
+			}
+		}
+	}
 </script>
-
-<Element class:list={["appearing-stage text-body prose", className]} {...other}>
-	{
-		text.map(([wordDuration, word]) => {
-			return (
-				<span class="appearing-word" data-word-duration={wordDuration}>
-					{word}
-				</span>
-			);
-		})
-	}
-</Element>
-
-<style lang="scss">
-	.appearing-word {
-		@apply motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
-	}
-	.appearing-stage.playing {
-		:where(&.has-fading-words .appearing-word) {
-			opacity: 0;
-		}
-
-		&.has-finished-words .appearing-word {
-			display: none;
-		}
-
-		.appearing-word {
-			&.word-hide-before,
-			&.word-hide-before ~ .appearing-word {
-				opacity: 1;
-			}
-
-			&.last-finished-transition ~ .appearing-word {
-				display: inline;
-			}
-
-			&.word-last-visible ~ .appearing-word {
-				opacity: 0;
-				& + .appearing-word {
-					display: none;
-				}
-			}
-		}
-	}
-</style>

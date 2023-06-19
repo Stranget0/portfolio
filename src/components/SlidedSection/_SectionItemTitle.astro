@@ -1,19 +1,19 @@
 ---
-import DynamicText from "@components/DynamicText.astro";
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 
-import type {HTMLAttributes} from "astro/types"
-import type { DynamicTextT } from "src/utilTypes/text";
+import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"div"> {
-	text: DynamicTextT;
+interface Props extends Omit<HTMLAttributes<"div">, "title"> {
+	title: string;
 }
-const { text, class:className } = Astro.props;
+const { title, class: className = "bleed", ...other } = Astro.props;
 ---
 
-<div class:list={["sticky top-0 pt-font-4xl z-5 pb-4", className]}>
-	<DynamicText
+<div class:list={["sticky top-0 pt-font-4xl z-5 pb-4", className]} {...other}>
+	<AppearingLine
 		tag="h3"
-		text={text}
+		text={title}
 		class="text-subtitle-2 mix-blend-difference"
+		group="title"
 	/>
 </div>

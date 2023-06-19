@@ -24,7 +24,7 @@ const shortcuts = {
 	"text-body": "text-base font-extralight leading-110% tracking-0.5",
 	"text-body-u": "text-body uppercase",
 	"font-label": "text-sm font-thin tracking-2 lowercase",
-	section: "px-4 lg:px-36 flex flex-col justify-center",
+	section: "px-4 py-10 lg:px-36 flex flex-col justify-center",
 	"aspect-card": "aspect-[63/88]",
 	"aspect-card-rotated": "aspect-[88/63]",
 	"pseudo-full": "absolute inset-0 content",
@@ -140,18 +140,24 @@ export default defineConfig({
 		],
 		// ***************************************************************************************
 		[
+			/^bleed$/,
+			() => ({
+				"background-color": "var(--bleed-color)",
+				"box-shadow": "0 0 0 100vmax var(--bleed-color)",
+				"clip-path": "inset(0 -100vmax)",
+			}),
+		],
+		[
 			/^bleed-([a-z]+)-(\d+)$/,
 			([_, colorVariant, shade], { theme, rawSelector }) => {
 				const color = theme.colors[colorVariant]?.[shade];
 				const selector = e(rawSelector);
-				return `
-			${selector} {
-				background-color: ${color};
-				box-shadow: 0 0 0 100vmax ${color};
-				clip-path: inset(0 -100vmax);
+				return `${selector} {
+				--bleed-color: ${color};
 			}`;
 			},
 		],
-		[/^clip-full$/, ()=>({"clip-path":"inset(0)"})]
+		// ***************************************************************************************
+		[/^clip-full$/, () => ({ "clip-path": "inset(0)" })],
 	],
 });

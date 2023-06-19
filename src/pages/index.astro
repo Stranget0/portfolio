@@ -1,11 +1,9 @@
 ---
-import {getCollection} from "astro:content"
 import Button from "@components/Button.astro";
-import AppearingText from "@components/AppearingText.astro";
 import Footer from "@components/Footer.astro";
-import SlidedSection from "@components/SlidedSection/SlidedSection.astro";
 import ThreeScene from "@components/ThreeScene/ThreeScene.astro";
 import Layout from "@layouts/Layout.astro";
+import Projects from "@components/_Organisms/Projects/Projects.astro";
 
 // const text =
 // 	"We have a fantastic little sky! Let's put some happy little bushes on the other side now. Take your time. Speed will come later. Look at them little rascals. That's a crooked tree. We'll send him to Washington. You can create anything that makes you happy. Just let go - and fall like a little waterfall. We must be quiet, soft and gentle. We don't have anything but happy trees here. Let's build some happy little clouds up here. I thought today we would do a happy little picture. We need dark in order to show light. That's a son of a gun of a cloud. Maybe there's a happy little bush that lives right there. Maybe we got a few little happy bushes here, just covered with snow. We'll put all the little clouds in and let them dance around and have fun. Only God can make a tree - but you can paint one. This is a fantastic little painting. Didn't you know you had that much power? You can move mountains. You can do anything. You can create beautiful things - but you have to see them in your mind first. I was blessed with a very steady hand; and it comes in very handy when you're doing these little delicate things. A big strong tree needs big strong roots. Volunteering your time; it pays you and your whole community fantastic dividends. Just make little strokes like that. Maybe there's a little something happening right here. Van Dyke Brown is a very nice brown, it's almost like a chocolate brown. We'll have a super time. Use what happens naturally, don't fight it.";
@@ -21,14 +19,13 @@ import Layout from "@layouts/Layout.astro";
 // 	return acc;
 // }, [] as [number, string, number][]);
 
-const collections = await getCollection("projects")
 ---
 
 <Layout>
 	<ThreeScene />
 	<div data-taxi-view class="w-full">
 		<section
-			class="section h-screen min-h-md py-10 items-center justify-between text-center mix-blend-difference text-primary-200"
+			class="section h-screen min-h-md items-center justify-between text-center mix-blend-difference text-primary-200"
 		>
 			<div>
 				<h2 text-title-1>My Website</h2>
@@ -39,50 +36,12 @@ const collections = await getCollection("projects")
 				<h3 text-title-1>Your choice</h3>
 			</div>
 		</section>
+		<Projects />
 		<!-- <section class="section h-screen" data-static-vh="100vh">
 			<h2 text-subtitle-1>Testing</h2>
 			<AppearingText text={textMock} />
 		</section> -->
-		<SlidedSection
-			title="Projects"
-			sectionItems={[
-				{
-					name: "World War 3",
-					description: "I was building an interface for this game",
-					bleedClass: "bleed-primary-50",
-					fixedImages: [
-						"https://source.unsplash.com/random?fox",
-						"https://source.unsplash.com/random",
-						"https://source.unsplash.com/random",
-						"https://source.unsplash.com/random",
-					],
-				},
-				{
-					name: "Portfolio",
-					description: "This exact website!",
-					bleedClass: "bleed-primary-950",
-					fixedImages: [
-						"https://source.unsplash.com/random",
-						"https://source.unsplash.com/random?fox",
-						"https://source.unsplash.com/random",
-						"https://source.unsplash.com/random",
-					],
-					"data-obstacle-fox": true,
-				},
-				{
-					name: "Portfolio",
-					description:
-						"This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!This exact website!",
-					bleedClass: "bleed-primary-50",
-					fixedImages: [
-						"https://source.unsplash.com/random?fox",
-						"https://source.unsplash.com/random",
-						"https://source.unsplash.com/random?fox",
-						"https://source.unsplash.com/random",
-					],
-				},
-			]}
-		/>
+		
 		<section class="section">
 			<Button />
 		</section>
