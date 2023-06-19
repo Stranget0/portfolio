@@ -29,7 +29,7 @@ export default class ScrollReference extends HTMLElement {
 			const clean = scroll(
 				animate(
 					target,
-					{ scale: [0, 0.8, 1, 0.8, 0], opacity: [0, 0.8, 1, 0.8, 0] },
+					{ scale: [0, 0.8, 1, 0.8, 0], opacity: [0, 0.3, 1, 0.3, 0] },
 					{ easing: "ease-in-out" }
 				),
 				options
