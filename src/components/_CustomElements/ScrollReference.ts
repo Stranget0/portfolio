@@ -34,7 +34,7 @@ export default class ScrollReference extends HTMLElement {
 
 			const options: ScrollOptions = {
 				target: targetRef,
-				offset: [`start end`, `start 0.5`],
+				offset: [`start 0.7`, `end 0.3`],
 			};
 
 			const clean = scroll(
@@ -45,6 +45,7 @@ export default class ScrollReference extends HTMLElement {
 				),
 				options
 			);
+
 			this.cleanMenago.push(clean);
 		}
 	}

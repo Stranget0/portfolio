@@ -9,14 +9,13 @@ const {images} = Astro.props
 		<div class="fixed top-20vh bottom-4 left-4 right-4 lg:(right-36 left-36 bottom-8) flex justify-center">
 			<ImagesCheckboard
 				images={[...images].reverse()}
-				class="justify-end"
 				imageProps={{ "data-scroll-target": true }}
 			/>
 		</div>
 	</div>
-		<div class="absolute inset-0 top-50% flex flex-col-reverse invisible">
-			{images.map(()=><div class='w-20 bg-red flex-grow-1' data-scroll-target-ref/>)}
-		</div>
+	<div class="flex flex-col-reverse mt-auto h-full gap-40">
+		{images.map(()=><div data-scroll-target-ref/>)}
+	</div>
 
 
 <script>

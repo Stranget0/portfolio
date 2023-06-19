@@ -6,10 +6,10 @@ import type { HTMLAttributes } from "astro/types";
 interface Props extends Omit<HTMLAttributes<"div">, "title"> {
 	title: string;
 }
-const { title, class: className = "bleed", ...other } = Astro.props;
+const { title, class: className, ...other } = Astro.props;
 ---
-
-<div class:list={["sticky top-0 pt-font-4xl z-5 pb-4", className]} {...other}>
+<div class="fixed top-0 left-0 right-0 pt-font-4xl pb-font-3xl bleed z-5"/>
+<div class:list={["sticky top-font-4xl pt-4 z-5 pb-4 bleed", className]} {...other}>
 	<AppearingLine
 		tag="h3"
 		text={title}
