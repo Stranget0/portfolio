@@ -2,32 +2,39 @@
 import { Image } from "@astrojs/image/components";
 import type { HTMLAttributes } from "astro/types";
 
-type Attributes = HTMLAttributes<"div"> & {[k in `data-${string}`]: unknown};
+type Attributes = HTMLAttributes<"div"> & { [k in `data-${string}`]: unknown };
 
 interface Props extends Attributes {
 	images: ([string, string] | string)[];
-	imageProps?: Attributes
+	imageProps?: Attributes;
 }
 
-const { class: className, images, imageProps:{class:imageClass, ...otherImageProps} = {},...other } = Astro.props;
+const {
+	class: className,
+	images,
+	imageProps: { class: imageClass, ...otherImageProps } = {},
+	...other
+} = Astro.props;
 ---
 
 <div
-	class:list={["w-full h-full max-w-250 flex flex-col gap-8", className]}
+	class:list={["w-full h-full max-w-250 flex flex-col", className]}
 	{...other}
 >
 	{
 		images.map((srcOrArr, i) => {
-			const src = Array.isArray( srcOrArr) ? srcOrArr[0] : srcOrArr
-			const alt = Array.isArray( srcOrArr) ? srcOrArr[1] : ""
+			const src = Array.isArray(srcOrArr) ? srcOrArr[0] : srcOrArr;
+			const alt = Array.isArray(srcOrArr) ? srcOrArr[1] : "";
 			return (
 				<div
 					class:list={[
 						"rounded-2 overflow-hidden aspect-3/2 w-max max-w-full",
 						i % 2 === 0 && "self-end",
-					imageClass]}{...otherImageProps}
+						imageClass,
+					]}
+					{...otherImageProps}
 				>
-					<Image src={src} alt={alt||""} width={300} height={200} />
+					<Image src={src} alt={alt || ""} width={1000} aspectRatio={3/2} />
 				</div>
 			);
 		})

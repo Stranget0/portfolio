@@ -13,8 +13,8 @@ const {images} = Astro.props
 			/>
 		</div>
 	</div>
-	<div class="flex flex-col-reverse mt-auto h-full gap-40">
-		{images.map(()=><div data-scroll-target-ref/>)}
+	<div class="flex flex-col-reverse mt-auto h-screen invisible" aria-hidden="true">
+		{images.map(()=><div class="flex-grow-1" data-scroll-target-ref/>)}
 	</div>
 
 

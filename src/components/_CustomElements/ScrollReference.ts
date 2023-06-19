@@ -34,7 +34,7 @@ export default class ScrollReference extends HTMLElement {
 
 			const options: ScrollOptions = {
 				target: targetRef,
-				offset: [`start 0.7`, `end 0.3`],
+				offset: [`0.5 0.7`, `0.5 0.3`],
 			};
 
 			const clean = scroll(
