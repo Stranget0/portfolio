@@ -1,21 +1,32 @@
-import { scroll, animate, ScrollOptions } from "motion";
+import { scroll, animate, ScrollOptions, inView } from "motion";
 import createCleanFunction from "@utils/createCleanFunction";
 
 export default class ScrollReference extends HTMLElement {
+	targets: NodeListOf<HTMLElement> | null = null;
+	targetsRef: NodeListOf<HTMLElement> | null = null;
 	constructor() {
 		super();
 	}
 	cleanMenago = createCleanFunction();
 	connectedCallback() {
 		if (!this.isConnected) return;
-		const { scrollFeatureRefs } = this.dataset;
-		if (typeof scrollFeatureRefs !== "undefined") this.handleTargetsWithRef();
+		inView(this, () => {
+			const { scrollFeatureRefs } = this.dataset;
+			if (typeof scrollFeatureRefs !== "undefined") this.handleTargetsWithRef();
+			return this.cleanMenago.clean;
+		});
 	}
+
 	private handleTargetsWithRef() {
-		const targets = this.querySelectorAll<HTMLElement>("[data-scroll-target]");
-		const targetsRef = this.querySelectorAll<HTMLElement>(
-			"[data-scroll-target-ref]"
-		);
+		const targets =
+			this.targets ||
+			this.querySelectorAll<HTMLElement>("[data-scroll-target]");
+		const targetsRef =
+			this.targetsRef ||
+			this.querySelectorAll<HTMLElement>("[data-scroll-target-ref]");
+		this.targets = targets;
+		this.targetsRef = targetsRef;
+
 		for (let i = 0; i < targets.length; i++) {
 			const target = targets[i];
 			const targetRef = targetsRef[i];
