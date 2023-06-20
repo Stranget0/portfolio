@@ -13,9 +13,17 @@ export type AppearingTextProps = Props;
 const {
 	tag: Element = "p",
 	class: className="text-body prose",
-	text,group,
+	text:rawText,
+	group,
 	...other
 } = Astro.props;
+
+const textArr = rawText.trim().split(/(\s)/);
+const text = [];
+for(const w of textArr){
+	if(/^\s$/.test(w)) text[text.length-1] += w;
+	else text.push(w);
+}
 ---
 <!-- TODO: FIX TYPE -->
 <Element
@@ -24,7 +32,7 @@ const {
 	{...other as any}
 >
 	{
-		text.split(/(\s)/).map((w) => {
+		text.map((w) => {
 			return <span class="appearing-word">{w}</span>;
 		})
 	}
@@ -33,7 +41,7 @@ const {
 
 <style lang="scss" is:global>
 	.appearing-word {
-		@apply motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
+		@apply whitespace-pre motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
 	}
 	[data-text-timings].playing {
 		:where(&.has-fading-words .appearing-word) {
