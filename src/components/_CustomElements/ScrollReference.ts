@@ -1,9 +1,17 @@
 import { scroll, animate, ScrollOptions, inView } from "motion";
 import createCleanFunction from "@utils/createCleanFunction";
+import { z } from "zod";
+
+const defaultKeyframes = {
+	scale: [0, 0.8, 1, 0.8, 0],
+	opacity: [0, 0.3, 1, 0.3, 0],
+};
 
 export default class ScrollReference extends HTMLElement {
 	targets: NodeListOf<HTMLElement> | null = null;
 	targetsRef: NodeListOf<HTMLElement> | null = null;
+	keyframes: Record<string, (string | number)[]>[] = [];
+
 	constructor() {
 		super();
 	}
@@ -21,9 +29,11 @@ export default class ScrollReference extends HTMLElement {
 		const targets =
 			this.targets ||
 			this.querySelectorAll<HTMLElement>("[data-scroll-target]");
+
 		const targetsRef =
 			this.targetsRef ||
 			this.querySelectorAll<HTMLElement>("[data-scroll-target-ref]");
+
 		this.targets = targets;
 		this.targetsRef = targetsRef;
 
@@ -32,17 +42,24 @@ export default class ScrollReference extends HTMLElement {
 			const targetRef = targetsRef[i];
 			if (!targetRef) break;
 
+			if (!this.keyframes[i])
+				this.keyframes.push(getKeyframesOfTarget(target) || defaultKeyframes);
+
+			const keyframes = this.keyframes[i];
+
+			const [offset1, offset2, offsetA, offsetB] =
+				getOffsetFromTargetRef(targetRef);
+
 			const options: ScrollOptions = {
 				target: targetRef,
-				offset: [`0.5 0.7`, `0.5 0.3`],
+				offset: [
+					`${offset1 || "start"} ${offsetA || "end"}`,
+					`${offset2 || "end"} ${offsetB || "start"}`,
+				],
 			};
 
 			const clean = scroll(
-				animate(
-					target,
-					{ scale: [0, 0.8, 1, 0.8, 0], opacity: [0, 0.3, 1, 0.3, 0] },
-					{ easing: "ease-in-out" }
-				),
+				animate(target, keyframes, { easing: "ease-in-out" }),
 				options
 			);
 
@@ -52,6 +69,21 @@ export default class ScrollReference extends HTMLElement {
 
 	disconnectedCallback() {
 		this.cleanMenago.clean();
+	}
+}
+
+function getOffsetFromTargetRef(ref: HTMLElement) {
+	const { scrollRefOffsets = "" } = ref.dataset;
+	return scrollRefOffsets.split(" ") as any[];
+}
+
+const keyframesSchema = z.record(z.array(z.union([z.string(), z.number()])));
+function getKeyframesOfTarget(target: HTMLElement) {
+	try {
+		const { scrollTargetKeyframes = "" } = target.dataset;
+		return keyframesSchema.parse(JSON.parse(scrollTargetKeyframes));
+	} catch (e) {
+		return undefined;
 	}
 }
 
