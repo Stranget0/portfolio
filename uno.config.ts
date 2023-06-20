@@ -23,7 +23,9 @@ const shortcuts = {
 	"text-button": "font-serif text-lg font-normal tracking-2",
 	"text-body": "text-base font-extralight leading-110% tracking-0.5",
 	"text-body-u": "text-body uppercase",
-	"font-label": "text-sm font-thin tracking-2 lowercase",
+	"font-label": "font-xs font-thin tracking-2 lowercase",
+	"font-sm": "text-sm font-thin",
+	"font-xs": "text-xs font-thin",
 	section: "px-4 py-10 lg:px-36 flex flex-col justify-center",
 	"aspect-card": "aspect-[63/88]",
 	"aspect-card-rotated": "aspect-[88/63]",
@@ -71,7 +73,7 @@ export default defineConfig({
 		presetWebFonts({
 			provider: "google",
 			fonts: {
-				sans: "Sora",
+				sans: [{name:"Sora", weights:[100,200,300,400,500,600,700,800,900]}],
 				serif: "Marcellus",
 			},
 		}),
