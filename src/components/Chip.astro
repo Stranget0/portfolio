@@ -1,8 +1,27 @@
 ---
-interface Props {
-	class?: string;
+import type { HTMLAttributes } from "astro/types";
+interface Props extends HTMLAttributes<"p">{
+	color?: string,
+	bg?: string,
+	style?: Record<string,any>;
 }
-const { class: className } = Astro.props;
+
+const {color,bg:background, class: className="text-body px-2 py-1", style={},...other } = Astro.props;
+
+const isWhiteText = color==="white";
 ---
 
-<strong class:list={["p-1 rounded", className]}><slot /></strong>
+<p
+	class:list={["rounded font-normal",
+		isWhiteText && "text-shadow text-shadow-color-black",
+		className,
+	]}
+	style={{ 
+		background,
+		color,
+		...style,
+	}}
+	{...other}
+	>
+	<strong><slot /></strong>
+</p>

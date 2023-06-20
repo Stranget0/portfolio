@@ -6,7 +6,7 @@ export const projectSchema = z.object({
 	fixedImages: z.array(z.tuple([z.string().url(), z.string()])).optional(),
 	audioTextTimings: z.array(z.number()).optional(),
 	class: z.string().optional(),
-	// technologies: z.array(reference("technologies")),
+	technologies: z.array(reference("technologies")).optional(),
 	startYear: z.number(),
 	endYear: z.number().optional(),
 	draft: z.boolean(),

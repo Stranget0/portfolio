@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+import classNames from "classnames";
+import ChipArr from "@components/ChipArr.astro";
+interface Props {
+	entries: CollectionEntry<"technologies">[];
+	defaultColor?: string;
+}
+const { entries, defaultColor } = Astro.props;
+const chips = entries.map(({ data }) => {
+		const { color, accent, name } = data;
+		return {
+			text: name,
+			color: accent || defaultColor,
+			bg: color,
+			class: classNames(
+				"font-xs px-2 py-1",
+				defaultColor === "white" && "drop-shadow"
+			),
+		};
+	});
+
+---
+<div class="absolute bottom-0 left-0 right-0 h-80 bleed z-2" aria-hidden="true"/>
+<ChipArr
+	class="sticky w-full bottom-4 mt-auto mb-4 justify-center z-1 lg:(justify-end pr-1)"
+	chips={chips}
+/>

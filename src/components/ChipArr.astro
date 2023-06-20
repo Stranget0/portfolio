@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Chip from './Chip.astro';
+
+interface ChipT extends HTMLAttributes<"p">{
+	text:string,
+	color?: string,
+	bg?: string,
+}
+
+interface Props extends HTMLAttributes<"div">{
+	chips:ChipT[];
+}
+const {chips, class:className, ...other} = Astro.props
+---
+<ul class:list={["flex flex-wrap gap-4", className]} {...other}>
+	{
+		chips.map(({ text, color, bg, ...other }) => {
+			return (
+				<li>
+					<Chip {...other} color={color} bg={bg} 
+					>
+						{text}
+					</Chip>
+				</li>
+			);
+		})
+	}
+</ul>

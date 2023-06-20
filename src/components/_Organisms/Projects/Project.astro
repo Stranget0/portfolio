@@ -3,7 +3,11 @@ import SectionFloatingImages from "@components/SlidedSection/_SectionFloatingIma
 import SectionItem from "@components/SlidedSection/_SectionItem.astro";
 import SectionItemDescription from "@components/SlidedSection/_SectionItemDescription.astro";
 import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro";
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, getEntryBySlug } from "astro:content";
+import Technologies from "./Technologies.astro";
+import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
+import SectionFixed from "@components/SlidedSection/_SectionFixed.astro";
+import SectionClip from "@components/SlidedSection/_SectionClip.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -16,20 +20,46 @@ const {
 	title,
 	description,
 	audioTextTimings,
+	technologies: technologiesCollectionData,
 	class: className = "bleed-primary-50",
 } = data;
+
+const technologies = technologiesCollectionData && await Promise.all(
+	technologiesCollectionData.map(({ slug }) =>
+		getEntryBySlug("technologies", slug)
+	)
+).then((arr) =>
+	arr.sort(({ data: a }, { data: b }) => a.importance - b.importance)
+);
+
+const isDarkBg = /bleed-.+-(700|800|900|950)/.test(className);
 const hasFixedImages = !!fixedImages?.length;
+const hasTech = !!technologies?.length;
+const isScrollRefFeature = hasFixedImages;
+
 const { Content } = await render();
 ---
 
 <SectionItem
 	id={slug}
 	class={className}
-	data-scroll-feature-refs={hasFixedImages ? true : undefined}
+	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
 	data-text-timings={audioTextTimings}
 >
 	{title && <SectionItemTitle title={title} />}
 	{description && <SectionItemDescription text={description} />}
+
 	<Content />
-	{hasFixedImages && <SectionFloatingImages images={fixedImages} />}
+		<SectionFixed class="flex justify-center">
+			{hasFixedImages && <SectionFloatingImages images={fixedImages} />}
+		</SectionFixed>
+	{hasFixedImages && <SectionFloatingImagesReferences images={fixedImages} />}
+	{
+		hasTech && (
+			<Technologies
+				entries={technologies}
+				defaultColor={isDarkBg ? "black" : "white"}
+			/>
+		)
+	}
 </SectionItem>

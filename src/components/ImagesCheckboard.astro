@@ -18,7 +18,7 @@ const {
 ---
 
 <div
-	class:list={["w-full h-full max-w-250 flex flex-col", className]}
+	class:list={["flex flex-col max-w-max", className]}
 	{...other}
 >
 	{
@@ -28,7 +28,7 @@ const {
 			return (
 				<div
 					class:list={[
-						"rounded-2 overflow-hidden aspect-3/2 w-max max-w-full",
+						"rounded-2 overflow-hidden aspect-3/2 w-max max-w-full max-w-full",
 						i % 2 === 0 && "self-end",
 						imageClass,
 					]}

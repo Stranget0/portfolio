@@ -17,6 +17,7 @@ specifiers:
   '@unseenco/taxi': ^1.2.2
   astro: ^2.6.4
   autoprefixer: ^10.4.14
+  classnames: ^2.3.2
   color: ^4.2.3
   cssnano: ^6.0.0
   dat.gui: ^0.7.9
@@ -52,6 +53,7 @@ dependencies:
   '@astrojs/mdx': 0.19.7_astro@2.6.4
   '@unseenco/taxi': 1.2.2
   astro: 2.6.4_sass@1.62.1+sharp@0.32.1
+  classnames: 2.3.2
   gltf-pipeline: 4.1.0
   lodash: 4.17.21
   motion: 10.16.2
@@ -4156,6 +4158,10 @@ packages:
   /ci-info/3.8.0:
     resolution: {integrity: sha512-eXTggHWSooYhq49F2opQhuHWgzucfF2YgODK4e1566GQs5BIfP30B0oenwBJHfWxAs2fyPB1s7Mg949zLf61Yw==}
     engines: {node: '>=8'}
+    dev: false
+
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
     dev: false
 
   /clean-stack/2.2.0:

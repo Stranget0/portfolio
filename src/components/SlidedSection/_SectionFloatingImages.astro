@@ -2,23 +2,20 @@
 import ImagesCheckboard from "../ImagesCheckboard.astro";
 import type { ImageString } from "src/utilTypes/image";
 
-type Props = {images: ImageString[]}
-const {images} = Astro.props
+type Props = { images: ImageString[] };
+const { images } = Astro.props;
 ---
-	<div class="absolute inset-0 z-6 clip-full pointer-events-none">
-		<div class="fixed top-20vh bottom-4 left-4 right-4 lg:(right-36 left-36 bottom-8) flex justify-center">
-			<ImagesCheckboard
-				images={[...images].reverse()}
-				imageProps={{ "data-scroll-target": true }}
-			/>
-		</div>
-	</div>
-	<div class="flex flex-col-reverse mt-auto h-screen invisible" aria-hidden="true">
-		{images.map(()=><div class="flex-grow-1" data-scroll-target-ref/>)}
-	</div>
 
+<ImagesCheckboard
+	images={[...images].reverse()}
+	imageProps={{ "data-scroll-target": true, class:"mx-auto" }}
+	class="absolute z-5 top-17vh bottom-4 left-4 right-4 lg:(right-36 left-36 bottom-8) mx-auto"
+/>
 
 <script>
-	import importInView from "@utils/importInView/importInView"
-	importInView("scroll-reference",()=>import("@components/_CustomElements/ScrollReference"))
+	import importInView from "@utils/importInView/importInView";
+	importInView(
+		"scroll-reference",
+		() => import("@components/_CustomElements/ScrollReference")
+	);
 </script>
