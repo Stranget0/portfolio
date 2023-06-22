@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { CollectionEntry } from "astro:content";
+import classNames from "classnames";
+import ChipArr from "@components/ChipArr.astro";
+
+export interface TechnologiesProps {
+	entries: CollectionEntry<"technologies">[];
+	defaultColor?: string;
+}
+
+type Props = TechnologiesProps & HTMLAttributes<"div">
+
+const { entries, defaultColor, class:className,...other } = Astro.props;
+
+const chips = entries.map(({ data }) => {
+		const { color, accent, name } = data;
+		return {
+			text: name,
+			color: accent || defaultColor,
+			bg: color,
+			class: classNames(
+				"font-xs px-2 py-1",
+				defaultColor === "white" && "drop-shadow"
+			),
+		};
+	});
+
+---
+<ChipArr
+	{...other}
+	class={classNamesrRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR(["w-full justify-center ", className])}
+	chips={chips}
+/>
