@@ -4,10 +4,9 @@ import SectionItem from "@components/SlidedSection/_SectionItem.astro";
 import SectionItemDescription from "@components/SlidedSection/_SectionItemDescription.astro";
 import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro";
 import { type CollectionEntry, getEntryBySlug } from "astro:content";
-import Technologies from "./Technologies.astro";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
 import SectionFixed from "@components/SlidedSection/_SectionFixed.astro";
-import SectionClip from "@components/SlidedSection/_SectionClip.astro";
+import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -56,7 +55,7 @@ const { Content } = await render();
 	{hasFixedImages && <SectionFloatingImagesReferences images={fixedImages} />}
 	{
 		hasTech && (
-			<Technologies
+			<SectionTechnologies
 				entries={technologies}
 				defaultColor={isDarkBg ? "black" : "white"}
 			/>

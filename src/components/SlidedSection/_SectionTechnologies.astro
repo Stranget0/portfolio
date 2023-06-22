@@ -1,0 +1,30 @@
+---
+import Technologies, {
+	TechnologiesProps,
+} from "@components/Technologies.astro";
+type Props = TechnologiesProps;
+const props = Astro.props;
+---
+
+<div
+	class="absolute bottom-0 left-0 right-0 h-80 bleed z-2 expanded:mt-auto"
+	aria-hidden="true"
+>
+</div>
+<div is="menu" class='sticky bottom-4 mt-auto mb-4 z-1 lg:(justify-end pr-1)'>
+	<Technologies
+		{...props}
+		class=""
+		aria-expanded="false"
+	/>
+</div>
+
+<script>
+import { inView } from "motion";
+
+console.log(document.querySelectorAll("[is=\"toggled-menu\"]"));
+	inView(
+		"[is=\"toggled-menu\"]",
+		() => {import("@components/_CustomElements/Menu")}
+	);
+</script>
