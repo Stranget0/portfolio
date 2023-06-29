@@ -150,9 +150,10 @@ export default defineConfig({
 			}),
 		],
 		[
-			/^bleed-([a-z]+)-(\d+)$/,
+			/^bleed-([a-z]+)(?:-(\d+))?$/,
 			([_, colorVariant, shade], { theme, rawSelector }) => {
-				const color = theme.colors[colorVariant]?.[shade];
+				let color = theme.colors[colorVariant];
+				if(shade !== undefined) color = color?.[shade]
 				const selector = e(rawSelector);
 				return `${selector} {
 				--bleed-color: ${color};
