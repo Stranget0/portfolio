@@ -1,13 +1,23 @@
 ---
-interface Props{
+import type { HTMLAttributes } from "astro/types";
+interface Props extends HTMLAttributes<"div"> {
 	images: unknown[];
 }
-const {images} = Astro.props
+const { images, class: className, ...other } = Astro.props;
 ---
 
 <div
-	class="flex flex-col-reverse h-screen"
+	{...other}
+	class:list={["flex flex-col-reverse h-screen invisible", className]}
 	aria-hidden="true"
 >
-	{images.map(() => <div class="flex-grow-1 w-40  bg-orange" data-scroll-target-ref data-scroll-ref-offsets="0.5" />)}
+	{
+		images.map(() => (
+			<div
+				class="flex-grow-1"
+				data-scroll-target-ref
+				data-scroll-ref-offsets="0.5"
+			/>
+		))
+	}
 </div>

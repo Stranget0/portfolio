@@ -1,0 +1,38 @@
+---
+import { Image } from "@astrojs/image/components";
+import SectionClip from "@components/SectionClip.astro";
+import SectionFixed from "@components/SectionFixed.astro";
+import type { ImageString } from "src/utilTypes/image";
+import SectionFloatingImagesReferences from "./_SectionFloatingImagesReferences.astro";
+
+type Props = { images: ImageString[]; floatingImages?: ImageString[] };
+const { images, floatingImages } = Astro.props;
+const hasFloatingImages = !!floatingImages?.length;
+---
+
+<ul class="w-full isolate clip-full">
+	{
+		images.map(([src, alt], i, { length }) => {
+			const isLast = i === length - 1;
+			const showFloatingImagesRefs = isLast && hasFloatingImages;
+
+			return (
+				<li style={{ "z-index": length - i }}>
+					<SectionClip class="min-h-150 w-full flex flex-col">
+						<SectionFixed class="flex justify-center items-center">
+							<Image
+								src={import(`../../assets/${src}.jpg`)}
+								alt={alt || ""}
+								width={1000}
+								class="mx-auto rounded-2xl"
+							/>
+						</SectionFixed>
+						{showFloatingImagesRefs && (
+							<SectionFloatingImagesReferences images={floatingImages} class="mt-100"/>
+						)}
+					</SectionClip>
+				</li>
+			);
+		})
+	}
+</ul>

@@ -1,17 +1,18 @@
 ---
 
-import type {Tag} from './types'
+import type {TextTag} from './types'
 import type {HTMLAttributes} from 'astro/types'
 
-interface Props extends HTMLAttributes<"div">{
+interface Props extends HTMLAttributes<TextTag>{
 	text: string;
-	tag?: Tag;
+	tag?: TextTag;
 	class?: string;
 	group?: string;
 }
+
 export type AppearingTextProps = Props;
 const {
-	tag: Element = "p",
+	tag: Tag = "p",
 	class: className="text-body prose",
 	text:rawText,
 	group,
@@ -26,7 +27,7 @@ for(const w of textArr){
 }
 ---
 <!-- TODO: FIX TYPE -->
-<Element
+<Tag
 	class:list={[className]}
 	data-appearing-group={group}
 	{...other as any}
@@ -36,12 +37,12 @@ for(const w of textArr){
 			return <span class="appearing-word">{w}</span>;
 		})
 	}
-</Element>
+</Tag>
 
 
 <style lang="scss" is:global>
 	.appearing-word {
-		@apply whitespace-pre motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
+		@apply motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
 	}
 	[data-text-timings].playing {
 		:where(&.has-fading-words .appearing-word) {
@@ -163,12 +164,12 @@ for(const w of textArr){
 		return parseFloat(word.dataset.wordDuration || "0");
 	}
 
-	function getWords(parent: HTMLElement) {
-		const res = [];
-		for (const child of parent.childNodes) {
-			if (child.nodeType === 3) {
-				res.push(child.textContent);
-			}
-		}
-	}
+	// function getWords(parent: HTMLElement) {
+	// 	const res = [];
+	// 	for (const child of parent.childNodes) {
+	// 		if (child.nodeType === 3) {
+	// 			res.push(child.textContent);
+	// 		}
+	// 	}
+	// }
 </script>

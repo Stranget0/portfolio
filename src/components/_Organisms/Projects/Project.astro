@@ -1,11 +1,11 @@
 ---
 import SectionFloatingImages from "@components/SlidedSection/_SectionFloatingImages.astro";
+import SectionFullscreenImages from "@components/SlidedSection/_SectionFullscreenImages.astro";
 import SectionItem from "@components/SlidedSection/_SectionItem.astro";
 import SectionItemDescription from "@components/SlidedSection/_SectionItemDescription.astro";
 import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro";
 import { type CollectionEntry, getEntryBySlug } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
-import SectionFixed from "@components/SlidedSection/_SectionFixed.astro";
 import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
 
 interface Props {
@@ -15,7 +15,8 @@ interface Props {
 const { frontmatter } = Astro.props;
 const { data, render, slug } = frontmatter;
 const {
-	fixedImages,
+	fullscreenImages,
+	floatingImages,
 	title,
 	description,
 	audioTextTimings,
@@ -23,18 +24,25 @@ const {
 	class: className = "bleed-primary-50",
 } = data;
 
-const technologies = technologiesCollectionData && await Promise.all(
-	technologiesCollectionData.map(({ slug }) =>
-		getEntryBySlug("technologies", slug)
-	)
-).then((arr) =>
-	arr.sort(({ data: a }, { data: b }) => a.importance - b.importance)
-);
+const technologies =
+	technologiesCollectionData &&
+	(await Promise.all(
+		technologiesCollectionData.map(({ slug }) =>
+			getEntryBySlug("technologies", slug)
+		)
+	).then((arr) =>
+		arr.sort(({ data: a }, { data: b }) => a.importance - b.importance)
+	));
 
 const isDarkBg = /bleed-.+-(700|800|900|950)/.test(className);
-const hasFixedImages = !!fixedImages?.length;
+
+const hasFullscreenImages = !!fullscreenImages?.length;
+const hasFloatingImages = !!floatingImages?.length;
+const showFloatingRefsInMain = hasFloatingImages && !hasFullscreenImages;
+
+const isScrollRefFeature = hasFullscreenImages || !!description;
+
 const hasTech = !!technologies?.length;
-const isScrollRefFeature = hasFixedImages;
 
 const { Content } = await render();
 ---
@@ -49,15 +57,26 @@ const { Content } = await render();
 	{description && <SectionItemDescription text={description} />}
 
 	<Content />
-		<SectionFixed class="flex justify-center">
-			{hasFixedImages && <SectionFloatingImages images={fixedImages} />}
-		</SectionFixed>
-	{hasFixedImages && <SectionFloatingImagesReferences images={fixedImages} />}
+	{
+		hasFullscreenImages && (
+			<SectionFullscreenImages
+				images={fullscreenImages}
+				floatingImages={floatingImages}
+			/>
+		)
+	}
+	{hasFloatingImages && <SectionFloatingImages images={floatingImages} />}
+	{
+		showFloatingRefsInMain && (
+			<SectionFloatingImagesReferences images={floatingImages} />
+		)
+	}
 	{
 		hasTech && (
 			<SectionTechnologies
 				entries={technologies}
 				defaultColor={isDarkBg ? "black" : "white"}
+				isTopSpacing={hasFullscreenImages}
 			/>
 		)
 	}

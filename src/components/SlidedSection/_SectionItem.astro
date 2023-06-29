@@ -1,6 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import SectionClip from "@components/SlidedSection/_SectionClip.astro";
+import SectionClip from "@components/SectionClip.astro";
 
 type Props = HTMLAttributes<"div">;
 
@@ -12,12 +12,10 @@ const { class: className,  ...other } = Astro.props;
 <scroll-reference
 {...other}
 	class:list={[
-		"relative p-16 pt-0 pb-0 min-h-100vh w-full block bleed",
+		"relative pt-0 pb-0  w-full block bleed flex",
 		className,
-	]}
-	data-static-vh="100vh"
-	data-static-vh-type="min">
-	<SectionClip class="flex flex-col items-center">
+	]}>
+	<SectionClip class="flex flex-col items-center w-full">
 		<slot />
 	</SectionClip>
 	</scroll-reference>

@@ -1,9 +1,12 @@
 import { z, reference } from "astro:content";
 
+export const imagesSchema = z.array(z.tuple([z.string(), z.string()]));
+
 export const projectSchema = z.object({
 	title: z.string().optional(),
 	description: z.string().optional(),
-	fixedImages: z.array(z.tuple([z.string().url(), z.string()])).optional(),
+	floatingImages: imagesSchema.optional(),
+	fullscreenImages: imagesSchema.optional(),
 	audioTextTimings: z.array(z.number()).optional(),
 	class: z.string().optional(),
 	technologies: z.array(reference("technologies")).optional(),

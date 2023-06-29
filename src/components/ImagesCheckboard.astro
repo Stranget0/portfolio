@@ -1,11 +1,12 @@
 ---
 import { Image } from "@astrojs/image/components";
 import type { HTMLAttributes } from "astro/types";
+import type { ImageSrc } from "src/utilTypes/image";
 
 type Attributes = HTMLAttributes<"div"> & { [k in `data-${string}`]: unknown };
 
 interface Props extends Attributes {
-	images: ([string, string] | string)[];
+	images: [ImageSrc, string][];
 	imageProps?: Attributes;
 }
 
@@ -17,14 +18,9 @@ const {
 } = Astro.props;
 ---
 
-<div
-	class:list={["flex flex-col max-w-max", className]}
-	{...other}
->
+<div class:list={["flex flex-col max-w-max", className]} {...other}>
 	{
-		images.map((srcOrArr, i) => {
-			const src = Array.isArray(srcOrArr) ? srcOrArr[0] : srcOrArr;
-			const alt = Array.isArray(srcOrArr) ? srcOrArr[1] : "";
+		images.map(([src,alt], i) => {
 			return (
 				<div
 					class:list={[
@@ -34,7 +30,7 @@ const {
 					]}
 					{...otherImageProps}
 				>
-					<Image src={src} alt={alt || ""} width={1000} aspectRatio={3/2} />
+					<Image  src={src} alt={alt || ""} width={1000} aspectRatio={3/2} />
 				</div>
 			);
 		})

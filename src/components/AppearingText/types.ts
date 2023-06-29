@@ -1,4 +1,4 @@
-export type Tag =
+export type TextTag =
 	| "h1"
 	| "h2"
 	| "h3"
@@ -9,7 +9,6 @@ export type Tag =
 	| "cite"
 	| "abbr"
 	| "code"
-	| "command"
 	| "del"
 	| "strong"
 	| "i";

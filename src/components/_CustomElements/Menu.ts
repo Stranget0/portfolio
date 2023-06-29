@@ -1,5 +1,3 @@
-console.log("ALALLAL");
-
 export default class Menu extends HTMLElement {
 	timeoutId = -1;
 	listElement: HTMLElement | null = null;
