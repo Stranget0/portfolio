@@ -1,0 +1,10 @@
+---
+import type {Polymorphic, HTMLTag} from "astro/types";
+
+type Props <T extends HTMLTag> = Polymorphic<{as:T}>
+
+const {class:className,as:Tag="div",...other} = Astro.props;
+---
+	<Tag class:list={["fixed inset-0", className]} {...other}>
+		<slot/>
+	</Tag>
