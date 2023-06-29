@@ -1,44 +1,38 @@
 ---
+import type { TextTag } from "./types";
+import type { Polymorphic } from "astro/types";
 
-import type {TextTag} from './types'
-import type {HTMLAttributes} from 'astro/types'
-
-interface Props extends HTMLAttributes<TextTag>{
+type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	text: string;
-	tag?: TextTag;
 	class?: string;
 	group?: string;
-}
+};
 
 export type AppearingTextProps = Props;
 const {
-	tag: Tag = "p",
-	class: className="text-body prose",
-	text:rawText,
+	as: Tag = "p",
+	class: className = "text-body prose",
+	text: rawText,
 	group,
 	...other
 } = Astro.props;
 
 const textArr = rawText.trim().split(/(\s)/);
 const text = [];
-for(const w of textArr){
-	if(/^\s$/.test(w)) text[text.length-1] += w;
+for (const w of textArr) {
+	if (/^\s$/.test(w)) text[text.length - 1] += w;
 	else text.push(w);
 }
 ---
+
 <!-- TODO: FIX TYPE -->
-<Tag
-	class:list={[className]}
-	data-appearing-group={group}
-	{...other as any}
->
+<Tag class:list={[className]} data-appearing-group={group} {...other as any}>
 	{
 		text.map((w) => {
 			return <span class="appearing-word">{w}</span>;
 		})
 	}
 </Tag>
-
 
 <style lang="scss" is:global>
 	.appearing-word {
@@ -130,7 +124,7 @@ for(const w of textArr){
 			stage.classList.add("has-finished-words");
 		}
 
-		function showWord(word: HTMLElement | null, delay?: number) {
+		function showWord(word: HTMLElement | null) {
 			setLastVisibleWord(word);
 		}
 

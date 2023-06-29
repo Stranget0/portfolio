@@ -27,13 +27,10 @@ import HeroSection from "@components/_Organisms/HeroSection/HeroSection.astro";
 	<div data-taxi-view class="w-full">
 		<HeroSection/>
 		<Projects />
-		<!-- <section class="section h-screen" data-static-vh="100vh">
-			<h2 text-subtitle-1>Testing</h2>
-			<AppearingText text={textMock} />
-		</section> -->
-		
-		<section class="section">
-			<Button />
+		<section class="section h-screen relative" data-static-h="100vh">
+			<div class="absolute inset-0 backdrop-blur"/>
+			<div class="absolute inset-0 opacity-80 bg-primary-100"/>
+			<Button text="Help me make more!" wordTimings={[]}/>
 		</section>
 		<Footer />
 	</div>

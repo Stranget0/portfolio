@@ -1,12 +1,12 @@
 export {};
 
 const elements = document.querySelectorAll<HTMLElement>(
-	"[data-static-vh], [data-static-vw]"
+	"[data-static-w], [data-static-h]"
 );
 for (const e of elements) {
-	const { staticVh, staticVw, staticVhType, staticVwType } = e.dataset;
-	if (staticVh) setStaticViewportSize("Height", e, staticVh, staticVhType);
-	if (staticVw) setStaticViewportSize("Width", e, staticVw, staticVwType);
+	const { staticH, staticW, staticVhType, staticVwType } = e.dataset;
+	if (staticH) setStaticViewportSize("Height", e, staticH, staticVhType);
+	if (staticW) setStaticViewportSize("Width", e, staticW, staticVwType);
 }
 
 function setStaticViewportSize(

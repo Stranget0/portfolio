@@ -1,14 +1,34 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { Polymorphic } from "astro/types";
+import AppearingText from "./AppearingText/AppearingText.astro";
+import AppearingLine from "./AppearingText/AppearingLine.astro";
 
-interface Props extends HTMLAttributes<"button"> {
+type Conditional =
+	| {
+			wordTimings?: never;
+			text?: never;
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+	  }
+	| {
+			wordTimings: number[];
+			text: string;
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+	  };
+
+type Props<T extends "button" | "a"> = Polymorphic<{ as: T }> & {
 	visualType?: "simple" | "outline";
-}
+} & Conditional;
 
-const { visualType = "simple", class: className, ...rest } = Astro.props;
+const {
+	visualType = "simple",
+	class: className,
+	wordTimings,
+	text,as:Tag="button",
+	...rest
+} = Astro.props;
 ---
 
-<button
+<Tag
 	class:list={[
 		"rounded p-4 text-button relative outline-offset-4 transition-interactive w-full mix-blend-difference",
 		visualType === "simple" &&
@@ -18,5 +38,13 @@ const { visualType = "simple", class: className, ...rest } = Astro.props;
 	]}
 	{...rest}
 >
-	<slot>LOREM IPSUM NIHIL NOVI</slot>
-</button>
+	{
+		wordTimings ? (
+			<AppearingText as="span" wordTimings={wordTimings}>
+				<AppearingLine as="span" text={text} />
+			</AppearingText>
+		) : (
+			<slot>LOREM IPSUM NIHIL NOVI</slot>
+		)
+	}
+</Tag>

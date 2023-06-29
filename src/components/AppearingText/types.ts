@@ -11,4 +11,5 @@ export type TextTag =
 	| "code"
 	| "del"
 	| "strong"
-	| "i";
+	| "i"
+	| "span";
