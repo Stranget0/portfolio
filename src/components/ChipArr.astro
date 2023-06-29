@@ -18,7 +18,8 @@ const {chips, class:className, ...other} = Astro.props
 		chips.map(({ text, color, bg, ...other }) => {
 			return (
 				<li>
-					<Chip {...other} color={color} bg={bg} 
+					{/*TODO: Fix type */}
+					<Chip {...other as any} color={color} bg={bg} 
 					>
 						{text}
 					</Chip>

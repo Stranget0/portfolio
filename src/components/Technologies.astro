@@ -27,8 +27,9 @@ const chips = entries.map(({ data }) => {
 	});
 
 ---
+{/*TODO fix type */}
 <ChipArr
-	{...other}
-	class={classNamesrRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR(["w-full justify-center ", className])}
+{...other as any}
+	class={classNames(["justify-center", className])}
 	chips={chips}
 />

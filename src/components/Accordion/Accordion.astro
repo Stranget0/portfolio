@@ -8,10 +8,9 @@ const { class: className, ...other } = Astro.props;
 	{...other}
 	is="accordion-container"
 	class:list={[
-		"text-primary-50 gap-2 md:gap-4 h-160 w-full menu-opafocus justify-center md:flex-row",
+		"flex flex-col text-primary-50 gap-2 md:gap-4 h-160 w-full menu-opafocus justify-center md:flex-row",
 		className,
 	]}
-	flex="~ col"
 >
 	<slot />
 </ul>

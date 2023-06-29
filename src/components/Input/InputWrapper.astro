@@ -4,8 +4,7 @@ const { label, for: forId } = Astro.props;
 ---
 
 <div
-	flex="~ col"
-	class="input-wrapper dialog transition-interactive mix-blend-difference"
+	class="input-wrapper flex flex-col dialog transition-interactive mix-blend-difference"
 >
 	<label class="opacity-50 text-primary-50 font-label" for={forId}
 		>{label}</label
