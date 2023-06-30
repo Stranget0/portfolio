@@ -11,7 +11,7 @@ import {
 } from "unocss";
 
 import { colors, themeColorsRule } from "./unoUtils/colorsTheme";
-import { shake } from "./unoUtils/animations";
+import { shake, marquee } from "./unoUtils/animations";
 
 const shortcuts = {
 	"text-title-1": "font-serif text-5xl font-extrabold tracking-5 uppercase",
@@ -34,6 +34,8 @@ const shortcuts = {
 		"rounded pt-1 px-4 pb-2 relative before:(pseudo-full rounded bg-primary-50 opacity-10 pointer-events-none)",
 	"transition-interactive":
 		"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-75)",
+	"flex-center": "flex justify-center items-center",
+	"flex-col-center": "flex-center flex-col"
 };
 
 const fontSizes = {
@@ -50,9 +52,9 @@ export default defineConfig({
 		colors,
 		fontSize: fontSizes,
 		animation: {
-			keyframes: { shake: shake.keyframes },
-			durations: { shake: shake.duration },
-			counts: { shake: shake.count },
+			keyframes: { shake: shake.keyframes, marquee: marquee.keyframes },
+			durations: { shake: shake.duration, marquee: marquee.duration },
+			counts: { shake: shake.count, marquee: marquee.count },
 			properties: { shake: shake.properties },
 			timingFns: { shake: shake.easing },
 		},
@@ -73,7 +75,12 @@ export default defineConfig({
 		presetWebFonts({
 			provider: "google",
 			fonts: {
-				sans: [{name:"Sora", weights:[100,200,300,400,500,600,700,800,900]}],
+				sans: [
+					{
+						name: "Sora",
+						weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+					},
+				],
 				serif: "Marcellus",
 			},
 		}),
@@ -153,7 +160,7 @@ export default defineConfig({
 			/^bleed-([a-z]+)(?:-(\d+))?$/,
 			([_, colorVariant, shade], { theme, rawSelector }) => {
 				let color = theme.colors[colorVariant];
-				if(shade !== undefined) color = color?.[shade]
+				if (shade !== undefined) color = color?.[shade];
 				const selector = e(rawSelector);
 				return `${selector} {
 				--bleed-color: ${color};

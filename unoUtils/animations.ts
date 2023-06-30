@@ -32,3 +32,10 @@ export const shake = {
 		scale: "1.50",
 	},
 };
+const marqueeKeyframes='{0%, 100% {transform:translateX(0)} 50% {transform:translateX(-100%)} 50.01% {transform:translateX(100%)}}';
+export const marquee = {
+	keyframes: marqueeKeyframes,
+	duration: "4s",
+	count: "infinite",
+	easing: "linear",
+};
