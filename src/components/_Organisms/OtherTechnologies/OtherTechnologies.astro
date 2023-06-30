@@ -1,0 +1,71 @@
+---
+import { getCollection, getEntryBySlug } from "astro:content";
+import Technologies from "@components/Technologies.astro";
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import sortTechnologies from "@utils/sortTechnologies";
+import { chunk, partition } from "lodash";
+
+const projects = await getCollection("projects");
+const usedTechnologies = projects.flatMap(({ data }) => {
+	const { technologies } = data;
+	return technologies?.map(({ slug }) => slug) || [];
+});
+
+const unusedTechCollection = await getCollection(
+	"technologies",
+	({ slug }) => !usedTechnologies.includes(slug)
+);
+
+const technologies = sortTechnologies(
+	await Promise.all(
+		unusedTechCollection.map(({ slug }) => getEntryBySlug("technologies", slug))
+	)
+);
+
+const techsArr = partition(
+	technologies,
+	({ data }) => data.importance < 10
+).flatMap((arr) => chunk(arr, 4));
+
+const stagger = 0.025;
+---
+
+{
+	!!technologies.length && (
+		<article class="w-full bleed bleed-primary-200 pt-4 pb-6 text-center">
+			<marquee-x
+				class="block md:(motion-safe:animate-marquee motion-safe:animate-paused)"
+				data-marquee-speed={1 - stagger}
+			>
+				<AppearingLine
+					as="h2"
+					text="Other skills"
+					class="text-subtitle-2 mb-4"
+				/>
+			</marquee-x>
+			<section class="flex flex-col gap-4">
+				{techsArr.map((tech, i) => {
+					return (
+						<marquee-x
+							class="flex-center md:(motion-safe:animate-marquee motion-safe:animate-paused)"
+							data-marquee-speed={1 + (i % 3) * stagger}
+						>
+							<Technologies
+								entries={tech}
+								defaultColor="white"
+								class="justify-center"
+							/>
+						</marquee-x>
+					);
+				})}
+			</section>
+		</article>
+	)
+}
+<script>
+	import importInView from "@utils/importInView/importInView";
+	importInView(
+		"marquee-x",
+		() => import("@components/_CustomElements/Marquee")
+	);
+</script>

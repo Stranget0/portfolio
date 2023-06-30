@@ -4,32 +4,43 @@ import type { CollectionEntry } from "astro:content";
 import classNames from "classnames";
 import ChipArr from "@components/ChipArr.astro";
 
+type ChipEntry = CollectionEntry<"technologies"> & Pick<HTMLAttributes<"div">, "style">;
+
 export interface TechnologiesProps {
-	entries: CollectionEntry<"technologies">[];
+	entries: ChipEntry[];
 	defaultColor?: string;
+	chipClass?: string;
 }
 
-type Props = TechnologiesProps & HTMLAttributes<"div">
+type Props = TechnologiesProps & HTMLAttributes<"div">;
 
-const { entries, defaultColor, class:className,...other } = Astro.props;
+const {
+	entries,
+	defaultColor,
+	class: className,
+	chipClass,
+	...other
+} = Astro.props;
 
-const chips = entries.map(({ data }) => {
-		const { color, accent, name } = data;
-		return {
-			text: name,
-			color: accent || defaultColor,
-			bg: color,
-			class: classNames(
-				"font-xs px-2 py-1",
-				defaultColor === "white" && "drop-shadow"
-			),
-		};
-	});
-
+const chips = entries.map(({ data, style }) => {
+	const { color, accent, name } = data;
+	return {
+		text: name,
+		color: accent || defaultColor,
+		bg: color,
+		style,
+		class: classNames(
+			"font-xs px-2 py-1",
+			defaultColor === "white" && "drop-shadow",
+			chipClass
+		),
+	};
+});
 ---
+
 {/*TODO fix type */}
 <ChipArr
-{...other as any}
-	class={classNames(["justify-center", className])}
+	{...other as any}
+	class={classNames("max-w-sm", className)}
 	chips={chips}
 />

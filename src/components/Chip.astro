@@ -1,27 +1,47 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-interface Props extends HTMLAttributes<"p">{
-	color?: string,
-	bg?: string,
-	style?: Record<string,any>;
-}
+import type { Polymorphic } from "astro/types";
+type Props<T extends "p" | "li"> = Polymorphic<{ as: T }> & {
+	color?: string;
+	bg?: string;
+	style?: Record<string, any>;
+};
 
-const {color,bg:background, class: className="text-body px-2 py-1", style={},...other } = Astro.props;
+const {
+	as: Tag,
+	color,
+	bg: background,
+	class: className = "text-body px-2 py-1",
+	style = {},
+	...other
+} = Astro.props;
 
-const isWhiteText = color==="white";
+const isWhiteText = color === "white";
 ---
 
-<p
-	class:list={["rounded font-normal",
+<Tag
+	class:list={[
+		"rounded font-normal",
 		isWhiteText && "text-shadow text-shadow-color-black",
 		className,
 	]}
-	style={{ 
+	style={{
 		background,
 		color,
 		...style,
 	}}
 	{...other}
-	>
-	<strong><slot /></strong>
-</p>
+>
+	{
+		Tag === "p" ? (
+			<strong>
+				<slot />
+			</strong>
+		) : (
+			<p>
+				<strong>
+					<slot />
+				</strong>
+			</p>
+		)
+	}
+</Tag>

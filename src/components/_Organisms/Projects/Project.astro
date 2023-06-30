@@ -7,6 +7,7 @@ import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro"
 import { type CollectionEntry, getEntryBySlug } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
 import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
+import sortTechnologies from "@utils/sortTechnologies"
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -31,7 +32,7 @@ const technologies =
 			getEntryBySlug("technologies", slug)
 		)
 	).then((arr) =>
-		arr.sort(({ data: a }, { data: b }) => a.importance - b.importance)
+		sortTechnologies(arr)
 	));
 
 const isDarkBg = /bleed-.+-(700|800|900|950)/.test(className);
