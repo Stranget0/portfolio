@@ -18,11 +18,11 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={["flex flex-col max-w-max", className]} {...other}>
+<ul class:list={["flex flex-col max-w-max", className]} {...other}>
 	{
 		images.map(([src,alt], i) => {
 			return (
-				<div
+				<li
 					class:list={[
 						"rounded-2 overflow-hidden aspect-3/2 w-max max-w-full max-w-full",
 						i % 2 === 0 && "self-end",
@@ -30,9 +30,9 @@ const {
 					]}
 					{...otherImageProps}
 				>
-					<Image  src={src} alt={alt || ""} width={1000} aspectRatio={3/2} />
-				</div>
+					<Image  src={src} alt={alt || ""} width={1000} aspectRatio={3/2}/>
+				</li>
 			);
 		})
 	}
-</div>
+</ul>
