@@ -4,16 +4,24 @@ import Technologies, {
 	TechnologiesProps,
 } from "@components/Technologies.astro";
 import classNames from "classnames";
+
 interface Props extends TechnologiesProps {
 	isTopSpacing?: boolean;
 }
-const { isTopSpacing, ...props } = Astro.props;
+
+const { isTopSpacing, entries, ...props } = Astro.props;
+
+const techChips = entries.map((e) => {
+	return { ...e, style: { "flex-basis": `${50 / e.data.importance}%` } };
+});
 ---
 
-<SectionClip class={classNames("h-150 w-full relative", isTopSpacing && "mt-200")}>
+<SectionClip
+	class={classNames("h-150 w-full relative", isTopSpacing && "mt-200")}
+>
 	<div
 		class="fixed bottom-12 left-0 right-0 mt-auto pt-4 mb-4 flex justify-center"
 	>
-		<Technologies {...props} />
+		<Technologies {...props} entries={techChips} class="justify-center" />
 	</div>
 </SectionClip>
