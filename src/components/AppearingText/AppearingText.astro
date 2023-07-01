@@ -1,12 +1,11 @@
 ---
-import type { Polymorphic } from "astro/types";
-import type { TextTag } from "./types";
+import type { HTMLTag, Polymorphic } from "astro/types";
 
-type Props<T extends TextTag> = Polymorphic<{ as: T }> & {
+type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 	wordTimings: number[];
 };
 
-const { tag: Tag = "p", wordTimings, ...other } = Astro.props;
+const { as: Tag = "p", wordTimings, ...other } = Astro.props;
 ---
 
 <!-- TODO: Fix typing error -->
