@@ -27,39 +27,52 @@ const techsArr = partition(
 	({ data }) => data.importance < 10
 ).flatMap((arr) => chunk(arr, 4));
 
-const stagger = 0.025;
+const stagger = 20;
+
+const rightToLeft = (i: number) =>
+	JSON.stringify({ x: [`${100 + stagger * i}%`, `-${100 + stagger * i}%`] });
 ---
 
 {
 	!!technologies.length && (
-		<article class="w-full bleed bleed-primary-200 pt-4 pb-6 text-center">
-			<marquee-x
-				class="block md:(motion-safe:animate-marquee motion-safe:animate-paused)"
-				data-marquee-speed={1 - stagger}
+		<scroll-reference
+			data-scroll-feature-refs
+			class="block overflow-hidden max-w-full"
+		>
+			<article
+				class="w-full bleed bleed-primary-200 pt-4 pb-6 text-center"
+				data-scroll-target-ref
 			>
-				<AppearingLine
-					as="h2"
-					text="Other skills"
-					class="text-subtitle-2 mb-4"
-				/>
-			</marquee-x>
-			<section class="flex flex-col gap-4">
-				{techsArr.map((tech, i) => {
-					return (
-						<marquee-x
-							class="flex-center md:(motion-safe:animate-marquee motion-safe:animate-paused)"
-							data-marquee-speed={1 + (i % 3) * stagger}
-						>
-							<Technologies
-								entries={tech}
-								defaultColor="white"
-								class="justify-center"
-							/>
-						</marquee-x>
-					);
-				})}
-			</section>
-		</article>
+				<div
+					class="w-full"
+					data-scroll-target
+					data-scroll-target-keyframes={rightToLeft(0)}
+				>
+					<AppearingLine
+						as="h2"
+						text="Other skills"
+						class="text-subtitle-2 mb-4 mx-auto"
+					/>
+				</div>
+				<section class="flex flex-col gap-4">
+					{techsArr.map((tech, i) => {
+						return (
+							<div
+								class="w-full"
+								data-scroll-target
+								data-scroll-target-keyframes={rightToLeft((i % 2) + 1)}
+							>
+								<Technologies
+									entries={tech}
+									defaultColor="white"
+									class="justify-center mx-auto"
+								/>
+							</div>
+						);
+					})}
+				</section>
+			</article>
+		</scroll-reference>
 	)
 }
 <script>

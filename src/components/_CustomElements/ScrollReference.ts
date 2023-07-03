@@ -39,8 +39,7 @@ export default class ScrollReference extends HTMLElement {
 
 		for (let i = 0; i < targets.length; i++) {
 			const target = targets[i];
-			const targetRef = targetsRef[i];
-			if (!targetRef) break;
+			const targetRef = targetsRef[i] || targetsRef[targetsRef.length - 1];
 
 			if (!this.keyframes[i])
 				this.keyframes.push(getKeyframesOfTarget(target) || defaultKeyframes);

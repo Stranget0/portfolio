@@ -35,7 +35,8 @@ const shortcuts = {
 	"transition-interactive":
 		"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-75)",
 	"flex-center": "flex justify-center items-center",
-	"flex-col-center": "flex-center flex-col"
+	"flex-col-center": "flex-center flex-col",
+	"glass-backdrop":"before:(pseudo-full opacity-80 bg-primary-100 -z-1) after:(pseudo-full backdrop-blur -z-1)"
 };
 
 const fontSizes = {

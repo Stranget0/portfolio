@@ -4,9 +4,9 @@ const elements = document.querySelectorAll<HTMLElement>(
 	"[data-static-w], [data-static-h]"
 );
 for (const e of elements) {
-	const { staticH, staticW, staticVhType, staticVwType } = e.dataset;
-	if (staticH) setStaticViewportSize("Height", e, staticH, staticVhType);
-	if (staticW) setStaticViewportSize("Width", e, staticW, staticVwType);
+	const { staticH, staticW, staticHType, staticWType } = e.dataset;
+	if (staticH) setStaticViewportSize("Height", e, staticH, staticHType);
+	if (staticW) setStaticViewportSize("Width", e, staticW, staticWType);
 }
 
 function setStaticViewportSize(
