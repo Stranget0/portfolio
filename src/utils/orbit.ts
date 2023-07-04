@@ -1,11 +1,10 @@
-import { Vector3 } from "three";
 import type ThreeController from "./ThreeController";
 import initLerpPositions from "./lerpPositions";
 import SphericalLerpable from "./SphericalLerpable";
 
 export default function initOrbit(
 	controller: ThreeController,
-	lookAtTarget = new Vector3(0, 0, 0)
+	lookAtTarget: readonly [number, number, number] = [0, 0, 0]
 ) {
 	const camera = controller.camera;
 	const absInitialCamPos = camera.position.clone();
@@ -13,12 +12,13 @@ export default function initOrbit(
 	const initialSpherical = spherical.clone();
 	const sphericalTarget = spherical.clone();
 
-	addEventListener("mousemove", handleMouseMove);
-
 	const { startLerp } = initLerpPositions(() => {
 		camera.position.setFromSpherical(spherical);
-		camera.lookAt(lookAtTarget);
+		camera.lookAt(...lookAtTarget);
 	});
+	addEventListener("mousemove", handleMouseMove);
+
+	return () => removeEventListener("mousemove", handleMouseMove);
 
 	function handleMouseMove(e: MouseEvent) {
 		const thetaLeading = mouseDToSphericalD(e.clientX, window.innerWidth);

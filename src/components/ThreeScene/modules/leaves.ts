@@ -18,13 +18,22 @@ import mulberry32 from "@utils/seedableRandom";
 import randomBetween from "@utils/randomBetween";
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
 import { animate } from "motion";
+import type ThreeController from "@utils/ThreeController";
 
 const goodLookingSeeds = [64, 342];
 const random = mulberry32(
 	goodLookingSeeds[Math.round(randomBetween(0, goodLookingSeeds.length - 1))]
 );
 
-export default async function loadLeafs(
+export default function addLeaves(controller: ThreeController) {
+	const leafs = loadLeafs(30, 1, 2, 3).then((ls) => {
+		controller.scene.add(...ls);
+		controller.render();
+	});
+	return { leafs };
+}
+
+async function loadLeafs(
 	amount: number,
 	radiusFrom: number,
 	radiusTo: number,

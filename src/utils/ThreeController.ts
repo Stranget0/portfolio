@@ -3,17 +3,40 @@ import { Scene, WebGLRenderer } from "three";
 import type { PerspectiveCamera, OrthographicCamera } from "three";
 
 import Observable from "./Observable";
+import onResizeScreen from "./resizer";
 
-export default class ThreeController<
-	C extends PerspectiveCamera | OrthographicCamera =
-		| PerspectiveCamera
-		| OrthographicCamera
-> {
+export type ThreeModule = (
+	controller: ThreeController
+) => Record<string, any> | void;
+
+export type CameraOptions = PerspectiveCamera | OrthographicCamera;
+
+export default class ThreeController<C extends CameraOptions = CameraOptions> {
+	[k: string]: any;
 	scene = new Scene();
 	camera: C;
 	renderer: WebGLRenderer;
+	frameListeners: VoidFunction[] = [];
+	frameId = -1;
 
 	private destroyObservable = new Observable(undefined);
+
+	static createWithModules<C extends CameraOptions, Ms extends ThreeModule[]>(
+		selector: string,
+		width: number,
+		height: number,
+		camera: C,
+		...modules: Ms
+	) {
+		const root = new ThreeController(selector, width, height, camera);
+		const controller = root as typeof root &
+			UnionToIntersection<ReturnType<Ms[number]>>;
+		modules.forEach((m) => {
+			const exposed = m(root);
+			Object.assign(root, exposed);
+		});
+		return controller;
+	}
 
 	constructor(selector: string, width: number, height: number, camera: C) {
 		const canvas = document.querySelector(selector);
@@ -24,6 +47,11 @@ export default class ThreeController<
 		this.setSize(width, height);
 		this.renderer.shadowMap.enabled = true;
 		this.onDestroy(() => this.renderer.dispose());
+		const removeOnResize = onResizeScreen(({ width, height }) => {
+			this.setSize(width, height);
+		});
+
+		this.onDestroy(removeOnResize);
 	}
 
 	render() {
@@ -38,6 +66,17 @@ export default class ThreeController<
 		}
 		this.renderer.setSize(width, height);
 		this.render();
+	}
+
+	private raf() {
+		this.frameId = requestAnimationFrame(() => this.raf());
+		this.render();
+		this.frameListeners.forEach((f) => f());
+	}
+
+	startLoop() {
+		this.raf();
+		this.onDestroy(() => cancelAnimationFrame(this.frameId));
 	}
 
 	onDestroy(listener: VoidFunction) {
