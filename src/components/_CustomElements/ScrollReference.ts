@@ -58,7 +58,7 @@ export default class ScrollReference extends HTMLElement {
 			};
 
 			const clean = scroll(
-				animate(target, keyframes, { easing: "ease-in-out" }),
+				animate(target, keyframes, { easing: "ease-out" }),
 				options
 			);
 
