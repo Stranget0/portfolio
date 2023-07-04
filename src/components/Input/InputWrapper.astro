@@ -1,10 +1,10 @@
 ---
-type Props = { label: string; for: string };
-const { label, for: forId } = Astro.props;
+type Props = { label: string; for: string, class?: string};
+const { label, for: forId,class:className } = Astro.props;
 ---
 
 <div
-	class="input-wrapper flex flex-col dialog transition-interactive mix-blend-difference"
+	class:list={["input-wrapper flex flex-col dialog transition-interactive", className]}
 >
 	<label class="opacity-50 text-primary-50 font-label" for={forId}
 		>{label}</label

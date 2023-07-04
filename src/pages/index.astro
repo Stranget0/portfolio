@@ -10,6 +10,11 @@ import myImage from "@assets/me.png";
 import { Image } from "@astrojs/image/components";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import Input from "@components/Input/Input.astro";
+import TextArea from "@components/Input/TextArea.astro";
+import SectionClip from "@components/SectionClip.astro";
+import SectionFixed from "@components/SectionFixed.astro";
+import ContactSection from "@components/_Organisms/ContactSection/ContactSection.astro";
 
 // const text =
 // 	"We have a fantastic little sky! Let's put some happy little bushes on the other side now. Take your time. Speed will come later. Look at them little rascals. That's a crooked tree. We'll send him to Washington. You can create anything that makes you happy. Just let go - and fall like a little waterfall. We must be quiet, soft and gentle. We don't have anything but happy trees here. Let's build some happy little clouds up here. I thought today we would do a happy little picture. We need dark in order to show light. That's a son of a gun of a cloud. Maybe there's a happy little bush that lives right there. Maybe we got a few little happy bushes here, just covered with snow. We'll put all the little clouds in and let them dance around and have fun. Only God can make a tree - but you can paint one. This is a fantastic little painting. Didn't you know you had that much power? You can move mountains. You can do anything. You can create beautiful things - but you have to see them in your mind first. I was blessed with a very steady hand; and it comes in very handy when you're doing these little delicate things. A big strong tree needs big strong roots. Volunteering your time; it pays you and your whole community fantastic dividends. Just make little strokes like that. Maybe there's a little something happening right here. Van Dyke Brown is a very nice brown, it's almost like a chocolate brown. We'll have a super time. Use what happens naturally, don't fight it.";
@@ -27,11 +32,11 @@ import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 ---
 
 <Layout>
-	<ThreeScene />
 	<div data-taxi-view class="w-full">
+		<ThreeScene />
 		<HeroSection />
 		<section
-			class="section flex flex-col justify-between gap-12 md:flex-row relative before:(pseudo-full opacity-80 bg-primary-100 -z-1) after:(pseudo-full backdrop-blur -z-1) text-primary-100"
+			class="section flex flex-col justify-between gap-12 md:flex-row relative text-primary-50 glass-backdrop"
 		>
 			<div class="max-w-full min-w-xl max-w-5xl hidden md:block">
 				<Image
@@ -53,7 +58,13 @@ import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 					text="Nice to meet you!"
 				/>
 				<div class="md:hidden max-w-50 mx-auto">
-					<Image src={myImage} alt="Picture of me" aspect-ratio="1:1" fit="contain" class="rounded-full" />
+					<Image
+						src={myImage}
+						alt="Picture of me"
+						aspect-ratio="1:1"
+						fit="contain"
+						class="rounded-full"
+					/>
 				</div>
 				<AppearingLine
 					class="text-body mix-blend-difference"
@@ -69,16 +80,24 @@ import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 				
 				It takes dark in order to show light. I can't think of anything more rewarding than being able to express yourself to others through painting. We don't have to be concerned about it. We just have to let it fall where it will. There are no limits in this world. There's not a thing in the world wrong with washing your brush.`}
 				/>
+
+				<Button
+					wordTimings={[]}
+					text="Contact me!"
+					class="my-8 max-w-max ml-auto"
+				/>
 			</AppearingText>
 		</section>
 		<Projects />
 		<OtherTechnologies />
 		<section
-			class="section h-screen relative before:(pseudo-full opacity-80 bg-primary-100) after:(pseudo-full backdrop-blur -z-1)"
+			class="section h-screen relative glass-backdrop"
 			data-static-h="100vh"
 		>
 			<Button text="Help me make more!" wordTimings={[]} />
 		</section>
+
+		<ContactSection />
 		<Footer />
 	</div>
 </Layout>

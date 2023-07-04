@@ -5,13 +5,15 @@ import InputWrapper from "./InputWrapper.astro";
 type Props = HTMLAttributes<"input"> & {
 	id: string;
 	label: string;
+	wrapperClass?: string;
+
 };
 
-const { label, class: className, ...other } = Astro.props;
+const { label, class: className,wrapperClass, ...other } = Astro.props;
 
 const common = { name: other.id, ...other };
 ---
 
-<InputWrapper for={common.id} label={label}>
+<InputWrapper for={common.id} label={label} class={wrapperClass}>
 	<input {...common} class:list={["bg-transparent", className]} />
 </InputWrapper>
