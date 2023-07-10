@@ -13,6 +13,8 @@ export default function elementWaypoints(
 		setWaypointTarget(onUpdate?: (newTarget: Vector3) => void) {
 			const lerpVector = new Vector3();
 			const waypoints = getWaypoints(attribute, key, separator);
+			console.log(key, waypoints);
+
 			handleOnResize(waypoints, controller);
 			const { startLerp } = initLerpPositions(() => {
 				onUpdate?.(lerpVector);
@@ -43,6 +45,8 @@ export default function elementWaypoints(
 		},
 	};
 }
+
+export type ElementWaypointInitReturnType = ReturnType<typeof elementWaypoints>;
 
 function handleOnResize(
 	waypoints: WaypointTuple[],

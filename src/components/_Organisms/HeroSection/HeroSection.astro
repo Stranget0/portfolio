@@ -1,7 +1,7 @@
 ---
 import {
 	foxWaypointCameraSpatial,
-	foxWaypointTarget,
+	foxWaypointTarget,foxWaypointStiffness
 } from "@components/ThreeScene/modules/elementWaypoints/constants";
 import SectionClip from "../../SectionClip.astro";
 import SectionFixed from "../../SectionFixed.astro";
@@ -13,6 +13,8 @@ import { createWaypoint } from "@components/ThreeScene/modules/elementWaypoints/
 	class="section h-screen min-h-md text-center mix-blend-difference text-primary-200"
 	{...createWaypoint(foxWaypointCameraSpatial, 3.316, 1.264, -0.321)}
 	{...createWaypoint(foxWaypointTarget, 0.5, -0.3, -1)}
+	{...createWaypoint(foxWaypointStiffness, 1, 1)}
+
 >
 	<SectionFixed class="flex flex-col items-center justify-between">
 		<div>
