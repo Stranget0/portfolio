@@ -1,19 +1,20 @@
 import type ThreeController from "@utils/ThreeController";
-import { foxWaypointCameraSpatial, foxWaypointTarget } from "./constants";
+import { waypoints } from "./constants";
+import type { ElementWaypointInitReturnType } from "./elementWaypoints";
 
 export function elementWaypointsInit(controller: ThreeController) {
 	return {
 		elementWaypoints: import("./elementWaypoints").then(
-			({ default: elementWaypoints }) => ({
-				[foxWaypointTarget.key]: elementWaypoints(
-					controller,
-					foxWaypointTarget
-				),
-				[foxWaypointCameraSpatial.key]: elementWaypoints(
-					controller,
-					foxWaypointCameraSpatial
-				),
-			})
+			({ default: elementWaypoints }) =>
+				waypoints.reduce(
+					(acc, waypoint) => ({
+						...acc,
+						[waypoint.key]: elementWaypoints(controller, waypoint),
+					}),
+					{} as {
+						[k in (typeof waypoints)[number]["key"]]: ElementWaypointInitReturnType;
+					}
+				)
 		),
 	};
 }

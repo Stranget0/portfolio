@@ -31,6 +31,7 @@ export default function initOrbit(controller: ThreeController) {
 	const initialSpherical = spherical.clone();
 	const sphericalTarget = spherical.clone();
 	const sphericalOffset = new Spherical(0);
+	const stiffness = { x: 1, y: 1 };
 
 	camera.lookAt(target);
 
@@ -40,13 +41,18 @@ export default function initOrbit(controller: ThreeController) {
 	controller.onDestroy(() => removeEventListener("mousemove", handleMouseMove));
 
 	function handleMouseMove(e: MouseEvent) {
-		thetaLeading = mouseDToSphericalD(e.clientX, window.innerWidth) / 12;
-		phiLeading = mouseDToSphericalD(e.clientY, window.innerHeight) / 12;
+		thetaLeading =
+			mouseDToSphericalD(e.clientX, window.innerWidth) / 12 / stiffness.x;
+		phiLeading =
+			mouseDToSphericalD(e.clientY, window.innerHeight) / 12 / stiffness.y;
+
+		console.log(stiffness);
 
 		startPositionLerp(thetaLeading, phiLeading);
 	}
 
 	return {
+		stiffness,
 		setLookAtOffset(vec: Vector3) {
 			target.copy(vec);
 			helper1.position.copy(target);
