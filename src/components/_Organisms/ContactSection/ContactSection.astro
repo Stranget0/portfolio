@@ -8,7 +8,7 @@ import ContactInputContainer from "./ContactInputContainer.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import {
 	foxWaypointCameraSpatial,
-	foxWaypointTarget,foxWaypointCamera
+	foxWaypointTarget,
 } from "@components/ThreeScene/modules/elementWaypoints/constants";
 import { createWaypoint } from "@components/ThreeScene/modules/elementWaypoints/elementWaypointsServer";
 ---
@@ -17,9 +17,8 @@ import { createWaypoint } from "@components/ThreeScene/modules/elementWaypoints/
 	class="min-h-screen text-primary-50 relative text-right before:(pseudo-full bleed bleed-primary-950 -z-3)"
 	data-static-h="100vh"
 	data-static-h-type="min"
-	{...createWaypoint(foxWaypointTarget,1, 0, 1.7)}
-	{...createWaypoint(foxWaypointCameraSpatial, -1, 0, 0)}
-	{...createWaypoint(foxWaypointCamera, 0, 0, 0)}
+	{...createWaypoint(foxWaypointCameraSpatial,  2, 1.764, -0.421)}
+	{...createWaypoint(foxWaypointTarget, 1,0,0)}
 >
 	<SectionClip class="absolute inset-0">
 		<SectionFixed class="section justify-end items-center md:items-end -z-3">

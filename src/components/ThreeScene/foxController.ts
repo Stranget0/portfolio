@@ -17,15 +17,11 @@ const controller = initHeroController(
 
 Promise.all([controller.orbit, controller.elementWaypoints]).then(
 	([
-		{ setLookAtOffset, setCameraOffset, setCameraSpatialOffset },
+		{ setLookAtOffset, setCameraSpatial: setCameraSpatialOffset },
 		waypoints,
 	]) => {
 		waypoints.foxWaypointTarget.setWaypointTarget((vec) =>
 			setLookAtOffset(vec)
-		);
-
-		waypoints.foxWaypointCamera.setWaypointTarget((vec) =>
-			setCameraOffset(vec)
 		);
 
 		waypoints.foxWaypointCameraSpatial.setWaypointTarget((vec) =>

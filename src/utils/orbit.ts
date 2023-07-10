@@ -3,69 +3,58 @@ import initLerpPositions from "./lerpPositions";
 import SphericalLerpable from "./SphericalLerpable";
 import { AxesHelper, Spherical, Vector3 } from "three";
 
-type NumTuple = readonly [number, number, number];
-
-export default function initOrbit(
-	controller: ThreeController,
-	initialPosition: NumTuple = [0, 0, 0],
-	lookAtTarget: NumTuple = [0, 0, 0]
-) {
+export default function initOrbit(controller: ThreeController) {
 	function updateCameraPosition() {
-		camera.position.setFromSpherical(spherical).add(positionOffset);
+		camera.position.setFromSpherical(spherical);
 		camera.lookAt(target);
 	}
-
-	const helper1 = new AxesHelper(0.3);
-	controller.scene.add(helper1);
-
-	const camera = controller.camera;
-	const absInitialCamPos = new Vector3(...initialPosition);
-	const spherical = new SphericalLerpable().setFromVector3(absInitialCamPos);
-	const initialSpherical = spherical.clone();
-	const sphericalTarget = spherical.clone();
-	const positionOffset = new Vector3();
-	const sphericalOffset = new Spherical(0);
-
-	const targetAbs = new Vector3(...lookAtTarget);
-	const target = targetAbs.clone();
-	camera.lookAt(target);
-
-	const { startLerp } = initLerpPositions(updateCameraPosition);
-
-	addEventListener("mousemove", handleMouseMove);
-	controller.onDestroy(() => removeEventListener("mousemove", handleMouseMove));
-
-	function handleMouseMove(e: MouseEvent) {
-		const thetaLeading = mouseDToSphericalD(e.clientX, window.innerWidth);
-		const phiLeading = mouseDToSphericalD(e.clientY, window.innerHeight);
-
+	function startPositionLerp(thetaLeading: number, phiLeading: number) {
 		const thetaTarget =
-			initialSpherical.theta - thetaLeading / 12 + sphericalOffset.theta;
-		const phiTarget =
-			initialSpherical.phi - phiLeading / 12 + sphericalOffset.phi;
+			initialSpherical.theta - thetaLeading + sphericalOffset.theta;
+		const phiTarget = initialSpherical.phi - phiLeading + sphericalOffset.phi;
 
 		sphericalTarget.theta = thetaTarget;
 		sphericalTarget.phi = phiTarget;
 		sphericalTarget.radius = initialSpherical.radius + sphericalOffset.radius;
 		sphericalTarget.makeSafe();
 
-		startLerp(spherical, sphericalTarget);
+		if (!isRunning()) startLerp(spherical, sphericalTarget);
+	}
+
+	const helper1 = new AxesHelper(0.3);
+	controller.scene.add(helper1);
+	let thetaLeading = 0;
+	let phiLeading = 0;
+	const camera = controller.camera;
+	const target = new Vector3();
+	const spherical = new SphericalLerpable(0);
+	const initialSpherical = spherical.clone();
+	const sphericalTarget = spherical.clone();
+	const sphericalOffset = new Spherical(0);
+
+	camera.lookAt(target);
+
+	const { startLerp, isRunning } = initLerpPositions(updateCameraPosition);
+
+	addEventListener("mousemove", handleMouseMove);
+	controller.onDestroy(() => removeEventListener("mousemove", handleMouseMove));
+
+	function handleMouseMove(e: MouseEvent) {
+		thetaLeading = mouseDToSphericalD(e.clientX, window.innerWidth) / 12;
+		phiLeading = mouseDToSphericalD(e.clientY, window.innerHeight) / 12;
+
+		startPositionLerp(thetaLeading, phiLeading);
 	}
 
 	return {
-		target: targetAbs,
 		setLookAtOffset(vec: Vector3) {
-			target.addVectors(targetAbs, vec);
+			target.copy(vec);
 			helper1.position.copy(target);
 			camera.lookAt(target);
 		},
-		setCameraOffset(vec: Vector3) {
-			positionOffset.copy(vec);
-			updateCameraPosition();
-		},
-		setCameraSpatialOffset(vec: Vector3) {
+		setCameraSpatial(vec: Vector3) {
 			sphericalOffset.set(...vec.toArray());
-			updateCameraPosition();
+			startPositionLerp(thetaLeading, phiLeading);
 		},
 	};
 }

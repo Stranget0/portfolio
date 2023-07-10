@@ -23,11 +23,12 @@ export default function elementWaypoints(
 				waypointIndex = waypoints.findLastIndex(
 					([_w, offsetTop]) => y.current - offsetTop > 0
 				);
+				if (waypointIndex === -1) waypointIndex = 0;
 
 				const waypoint = waypoints[waypointIndex];
 				const nextWaypoint = waypoints[waypointIndex + 1];
 
-				if (nextWaypoint) {
+				if (nextWaypoint && waypoint) {
 					const p = new Vector3(...waypoint[2]);
 					const q = new Vector3(...nextWaypoint[2]);
 
@@ -70,8 +71,6 @@ function getWaypoints(dataStr: string, datasetKey: string, separator: string) {
 	}
 
 	sortWaypoints(waypoints);
-	console.log(dataStr, datasetKey, waypoints);
-
 	return waypoints;
 }
 

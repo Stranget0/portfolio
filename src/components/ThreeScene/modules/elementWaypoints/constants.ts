@@ -7,11 +7,6 @@ export const foxWaypointTarget = {
 	key: "foxWaypointTarget",
 } as const satisfies Waypoint;
 
-export const foxWaypointCamera = {
-	attribute: "data-fox-waypoint-camera",
-	key: "foxWaypointCamera",
-} as const satisfies Waypoint;
-
 export const foxWaypointCameraSpatial = {
 	attribute: "data-fox-waypoint-camera-spatial",
 	key: "foxWaypointCameraSpatial",
