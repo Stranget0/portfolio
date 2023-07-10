@@ -63,8 +63,8 @@ export default function initOrbit(
 			positionOffset.copy(vec);
 			updateCameraPosition();
 		},
-		setCameraSpatialOffset(sph: Spherical) {
-			sphericalOffset.copy(sph);
+		setCameraSpatialOffset(vec: Vector3) {
+			sphericalOffset.set(...vec.toArray());
 			updateCameraPosition();
 		},
 	};
