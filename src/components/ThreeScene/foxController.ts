@@ -5,11 +5,7 @@ import loadFox from "./modules/fox/fox";
 import addLeaves from "./modules/leaves";
 import lights from "./modules/lights/lights";
 import orbit from "./modules/orbit";
-import {
-	foxWaypointRadiusKey,
-	foxWaypointTargetKey,
-} from "./modules/elementWaypoints/constants";
-import { Vector3 } from "three";
+import { Spherical, Vector3 } from "three";
 
 const controller = initHeroController(
 	loadFox,
@@ -21,16 +17,24 @@ const controller = initHeroController(
 );
 
 Promise.all([controller.orbit, controller.elementWaypoints]).then(
-	([{ setLookAtOffset, setRadiusOffset }, waypoints]) => {
-		const foxWaypointTarget = waypoints[foxWaypointTargetKey];
-		const foxWaypointTargetRadius = waypoints[foxWaypointRadiusKey];
+	([
+		{ setLookAtOffset, setCameraOffset, setCameraSpatialOffset },
+		waypoints,
+	]) => {
+		const spatialOffset = new Spherical();
 
-		foxWaypointTarget.setWaypointTarget(new Vector3(), (vec) =>
+		waypoints.foxWaypointTarget.setWaypointTarget((vec) =>
 			setLookAtOffset(vec)
 		);
-		foxWaypointTargetRadius.setWaypointTarget(new Vector3(0), (v) =>
-			setRadiusOffset(v.x)
+
+		waypoints.foxWaypointCamera.setWaypointTarget((vec) =>
+			setCameraOffset(vec)
 		);
+
+		waypoints.foxWaypointCameraSpatial.setWaypointTarget((vec) => {
+			spatialOffset.set(...vec.toArray());
+			setCameraSpatialOffset(spatialOffset);
+		});
 	}
 );
 

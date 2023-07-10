@@ -1,37 +1,44 @@
 ---
-import SectionClip from "@components/SectionClip.astro"
-import SectionFixed from "@components/SectionFixed.astro"
-import Input from "@components/Input/Input.astro"
-import TextArea from "@components/Input/TextArea.astro"
-import Button from "@components/Button.astro"
-import ContactInputContainer from "./ContactInputContainer.astro"
-import AppearingLine from "@components/AppearingText/AppearingLine.astro"
+import SectionClip from "@components/SectionClip.astro";
+import SectionFixed from "@components/SectionFixed.astro";
+import Input from "@components/Input/Input.astro";
+import TextArea from "@components/Input/TextArea.astro";
+import Button from "@components/Button.astro";
+import ContactInputContainer from "./ContactInputContainer.astro";
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import {
+	foxWaypointCameraSpatial,
+	foxWaypointTarget,foxWaypointCamera
+} from "@components/ThreeScene/modules/elementWaypoints/constants";
+import { createWaypoint } from "@components/ThreeScene/modules/elementWaypoints/elementWaypointsServer";
 ---
+
 <section
-			class="min-h-screen text-primary-50 relative text-right before:(pseudo-full bleed bleed-primary-950 -z-3)"
-			data-static-h="100vh"
-			data-static-h-type="min"
-		>
-			<SectionClip class="absolute inset-0">
-				<SectionFixed
-					class="section justify-end items-center md:items-end -z-3"
-				>
-					<ContactInputContainer>
-						<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1"/>
-						<Input id="contact-name" label="name" wrapperClass="bg-primary-950" />
-						<Input
-						id="contact-email"
-						label="email"
-						type="email"
-						wrapperClass="bg-primary-950"
-						/>
-						<TextArea
-						id="contact-message"
-						label="message"
-						wrapperClass="bg-primary-950"
-						/>
-						<Button type="submit" visualType="outline">Submit</Button>
-					</ContactInputContainer>
-				</SectionFixed>
-			</SectionClip>
-		</section>
+	class="min-h-screen text-primary-50 relative text-right before:(pseudo-full bleed bleed-primary-950 -z-3)"
+	data-static-h="100vh"
+	data-static-h-type="min"
+	{...createWaypoint(foxWaypointTarget,1, 0, 1.7)}
+	{...createWaypoint(foxWaypointCameraSpatial, -1, 0, 0)}
+	{...createWaypoint(foxWaypointCamera, 0, 0, 0)}
+>
+	<SectionClip class="absolute inset-0">
+		<SectionFixed class="section justify-end items-center md:items-end -z-3">
+			<ContactInputContainer>
+				<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1" />
+				<Input id="contact-name" label="name" wrapperClass="bg-primary-950" />
+				<Input
+					id="contact-email"
+					label="email"
+					type="email"
+					wrapperClass="bg-primary-950"
+				/>
+				<TextArea
+					id="contact-message"
+					label="message"
+					wrapperClass="bg-primary-950"
+				/>
+				<Button type="submit" visualType="outline">Submit</Button>
+			</ContactInputContainer>
+		</SectionFixed>
+	</SectionClip>
+</section>

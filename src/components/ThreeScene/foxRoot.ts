@@ -12,6 +12,7 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 		0.1,
 		1000
 	);
+
 	camera.position.set(-1, 1, 3);
 
 	const heroController = ThreeController.createWithModules(
