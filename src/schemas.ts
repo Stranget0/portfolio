@@ -21,3 +21,9 @@ export const technologySchema = z.object({
 	color: z.string(),
 	accent: z.string().optional(),
 });
+
+export const linkSchema = z.object({
+	title: z.string(),
+	href: z.string().url(),
+	class: z.string().regex(/^i-/),
+});
