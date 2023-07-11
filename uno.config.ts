@@ -36,7 +36,8 @@ const shortcuts = {
 		"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-75)",
 	"flex-center": "flex justify-center items-center",
 	"flex-col-center": "flex-center flex-col",
-	"glass-backdrop":"before:(pseudo-full opacity-80 bg-primary-100 -z-1) after:(pseudo-full backdrop-blur -z-1)"
+	"glass-backdrop":
+		"before:(pseudo-full opacity-80 bg-primary-100 -z-1) after:(pseudo-full backdrop-blur -z-1)",
 };
 
 const fontSizes = {
@@ -67,6 +68,11 @@ export default defineConfig({
 		presetUno(),
 		presetAttributify(),
 		presetIcons({
+			prefix: "i-",
+			warn: true,
+			collections: {
+				mingcute: () => import("@iconify/json/json/mingcute.json"),
+			},
 			extraProperties: {
 				display: "inline-block",
 				"vertical-align": "middle",
@@ -100,14 +106,21 @@ export default defineConfig({
 				return `
 			@media (prefers-reduced-motion: no-preference){
 				:where(.menu-opafocus-option){
-					transition: opacity .15s cubic-bezier(0, 0, 0.2, 1);
+					transition-property: opacity, scale;
+					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+					transition-duration: 150ms;
 				}
 			}
-			:where(.menu-opafocus .menu-opafocus-option) {
+			:where(.menu-opafocus .menu-opafocus-option){
+				opacity: 90%;
+			}
+			:where(.menu-opafocus:is(:hover, :focus-within) .menu-opafocus-option){
 				opacity: var(--opafocus-min-opacity, 0.5);
+				scale: var(--opafocus-min-scale, 0.9);
 			}
 			:where(.menu-opafocus .menu-opafocus-option:is(:hover, :focus-visible)) {
 				opacity: var(--opafocus-max-opacity, 1);
+				scale: var(--opafocus-max-scale, 1.1);
 			}`;
 			},
 		],
@@ -116,6 +129,12 @@ export default defineConfig({
 			/^opafocus-(max|min)-opacity-(\d+)$/,
 			([_, type, opacity]) => ({
 				[`--opafocus-${type}-opacity`]: `${parseInt(opacity) / 100}`,
+			}),
+		],
+		[
+			/^opafocus-(max|min)-scale-(\d+)$/,
+			([_, type, scale]) => ({
+				[`--opafocus-${type}-opacity`]: `${parseInt(scale) / 100}`,
 			}),
 		],
 		// ***************************************************************************************
