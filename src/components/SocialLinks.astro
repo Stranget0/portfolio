@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+const links = await getCollection("links");
+---
+
+{
+	links.map(({ data }) => {
+		const { class:className, href, title } = data;
+		return (
+			<a
+				href={href}
+				title={title}
+				aria-label={title}
+				class:list={[
+					"block h-10 w-10 bg-primary-50 menu-opafocus-option mix-blend-difference",
+					className,
+				]}
+			>
+				{" "}
+			</a>
+		);
+	})
+}

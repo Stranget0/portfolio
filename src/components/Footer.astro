@@ -1,25 +1,14 @@
 ---
-import Button from "./Button.astro";
-import Input from "./Input/Input.astro";
-import TextArea from "./Input/TextArea.astro";
----
+import SocialLinks from "./SocialLinks.astro";
+import Copyright from "./Copyright.astro";
 
+---
+<div class="relative h-120 bleed bleed-primary-950 -z-4 -my-px"></div>
 <footer
-	class="footer bg-primary-950 gap-24 p-16 grid text-primary-50 snap-center op-98"
+	class="flex justify-between items-center bg-primary-950 px-8 py-4 op-98"
 >
-	<section class="flex md:justify-end">LOREM IPSUM</section>
-	<section class="flex flex-col gap-4 max-w-xl h-full">
-		<Input id="footer-name" label="name" />
-		<Input id="footer-email" label="email" type="email" />
-		<TextArea id="footer-message" label="message" />
-		<Button type="submit" visualType="outline">Submit</Button>
-	</section>
+		<nav class="menu-opafocus flex"><SocialLinks /></nav>
+	<Copyright/>
 </footer>
 
-<style>
-	@media (width > 756px) {
-		.footer {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-</style>
+
