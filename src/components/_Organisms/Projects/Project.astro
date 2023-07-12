@@ -8,6 +8,8 @@ import { type CollectionEntry, getEntryBySlug } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
 import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
 import sortTechnologies from "@utils/sortTechnologies"
+import SectionTopSticky from "@components/SlidedSection/_SectionTopSticky.astro"
+import Link from "@components/Link.astro"
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -54,7 +56,13 @@ const { Content } = await render();
 	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
 	data-text-timings={audioTextTimings}
 >
+<SectionTopSticky>
 	{title && <SectionItemTitle title={title} />}
+	<nav class="absolute top-0 right-0 mt-4 hidden md:block">
+		<Link class="animated-underline-right animated-underline-primary-50 font-label">TEST</Link>
+	</nav>
+</SectionTopSticky>
+
 	{description && <SectionItemDescription text={description} />}
 
 	<Content />

@@ -1,0 +1,8 @@
+---
+import type {HTMLAttributes} from "astro/types"
+type Props = HTMLAttributes<"a">
+
+const {class:className,...props} = Astro.props
+---
+
+<a {...props} class:list={["animated-underline cursor-pointer",className]}><slot/></a>
