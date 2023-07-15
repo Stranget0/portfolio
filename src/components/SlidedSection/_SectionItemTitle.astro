@@ -1,5 +1,6 @@
 ---
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import SectionTopSticky from "@components/SlidedSection/_SectionTopSticky.astro"
 
 import type { HTMLAttributes } from "astro/types";
 
@@ -8,11 +9,12 @@ interface Props extends Omit<HTMLAttributes<"h3">, "title"> {
 }
 const { title, ...other } = Astro.props;
 ---
-
-<AppearingLine
+<SectionTopSticky>
+	<AppearingLine
 	{...other as any}
 	as="h3"
 	text={title}
 	class="text-subtitle-2 mix-blend-difference"
 	group="title"
-/>
+	/>
+</SectionTopSticky>

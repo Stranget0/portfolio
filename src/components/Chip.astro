@@ -1,6 +1,6 @@
 ---
-import type { Polymorphic } from "astro/types";
-type Props<T extends "p" | "li"> = Polymorphic<{ as: T }> & {
+import type { HTMLTag, Polymorphic } from "astro/types";
+type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 	color?: string;
 	bg?: string;
 	style?: Record<string, any>;
@@ -8,9 +8,9 @@ type Props<T extends "p" | "li"> = Polymorphic<{ as: T }> & {
 
 const {
 	as: Tag,
-	color,
-	bg: background,
-	class: className = "text-body px-2 py-1",
+	color='',
+	bg: background='',
+	class: className = "text-body",
 	style = {},
 	...other
 } = Astro.props;
@@ -20,7 +20,7 @@ const isWhiteText = color === "white";
 
 <Tag
 	class:list={[
-		"rounded font-normal",
+		"rounded font-normal px-2 py-1",
 		isWhiteText && "text-shadow text-shadow-color-black",
 		className,
 	]}
@@ -32,7 +32,7 @@ const isWhiteText = color === "white";
 	{...other}
 >
 	{
-		Tag === "p" ? (
+		["p","a"].includes(Tag) ? (
 			<strong>
 				<slot />
 			</strong>

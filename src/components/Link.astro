@@ -1,8 +1,11 @@
 ---
 import type {HTMLAttributes} from "astro/types"
+import Chip from "./Chip.astro";
+import classNames from "classnames";
 type Props = HTMLAttributes<"a">
 
 const {class:className,...props} = Astro.props
 ---
 
-<a {...props} class:list={["animated-underline cursor-pointer",className]}><slot/></a>
+<!-- TODO: Fix types -->
+<Chip as="a" {...props as any} class={classNames(["border",className])}><slot/></Chip>

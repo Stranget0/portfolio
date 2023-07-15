@@ -8,7 +8,6 @@ import { type CollectionEntry, getEntryBySlug } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
 import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
 import sortTechnologies from "@utils/sortTechnologies"
-import SectionTopSticky from "@components/SlidedSection/_SectionTopSticky.astro"
 import Link from "@components/Link.astro"
 
 interface Props {
@@ -24,7 +23,7 @@ const {
 	description,
 	audioTextTimings,
 	technologies: technologiesCollectionData,
-	class: className = "bleed-primary-50",
+	class: className = "bleed-primary-50",github,website
 } = data;
 
 const technologies =
@@ -56,12 +55,11 @@ const { Content } = await render();
 	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
 	data-text-timings={audioTextTimings}
 >
-<SectionTopSticky>
 	{title && <SectionItemTitle title={title} />}
-	<nav class="absolute top-0 right-0 mt-4 hidden md:block">
-		<Link class="animated-underline-right animated-underline-primary-50 font-label">TEST</Link>
+	<nav class="fixed top-font-4xl mt-4 right-4 z-100 gap-4 mix-blend-difference animated-underline-right animated-underline-primary-50 hidden md:flex lg:right-36">
+		{website && <Link href={website} class="font-label">Website</Link>}
+		{github && <Link href={github} class="font-label">GitHub</Link>}
 	</nav>
-</SectionTopSticky>
 
 	{description && <SectionItemDescription text={description} />}
 
