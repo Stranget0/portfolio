@@ -1,4 +1,4 @@
-export type WaypointData = number[];
+export type WaypointData = [number, number, number];
 
 // Element, offsetY, dataArray
 export type WaypointTuple = [HTMLElement, number, WaypointData];
@@ -10,7 +10,7 @@ export type Waypoint = {
 
 export type CreateWaypoint = (
 	w: Waypoint,
-	...coords: WaypointData
+	...coords: number[]
 ) => {
 	[key: string]: string;
 };

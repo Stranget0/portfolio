@@ -9,6 +9,8 @@ export default function elementWaypoints(
 	controller: ThreeController,
 	{ attribute, key }: Waypoint
 ) {
+	const p = new Vector3();
+	const q = new Vector3();
 	return {
 		setWaypointTarget(onUpdate?: (newTarget: Vector3) => void) {
 			const lerpVector = new Vector3();
@@ -28,17 +30,19 @@ export default function elementWaypoints(
 
 				const waypoint = waypoints[waypointIndex];
 				const nextWaypoint = waypoints[waypointIndex + 1];
+				if (waypoint) {
+					p.set(...waypoint[2]);
 
-				if (nextWaypoint && waypoint) {
-					const p = new Vector3(...waypoint[2]);
-					const q = new Vector3(...nextWaypoint[2]);
+					if (nextWaypoint) {
+						q.set(...nextWaypoint[2]);
 
-					const progressBetweenWaypoints =
-						(y.current - waypoint[1]) / (nextWaypoint[1] - waypoint[1]);
+						const progressBetweenWaypoints =
+							(y.current - waypoint[1]) / (nextWaypoint[1] - waypoint[1]);
 
-					const to = p.lerp(q, progressBetweenWaypoints);
+						const to = p.lerp(q, progressBetweenWaypoints);
 
-					startLerp(lerpVector, to);
+						startLerp(lerpVector, to);
+					} else startLerp(lerpVector, p);
 				}
 			});
 		},
