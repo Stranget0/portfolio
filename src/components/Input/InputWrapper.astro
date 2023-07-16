@@ -6,7 +6,7 @@ const { label, for: forId,class:className } = Astro.props;
 <div
 	class:list={["input-wrapper flex flex-col dialog transition-interactive", className]}
 >
-	<label class="opacity-50 text-primary-50 font-label" for={forId}
+	<label class="opacity-50 text-primary-50 text-label" for={forId}
 		>{label}</label
 	>
 	<slot />

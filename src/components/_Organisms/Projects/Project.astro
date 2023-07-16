@@ -7,8 +7,9 @@ import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro"
 import { type CollectionEntry, getEntryBySlug } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
 import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
-import sortTechnologies from "@utils/sortTechnologies"
-import Link from "@components/Link.astro"
+import sortTechnologies from "@utils/sortTechnologies";
+import Link from "@components/Link.astro";
+import Button from "@components/Button.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -23,7 +24,9 @@ const {
 	description,
 	audioTextTimings,
 	technologies: technologiesCollectionData,
-	class: className = "bleed-primary-50",github,website
+	class: className = "bleed-primary-50",
+	github,
+	website,
 } = data;
 
 const technologies =
@@ -32,9 +35,7 @@ const technologies =
 		technologiesCollectionData.map(({ slug }) =>
 			getEntryBySlug("technologies", slug)
 		)
-	).then((arr) =>
-		sortTechnologies(arr)
-	));
+	).then((arr) => sortTechnologies(arr)));
 
 const isDarkBg = /bleed-.+-(700|800|900|950)/.test(className);
 
@@ -56,10 +57,44 @@ const { Content } = await render();
 	data-text-timings={audioTextTimings}
 >
 	{title && <SectionItemTitle title={title} />}
-	<nav class="fixed top-font-4xl mt-4 right-4 z-100 gap-4 mix-blend-difference animated-underline-right animated-underline-primary-50 hidden md:flex lg:right-36">
-		{website && <Link href={website} class="font-label">Website</Link>}
-		{github && <Link href={github} class="font-label">GitHub</Link>}
-	</nav>
+	{
+		!!(website || github) && (
+			<nav class="flex fixed z-100 gap-4 mix-blend-difference menu-opafocus animated-underline-right animated-underline-primary-50 top-font-4xl mt-font-4xl pt-6 mr-4 md:(top-font-4xl mt-4 right-36 pt-0 mt-4)">
+				{website && (
+					<Button
+						size="small"
+						visualType="outline"
+						as="a"
+						href={website}
+						class="text-label menu-opafocus-option"
+						aria-label="website"
+						title="website"
+					>
+						<div class="flex-center gap-1em text-xs">
+							<div class="i-mingcute-earth-line w-6 h-6" />
+							<p class="hidden xl:block">web</p>
+						</div>
+					</Button>
+				)}
+				{github && (
+					<Button
+						size="small"
+						visualType="outline"
+						as="a"
+						href={github}
+						class="text-label menu-opafocus-option"
+						aria-label="github"
+						title="github"
+					>
+					<div class="flex-center gap-1em text-xs">
+							<div class="i-mingcute-github-fill w-6 h-6" />
+							<p class="hidden xl:block">git</p>
+						</div>
+					</Button>
+				)}
+			</nav>
+		)
+	}
 
 	{description && <SectionItemDescription text={description} />}
 

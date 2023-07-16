@@ -17,23 +17,28 @@ type Conditional =
 
 type Props<T extends "button" | "a"> = Polymorphic<{ as: T }> & {
 	visualType?: "simple" | "outline";
+	size?: "default" | "small";
 } & Conditional;
 
 const {
 	visualType = "simple",
 	class: className,
 	wordTimings,
-	text,as:Tag="button",
+	text,
+	as: Tag = "button",
+	size = "default",
 	...rest
 } = Astro.props;
 ---
 
 <Tag
 	class:list={[
-		"rounded p-4 text-button relative outline-offset-4 transition-interactive w-full mix-blend-difference",
+		"rounded relative outline-offset-4 transition-interactive w-full mix-blend-difference border-accent-300",
+		size==="default" && "p-4 text-button",
+		size ==="small" && "px-2 py-1 text-xs",
 		visualType === "simple" &&
 			"bg-primary-100 text-primary-950 hover:bg-accent-50",
-		visualType === "outline" && "border-accent-200 border-2",
+		visualType === "outline" && "border-2",
 		className,
 	]}
 	{...rest}
