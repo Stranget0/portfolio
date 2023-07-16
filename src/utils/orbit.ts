@@ -46,8 +46,6 @@ export default function initOrbit(controller: ThreeController) {
 		phiLeading =
 			mouseDToSphericalD(e.clientY, window.innerHeight) / 12 / stiffness.y;
 
-		console.log(stiffness);
-
 		startPositionLerp(thetaLeading, phiLeading);
 	}
 
