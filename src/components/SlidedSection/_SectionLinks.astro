@@ -1,0 +1,20 @@
+---
+import Button from '@components/Button.astro';
+import SectionLink from "./_SectionLink.astro"
+
+interface Props{
+	website?: string;
+	github?: string;
+}
+
+const {github,website} = Astro.props
+---
+
+<nav class="flex fixed z-100 gap-4 mix-blend-difference menu-opafocus animated-underline-right animated-underline-primary-50 top-font-4xl mt-font-4xl pt-6 mr-4 sm:(top-font-4xl mt-4 right-4 pt-0 mt-4) lg:right-16">
+	{website && (
+		<SectionLink href={website} label="website" iconClass='i-mingcute-earth-line'/>
+		)}
+	{github && (
+		<SectionLink href={github} label="github" iconClass='i-mingcute-github-fill'/>
+	)}
+</nav>

@@ -9,7 +9,7 @@ interface Props extends HTMLAttributes<"div">{
 const { class: className, title, ...other } = Astro.props;
 ---
 
-<section class:list={["section bg-primary-50", className]} {...other}>
+<section class:list={["bg-primary-50", className]} {...other}>
 	<div class="text-primary-100 text-center pt-4">
 		<SectionTitle title={title}/>
 		<slot/>

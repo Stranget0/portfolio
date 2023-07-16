@@ -1,0 +1,24 @@
+---
+import Button from "@components/Button.astro";
+interface Props {
+	label: string;
+	href: string;
+	iconClass: string;
+}
+const { href, iconClass, label } = Astro.props;
+---
+
+<Button
+	size="small"
+	visualType="outline"
+	as="a"
+	href={href}
+	class="text-label menu-opafocus-option"
+	aria-label={label}
+	title={label}
+>
+	<div class="flex-center gap-1em text-xs">
+		<div class:list={["w-6 h-6", iconClass]}></div>
+		<p class="hidden xl:block">{label}</p>
+	</div>
+</Button>

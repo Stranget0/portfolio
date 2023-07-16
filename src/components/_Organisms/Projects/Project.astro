@@ -8,8 +8,7 @@ import { type CollectionEntry, getEntryBySlug } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
 import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
 import sortTechnologies from "@utils/sortTechnologies";
-import Link from "@components/Link.astro";
-import Button from "@components/Button.astro";
+import SectionLinks from "@components/SlidedSection/_SectionLinks.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -59,40 +58,7 @@ const { Content } = await render();
 	{title && <SectionItemTitle title={title} />}
 	{
 		!!(website || github) && (
-			<nav class="flex fixed z-100 gap-4 mix-blend-difference menu-opafocus animated-underline-right animated-underline-primary-50 top-font-4xl mt-font-4xl pt-6 mr-4 md:(top-font-4xl mt-4 right-36 pt-0 mt-4)">
-				{website && (
-					<Button
-						size="small"
-						visualType="outline"
-						as="a"
-						href={website}
-						class="text-label menu-opafocus-option"
-						aria-label="website"
-						title="website"
-					>
-						<div class="flex-center gap-1em text-xs">
-							<div class="i-mingcute-earth-line w-6 h-6" />
-							<p class="hidden xl:block">web</p>
-						</div>
-					</Button>
-				)}
-				{github && (
-					<Button
-						size="small"
-						visualType="outline"
-						as="a"
-						href={github}
-						class="text-label menu-opafocus-option"
-						aria-label="github"
-						title="github"
-					>
-					<div class="flex-center gap-1em text-xs">
-							<div class="i-mingcute-github-fill w-6 h-6" />
-							<p class="hidden xl:block">git</p>
-						</div>
-					</Button>
-				)}
-			</nav>
+			<SectionLinks website={website} github={github}/>
 		)
 	}
 
