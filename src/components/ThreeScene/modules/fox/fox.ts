@@ -3,18 +3,16 @@ import { loadDracoGLTF } from "@utils/loadDracoGLTF";
 import type { BufferGeometry, Mesh, MeshStandardMaterial } from "three";
 
 export default function loadFox(controller: ThreeController) {
-	const fox = loadDracoGLTF("models/fox/foxLowNoAnimsDraco.glb").then(
-		(foxGLTF) => {
-			const fox = foxGLTF.scene as Mesh<BufferGeometry, MeshStandardMaterial>;
-			fox.matrixAutoUpdate = false;
-			fox.receiveShadow = true;
-			fox.castShadow = true;
+	const fox = loadDracoGLTF("models/fox/foxM.glb").then((foxGLTF) => {
+		const fox = foxGLTF.scene as Mesh<BufferGeometry, MeshStandardMaterial>;
+		fox.matrixAutoUpdate = false;
+		fox.receiveShadow = true;
+		fox.castShadow = true;
 
-			controller.scene.add(fox);
-			controller.render();
-			return fox;
-		}
-	);
+		controller.scene.add(fox);
+		controller.render();
+		return fox;
+	});
 
 	const foxAnimations = fox.then(async (fox) => {
 		const animationManager = await Promise.all([
