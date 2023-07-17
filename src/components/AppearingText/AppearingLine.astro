@@ -11,8 +11,8 @@ type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 export type AppearingTextProps = Props;
 const {
 	as: Tag = "p",
-	class: className = "text-body prose",
-	text: rawText,
+	class: className = "prose",
+	text: rawText="",
 	group,
 	...other
 } = Astro.props;
