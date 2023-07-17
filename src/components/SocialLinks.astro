@@ -1,21 +1,31 @@
 ---
 import { getCollection } from "astro:content";
 const links = await getCollection("links");
+
+interface Props {
+	small?: boolean;
+}
+const { small: isSmall } = Astro.props;
 ---
 
 {
-	links.sort(({data:a},{data:b})=>b.title.localeCompare(a.title)).map(({ data }) => {
-		const { class:className, href, title } = data;
-		return (
-			<a
-				href={href}
-				title={title}
-				aria-label={title}
-				class:list={[
-					"block h-10 w-10 bg-primary-50 menu-opafocus-option mix-blend-difference",
-					className,
-				]}
-			> </a>
-		);
-	})
+	links
+		.sort(({ data: a }, { data: b }) => b.title.localeCompare(a.title))
+		.map(({ data }) => {
+			const { class: className, href, title } = data;
+			return (
+				<a
+					href={href}
+					title={title}
+					aria-label={title}
+					class:list={[
+						"block bg-primary-50 menu-opafocus-option mix-blend-difference",
+						isSmall ? "w-12 h-12" : "h-16 w-16",
+						className,
+					]}
+				>
+					{" "}
+				</a>
+			);
+		})
 }
