@@ -57,7 +57,7 @@ const { Content } = await render();
 	data-text-timings={audioTextTimings}
 >
 	{title && <SectionItemTitle title={title} />}
-	{!!(website || github) && <SectionLinks website={website} github={github} />}
+	<SectionLinks website={website} github={github} />
 
 	<SectionItemDescription text={description}>
 		<Content

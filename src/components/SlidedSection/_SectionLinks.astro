@@ -10,7 +10,8 @@ const {github,website} = Astro.props
 ---
 
 <nav class="flex fixed z-100 w-max gap-4 menu-opafocus top-15 mt-font-4xl mr-4 right-4 sm:(top-font-4xl mt-2) lg:right-16">
-	<div class="absolute -inset-3 overflow-hidden before:(pseudo-full bleed)"/>
+	<div class="absolute -inset-3 -left-5 -right-5 overflow-hidden before:(pseudo-full bleed)"/>
+	<SectionLink href="#contact" labelShort="Contact" label="help me make more!" iconClass='i-mingcute-message-3-fill bg-white mix-blend-difference'/>
 	{website && (
 		<SectionLink href={website} label="website" iconClass='i-mingcute-earth-line mix-blend-difference'/>
 		)}
