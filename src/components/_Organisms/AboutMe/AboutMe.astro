@@ -38,11 +38,12 @@ import SocialLinks from "@components/SocialLinks.astro";
 				class="rounded-full"
 			/>
 		</div>
-		<p class="text-subtitle-4 text-left mix-blend-difference">
-			<AppearingLine
-				as="span"
-				text="My name is Marcin and I am a Web Developer with a UX/UI side and my goal is to deliver "
-			/>
+		<AppearingLine
+			class="text-subtitle-4 text-left mix-blend-difference my-0"
+			text="My name is Marcin and I am a Web Developer with a UX/UI side."
+		/>
+		<p class="text-subtitle-4 text-left mix-blend-difference mt-0">
+			<AppearingLine as="span" text="My goal is to deliver " />
 			<AppearingLine as="strong" text="functional, " />
 			<AppearingLine as="strong" text="simple" />
 			<AppearingLine as="span" text=" and " />
@@ -69,7 +70,11 @@ import SocialLinks from "@components/SocialLinks.astro";
 			class="ml-auto flex-center flex-wrap sm:justify-end gap-2 my-8 menu-opafocus opafocus-max-opacity-100 opafocus-min-opacity-80"
 		>
 			<SocialLinks />
-			<Button wordTimings={[]} text="Contact me!" class="max-w-max font-black text-right">
+			<Button
+				wordTimings={[]}
+				text="Contact me!"
+				class="max-w-max font-black text-right"
+			>
 				<div slot="before" class="i-mingcute-message-3-fill w-8 h-8"></div>
 			</Button>
 		</nav>
