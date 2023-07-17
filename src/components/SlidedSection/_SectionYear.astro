@@ -1,0 +1,18 @@
+---
+interface Props{
+	startYear: number;
+	endYear?: number;
+}
+const {startYear,endYear} = Astro.props
+---
+<p class="pointer-events-auto text-8 font-leading-80% font-serif flex flex-col md:flex-row">
+	<span>{startYear}</span>
+	{
+		!!endYear && startYear !== endYear && (
+			<>
+				<span>-</span>
+				<span>{endYear}</span>
+			</>
+		)
+	}
+</p>

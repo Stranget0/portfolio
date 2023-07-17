@@ -1,21 +1,40 @@
 ---
-import SectionLink from "./_SectionLink.astro"
+import SectionLink from "./_SectionLink.astro";
 
-interface Props{
+interface Props {
 	website?: string;
 	github?: string;
 }
 
-const {github,website} = Astro.props
+const { github, website } = Astro.props;
 ---
 
-<nav class="flex fixed z-100 w-max gap-4 menu-opafocus top-15 mt-font-4xl mr-4 right-4 sm:(top-font-4xl mt-2) lg:right-16">
-	<div class="absolute -inset-3 -left-5 -right-5 overflow-hidden before:(pseudo-full bleed)"/>
-	<SectionLink href="#contact" labelShort="Contact" label="help me make more!" iconClass='i-mingcute-message-3-fill bg-white mix-blend-difference'/>
-	{website && (
-		<SectionLink href={website} label="website" iconClass='i-mingcute-earth-line mix-blend-difference'/>
-		)}
-	{github && (
-		<SectionLink href={github} label="github" iconClass='i-mingcute-github-fill mix-blend-difference'/>
-	)}
+<nav
+	class="pointer-events-auto flex flex-col h-max relative gap-4 menu-opafocus mr-4 2xl:flex-row"
+>
+	<SectionLink
+		href="#contact"
+		labelShort="Call me"
+		label="help me make more!"
+		wrapperClass="text-xs"
+		iconClass="i-mingcute-message-3-fill"
+	/>
+	{
+		website && (
+			<SectionLink
+				href={website}
+				label="website"
+				iconClass="i-mingcute-earth-line"
+			/>
+		)
+	}
+	{
+		github && (
+			<SectionLink
+				href={github}
+				label="github"
+				iconClass="i-mingcute-github-fill"
+			/>
+		)
+	}
 </nav>

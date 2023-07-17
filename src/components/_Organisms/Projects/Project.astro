@@ -10,6 +10,8 @@ import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.
 import sortTechnologies from "@utils/sortTechnologies";
 import SectionLinks from "@components/SlidedSection/_SectionLinks.astro";
 import SectionHeading from "@components/SlidedSection/_SectionHeading.astro";
+import SectionYear from "@components/SlidedSection/_SectionYear.astro";
+import SectionTopFixed from "@components/SlidedSection/_SectionTopFixed.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -24,6 +26,8 @@ const {
 	description,
 	audioTextTimings,
 	technologies: technologiesCollectionData,
+	startYear,
+	endYear,
 	class: className = "bleed-primary-50",
 	github,
 	website,
@@ -57,7 +61,11 @@ const { Content } = await render();
 	data-text-timings={audioTextTimings}
 >
 	{title && <SectionItemTitle title={title} />}
-	<SectionLinks website={website} github={github} />
+	<SectionTopFixed
+	>
+		<SectionYear startYear={startYear} endYear={endYear}/>
+		<SectionLinks website={website} github={github} />
+	</SectionTopFixed>
 
 	<SectionItemDescription text={description}>
 		<Content
