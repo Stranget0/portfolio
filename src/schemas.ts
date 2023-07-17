@@ -12,6 +12,7 @@ export const projectSchema = z.object({
 	technologies: z.array(reference("technologies")).optional(),
 	startYear: z.number(),
 	endYear: z.number().optional(),
+	importance: z.number().optional(),
 	github: z.string().url().optional(),
 	website: z.string().url().optional(),
 	draft: z.boolean(),

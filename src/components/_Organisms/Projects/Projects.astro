@@ -7,6 +7,12 @@ const projects = await getCollection("projects");
 ---
 
 <SlidedSection title="Projects" id="projects" class="pt-50">
-	{projects.sort(({data:a},{data:b})=>	a.startYear - b.startYear
-	).map((ft) => <Project frontmatter={ft} />)}
+	{
+		projects
+			.sort(
+				({ data: a }, { data: b }) =>
+					(b.importance || 0) - (a.importance || 0) || a.startYear - b.startYear
+			)
+			.map((ft) => <Project frontmatter={ft} />)
+	}
 </SlidedSection>
