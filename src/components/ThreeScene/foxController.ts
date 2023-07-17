@@ -1,5 +1,5 @@
 import initHeroController from "./foxRoot";
-import { elementWaypointsInit } from "./modules/elementWaypoints/elementWaypointsInit";
+import elementWaypointsInit from "./modules/waypoints/elementWaypointsInit";
 import fog from "./modules/fog/fog";
 import loadFox from "./modules/fox/fox";
 import addLeaves from "./modules/leaves";

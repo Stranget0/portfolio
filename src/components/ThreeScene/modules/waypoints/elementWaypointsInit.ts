@@ -1,10 +1,10 @@
 import type ThreeController from "@utils/ThreeController";
 import { waypoints } from "./constants";
-import type { ElementWaypointInitReturnType } from "./elementWaypoints";
+import type { ElementWaypointInitReturnType } from "../../../../utils/elementWaypoints/elementWaypoints";
 
-export function elementWaypointsInit(controller: ThreeController) {
+export default function elementWaypointsInit(controller: ThreeController) {
 	return {
-		elementWaypoints: import("./elementWaypoints").then(
+		elementWaypoints: import("@utils/elementWaypoints/elementWaypoints").then(
 			({ default: elementWaypoints }) =>
 				waypoints.reduce(
 					(acc, waypoint) => ({

@@ -6,25 +6,33 @@ import TextArea from "@components/Input/TextArea.astro";
 import Button from "@components/Button.astro";
 import ContactInputContainer from "./ContactInputContainer.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
-import {
-	foxWaypointCameraSpatial,
-	foxWaypointTarget,
-	foxWaypointStiffness,
-} from "@components/ThreeScene/modules/elementWaypoints/constants";
-import { createWaypoint } from "@components/ThreeScene/modules/elementWaypoints/elementWaypointsServer";
+import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
+
+const md = 768;
+const waypointsData = {
+	...waypoints
+		.foxWaypointCameraSpatial(3, 1.5, -0.421)
+		.addBreakpoint(md, 2, 1.5, -0.421)
+		.waypoint(),
+	...waypoints
+		.foxWaypointTarget(0, -1, 0)
+		.addBreakpoint(md, 1, -0.5, 0)
+		.waypoint(),
+	...waypoints.foxWaypointStiffness(3, 4).waypoint(),
+};
 ---
 
 <section
-id="contact"
+	id="contact"
 	class="min-h-screen text-primary-50 relative text-right before:(pseudo-full bleed bleed-primary-950 -z-3)"
 	data-static-h="100vh"
 	data-static-h-type="min"
-	{...createWaypoint(foxWaypointCameraSpatial, 2, 1.5, -0.421)}
-	{...createWaypoint(foxWaypointTarget, 1, -.1, 0)}
-	{...createWaypoint(foxWaypointStiffness, 3, 4)}
+	{...waypointsData}
 >
 	<SectionClip class="absolute inset-0">
-		<SectionFixed class="section inset-4 justify-end items-center md:items-end -z-3">
+		<SectionFixed
+			class="section inset-4 justify-end items-center md:items-end -z-3"
+		>
 			<ContactInputContainer>
 				<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1" />
 				<Input id="contact-name" label="name" wrapperClass="bg-primary-950" />

@@ -1,6 +1,4 @@
-import type { Waypoint } from "./types";
-
-export const separator = " ";
+import type { Waypoint } from "../../../../utils/elementWaypoints/types";
 
 export const foxWaypointTarget = {
 	attribute: "data-fox-waypoint-target",

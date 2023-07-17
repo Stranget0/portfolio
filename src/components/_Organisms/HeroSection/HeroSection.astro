@@ -1,19 +1,16 @@
 ---
-import {
-	foxWaypointCameraSpatial,
-	foxWaypointTarget,foxWaypointStiffness
-} from "@components/ThreeScene/modules/elementWaypoints/constants";
 import SectionClip from "../../SectionClip.astro";
 import SectionFixed from "../../SectionFixed.astro";
-import { createWaypoint } from "@components/ThreeScene/modules/elementWaypoints/elementWaypointsServer";
+import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
+
 ---
 
 <SectionClip
 	as="section"
 	class="section h-screen min-h-md text-center mix-blend-difference text-primary-200"
-	{...createWaypoint(foxWaypointCameraSpatial, 3.316, 1.264, -0.321)}
-	{...createWaypoint(foxWaypointTarget, 0.5, -0.3, -1)}
-	{...createWaypoint(foxWaypointStiffness, 1, 1)}
+	{...waypoints.foxWaypointCameraSpatial( 3.316, 1.264, -0.321).waypoint()}
+	{...waypoints.foxWaypointTarget( 0.5, -0.3, -1).waypoint()}
+	{...waypoints.foxWaypointStiffness( 1, 1).waypoint()}
 
 >
 	<SectionFixed class="flex flex-col items-center justify-between">
