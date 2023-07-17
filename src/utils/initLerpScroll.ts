@@ -24,30 +24,24 @@ export default function initLerpScroll(
 	const { startLerp: startLerpY, cancel: cancelY } = initLerpPositions(() => {
 		target.scrollTo({ top: yLerp.value });
 	});
-	cleanMenago.push(cancelY);
-
 	const { startLerp: startLerpX, cancel: cancelX } = initLerpPositions(() => {
 		target.scrollTo({ left: xLerp.value });
 	});
-	cleanMenago.push(cancelX);
+	cleanMenago.push(cancel);
 
 	let isScrollbarActive = false;
 	const cleanScrollbarClick = onScrollbar((isActive) => {
 		isScrollbarActive = isActive;
-		if (isActive) {
-			cancelX();
-			cancelY();
-		}
+		if (isActive) cancel();
+		else synchroniseValues();
 	});
 	cleanMenago.push(cleanScrollbarClick);
 
 	let isMiddleButtonScrolling = false;
 	const cleanMiddleButton = onMiddleButtonScroll((isScrolling) => {
 		isMiddleButtonScrolling = isScrolling;
-		if (isScrolling) {
-			cancelX();
-			cancelY();
-		}
+		if (isScrolling) cancel();
+		else synchroniseValues();
 	});
 	cleanMenago.push(cleanMiddleButton);
 
@@ -57,6 +51,15 @@ export default function initLerpScroll(
 	handleAnchorsScroll();
 
 	return { clean: cleanMenago.clean, scrollToElement };
+
+	function cancel() {
+		cancelX();
+		cancelY();
+	}
+	function synchroniseValues() {
+		xLerp.value = lastTargetX = getScrollPos(target, "x");
+		yLerp.value = lastTargetY = getScrollPos(target, "y");
+	}
 
 	function handleAnchorsScroll() {
 		for (const anchor of document.querySelectorAll<HTMLAnchorElement>(
@@ -160,9 +163,8 @@ export default function initLerpScroll(
 }
 
 function getFrom(lerpObject: NumberLerpable, lastTarget: number) {
-	return Math.abs(lerpObject.value - lastTarget) <= 1000
-		? lastTarget
-		: lerpObject.value;
+	const diff = Math.abs(lerpObject.value - lastTarget);
+	return diff <= 1000 ? lastTarget : lerpObject.value;
 }
 // 	target: Window | HTMLElement,
 // 	lerpAlpha: number,
