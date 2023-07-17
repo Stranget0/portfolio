@@ -47,7 +47,7 @@ const hasFullscreenImages = !!fullscreenImages?.length;
 const hasFloatingImages = !!floatingImages?.length;
 const showFloatingRefsInMain = hasFloatingImages && !hasFullscreenImages;
 
-const isScrollRefFeature = hasFullscreenImages || !!description;
+const isScrollRefFeature = true;
 
 const hasTech = !!technologies?.length;
 
@@ -61,9 +61,8 @@ const { Content } = await render();
 	data-text-timings={audioTextTimings}
 >
 	{title && <SectionItemTitle title={title} />}
-	<SectionTopFixed
-	>
-		<SectionYear startYear={startYear} endYear={endYear}/>
+	<SectionTopFixed>
+		<SectionYear startYear={startYear} endYear={endYear} />
 		<SectionLinks website={website} github={github} />
 	</SectionTopFixed>
 

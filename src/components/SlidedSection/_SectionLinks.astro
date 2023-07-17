@@ -9,32 +9,38 @@ interface Props {
 const { github, website } = Astro.props;
 ---
 
-<nav
-	class="pointer-events-auto flex flex-col h-max relative gap-4 menu-opafocus mr-4 2xl:flex-row"
->
-	<SectionLink
-		href="#contact"
-		labelShort="Call me"
-		label="help me make more!"
-		wrapperClass="text-xs"
-		iconClass="i-mingcute-message-3-fill"
-	/>
-	{
-		website && (
-			<SectionLink
-				href={website}
-				label="website"
-				iconClass="i-mingcute-earth-line"
-			/>
-		)
-	}
-	{
-		github && (
-			<SectionLink
-				href={github}
-				label="github"
-				iconClass="i-mingcute-github-fill"
-			/>
-		)
-	}
-</nav>
+<div class="relative h-max">
+	<div
+		class="absolute -inset-4 overflow-hidden before:(pseudo-full bleed -z-1)"
+	>
+	</div>
+	<nav
+		class="pointer-events-auto flex flex-col items-end h-max relative gap-2 menu-opafocus 2xl:(flex-row items-start)"
+	>
+		<SectionLink
+			href="#contact"
+			labelShort="Call me"
+			label="help me make more!"
+			wrapperClass="text-xs"
+			iconClass="i-mingcute-message-3-fill"
+		/>
+		{
+			website && (
+				<SectionLink
+					href={website}
+					label="website"
+					iconClass="i-mingcute-earth-line"
+				/>
+			)
+		}
+		{
+			github && (
+				<SectionLink
+					href={github}
+					label="github"
+					iconClass="i-mingcute-github-fill"
+				/>
+			)
+		}
+	</nav>
+</div>

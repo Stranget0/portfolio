@@ -14,12 +14,12 @@ import { colors, themeColorsRule } from "./unoUtils/colorsTheme";
 import { shake, marquee } from "./unoUtils/animations";
 
 const shortcuts = {
-	"text-title-1": "font-serif text-5xl font-extrabold tracking-5 uppercase",
-	"text-title-2": "font-serif text-4xl font-extrabold tracking-5 uppercase",
+	"text-title-1": "font-serif text-5xl font-extrabold tracking-.3em uppercase",
+	"text-title-2": "font-serif text-4xl font-extrabold tracking-.3em uppercase",
 	"text-subtitle-1":
-		"font-serif text-3xl font-bold tracking-3 leading-100% uppercase",
+		"font-serif text-3xl font-bold tracking-.3em uppercase",
 	"text-subtitle-2":
-		"font-serif text-xl font-bold tracking-3 leading-100% uppercase",
+		"font-serif text-xl font-bold tracking-.3em uppercase",
 	"text-button": "font-serif text-lg font-normal tracking-2",
 	"text-subtitle-3": "font-serif text-xl font-medium leading-140% tracking-0.5",
 	"text-subtitle-4": "text-4 font-light leading-140% tracking-0.5",
@@ -28,7 +28,7 @@ const shortcuts = {
 	"text-label": "text-xs font-thin tracking-2 lowercase",
 	"text-sm": "text-sm font-thin",
 	"text-xs": "text-xs font-thin",
-	section: "px-4 py-10 lg:px-36 flex flex-col justify-center",
+	section: "px-4 py-10 lg:px-16 flex flex-col justify-center",
 	"aspect-card": "aspect-[63/88]",
 	"aspect-card-rotated": "aspect-[88/63]",
 	"pseudo-full": "absolute inset-0 content",
@@ -43,6 +43,7 @@ const shortcuts = {
 };
 
 const fontSizes = {
+	lg: "clamp(1rem, 0.75vw + 1rem, 7rem)",
 	xl: "clamp(1.25rem, 1vw + 1rem, 10.24rem)",
 	"2xl": "clamp(1.5rem, 2vw + 1rem, 12.8rem)",
 	"3xl": "clamp(1.875rem, 3vw + 1rem, 16rem)",

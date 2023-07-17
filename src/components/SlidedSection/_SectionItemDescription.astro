@@ -11,35 +11,32 @@ const { text, class: className, ...other } = Astro.props;
 const descClass = ["text-body prose", className];
 ---
 
-
-<div class="bleed">
-	<SectionFixed
-		class="z-4 flex-col-center justify-center items-center mix-blend-difference prose mx-auto text-center top-20vh max-w-full bottom-0 left-8 right-8 sm:top-0"
-		data-scroll-target
-	>
-		<!-- TODO: FIX TYPE -->{
-			text ? (
-				text
-					.split("\n")
-					.map((t) => (
-						<AppearingLine
-							{...(other as any)}
-							text={t}
-							class={descClass}
-							group="description"
-						/>
-					))
-			) : (
-				<div class:list={descClass}>
-					<slot />
-				</div>
-			)
-		}
-	</SectionFixed>
-	<div
-		class="w-full h-200"
-		data-scroll-target-ref
-		data-scroll-ref-offsets="start end 0.5 0.5"
-	>
-	</div>
+<SectionFixed
+	class="z-200 flex-col-center justify-center items-center mix-blend-difference prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 lg:(right-36 left-36 bottom-8)"
+	data-scroll-target
+>
+	<!-- TODO: FIX TYPE -->{
+		text ? (
+			text
+				.split("\n")
+				.map((t) => (
+					<AppearingLine
+						{...(other as any)}
+						text={t}
+						class={descClass}
+						group="description"
+					/>
+				))
+		) : (
+			<div class:list={descClass}>
+				<slot />
+			</div>
+		)
+	}
+</SectionFixed>
+<div
+	class="w-full h-200 bleed"
+	data-scroll-target-ref
+	data-scroll-ref-offsets="start end 0.5 0.5"
+>
 </div>
