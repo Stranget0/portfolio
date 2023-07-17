@@ -9,6 +9,7 @@ import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionF
 import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
 import sortTechnologies from "@utils/sortTechnologies";
 import SectionLinks from "@components/SlidedSection/_SectionLinks.astro";
+import SectionHeading from "@components/SlidedSection/_SectionHeading.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -56,15 +57,16 @@ const { Content } = await render();
 	data-text-timings={audioTextTimings}
 >
 	{title && <SectionItemTitle title={title} />}
-	{
-		!!(website || github) && (
-			<SectionLinks website={website} github={github}/>
-		)
-	}
+	{!!(website || github) && <SectionLinks website={website} github={github} />}
 
-	{description && <SectionItemDescription text={description} />}
+	<SectionItemDescription text={description}>
+		<Content
+			components={{
+				h1: SectionHeading,
+			}}
+		/>
+	</SectionItemDescription>
 
-	<Content />
 	{
 		hasFullscreenImages && (
 			<SectionFullscreenImages
