@@ -1,6 +1,5 @@
 ---
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
-import SectionClip from "@components/SectionClip.astro";
 import SectionFixed from "@components/SectionFixed.astro";
 import type { HTMLAttributes } from "astro/types";
 
@@ -9,31 +8,38 @@ interface Props extends HTMLAttributes<"div"> {
 }
 
 const { text, class: className, ...other } = Astro.props;
-const descClass = ["text-body mt-6", className];
+const descClass = ["text-body prose", className];
 ---
 
-<SectionClip
-	class="w-full h-200 z-4 bleed"
-	data-scroll-target-ref
-	data-scroll-ref-offsets="start end 0.5 0.5"
->
-	<SectionFixed class="flex justify-center items-center mix-blend-difference" data-scroll-target>
+
+<div class="bleed">
+	<SectionFixed
+		class="z-4 flex-col-center justify-center items-center mix-blend-difference prose mx-auto text-center top-20vh max-w-full bottom-0 left-8 right-8 sm:top-0"
+		data-scroll-target
+	>
 		<!-- TODO: FIX TYPE -->{
-			text && (
-				<AppearingLine
-					{...(other as any)}
-					text={text}
-					class:list={descClass}
-					group="description"
-				/>
-			)
-		}
-		{
-			!text && (
-				<div class:list={[...descClass, "bleed"]}>
+			text ? (
+				text
+					.split("\n")
+					.map((t) => (
+						<AppearingLine
+							{...(other as any)}
+							text={t}
+							class={descClass}
+							group="description"
+						/>
+					))
+			) : (
+				<div class:list={descClass}>
 					<slot />
 				</div>
 			)
 		}
 	</SectionFixed>
-</SectionClip>
+	<div
+		class="w-full h-200"
+		data-scroll-target-ref
+		data-scroll-ref-offsets="start end 0.5 0.5"
+	>
+	</div>
+</div>
