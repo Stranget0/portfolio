@@ -9,6 +9,7 @@ export default function initLerpPositions(
 ) {
 	let frameId = -1;
 	let isRunning = false;
+	let onCancel: VoidFunction | null | undefined = null;
 
 	function lerpPositions<T>(
 		from: LerpObject<T>,
@@ -39,11 +40,13 @@ export default function initLerpPositions(
 	) {
 		cancel();
 		isRunning = true;
+		onCancel = onFinish;
 		lerpPositions(from, to, alpha, localEPS, onFinish);
 	}
 
 	function cancel() {
 		isRunning = false;
+		onCancel?.();
 		cancelAnimationFrame(frameId);
 	}
 
