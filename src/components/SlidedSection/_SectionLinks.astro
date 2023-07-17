@@ -1,5 +1,4 @@
 ---
-import Button from '@components/Button.astro';
 import SectionLink from "./_SectionLink.astro"
 
 interface Props{
@@ -10,11 +9,12 @@ interface Props{
 const {github,website} = Astro.props
 ---
 
-<nav class="flex fixed z-100 gap-4 mix-blend-difference menu-opafocus animated-underline-right animated-underline-primary-50 top-font-4xl mt-font-4xl pt-6 mr-4 sm:(top-font-4xl mt-4 right-4 pt-0 mt-4) lg:right-16">
+<nav class="flex fixed z-100 w-max gap-4 menu-opafocus top-15 mt-font-4xl mr-4 right-4 sm:(top-font-4xl mt-2) lg:right-16">
+	<div class="absolute -inset-3 overflow-hidden before:(pseudo-full bleed)"/>
 	{website && (
-		<SectionLink href={website} label="website" iconClass='i-mingcute-earth-line'/>
+		<SectionLink href={website} label="website" iconClass='i-mingcute-earth-line mix-blend-difference'/>
 		)}
 	{github && (
-		<SectionLink href={github} label="github" iconClass='i-mingcute-github-fill'/>
+		<SectionLink href={github} label="github" iconClass='i-mingcute-github-fill mix-blend-difference'/>
 	)}
 </nav>
