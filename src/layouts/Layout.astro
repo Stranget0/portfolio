@@ -3,8 +3,7 @@ import Header from "../components/Header.astro";
 import SEO from "../components/SEO.astro";
 import "@unocss/reset/tailwind-compat.css";
 import Background from "@components/Background.astro";
-import LerpScrolling from "@components/LerpScrolling.astro";
-import StaticViewportUnits from "@components/StaticViewportUnits/StaticViewportUnits.astro";
+import Plugins from "@plugins/Plugins.astro";
 ---
 
 <!DOCTYPE html>
@@ -18,9 +17,8 @@ import StaticViewportUnits from "@components/StaticViewportUnits/StaticViewportU
 				background-color: transparent;
 			}
 		</style>
-		<StaticViewportUnits />
-		<LerpScrolling />
 		<SEO />
+		<Plugins/>
 	</head>
 	<body
 		class="theme-default text-primary-950 font-sans overflow-y-auto overflow-x-hidden drop-shadow-color-black drop-shadow-color-opacity-50"
