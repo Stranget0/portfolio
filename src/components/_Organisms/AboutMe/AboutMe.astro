@@ -1,7 +1,7 @@
 ---
 import Button from "@components/Button.astro";
 import myImage from "@assets/me.png";
-import { Picture, Image } from "@astrojs/image/components";
+import { Picture} from "@astrojs/image/components";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SocialLinks from "@components/SocialLinks.astro";
@@ -16,7 +16,7 @@ import SocialLinks from "@components/SocialLinks.astro";
 			alt="Picture of me"
 			fit="contain"
 			aspect-ratio="1:20"
-			sizes="(min-width: 768px) 320px, (min-width:1428px) 500px, 700px"
+			sizes="(max-width: 768px) 320px, (max-width:1428px) 500px, 700px"
 			widths={[320,500,700]}
 			class="sticky top-4 object-contain rounded-100% md:(top-8 max-h-80vh max-w-min w-full)"
 		/>
