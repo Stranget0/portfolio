@@ -4,6 +4,7 @@ import SectionClip from "@components/SectionClip.astro";
 import SectionFixed from "@components/SectionFixed.astro";
 import type { ImageString } from "src/utilTypes/image";
 import SectionFloatingImagesReferences from "./_SectionFloatingImagesReferences.astro";
+import resolveImageImport from "@utils/resolveImageImport";
 
 type Props = { images: ImageString[]; floatingImages?: ImageString[] };
 const { images, floatingImages } = Astro.props;
@@ -12,19 +13,20 @@ const hasFloatingImages = !!floatingImages?.length;
 
 <ul class="w-full isolate clip-full">
 	{
-		images.map(([src, alt], i, { length }) => {
+		images.map(([name, alt], i, { length }) => {
 			const isLast = i === length - 1;
 			const showFloatingImagesRefs = isLast && hasFloatingImages;
 
 			return (
 				<li style={{ "z-index": length - i }}>
 					<SectionClip class="min-h-150 w-full flex flex-col">
-						<SectionFixed class="flex justify-center items-center">
+						<SectionFixed class="inset-4 top-42 bottom-4 flex justify-center items-center">
 							<Image
-								src={import(`../../assets/${src}.jpg`)}
+								src={resolveImageImport(name)}
 								alt={alt || ""}
 								width={1000}
-								class="mx-auto rounded-2xl"
+								fit="contain"
+								class="object-contain mx-auto rounded-2xl w-max max-w-full max-h-full"
 							/>
 						</SectionFixed>
 						{showFloatingImagesRefs && (

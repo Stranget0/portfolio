@@ -2,17 +2,18 @@
 import SectionFixed from "@components/SectionFixed.astro";
 import ImagesCheckboard from "../ImagesCheckboard.astro";
 import type { ImageString , ImageSrc} from "src/utilTypes/image";
+import resolveImageImport from "@utils/resolveImageImport";
 
 type Props = { images: ImageString[] };
 const { images } = Astro.props;
-const imagesImports = [...images].reverse().map<[ImageSrc, string]>(([name, alt])=>[import(`../../assets/${name}.jpg`), alt]);
+const imagesImports = [...images].reverse().map<[ImageSrc, string]>(([name, alt])=>[resolveImageImport(name), alt]);
 ---
 
-<SectionFixed class="flex justify-center">
+<SectionFixed class="top-42 bottom-4 flex justify-center">
 	<ImagesCheckboard
 		images={imagesImports}
 		imageProps={{ "data-scroll-target": true, class:"shadow-lg shadow-black"}}
-		class="absolute z-5 top-17vh bottom-4 left-4 right-4 lg:(right-36 left-36 bottom-8) mx-auto"
+		class="absolute z-5 mx-auto top-0 bottom-4 left-4 right-4 h-full lg:(right-36 left-36 bottom-8)"
 	/>
 </SectionFixed>
 
