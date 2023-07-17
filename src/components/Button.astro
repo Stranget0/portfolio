@@ -34,8 +34,8 @@ const {
 <Tag
 	class:list={[
 		"rounded relative outline-offset-4 transition-interactive w-full mix-blend-difference border-accent-300",
-		size==="default" && "p-4 text-button",
-		size ==="small" && "px-2 py-1 text-xs",
+		size === "default" && "p-4 text-button",
+		size === "small" && "px-2 py-1 text-xs",
 		visualType === "simple" &&
 			"bg-primary-100 text-primary-950 hover:bg-accent-50",
 		visualType === "outline" && "border-2",
@@ -45,8 +45,10 @@ const {
 >
 	{
 		wordTimings ? (
-			<AppearingText as="span" wordTimings={wordTimings}>
+			<AppearingText as="span" class="flex-center gap-2" wordTimings={wordTimings}>
+				<slot name="before"/>
 				<AppearingLine as="span" text={text} />
+				<slot name="after"/>
 			</AppearingText>
 		) : (
 			<slot>LOREM IPSUM NIHIL NOVI</slot>
