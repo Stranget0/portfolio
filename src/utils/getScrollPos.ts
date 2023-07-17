@@ -1,4 +1,4 @@
-import type { Target } from "./lerpScroll";
+import type { Target } from "./initLerpScroll";
 
 export function getScrollPos(target: Target, d: "x" | "y"): number {
 	const map = {

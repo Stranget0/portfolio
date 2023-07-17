@@ -8,13 +8,11 @@ import createCleanFunction from "./createCleanFunction";
 
 export type Target = Window | HTMLElement;
 
-export default function initSmoothScroll(
+export default function initLerpScroll(
 	target: Target,
 	lerpAlpha: number,
 	strength: number
 ) {
-	const EPS = 1;
-
 	const xLerp = new NumberLerpable(getScrollPos(target, "x"));
 	const yLerp = new NumberLerpable(getScrollPos(target, "y"));
 
@@ -25,12 +23,12 @@ export default function initSmoothScroll(
 
 	const { startLerp: startLerpY, cancel: cancelY } = initLerpPositions(() => {
 		target.scrollTo({ top: yLerp.value });
-	}, EPS);
+	});
 	cleanMenago.push(cancelY);
 
 	const { startLerp: startLerpX, cancel: cancelX } = initLerpPositions(() => {
 		target.scrollTo({ left: xLerp.value });
-	}, EPS);
+	});
 	cleanMenago.push(cancelX);
 
 	let isScrollbarActive = false;
@@ -56,7 +54,61 @@ export default function initSmoothScroll(
 	target.addEventListener("wheel", onWheel, { passive: false });
 	cleanMenago.push(() => target.removeEventListener("wheel", onWheel));
 
-	return cleanMenago.clean;
+	handleAnchorsScroll();
+
+	return { clean: cleanMenago.clean, scrollToElement };
+
+	function handleAnchorsScroll() {
+		for (const anchor of document.querySelectorAll<HTMLAnchorElement>(
+			'a[href^="#"]'
+		)) {
+			const handleAnchorScroll = (e: MouseEvent): void => {
+				e.preventDefault();
+				const clickTarget = e.target as HTMLElement | undefined;
+				const anchor =
+					clickTarget?.tagName === "a"
+						? (clickTarget as HTMLAnchorElement)
+						: clickTarget?.closest<HTMLAnchorElement>("a");
+				if (!anchor?.href) return;
+				const index = anchor.href.lastIndexOf("#");
+				const selector = anchor.href.substring(index);
+				const scrollTarget = document.querySelector<HTMLElement>(selector);
+				if (!scrollTarget) return;
+
+				scrollToElement(scrollTarget);
+			};
+			anchor.addEventListener("click", handleAnchorScroll);
+			cleanMenago.push(() =>
+				anchor.removeEventListener("click", handleAnchorScroll)
+			);
+		}
+	}
+
+	function scrollToElement(scrollTarget: HTMLElement) {
+		const yPromise = new Promise<void>((resolve) => {
+			lastTargetY = handleDirection(
+				yLerp,
+				scrollTarget.offsetTop,
+				startLerpY,
+				"y",
+				undefined,
+				resolve
+			);
+		});
+
+		const xPromise = new Promise<void>((resolve) => {
+			lastTargetX = handleDirection(
+				xLerp,
+				scrollTarget.offsetLeft,
+				startLerpX,
+				"x",
+				undefined,
+				resolve
+			);
+		});
+
+		return Promise.all([xPromise, yPromise]);
+	}
 
 	function onWheel(e: WheelEvent | Event): void {
 		if (!(e instanceof WheelEvent)) throw new Error("Invalid event type");
@@ -73,44 +125,45 @@ export default function initSmoothScroll(
 
 		e.preventDefault();
 
-		lastTargetX = handleDirection(
-			xLerp,
-			lastTargetX,
-			e.deltaX * multiplier,
-			startLerpX,
-			"x"
+		// last target pos could be out of sync with current scroll position. If so use current scroll position instead
+		const fromX = getFrom(xLerp, lastTargetX);
+		const fromY = getFrom(yLerp, lastTargetY);
+
+		const toX = clamp(
+			fromX + e.deltaX * multiplier * strength,
+			0,
+			getMaxPos(target, "x")
 		);
-		lastTargetY = handleDirection(
-			yLerp,
-			lastTargetY,
-			e.deltaY * multiplier,
-			startLerpY,
-			"y"
+		const toY = clamp(
+			fromY + e.deltaY * multiplier * strength,
+			0,
+			getMaxPos(target, "y")
 		);
 
-		function handleDirection(
-			lerpObject: NumberLerpable,
-			lastTarget: number,
-			delta: number,
-			startLerp: ReturnType<typeof initLerpPositions>["startLerp"],
-			d: "x" | "y"
-		) {
-			lerpObject.value = getScrollPos(target, d);
+		lastTargetX = handleDirection(xLerp, toX, startLerpX, "x", 1);
+		lastTargetY = handleDirection(yLerp, toY, startLerpY, "y", 1);
+	}
 
-			// last target pos could be out of sync with current scroll position. If so use current scroll position instead
-			const from =
-				Math.abs(lerpObject.value - lastTarget) <= 1000
-					? lastTarget
-					: lerpObject.value;
+	function handleDirection(
+		lerpObject: NumberLerpable,
+		to: number,
+		startLerp: ReturnType<typeof initLerpPositions>["startLerp"],
+		d: "x" | "y",
+		EPS?: number,
+		onFinish?: VoidFunction
+	) {
+		lerpObject.value = getScrollPos(target, d);
+		startLerp(lerpObject, to, lerpAlpha, EPS, onFinish);
 
-			const to = clamp(from + delta * strength, 0, getMaxPos(target, d));
-			startLerp(lerpObject, to, lerpAlpha);
-
-			return to;
-		}
+		return to;
 	}
 }
 
+function getFrom(lerpObject: NumberLerpable, lastTarget: number) {
+	return Math.abs(lerpObject.value - lastTarget) <= 1000
+		? lastTarget
+		: lerpObject.value;
+}
 // 	target: Window | HTMLElement,
 // 	lerpAlpha: number,
 // 	strength: number

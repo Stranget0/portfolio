@@ -10,34 +10,46 @@ export default function initLerpPositions(
 	let frameId = -1;
 	let isRunning = false;
 
-	function lerpPositions<T>(from: LerpObject<T>, to: T, alpha: number) {
+	function lerpPositions<T>(
+		from: LerpObject<T>,
+		to: T,
+		alpha: number,
+		localEPS: number,
+		onFinish?: VoidFunction
+	) {
 		const distance = from.distanceTo(to);
-		if (distance < EPS) {
+		if (distance < localEPS) {
+			onFinish?.();
 			isRunning = false;
 			return;
 		}
 		frameId = requestAnimationFrame(() => {
 			from.lerp(to, alpha);
 			onUpdate();
-			lerpPositions(from, to, alpha);
+			lerpPositions(from, to, alpha, localEPS, onFinish);
 		});
 	}
 
-	function startLerp<T>(from: LerpObject<T>, to: T, alpha = 0.1) {
+	function startLerp<T>(
+		from: LerpObject<T>,
+		to: T,
+		alpha = 0.1,
+		localEPS = EPS,
+		onFinish?: VoidFunction
+	) {
 		cancel();
 		isRunning = true;
-		lerpPositions(from, to, alpha);
+		lerpPositions(from, to, alpha, localEPS, onFinish);
 	}
 
 	function cancel() {
+		isRunning = false;
 		cancelAnimationFrame(frameId);
 	}
 
 	return {
 		cancel,
 		startLerp,
-		isRunning() {
-			return isRunning;
-		},
+		isRunning: () => isRunning,
 	};
 }
