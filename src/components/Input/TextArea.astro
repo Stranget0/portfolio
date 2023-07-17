@@ -6,12 +6,13 @@ import classNames from "classnames";
 type Props = HTMLAttributes<"textarea"> & {
 	id: string;
 	label: string;
+	name: string;
 	wrapperClass?: string;
 };
 
-const { label, class: className, wrapperClass, ...other } = Astro.props;
+const { label, name, class: className, wrapperClass, ...other } = Astro.props;
 
-const common = { name: other.id, ...other };
+const common = { name, ...other };
 ---
 
 <InputWrapper
