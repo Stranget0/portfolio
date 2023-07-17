@@ -35,17 +35,21 @@ const waypointsData = {
 		>
 			<ContactInputContainer>
 				<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1" />
-				<Input id="contact-name" label="name" wrapperClass="bg-primary-950" />
+				<Input id="contact-name" label="name" wrapperClass="bg-primary-950" required/>
 				<Input
 					id="contact-email"
 					label="email"
 					type="email"
 					wrapperClass="bg-primary-950"
+					required
 				/>
 				<TextArea
 					id="contact-message"
 					label="message"
 					wrapperClass="bg-primary-950"
+					required
+					minlength={10}
+					maxlength={1000}
 				/>
 				<Button type="submit" visualType="outline">Submit</Button>
 			</ContactInputContainer>

@@ -31,6 +31,8 @@ export default function loadFox(controller: ThreeController) {
 		animationManager.shakeHead();
 
 		controller.frameListeners.push(() => animationManager.update());
+
+		return animationManager;
 	});
 
 	return { fox, foxAnimations };

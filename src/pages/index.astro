@@ -7,7 +7,7 @@ import HeroSection from "@components/_Organisms/HeroSection/HeroSection.astro";
 import OtherTechnologies from "@components/_Organisms/OtherTechnologies/OtherTechnologies.astro";
 import ContactSection from "@components/_Organisms/ContactSection/ContactSection.astro";
 import AboutMe from "@components/_Organisms/AboutMe/AboutMe.astro";
-
+import { Toaster } from 'solid-toast';
 // const text =
 // 	"We have a fantastic little sky! Let's put some happy little bushes on the other side now. Take your time. Speed will come later. Look at them little rascals. That's a crooked tree. We'll send him to Washington. You can create anything that makes you happy. Just let go - and fall like a little waterfall. We must be quiet, soft and gentle. We don't have anything but happy trees here. Let's build some happy little clouds up here. I thought today we would do a happy little picture. We need dark in order to show light. That's a son of a gun of a cloud. Maybe there's a happy little bush that lives right there. Maybe we got a few little happy bushes here, just covered with snow. We'll put all the little clouds in and let them dance around and have fun. Only God can make a tree - but you can paint one. This is a fantastic little painting. Didn't you know you had that much power? You can move mountains. You can do anything. You can create beautiful things - but you have to see them in your mind first. I was blessed with a very steady hand; and it comes in very handy when you're doing these little delicate things. A big strong tree needs big strong roots. Volunteering your time; it pays you and your whole community fantastic dividends. Just make little strokes like that. Maybe there's a little something happening right here. Van Dyke Brown is a very nice brown, it's almost like a chocolate brown. We'll have a super time. Use what happens naturally, don't fight it.";
 // const textMock = text.split(" ").reduce((acc, word, i) => {
@@ -25,6 +25,9 @@ import AboutMe from "@components/_Organisms/AboutMe/AboutMe.astro";
 
 <Layout>
 	<div data-taxi-view class="w-full">
+		<Toaster client:idle position="bottom-left" toastOptions={{
+			className:"text-primary-950"
+		}}/>
 		<ThreeScene />
 		<HeroSection />
 		<AboutMe/>
@@ -33,7 +36,7 @@ import AboutMe from "@components/_Organisms/AboutMe/AboutMe.astro";
 		<!-- <section
 			class="section h-screen relative glass-backdrop"
 			data-static-h="100vh"
-		>
+			>
 			<Button text="Help me make more!" wordTimings={[]} />
 		</section> -->
 		<ContactSection />

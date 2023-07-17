@@ -17,6 +17,7 @@
 	"dependencies": {
 		"@astrojs/image": "^0.16.6",
 		"@astrojs/mdx": "^0.19.7",
+		"@astrojs/solid-js": "^2.2.0",
 		"@unseenco/taxi": "^1.2.2",
 		"astro": "^2.6.4",
 		"classnames": "^2.3.2",
@@ -25,6 +26,8 @@
 		"motion": "^10.16.2",
 		"ramda": "^0.29.0",
 		"sharp": "^0.32.1",
+		"solid-js": "^1.4.3",
+		"solid-toast": "^0.5.0",
 		"three": "^0.152.2",
 		"zod": "^3.21.4",
 		"zustand": "^4.3.7"

@@ -1,3 +1,49 @@
-<form netlify class="flex flex-col gap-4 w-full max-h-50vh min-h-55 flex-1 md:(max-w-70 h-full max-h-120) lg:max-w-50% xl:max-w-xl">
-	<slot/>
+<form
+	netlify
+	name="contact"
+	method="post"
+	action="#"
+	class="flex flex-col gap-4 w-full max-h-50vh min-h-55 flex-1 md:(max-w-70 h-full max-h-120) lg:max-w-50% xl:max-w-xl"
+>
+	<slot />
 </form>
+
+<script>
+	import toast from "solid-toast";
+	import foxController from "@components/ThreeScene/fox";
+
+	const form = document.querySelector("form[name='contact']");
+	if (!form) throw new Error("No form found");
+	form.addEventListener("submit", async (event) => {
+		const e = event as SubmitEvent;
+		e.preventDefault();
+
+		const submitter = e.submitter as HTMLButtonElement;
+		submitter.disabled = true;
+
+		const myForm = e.target as HTMLFormElement;
+		const formData = new FormData(myForm);
+
+		fetch("/", {
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: new URLSearchParams(formData as any).toString(),
+		})
+			.then(() => {
+				toast.success("Thank you! I have received your message 😁");
+			})
+			.catch((error) => {
+				toast.error(error + "");
+			}).finally(()=>{
+				prepareToUnlockButton(submitter);
+			});
+
+		foxController.then((c) => c.foxAnimations.then((fox) => fox.smile()));
+	});
+
+	function prepareToUnlockButton(submitter: HTMLButtonElement) {
+		setTimeout(() => {
+			submitter.disabled = false;
+		}, 5000);
+	}
+</script>
