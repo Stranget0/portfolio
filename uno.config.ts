@@ -21,7 +21,9 @@ const shortcuts = {
 	"text-subtitle-2":
 		"font-serif text-xl font-bold tracking-3 leading-100% uppercase",
 	"text-button": "font-serif text-lg font-normal tracking-2",
-	"text-body": "text-base font-extralight leading-110% tracking-0.5",
+	"text-subtitle-3": "font-serif text-xl font-medium leading-140% tracking-0.5",
+	"text-subtitle-4": "text-4 font-light leading-140% tracking-0.5",
+	"text-body": "text-base font-extralight leading-140% tracking-0.5",
 	"text-body-u": "text-body uppercase",
 	"text-label": "text-xs font-thin tracking-2 lowercase",
 	"text-sm": "text-sm font-thin",
