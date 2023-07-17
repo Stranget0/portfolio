@@ -121,7 +121,7 @@ export default function initLerpScroll(
 			return;
 
 		const isLineMode = e.deltaMode === 1;
-		const multiplier = isLineMode ? 40 : 1;
+		const multiplier = isLineMode ? 16 : 1;
 
 		e.preventDefault();
 
