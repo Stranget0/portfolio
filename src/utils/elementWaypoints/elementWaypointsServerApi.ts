@@ -1,4 +1,4 @@
-import { chunk } from "lodash";
+import chunk from "lodash/chunk";
 import type { CreateWaypoint } from "./types";
 
 export default function createWaypoint<C extends number[]>(

@@ -3,7 +3,8 @@ import { getCollection, getEntryBySlug } from "astro:content";
 import Technologies from "@components/Technologies.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import sortTechnologies from "@utils/sortTechnologies";
-import { chunk, partition } from "lodash";
+import partition from "lodash/partition";
+import chunk from "lodash/chunk";
 
 const projects = await getCollection("projects");
 const usedTechnologies = projects.flatMap(({ data }) => {

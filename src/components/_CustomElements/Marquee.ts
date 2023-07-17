@@ -1,4 +1,4 @@
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 
 export default class Marquee extends HTMLElement {
 	clean?: VoidFunction;

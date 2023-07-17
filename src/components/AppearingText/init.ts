@@ -1,5 +1,5 @@
 import createCleanFunction from "@utils/createCleanFunction";
-import { groupBy } from "lodash";
+import groupBy from "lodash/groupBy";
 import { z } from "zod";
 import { createAwaitSequence } from "../../utils/createAwaitSequence";
 
@@ -12,7 +12,7 @@ const minDuration = 500;
 const stageWordsMap = new WeakMap<HTMLElement, WordsData>();
 const stages = document.querySelectorAll<HTMLElement>("[data-text-timings]");
 
-const { clean, finished } = play(stages[0]);
+const { clean } = play(stages[0]);
 
 setTimeout(clean, 2000);
 
