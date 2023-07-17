@@ -192,16 +192,19 @@ export default defineConfig({
 		// ***************************************************************************************
 		[/^clip-full$/, () => ({ "clip-path": "inset(0)" })],
 		// ***************************************************************************************
-		[/^animated-underline$/,()=>{
-			return `.animated-underline {
+		[
+			/^animated-underline$/,
+			() => {
+				return `.animated-underline {
 				@apply relative before:(pseudo-full top-auto w-full h-0.1em scale-x-0) hover:before:scale-x-100 focus-visible:before:scale-x-1 motion-safe:before:transition-transform;
 				
 				&::before{
 					background-color: var(--underline-color, black);
 					transform-origin: var(--underline-origin, center bottom);
 				}
-			}`
-		}],
+			}`;
+			},
+		],
 		[
 			/^animated-underline-(left|right|center)$/,
 			([_, direction]) => {
@@ -212,14 +215,29 @@ export default defineConfig({
 		],
 		[
 			/^animated-underline-([a-z]+)(?:-(\d+))$/,
-			([_, colorVariant,shade], {theme}) => {
-				
+			([_, colorVariant, shade], { theme }) => {
 				let color = theme.colors[colorVariant];
 				if (shade !== undefined) color = color?.[shade];
 
 				return {
 					"--underline-color": color,
 				};
+			},
+		],
+		// ***************************************************************************************
+		[
+			/^i-logo(\?mask)?$/,
+			([_, mask]) => {
+				const common = (type: "background" | "mask") => ({
+					display: "inline-block",
+					"vertical-align": "middle",
+					[`${type}-size`]: "contain",
+					[`${type}-position`]: "center",
+					[`${type}-repeat`]: "no-repeat",
+					[`${type}-image`]: "url(svg/fox.svg)",
+				});
+				if (mask) return common("mask");
+				return common("background");
 			},
 		],
 	],
