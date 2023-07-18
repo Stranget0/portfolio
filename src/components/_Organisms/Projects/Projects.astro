@@ -2,11 +2,16 @@
 import SlidedSection from "@components/SlidedSection/SlidedSection.astro";
 import Project from "./Project.astro";
 import { getCollection } from "astro:content";
-
+import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 const projects = await getCollection("projects");
 ---
 
-<SlidedSection title="Projects" id="projects" class="pt-50">
+<SlidedSection
+	title="Projects"
+	id="projects"
+	class="pt-50"
+	{...foxObstacleAttrObj}
+>
 	{
 		projects
 			.sort(

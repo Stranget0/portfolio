@@ -5,10 +5,13 @@ import loadFox from "./modules/fox/fox";
 import addLeaves from "./modules/leaves";
 import lights from "./modules/lights/lights";
 import orbit from "./modules/orbit";
+import renderObstacles from "./modules/renderObstacles/renderObstaclesInit";
+import { foxObstacleAttr } from "./constants";
 
 const controller = initHeroController(
 	loadFox,
 	addLeaves,
+	renderObstacles,
 	lights,
 	orbit,
 	fog,
@@ -40,6 +43,7 @@ Promise.all([
 ]).then(() => {
 	controller.renderer.domElement.classList.remove("opacity-0");
 	controller.startLoop();
+	controller.setObstacleSelector(`[${foxObstacleAttr}]`);
 });
 
 export type FoxControllerType = typeof controller;

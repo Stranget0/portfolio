@@ -78,7 +78,9 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 		this.raf();
 		this.onDestroy(() => cancelAnimationFrame(this.frameId));
 	}
-
+	stopLoop() {
+		cancelAnimationFrame(this.frameId);
+	}
 	onDestroy(listener: VoidFunction) {
 		return this.destroyObservable.on(listener);
 	}
