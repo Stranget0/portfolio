@@ -16,10 +16,8 @@ import { shake, marquee } from "./unoUtils/animations";
 const shortcuts = {
 	"text-title-1": "font-serif text-5xl font-extrabold tracking-.3em uppercase",
 	"text-title-2": "font-serif text-4xl font-extrabold tracking-.3em uppercase",
-	"text-subtitle-1":
-		"font-serif text-3xl font-bold tracking-.3em uppercase",
-	"text-subtitle-2":
-		"font-serif text-xl font-bold tracking-.3em uppercase",
+	"text-subtitle-1": "font-serif text-3xl font-bold tracking-.3em uppercase",
+	"text-subtitle-2": "font-serif text-xl font-bold tracking-.3em uppercase",
 	"text-button": "font-serif text-lg font-normal tracking-2",
 	"text-subtitle-3": "font-serif text-xl font-medium leading-140% tracking-0.5",
 	"text-subtitle-4": "text-4 font-light leading-140% tracking-0.5",
@@ -239,6 +237,17 @@ export default defineConfig({
 				});
 				if (mask) return common("mask");
 				return common("background");
+			},
+		],
+		// ***************************************************************************************
+		[
+			/^color-var-([a-z-]+)(?:-(\d+))$/,
+			([_, colorVariant, shade], { theme }) => {
+				let color = theme.colors[colorVariant];
+				if (colorVariant.startsWith("#")) color = colorVariant;
+				if (shade !== undefined) color = color?.[shade];
+				if (!color) return;
+				return { "--color-variable": color, color };
 			},
 		],
 	],

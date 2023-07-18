@@ -44,4 +44,5 @@ function generateVariableColor(colorName: string) {
 export const colors = {
 	...generateVariableColor("primary"),
 	...generateVariableColor("accent"),
+	var: "var(--color-variable)"
 };
