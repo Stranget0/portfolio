@@ -5,7 +5,6 @@ interface Props{
 }
 const {startYear,endYear} = Astro.props
 ---
-<div class="relative isolate overflow-hidden h-max before:(pseudo-full bleed -z-1)">
 	<p class="pointer-events-auto text-lg font-leading-80% font-serif flex flex-col md:flex-row">
 		<span>{startYear}</span>
 		{
@@ -17,4 +16,3 @@ const {startYear,endYear} = Astro.props
 			)
 		}
 	</p>
-</div>

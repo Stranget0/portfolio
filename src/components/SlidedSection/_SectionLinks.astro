@@ -9,11 +9,6 @@ interface Props {
 const { github, website } = Astro.props;
 ---
 
-<div class="relative h-max">
-	<div
-		class="absolute -inset-4 overflow-hidden before:(pseudo-full bleed -z-1)"
-	>
-	</div>
 	<nav
 		class="pointer-events-auto flex flex-col items-end max-w-35vw h-max relative gap-2 menu-opafocus 2xl:(flex-row items-center)"
 	>
@@ -43,4 +38,3 @@ const { github, website } = Astro.props;
 			)
 		}
 	</nav>
-</div>
