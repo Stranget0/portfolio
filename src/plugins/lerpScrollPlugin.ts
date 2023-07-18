@@ -1,3 +1,7 @@
-import initLerpScroll from "@utils/initLerpScroll";
-const lerpScroll = initLerpScroll(window, 0.075, 0.75);
-export default lerpScroll;
+const pointerMedia = matchMedia("(pointer:fine)");
+
+if (pointerMedia.matches) {
+	import("@utils/initLerpScroll").then(({ default: initLerpScroll }) => {
+		initLerpScroll(window, 0.075, 0.75);
+	});
+}

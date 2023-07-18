@@ -7,12 +7,16 @@ import { getMaxPos } from "./getMaxPos";
 import createCleanFunction from "./createCleanFunction";
 
 export type Target = Window | HTMLElement;
+export interface LerpControls {
+	clean: () => void;
+	scrollToElement: (scrollTarget: HTMLElement) => Promise<void>;
+}
 
 export default function initLerpScroll(
 	target: Target,
 	lerpAlpha: number,
 	strength: number
-) {
+): LerpControls {
 	const xLerp = new NumberLerpable(getScrollPos(target, "x"));
 	const yLerp = new NumberLerpable(getScrollPos(target, "y"));
 
@@ -110,7 +114,9 @@ export default function initLerpScroll(
 			);
 		});
 
-		return Promise.all([xPromise, yPromise]);
+		// Make promise type to void only
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		return Promise.all([xPromise, yPromise]).then(() => {});
 	}
 
 	function onWheel(e: WheelEvent | Event): void {
