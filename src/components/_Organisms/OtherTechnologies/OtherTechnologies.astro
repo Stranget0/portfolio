@@ -31,7 +31,7 @@ const techsArr = partition(
 const stagger = 20;
 
 const rightToLeft = (i: number) =>
-	JSON.stringify({ x: [`${100 + stagger * i}%`, `-${100 + stagger * i}%`] });
+	JSON.stringify({ transform: [`${100 + stagger * i}%`, `-${100 + stagger * i}%`].map(x=>`translateX(${x})`) });
 ---
 
 {
@@ -45,7 +45,7 @@ const rightToLeft = (i: number) =>
 				data-scroll-target-ref
 			>
 				<div
-					class="w-full"
+					class="w-full transition-transform"
 					data-scroll-target
 					data-scroll-target-keyframes={rightToLeft(0)}
 				>

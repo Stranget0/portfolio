@@ -2,7 +2,7 @@ import initHeroController from "./foxRoot";
 import elementWaypointsInit from "./modules/waypoints/elementWaypointsInit";
 import fog from "./modules/fog/fog";
 import loadFox from "./modules/fox/fox";
-import addLeaves from "./modules/leaves";
+import addLeaves from "./modules/leaves/leaves";
 import lights from "./modules/lights/lights";
 import orbit from "./modules/orbit";
 import renderObstacles from "./modules/renderObstacles/renderObstaclesInit";

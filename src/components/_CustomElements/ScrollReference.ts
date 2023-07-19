@@ -3,7 +3,7 @@ import createCleanFunction from "@utils/createCleanFunction";
 import { z } from "zod";
 
 const defaultKeyframes = {
-	scale: [0, 0.8, 1, 0.8, 0],
+	transform: [0, 0.8, 1, 0.8, 0].map((scale) => `scale(${scale})`),
 	opacity: [0, 0.3, 1, 0.3, 0],
 };
 
