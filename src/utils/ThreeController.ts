@@ -19,6 +19,7 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	frameListeners: VoidFunction[] = [];
 	frameId = -1;
 
+	isLooping = new Observable(false);
 	private destroyObservable = new Observable(undefined);
 
 	static createWithModules<C extends CameraOptions, Ms extends ThreeModule[]>(
@@ -75,10 +76,13 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	}
 
 	startLoop() {
+		this.stopLoop();
+		this.isLooping.setValue(true);
 		this.raf();
-		this.onDestroy(() => cancelAnimationFrame(this.frameId));
+		this.onDestroy(() => this.stopLoop());
 	}
 	stopLoop() {
+		this.isLooping.setValue(false);
 		cancelAnimationFrame(this.frameId);
 	}
 	onDestroy(listener: VoidFunction) {

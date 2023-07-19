@@ -17,7 +17,7 @@ import textureLoader from "@utils/textureLoader";
 import mulberry32 from "@utils/seedableRandom";
 import randomBetween from "@utils/randomBetween";
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
-import { animate } from "motion";
+import { AnimationControls, animate } from "motion";
 import type ThreeController from "@utils/ThreeController";
 
 const goodLookingSeeds = [64, 342];
@@ -26,9 +26,14 @@ const random = mulberry32(
 );
 
 export default function addLeaves(controller: ThreeController) {
-	const leafs = loadLeafs(30, 1, 2, 3).then((ls) => {
+	const leafs = loadLeafs(30, 1, 2, 3).then(({ leafs: ls, animations }) => {
 		controller.scene.add(...ls);
 		controller.render();
+
+		const cleanLoopingListener = controller.isLooping.on((isLooping) => {
+			animations.forEach(isLooping ? (a) => a.play() : (a) => a.pause());
+		});
+		controller.onDestroy(cleanLoopingListener);
 	});
 	return { leafs };
 }
@@ -50,9 +55,14 @@ async function loadLeafs(
 		variants
 	);
 
-	randomizeTransforms(instancedLeafTypes, amount, radiusFrom, radiusTo);
+	const animations = handleTransformsAnims(
+		instancedLeafTypes,
+		amount,
+		radiusFrom,
+		radiusTo
+	);
 
-	return instancedLeafTypes;
+	return { leafs: instancedLeafTypes, animations };
 }
 
 async function loadSingleLeaf(num: string) {
@@ -86,7 +96,7 @@ async function loadSingleLeaf(num: string) {
 	return leaf;
 }
 
-function randomizeTransforms(
+function handleTransformsAnims(
 	instancedLeafTypes: InstancedMesh[],
 	amount: number,
 	radiusFrom: number,
@@ -100,6 +110,7 @@ function randomizeTransforms(
 		random
 	);
 
+	const animationControls: AnimationControls[] = [];
 	let index = 0;
 	for (const instancedLeafs of instancedLeafTypes) {
 		for (
@@ -109,11 +120,13 @@ function randomizeTransforms(
 		) {
 			randomizeMatrix(matrix, randomPositions[index]);
 			instancedLeafs.setMatrixAt(instanceIndex, matrix);
-			startAnimate(instancedLeafs, matrix, instanceIndex);
-
+			const controls = startAnimate(instancedLeafs, matrix, instanceIndex);
+			animationControls.push(...controls);
 			index++;
 		}
 	}
+
+	return animationControls;
 }
 
 function startAnimate(
@@ -130,7 +143,7 @@ function startAnimate(
 	const m = initialMatrix.clone();
 	const stagger = -index;
 
-	animate(
+	const controls1 = animate(
 		(factor) => {
 			const value = factor * 2 - 1;
 			p.y = p_initial.y + value / 8;
@@ -144,7 +157,7 @@ function startAnimate(
 		}
 	);
 
-	animate(
+	const controls2 = animate(
 		(factor) => {
 			r.x = r_initial.x + factor * 2;
 			r.y = r_initial.y + factor / 2;
@@ -159,6 +172,8 @@ function startAnimate(
 			direction: "alternate",
 		}
 	);
+
+	return [controls1, controls2];
 
 	function update() {
 		m.compose(p, q, s);
