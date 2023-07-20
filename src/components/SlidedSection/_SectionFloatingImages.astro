@@ -16,11 +16,3 @@ const imagesImports = [...images].reverse().map<[ImageSrc, string]>(([name, alt]
 		class="absolute z-5 mx-auto h-full inset-4 top-0 lg:(right-36 left-36 bottom-8)"
 	/>
 </SectionFixed>
-
-<script>
-	import importInView from "@utils/importInView/importInView";
-	importInView(
-		"scroll-reference",
-		() => import("@components/_CustomElements/ScrollReference")
-	);
-</script>

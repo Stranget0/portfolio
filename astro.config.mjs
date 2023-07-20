@@ -8,16 +8,18 @@ import solidJs from "@astrojs/solid-js";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [UnoCSS(), image({
-    serviceEntryPoint: "@astrojs/image/sharp"
-  }), mdx(), solidJs()],
-  vite: {
-    plugins: [visualizer({
-      template: "treemap",
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-      filename: "generated/bundle.html"
-    })]
-  }
+	integrations: [UnoCSS(), image({
+		serviceEntryPoint: "@astrojs/image/sharp"
+	}), mdx(), solidJs()],
+	vite: {
+		plugins: [visualizer({
+			template: "treemap",
+			open: true,
+			gzipSize: true,
+			brotliSize: true,
+			filename: "generated/bundle.html"
+		})]
+	}, 
+	site: "https://msmarzewski.pl", 
+	compressHTML: true,
 });
