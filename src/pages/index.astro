@@ -1,6 +1,5 @@
 ---
 import Footer from "@components/Footer.astro";
-import ThreeScene from "@components/ThreeScene/ThreeScene.astro";
 import Layout from "@layouts/Layout.astro";
 import Projects from "@components/_Organisms/Projects/Projects.astro";
 import HeroSection from "@components/_Organisms/HeroSection/HeroSection.astro";
@@ -28,7 +27,6 @@ import { Toaster } from 'solid-toast';
 		<Toaster client:idle position="bottom-left" toastOptions={{
 			className:"text-primary-950"
 		}}/>
-		<ThreeScene />
 		<HeroSection />
 		<AboutMe/>
 		<Projects />
