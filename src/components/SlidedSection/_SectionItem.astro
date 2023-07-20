@@ -11,9 +11,9 @@ const { class: className, ...other } = Astro.props;
 
 <scroll-reference
 	{...other}
-	class:list={["relative pt-0 pb-0 w-full block bleed flex", className]}
+	class:list={["relative pt-0 pb-0 w-full block flex", className]}
 >
-	<SectionClip class="flex flex-col items-center w-full">
+	<SectionClip class="section flex flex-col items-center w-full">
 		<slot />
 	</SectionClip>
 </scroll-reference>
