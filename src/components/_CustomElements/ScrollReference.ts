@@ -57,10 +57,7 @@ export default class ScrollReference extends HTMLElement {
 				],
 			};
 
-			const clean = scroll(
-				animate(target, keyframes, { easing: "ease-out" }),
-				options
-			);
+			const clean = scroll(animate(target, keyframes), options);
 
 			this.cleanMenago.push(clean);
 		}

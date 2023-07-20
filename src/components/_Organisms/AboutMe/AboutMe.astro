@@ -5,10 +5,12 @@ import { Picture} from "@astrojs/image/components";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SocialLinks from "@components/SocialLinks.astro";
+import {foxObstacleAttrObj} from "@components/ThreeScene/constants"
 ---
 
 <section
 	class="section relative flex flex-col justify-between gap-12 md:flex-row relative text-primary-50 glass-backdrop"
+	{...foxObstacleAttrObj}
 >
 	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block">
 		<Picture
