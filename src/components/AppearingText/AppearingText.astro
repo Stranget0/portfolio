@@ -3,12 +3,28 @@ import type { HTMLTag, Polymorphic } from "astro/types";
 
 type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 	wordTimings: number[];
+	wordsReference: string[];
+	audioPath: string;
+	isDebug?: boolean;
 };
 
-const { as: Tag = "p", wordTimings, ...other } = Astro.props;
+const {
+	as: Tag = "p",
+	wordTimings,
+	audioPath,
+	wordsReference,
+	isDebug,
+	...other
+} = Astro.props;
 ---
 
 <!-- TODO: Fix typing error -->
-<Tag {...other as any} data-text-timings={wordTimings}>
+<Tag
+	{...other as any}
+	data-audio-timings={wordTimings}
+	data-audio-reference={wordsReference}
+	data-audio-path={audioPath}
+	data-debug={isDebug}
+>
 	<slot />
 </Tag>

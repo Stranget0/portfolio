@@ -1,29 +1,16 @@
 ---
 import type { Polymorphic } from "astro/types";
-import AppearingText from "./AppearingText/AppearingText.astro";
 import AppearingLine from "./AppearingText/AppearingLine.astro";
-
-type Conditional =
-	| {
-			wordTimings?: never;
-			text?: never;
-			// eslint-disable-next-line no-mixed-spaces-and-tabs
-	  }
-	| {
-			wordTimings: number[];
-			text: string;
-			// eslint-disable-next-line no-mixed-spaces-and-tabs
-	  };
 
 type Props<T extends "button" | "a"> = Polymorphic<{ as: T }> & {
 	visualType?: "simple" | "outline";
 	size?: "default" | "small";
-} & Conditional;
+	text?: string;
+};
 
 const {
 	visualType = "simple",
 	class: className,
-	wordTimings,
 	text,
 	as: Tag = "button",
 	size = "default",
@@ -44,12 +31,10 @@ const {
 	{...rest}
 >
 	{
-		wordTimings ? (
-			<AppearingText as="span" class="flex-center gap-2" wordTimings={wordTimings}>
+		text ? (
 				<slot name="before"/>
 				<AppearingLine as="span" text={text} />
 				<slot name="after"/>
-			</AppearingText>
 		) : (
 			<slot>LOREM IPSUM NIHIL NOVI</slot>
 		)

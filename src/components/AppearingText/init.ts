@@ -8,9 +8,9 @@ type WordsData = {
 	count: number;
 };
 
-const minDuration = 500;
+const minDuration = 200;
 const stageWordsMap = new WeakMap<HTMLElement, WordsData>();
-const stages = document.querySelectorAll<HTMLElement>("[data-text-timings]");
+const stages = document.querySelectorAll<HTMLElement>("[data-audio-timings]");
 
 const { clean } = play(stages[0]);
 
@@ -25,8 +25,14 @@ function play(stage: HTMLElement) {
 	let timeout2 = -1;
 
 	const wordData = getWordsFromStage(stage);
-	const timingsRaw = stage.dataset.textTimings;
-	const wordTimings = parseTimings(timingsRaw, wordData.count);
+
+	const timingsRaw = stage.dataset.audioTimings || "";
+	const isDebug = stage.dataset.debug === "true";
+	const wordsReference = isDebug
+		? (stage.dataset.audioReference || "").split(",")
+		: null;
+
+	const wordTimings = parseTimings(timingsRaw, wordData, wordsReference);
 
 	let timeOffset = 0;
 	let start = Date.now();
@@ -117,8 +123,33 @@ function play(stage: HTMLElement) {
 	}
 }
 
-function parseTimings(timingsRaw: string | undefined, length: number) {
-	return z.array(z.number().min(minDuration)).length(length).parse(timingsRaw);
+function parseTimings(
+	timingsRaw: string,
+	wordData: WordsData,
+	wordReferences: string[] | null
+) {
+	const timings = timingsRaw.split(",");
+
+	if (wordReferences) {
+		debugWords(wordData, wordReferences);
+	}
+
+	return z
+		.array(z.number().min(minDuration))
+		.length(wordData.count)
+		.parse(timings.map((time) => parseFloat(time)));
+}
+
+function debugWords(wordData: WordsData, wordReferences: string[]) {
+	const nodeWords = wordData.groups.flatMap(([_, nodes]) =>
+		nodes.map((n) => n.textContent || "")
+	);
+	nodeWords.forEach((w, i) => {
+		const w1 = w.toLowerCase().trim();
+		const w2 = (wordReferences[i] || "").toLowerCase().trim();
+		if (w1 === w2) console.log(i, w1, w2);
+		else console.error(i, w1, w2);
+	});
 }
 
 function getWordsFromStage(stage: HTMLElement): WordsData {
@@ -134,7 +165,7 @@ function getWordsFromStage(stage: HTMLElement): WordsData {
 
 	const wordsArr = Array.from(
 		stage.querySelectorAll<HTMLElement>(".appearing-word")
-	);
+	).filter((w) => w.textContent?.trim());
 	const wordsGroup = groupBy(wordsArr, (w) =>
 		parseGroup(w.dataset["data-appearing-group"])
 	);

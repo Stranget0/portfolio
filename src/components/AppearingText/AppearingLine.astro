@@ -38,7 +38,7 @@ for (const w of textArr) {
 	.appearing-word {
 		@apply motion-safe:transition-opacity motion-safe:duration-500 motion-safe:will-change-opacity;
 	}
-	[data-text-timings].playing {
+	[data-audio-timings].playing {
 		:where(&.has-fading-words .appearing-word) {
 			opacity: 0;
 		}
@@ -68,101 +68,5 @@ for (const w of textArr) {
 </style>
 
 <script>
-	document.querySelectorAll<HTMLElement>("[data-text-timings]");
-
-
-	function hasEndOfSentence(text: string) {
-		return /[.!?$]/.test(text);
-	}
-
-	function play(stage: HTMLElement) {
-		const start = Date.now();
-
-		let acc = 0;
-		for (const word of stage.children) {
-			(word as HTMLElement).dataset.startTime = `${start + acc}`;
-			acc += getWordDuration(word as HTMLElement);
-		}
-
-		const word = stage.children.item(0) as HTMLElement;
-		let lastVisibleWord: HTMLElement | null = null;
-		let hideBeforeWord: HTMLElement | null = null;
-		let lastFinishedTransitionWord: HTMLElement | null = null;
-		stage.classList.add("playing");
-		stage.classList.remove("has-finished-words");
-		stage.classList.remove("has-fading-words");
-		playWord(word);
-
-		function setter(
-			currentValue: HTMLElement | null,
-			word: HTMLElement | null,
-			classToAdd: string,
-			classToRemove = classToAdd
-		) {
-			if (currentValue === word) return word;
-			currentValue?.classList.remove(classToRemove);
-			word?.classList.add(classToAdd);
-			return word;
-		}
-
-		function setLastVisibleWord(word: typeof lastVisibleWord) {
-			lastVisibleWord = setter(lastVisibleWord, word, "word-last-visible");
-		}
-		function setHideBeforeWord(word: typeof hideBeforeWord) {
-			hideBeforeWord = setter(hideBeforeWord, word, "word-hide-before");
-		}
-		function setLastFinishedTransitionWord(
-			word: typeof lastFinishedTransitionWord
-		) {
-			stage.classList.add("has-fading-words");
-			lastFinishedTransitionWord = setter(
-				lastFinishedTransitionWord,
-				word,
-				"last-finished-transition"
-			);
-			stage.classList.add("has-finished-words");
-		}
-
-		function showWord(word: HTMLElement | null) {
-			setLastVisibleWord(word);
-		}
-
-		function playWord(
-			word: HTMLElement,
-			lastWord: HTMLElement | null = null,
-			isNewSentence?: boolean
-		) {
-			showWord(word);
-			if (isNewSentence) setLastFinishedTransitionWord(lastWord);
-			const isEndOfSentence = hasEndOfSentence(word.textContent || "");
-			const nextWord = word.nextElementSibling as HTMLElement | null;
-
-			const nextWordStamp = parseInt(nextWord?.dataset.startTime || "0");
-			const timeToNextWord1 = nextWordStamp - Date.now();
-
-			if (nextWord) {
-				setTimeout(() => {
-					playWord(nextWord, word, isEndOfSentence);
-				}, timeToNextWord1);
-			}
-			if (isEndOfSentence) {
-				setTimeout(() => {
-					setHideBeforeWord(nextWord);
-				}, timeToNextWord1 - 500);
-			}
-		}
-	}
-
-	function getWordDuration(word: HTMLElement): number {
-		return parseFloat(word.dataset.wordDuration || "0");
-	}
-
-	// function getWords(parent: HTMLElement) {
-	// 	const res = [];
-	// 	for (const child of parent.childNodes) {
-	// 		if (child.nodeType === 3) {
-	// 			res.push(child.textContent);
-	// 		}
-	// 	}
-	// }
+	import "./init"
 </script>
