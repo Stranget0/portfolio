@@ -15,11 +15,7 @@ const { data: aboutMeAudio } = await getEntry({
 	id: "about-me",
 });
 
-const aboutMeWordData = transcriptDataToTimestamps(aboutMeAudio);
-const aboutMeWordTimings = aboutMeWordData.map(
-	({ timestamp }) => parseFloat(timestamp) * 1000
-);
-const aboutMeWords = aboutMeWordData.map(({ word }) => word);
+const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 ---
 
 <section
@@ -40,8 +36,8 @@ const aboutMeWords = aboutMeWordData.map(({ word }) => word);
 	</div>
 	<AppearingText
 		as="article"
-		wordsReference={aboutMeWords}
-		wordTimings={aboutMeWordTimings}
+		wordsReference={aboutMeTranscript.words}
+		wordTimings={aboutMeTranscript.timestamps}
 		audioPath={aboutMeAudio.audio}
 		class="flex flex-col flex-shrink align-end text-center prose md:(text-right basis-full)"
 	>
