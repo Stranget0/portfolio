@@ -1,628 +1,248 @@
 {
-	"audio":"about-me-f.mp3",
-  "results": [ {
-    "alternatives": [ {
-      "confidence": 0.90164793,
-      "transcript": "nice to meet you my name is Martin and I'm a web developer fakes wise side",
-      "words": [ {
-        "endTime": "0.800s",
-        "startTime": "0.300s",
+	"audio":"about-me.mp3",
+  "results": [{
+    "alternatives": [{
+      "transcript": "nice to meet you my name is Marcin and I am a web developer with a UX/UI side my goal is to deliver functional Dynamic websites that will stand out from the ones that you see every day",
+      "confidence": 0.9488884,
+      "words": [{
+        "startTime": "0s",
+        "endTime": "0.700s",
         "word": "nice"
       }, {
-        "endTime": "1.100s",
-        "startTime": "0.800s",
+        "startTime": "0.700s",
+        "endTime": "1s",
         "word": "to"
       }, {
-        "endTime": "1.200s",
-        "startTime": "1.100s",
+        "startTime": "1s",
+        "endTime": "1.100s",
         "word": "meet"
       }, {
-        "endTime": "1.300s",
-        "startTime": "1.200s",
+        "startTime": "1.100s",
+        "endTime": "1.200s",
         "word": "you"
       }, {
-        "endTime": "1.800s",
-        "startTime": "1.300s",
+        "startTime": "1.200s",
+        "endTime": "1.900s",
         "word": "my"
       }, {
-        "endTime": "2.400s",
-        "startTime": "2.300s",
+        "startTime": "1.900s",
+        "endTime": "2.300s",
         "word": "name"
       }, {
-        "endTime": "2.600s",
-        "startTime": "2.400s",
+        "startTime": "2.300s",
+        "endTime": "2.500s",
         "word": "is"
       }, {
-        "endTime": "2.900s",
-        "startTime": "2.600s",
-        "word": "Martin"
+        "startTime": "2.500s",
+        "endTime": "3s",
+        "word": "Marcin"
       }, {
-        "endTime": "3.300s",
-        "startTime": "2.900s",
+        "startTime": "3s",
+        "endTime": "3.600s",
         "word": "and"
       }, {
-        "endTime": "3.500s",
-        "startTime": "3.300s",
+        "startTime": "3.600s",
+        "endTime": "3.900s",
         "word": "I"
       }, {
-        "endTime": "3.800s",
-        "startTime": "3.500s",
+        "startTime": "3.900s",
+        "endTime": "4.100s",
         "word": "am"
       }, {
-        "endTime": "3.900s",
-        "startTime": "3.800s",
+        "startTime": "4.100s",
+        "endTime": "4.200s",
         "word": "a"
       }, {
-        "endTime": "4s",
-        "startTime": "3.900s",
+        "startTime": "4.200s",
+        "endTime": "4.400s",
         "word": "web"
       }, {
-        "endTime": "4.300s",
-        "startTime": "4s",
+        "startTime": "4.400s",
+        "endTime": "4.700s",
         "word": "developer"
       }, {
-        "endTime": "5.300s",
-        "startTime": "4.300s",
+        "startTime": "4.700s",
+        "endTime": "5.500s",
         "word": "with"
       }, {
-        "endTime": "5.450s",
-        "startTime": "5.300s",
+        "startTime": "5.500s",
+        "endTime": "5.700s",
         "word": "a"
-      },{
-        "endTime": "5.800s",
-        "startTime": "5.450s",
+      }, {
+        "startTime": "5.700s",
+        "endTime": "6.500s",
         "word": "UX/UI"
       }, {
-        "endTime": "5.800s",
-        "startTime": "5.700s",
+        "startTime": "6.900s",
+        "endTime": "7.100s",
         "word": "side"
-      } ]
-    } ],
-    "languageCode": "en-us",
-    "resultEndTime": "6.270s"
-  }, {
-    "alternatives": [ {
-      "confidence": 0.96727985,
-      "transcript": " my goal is to deliver functional simple and creative websites that will catch your eye as a passion that final answer in the other evolving world of web development I take immense pride in grafting digital experiences that not only look stunning but also provides Stillness navigation as intuitive interactions",
-      "words": [ {
-        "endTime": "6.500s",
-        "startTime": "6.300s",
+      }, {
+        "startTime": "7.100s",
+        "endTime": "8.200s",
         "word": "my"
       }, {
-        "endTime": "7s",
-        "startTime": "6.500s",
+        "startTime": "8.200s",
+        "endTime": "8.600s",
         "word": "goal"
       }, {
-        "endTime": "7.200s",
-        "startTime": "7s",
+        "startTime": "8.600s",
+        "endTime": "8.900s",
         "word": "is"
       }, {
-        "endTime": "7.300s",
-        "startTime": "7.200s",
+        "startTime": "8.900s",
+        "endTime": "9s",
         "word": "to"
       }, {
-        "endTime": "7.700s",
-        "startTime": "7.300s",
+        "startTime": "9s",
+        "endTime": "9.400s",
         "word": "deliver"
       }, {
-        "endTime": "8.200s",
-        "startTime": "7.700s",
+        "startTime": "9.400s",
+        "endTime": "9.800s",
         "word": "functional"
       }, {
-        "endTime": "8.800s",
-        "startTime": "8.200s",
-        "word": "simple"
+        "startTime": "9.800s",
+        "endTime": "10.800s",
+        "word": "Dynamic"
       }, {
-        "endTime": "9.200s",
-        "startTime": "8.800s",
-        "word": "and"
-      }, {
-        "endTime": "9.700s",
-        "startTime": "9.200s",
-        "word": "creative"
-      }, {
-        "endTime": "10s",
-        "startTime": "9.700s",
+        "startTime": "10.800s",
+        "endTime": "11.300s",
         "word": "websites"
       }, {
-        "endTime": "10.600s",
-        "startTime": "10s",
+        "startTime": "11.300s",
+        "endTime": "11.700s",
         "word": "that"
       }, {
-        "endTime": "10.900s",
-        "startTime": "10.600s",
+        "startTime": "11.700s",
+        "endTime": "12.200s",
         "word": "will"
       }, {
-        "endTime": "11.000s",
-        "startTime": "10.900s",
-        "word": "catch"
+        "startTime": "12.200s",
+        "endTime": "12.300s",
+        "word": "stand"
       }, {
-        "endTime": "11.300s",
-        "startTime": "11.000s",
-        "word": "your"
+        "startTime": "12.300s",
+        "endTime": "12.500s",
+        "word": "out"
       }, {
-        "endTime": "11.700s",
-        "startTime": "11.300s",
-        "word": "eye"
+        "startTime": "12.500s",
+        "endTime": "12.600s",
+        "word": "from"
       }, {
-        "endTime": "12.700s",
-        "startTime": "11.700s",
-        "word": "as"
-      }, {
+        "startTime": "12.600s",
         "endTime": "12.800s",
-        "startTime": "12.700s",
-        "word": "a"
+        "word": "the"
       }, {
-        "endTime": "13.100s",
         "startTime": "12.800s",
-        "word": "passionate"
+        "endTime": "13.100s",
+        "word": "ones"
       }, {
-        "endTime": "13.700s",
         "startTime": "13.100s",
-        "word": "freelancer"
+        "endTime": "13.700s",
+        "word": "that"
       }, {
-        "endTime": "13.900s",
         "startTime": "13.700s",
-        "word": "in"
+        "endTime": "14s",
+        "word": "you"
       }, {
-        "endTime": "13.900s",
-        "startTime": "13.900s",
-        "word": "the"
+        "startTime": "14s",
+        "endTime": "14.200s",
+        "word": "see"
       }, {
-        "endTime": "14.800s",
-        "startTime": "13.900s",
-        "word": "ever-evolving"
-      }, {
-        "endTime": "15.100s",
-        "startTime": "14.800s",
-        "word": "world"
-      }, {
-        "endTime": "15.500s",
-        "startTime": "15.100s",
-        "word": "of"
-      }, {
-        "endTime": "16s",
-        "startTime": "15.500s",
-        "word": "web"
-      }, {
-        "endTime": "16.400s",
-        "startTime": "16s",
-        "word": "development"
-      }, {
-        "endTime": "17.100s",
-        "startTime": "16.400s",
-        "word": "I"
-      }, {
-        "endTime": "17.500s",
-        "startTime": "17.100s",
-        "word": "take"
-      }, {
-        "endTime": "17.900s",
-        "startTime": "17.500s",
-        "word": "immense"
-      }, {
-        "endTime": "18.300s",
-        "startTime": "17.900s",
-        "word": "pride"
-      }, {
-        "endTime": "18.400s",
-        "startTime": "18.300s",
-        "word": "in"
-      }, {
-        "endTime": "18.700s",
-        "startTime": "18.400s",
-        "word": "crafting"
-      }, {
-        "endTime": "19.300s",
-        "startTime": "18.700s",
-        "word": "digital"
-      }, {
-        "endTime": "19.900s",
-        "startTime": "19.300s",
-        "word": "experiences"
-      }, {
-        "endTime": "20.300s",
-        "startTime": "19.900s",
-        "word": "that"
-      }, {
-        "endTime": "20.700s",
-        "startTime": "20.300s",
-        "word": "not"
-      }, {
-        "endTime": "20.800s",
-        "startTime": "20.700s",
-        "word": "only"
-      }, {
-        "endTime": "21.300s",
-        "startTime": "20.800s",
-        "word": "look"
-      }, {
-        "endTime": "21.600s",
-        "startTime": "21.300s",
-        "word": "stunning"
-      }, {
-        "endTime": "21.900s",
-        "startTime": "21.600s",
-        "word": "but"
-      }, {
-        "endTime": "22.400s",
-        "startTime": "21.900s",
-        "word": "also"
-      }, {
-        "endTime": "22.800s",
-        "startTime": "22.400s",
-        "word": "provide"
-      }, {
-        "endTime": "23.200s",
-        "startTime": "22.800s",
-        "word": "seamless"
-      }, {
-        "endTime": "23.500s",
-        "startTime": "23.200s",
-        "word": "navigation"
-      }, {
-        "endTime": "24.300s",
-        "startTime": "23.500s",
-        "word": "and"
-      }, {
-        "endTime": "24.700s",
-        "startTime": "24.300s",
-        "word": "intuitive"
-      }, {
-        "endTime": "25.200s",
-        "startTime": "24.700s",
-        "word": "interactions"
-      } ]
-    } ],
-    "languageCode": "en-us",
-    "resultEndTime": "25.860s"
+        "startTime": "14.200s",
+        "endTime": "14.600s",
+        "word": "everyday"
+      }]
+    }],
+    "resultEndTime": "15.160s",
+    "languageCode": "en-us"
   }, {
-    "alternatives": [ {
-      "confidence": 0.9594568,
-      "transcript": " I believe that the key to successful web design lies in finding the perfect balance between Aesthetics and functionality",
-      "words": [ {
-        "endTime": "26.300s",
-        "startTime": "25.900s",
+    "alternatives": [{
+      "transcript": " I believe that leaving good customer experience will make your brand recognizable now wanna make some good shit contact me",
+      "confidence": 0.94765437,
+      "words": [{
+        "startTime": "15.200s",
+        "endTime": "15.400s",
         "word": "I"
       }, {
-        "endTime": "26.500s",
-        "startTime": "26.300s",
+        "startTime": "15.400s",
+        "endTime": "15.700s",
         "word": "believe"
       }, {
-        "endTime": "26.800s",
-        "startTime": "26.500s",
+        "startTime": "15.700s",
+        "endTime": "16.200s",
         "word": "that"
       }, {
-        "endTime": "27s",
-        "startTime": "26.800s",
-        "word": "the"
-      }, {
-        "endTime": "27.400s",
-        "startTime": "27s",
-        "word": "key"
-      }, {
-        "endTime": "27.600s",
-        "startTime": "27.400s",
-        "word": "to"
-      }, {
-        "endTime": "27.800s",
-        "startTime": "27.600s",
-        "word": "successful"
-      }, {
-        "endTime": "28s",
-        "startTime": "27.800s",
-        "word": "web"
-      }, {
-        "endTime": "28.300s",
-        "startTime": "28s",
-        "word": "design"
-      }, {
-        "endTime": "29.200s",
-        "startTime": "28.300s",
-        "word": "lies"
-      }, {
-        "endTime": "29.300s",
-        "startTime": "29.200s",
-        "word": "in"
-      }, {
-        "endTime": "29.500s",
-        "startTime": "29.300s",
-        "word": "finding"
-      }, {
-        "endTime": "29.600s",
-        "startTime": "29.500s",
-        "word": "the"
-      }, {
-        "endTime": "29.900s",
-        "startTime": "29.600s",
-        "word": "perfect"
-      }, {
-        "endTime": "30.400s",
-        "startTime": "29.900s",
-        "word": "balance"
-      }, {
-        "endTime": "30.600s",
-        "startTime": "30.400s",
-        "word": "between"
-      }, {
-        "endTime": "31.400s",
-        "startTime": "30.600s",
-        "word": "Aesthetics"
-      }, {
-        "endTime": "31.700s",
-        "startTime": "31.400s",
-        "word": "and"
-      }, {
-        "endTime": "32.500s",
-        "startTime": "31.700s",
-        "word": "functionality"
-      } ]
-    } ],
-    "languageCode": "en-us",
-    "resultEndTime": "33.050s"
-  }, {
-    "alternatives": [ {
-      "confidence": 0.94634724,
-      "transcript": "collaboration is at the heard of the process I believe in working closely with my clients understanding their unique needs and keeping them involved throughout the development journey",
-      "words": [ {
-        "endTime": "33.800s",
-        "startTime": "33.100s",
-        "word": "collaboration"
-      }, {
-        "endTime": "33.900s",
-        "startTime": "33.800s",
-        "word": "is"
-      }, {
-        "endTime": "34.400s",
-        "startTime": "33.900s",
-        "word": "at"
-      }, {
-        "endTime": "34.500s",
-        "startTime": "34.400s",
-        "word": "the"
-      }, {
-        "endTime": "34.600s",
-        "startTime": "34.500s",
-        "word": "heard"
-      }, {
-        "endTime": "34.800s",
-        "startTime": "34.600s",
-        "word": "of"
-      }, {
-        "endTime": "35s",
-        "startTime": "34.800s",
-        "word": "the"
-      }, {
-        "endTime": "35s",
-        "startTime": "35s",
-        "word": "process"
-      }, {
-        "endTime": "35.600s",
-        "startTime": "35s",
-        "word": "I"
-      }, {
-        "endTime": "35.900s",
-        "startTime": "35.600s",
-        "word": "believe"
-      }, {
-        "endTime": "36s",
-        "startTime": "35.900s",
-        "word": "in"
-      }, {
-        "endTime": "36.500s",
-        "startTime": "36s",
-        "word": "working"
-      }, {
-        "endTime": "36.900s",
-        "startTime": "36.500s",
-        "word": "closely"
-      }, {
-        "endTime": "37.100s",
-        "startTime": "36.900s",
-        "word": "with"
-      }, {
-        "endTime": "37.200s",
-        "startTime": "37.100s",
-        "word": "my"
-      }, {
-        "endTime": "37.600s",
-        "startTime": "37.200s",
-        "word": "clients"
-      }, {
-        "endTime": "38.200s",
-        "startTime": "37.600s",
-        "word": "understand"
-      }, {
-        "endTime": "38.900s",
-        "startTime": "38.200s",
-        "word": "their"
-      }, {
-        "endTime": "39s",
-        "startTime": "38.900s",
-        "word": "own"
-      }, {
-        "endTime": "39.400s",
-        "startTime": "39s",
-        "word": "needs"
-      }, {
-        "endTime": "40.100s",
-        "startTime": "39.400s",
-        "word": "and"
-      }, {
-        "endTime": "40.300s",
-        "startTime": "40.100s",
-        "word": "keeping"
-      }, {
-        "endTime": "40.400s",
-        "startTime": "40.300s",
-        "word": "them"
-      }, {
-        "endTime": "41s",
-        "startTime": "40.400s",
-        "word": "involved"
-      }, {
-        "endTime": "41.300s",
-        "startTime": "41s",
-        "word": "throughout"
-      }, {
-        "endTime": "41.500s",
-        "startTime": "41.300s",
-        "word": "the"
-      }, {
-        "endTime": "42.200s",
-        "startTime": "41.500s",
-        "word": "development"
-      }, {
-        "endTime": "42.300s",
-        "startTime": "42.200s",
-        "word": "journey"
-      } ]
-    } ],
-    "languageCode": "en-us",
-    "resultEndTime": "42.820s"
-  }, {
-    "alternatives": [ {
-      "confidence": 0.95797139,
-      "transcript": "This transparent and communicative approach allows me to translate their Vision into reality and then esnures that the final product not only meets expectations but surpasses them now wanna it makes a good shit contact me",
-      "words": [ {
-        "endTime": "43.100s",
-        "startTime": "42.900s",
-        "word": "this"
-      }, {
-        "endTime": "43.800s",
-        "startTime": "43.100s",
-        "word": "transparent"
-      }, {
-        "endTime": "44.100s",
-        "startTime": "43.800s",
-        "word": "and"
-      }, {
-        "endTime": "44.600s",
-        "startTime": "44.100s",
-        "word": "communicative"
-      }, {
-        "endTime": "45s",
-        "startTime": "44.600s",
-        "word": "approach"
-      }, {
-        "endTime": "45.700s",
-        "startTime": "45s",
-        "word": "allows"
-      }, {
-        "endTime": "45.800s",
-        "startTime": "45.700s",
-        "word": "me"
-      }, {
-        "endTime": "45.900s",
-        "startTime": "45.800s",
-        "word": "to"
-      }, {
-        "endTime": "46.200s",
-        "startTime": "45.900s",
-        "word": "translate"
-      }, {
-        "endTime": "46.600s",
-        "startTime": "46.200s",
-        "word": "their"
-      }, {
-        "endTime": "46.900s",
-        "startTime": "46.600s",
-        "word": "Vision"
-      }, {
-        "endTime": "47.300s",
-        "startTime": "46.900s",
-        "word": "into"
-      }, {
-        "endTime": "47.600s",
-        "startTime": "47.300s",
-        "word": "reality"
-      }, {
-        "endTime": "48.100s",
-        "startTime": "47.600s",
-        "word": "and"
-      }, {
-        "endTime": "48.500s",
-        "startTime": "48.100s",
-        "word": "ensures"
-      }, {
-        "endTime": "48.600s",
-        "startTime": "48.500s",
-        "word": "that"
-      }, {
-        "endTime": "48.900s",
-        "startTime": "48.600s",
-        "word": "the"
-      }, {
-        "endTime": "49.200s",
-        "startTime": "48.900s",
-        "word": "final"
-      }, {
-        "endTime": "49.200s",
-        "startTime": "48.900s",
-        "word": "product"
-      }, {
-        "endTime": "49.400s",
-        "startTime": "49.200s",
-        "word": "not"
-      }, {
-        "endTime": "49.700s",
-        "startTime": "49.400s",
-        "word": "only"
-      }, {
-        "endTime": "50s",
-        "startTime": "49.700s",
-        "word": "meets"
-      }, {
-        "endTime": "50.600s",
-        "startTime": "50s",
-        "word": "expectations"
-      }, {
-        "endTime": "51s",
-        "startTime": "50.600s",
-        "word": "but"
-      }, {
-        "endTime": "51.700s",
-        "startTime": "51s",
-        "word": "surpasses"
-      }, {
-        "endTime": "51.900s",
-        "startTime": "51.700s",
-        "word": "them"
-      }, {
-        "endTime": "52.500s",
-        "startTime": "51.900s",
-        "word": "now"
-      }, {
-        "endTime": "53.300s",
-        "startTime": "52.500s",
-        "word": "wanna"
-      },  {
-        "endTime": "53.400s",
-        "startTime": "53.300s",
-        "word": "make"
-      }, {
-        "endTime": "53.500s",
-        "startTime": "53.400s",
-        "word": "some"
-      }, {
-        "endTime": "53.600s",
-        "startTime": "53.500s",
+        "startTime": "16.200s",
+        "endTime": "16.700s",
+        "word": "leaving"
+      }, {
+        "startTime": "16.700s",
+        "endTime": "17s",
         "word": "good"
       }, {
-        "endTime": "53.700s",
-        "startTime": "53.600s",
+        "startTime": "17s",
+        "endTime": "17.300s",
+        "word": "customer"
+      }, {
+        "startTime": "17.300s",
+        "endTime": "17.700s",
+        "word": "experience"
+      }, {
+        "startTime": "17.700s",
+        "endTime": "18.500s",
+        "word": "will"
+      }, {
+        "startTime": "18.500s",
+        "endTime": "18.900s",
+        "word": "make"
+      }, {
+        "startTime": "18.900s",
+        "endTime": "19s",
+        "word": "your"
+      }, {
+        "startTime": "19s",
+        "endTime": "19.200s",
+        "word": "brand"
+      }, {
+        "startTime": "19.200s",
+        "endTime": "20.000s",
+        "word": "recognizable"
+      }, {
+        "startTime": "20.300s",
+        "endTime": "21s",
+        "word": "now"
+      }, {
+        "startTime": "21s",
+        "endTime": "21.900s",
+        "word": "wanna"
+      }, {
+        "startTime": "21.900s",
+        "endTime": "22.100s",
+        "word": "make"
+      }, {
+        "startTime": "22.100s",
+        "endTime": "22.200s",
+        "word": "some"
+      }, {
+        "startTime": "22.200s",
+        "endTime": "22.400s",
+        "word": "good"
+      }, {
+        "startTime": "22.400s",
+        "endTime": "22.500s",
         "word": "shit"
       }, {
-        "endTime": "54.400s",
-        "startTime": "53.700s",
+        "startTime": "22.500s",
+        "endTime": "23.500s",
         "word": "contact"
       }, {
-        "endTime": "54.700s",
-        "startTime": "54.400s",
+        "startTime": "23.500s",
+        "endTime": "23.700s",
         "word": "me"
-      } ]
-    } ],
-    "languageCode": "en-us",
-    "resultEndTime": "55.160s"
-  } ]
+      }]
+    }],
+    "resultEndTime": "23.910s",
+    "languageCode": "en-us"
+  }]
 }
