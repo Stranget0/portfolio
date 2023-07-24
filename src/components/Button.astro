@@ -1,19 +1,17 @@
 ---
 import type { Polymorphic } from "astro/types";
-import AppearingLine from "./AppearingText/AppearingLine.astro";
 
 type Props<T extends "button" | "a"> = Polymorphic<{ as: T }> & {
 	visualType?: "simple" | "outline";
 	size?: "default" | "small";
-	text?: string;
 };
 
 const {
 	visualType = "simple",
 	class: className,
-	text,
 	as: Tag = "button",
 	size = "default",
+	group,
 	...rest
 } = Astro.props;
 ---
@@ -30,13 +28,5 @@ const {
 	]}
 	{...rest}
 >
-	{
-		text ? (
-				<slot name="before"/>
-				<AppearingLine as="span" text={text} />
-				<slot name="after"/>
-		) : (
-			<slot>LOREM IPSUM NIHIL NOVI</slot>
-		)
-	}
+	<slot>LOREM IPSUM NIHIL NOVI</slot>
 </Tag>

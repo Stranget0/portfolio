@@ -50,6 +50,7 @@ const fontSizes = {
 };
 
 export default defineConfig({
+	safelist:["opacity-10","opacity-50", "filter-blur-2", "transform-scale-150"],
 	shortcuts,
 	theme: {
 		colors,
@@ -250,5 +251,7 @@ export default defineConfig({
 				return { "--color-variable": color, color };
 			},
 		],
+		// ***************************************************************************************
+		[/^text-balance$/,()=>({"text-wrap": "balance"})]
 	],
 });

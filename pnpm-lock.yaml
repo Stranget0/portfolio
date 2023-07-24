@@ -20,6 +20,9 @@ dependencies:
   astro:
     specifier: ^2.6.4
     version: 2.6.4(sass@1.62.1)(sharp@0.32.1)
+  balance-text:
+    specifier: ^3.3.1
+    version: 3.3.1
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
@@ -3962,6 +3965,10 @@ packages:
 
   /bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
+    dev: false
+
+  /balance-text@3.3.1:
+    resolution: {integrity: sha512-tpnHvo1w0rJ5rbu+jZKf7NLKKg6XZ6eAwREP/9jEDJ+ZTBi6jQFqn/UGARL3/oqD8SgQbyTwBXBjhKDdTgoPRw==}
     dev: false
 
   /balanced-match@1.0.2:
