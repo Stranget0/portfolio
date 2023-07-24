@@ -1,24 +1,31 @@
 ---
+import { getEntry } from "astro:content";
+import { Picture } from "@astrojs/image/components";
 import Button from "@components/Button.astro";
 import myImage from "@assets/me.png";
-import { Picture} from "@astrojs/image/components";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SocialLinks from "@components/SocialLinks.astro";
-import {foxObstacleAttrObj} from "@components/ThreeScene/constants"
-import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps"
-import { getEntry } from "astro:content";
+import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
+import { scrollToTargetAttrObj } from "@components/AppearingText/constants";
+import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
 
-const {data:aboutMeAudio} = await getEntry({collection:"transcripts",id:"about-me"})
+const { data: aboutMeAudio } = await getEntry({
+	collection: "transcripts",
+	id: "about-me",
+});
 
 const aboutMeWordData = transcriptDataToTimestamps(aboutMeAudio);
-const aboutMeWordTimings = aboutMeWordData.map(({timestamp})=>parseFloat(timestamp)*1000)
-const aboutMeWords = aboutMeWordData.map(({word})=>word)
+const aboutMeWordTimings = aboutMeWordData.map(
+	({ timestamp }) => parseFloat(timestamp) * 1000
+);
+const aboutMeWords = aboutMeWordData.map(({ word }) => word);
 ---
 
 <section
-	class="section relative flex flex-col justify-between gap-12 md:flex-row relative text-primary-50 glass-backdrop"
+	class="section font-serif relative flex flex-col justify-between gap-12 md:flex-row relative text-primary-50 glass-backdrop"
 	{...foxObstacleAttrObj}
+	{...scrollToTargetAttrObj}
 >
 	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block">
 		<Picture
@@ -27,7 +34,7 @@ const aboutMeWords = aboutMeWordData.map(({word})=>word)
 			fit="contain"
 			aspect-ratio="1:20"
 			sizes="(max-width: 768px) 320px, (max-width:1428px) 500px, 700px"
-			widths={[320,500,700]}
+			widths={[320, 500, 700]}
 			class="sticky top-4 object-contain rounded-100% md:(top-8 max-h-80vh max-w-min w-full)"
 		/>
 	</div>
@@ -35,13 +42,14 @@ const aboutMeWords = aboutMeWordData.map(({word})=>word)
 		as="article"
 		wordsReference={aboutMeWords}
 		wordTimings={aboutMeWordTimings}
-		audioPath="about-me-f.mp3"
+		audioPath={aboutMeAudio.audio}
 		class="flex flex-col flex-shrink align-end text-center prose md:(text-right basis-full)"
 	>
 		<AppearingLine
 			as="h2"
 			class="text-subtitle-1 mix-blend-difference"
 			text="Nice to meet you!"
+			group={1}
 		/>
 		<div class="md:hidden max-w-50 mx-auto mb-12">
 			<Picture
@@ -55,32 +63,23 @@ const aboutMeWords = aboutMeWordData.map(({word})=>word)
 			/>
 		</div>
 		<AppearingLine
-			class="text-subtitle-4 text-left mix-blend-difference my-0"
+			class="text-8 text-balance mix-blend-difference"
 			text="My name is Marcin and I am a Web Developer with a UX/UI side."
-		/>
-		<p class="text-subtitle-4 text-left mix-blend-difference mt-0">
-			<AppearingLine as="span" text="My goal is to deliver " />
-			<AppearingLine as="strong" text="functional, " />
-			<AppearingLine as="strong" text="simple" />
-			<AppearingLine as="span" text=" and " />
-			<AppearingLine as="strong" text="creative" />
-			<AppearingLine as="span" text=" websites that will catch your eye." />
-		</p>
-		<AppearingLine
-			class="text-body text-left mix-blend-difference"
-			text="As a passionate freelancer in the ever-evolving world of web development, I take immense pride in crafting digital experiences that not only look stunning but also provide seamless navigation and intuitive interactions."
+			group={2}
 		/>
 		<AppearingLine
-			class="text-body text-left mix-blend-difference"
-			text="I believe that the key to successful web design lies in finding the perfect balance between aesthetics and functionality."
+			text="My goal is to deliver functional, dynamic websites that will stand out from the ones that you see everyday."
+			class="text-6 text-balance mix-blend-difference"
 		/>
 		<AppearingLine
-			class="text-subtitle-4 mb-0 text-left mix-blend-difference"
-			text="Collaboration is at the heart of my process. I believe in working closely with my clients, understanding their unique needs, and keeping them involved throughout the development journey. This transparent and communicative approach allows me to translate their vision into reality and ensures that the final product not only meets expectations but surpasses them."
+			class="text-6 text-balance mix-blend-difference"
+			text="I believe that leaving good customer experience will make your brand recognizable."
 		/>
-		<p class="text-subtitle-3 text-9 mb-0 text-center mix-blend-difference sm:(text-right text-12)">
+		<p
+			class="text-subtitle-3 text-balance text-9 mb-0 text-center mix-blend-difference sm:(text-right text-12 ml-auto max-w-80%)"
+		>
 			<AppearingLine as="span" text="Now, wanna make some" />
-			<AppearingLine as="strong" text=" good&#160;shit?" />
+			<AppearingLine as="strong" text=" good shit?" />
 		</p>
 		<nav
 			class="ml-auto flex-center flex-wrap sm:justify-end gap-2 my-8 menu-opafocus opafocus-max-opacity-100 opafocus-min-opacity-80"
@@ -89,10 +88,10 @@ const aboutMeWords = aboutMeWordData.map(({word})=>word)
 			<Button
 				as="a"
 				href="#contact"
-				text="Contact me!"
 				class="text-right max-w-max font-black mix-blend-difference"
 			>
-				<div slot="before" class="i-mingcute-message-3-fill w-8 h-8"></div>
+				<div class="inline-block i-mingcute-message-3-fill w-8 h-8 mr-2"></div>
+				<AppearingLine class="inline-block my-2" group={3} text="Contact me!"/>
 			</Button>
 		</nav>
 	</AppearingText>
