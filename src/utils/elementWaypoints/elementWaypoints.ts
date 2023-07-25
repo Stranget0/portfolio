@@ -15,7 +15,6 @@ export default function elementWaypoints(
 			const lerpVector = new Vector3();
 			const waypointsElements = getDataElements(attribute);
 			const waypoints = handleWaypoints(controller, waypointsElements, key);
-			document.addEventListener("resize", () => console.log("AAAA"));
 
 			const { startLerp } = initLerpPositions(() => {
 				onUpdate?.(lerpVector);

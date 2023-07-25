@@ -17,7 +17,7 @@ const {
 	...other
 } = Astro.props;
 
-const textArr = rawText.trim().split(/(\s)/);
+const textArr = rawText.split(/(\s)/);
 const text = [];
 for (const w of textArr) {
 	if (/^\s$/.test(w)) text[text.length - 1] += w;

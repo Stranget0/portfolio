@@ -28,7 +28,7 @@ const {
 	technologies: technologiesCollectionData,
 	startYear,
 	endYear,
-	class: className = "bleed-primary-50 color-var-primary-900",
+	class: className = "bg-primary-50 color-var-primary-900",
 	github,
 	website,
 } = data;
@@ -41,7 +41,7 @@ const technologies =
 		)
 	).then((arr) => sortTechnologies(arr)));
 
-const isDarkBg = /bleed-.+-(700|800|900|950)/.test(className);
+const isDarkBg = /(bleed|bg)-.+-(700|800|900|950)/.test(className);
 
 const hasFullscreenImages = !!fullscreenImages?.length;
 const hasFloatingImages = !!floatingImages?.length;
@@ -98,3 +98,11 @@ const { Content } = await render();
 		)
 	}
 </SectionItem>
+
+<script>
+	import importInView from "@utils/importInView/importInView";
+	importInView(
+		"scroll-reference",
+		() => import("@components/_CustomElements/ScrollReference")
+	);
+</script>
