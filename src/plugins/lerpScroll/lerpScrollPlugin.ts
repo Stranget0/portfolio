@@ -11,9 +11,9 @@ if (pointerMedia.matches) {
 	);
 }
 
-export async function scrollToElement(element: HTMLElement) {
+export async function scrollToElement(element: HTMLElement, smooth = true) {
 	if (lerpScroll) {
 		const { scrollToElement } = await lerpScroll;
-		return scrollToElement(element);
-	} else element.scrollIntoView({ behavior: "smooth" });
+		return scrollToElement(element, smooth);
+	} else element.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
 }

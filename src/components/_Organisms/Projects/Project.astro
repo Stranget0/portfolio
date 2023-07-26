@@ -13,6 +13,7 @@ import SectionHeading from "@components/SlidedSection/_SectionHeading.astro";
 import SectionYear from "@components/SlidedSection/_SectionYear.astro";
 import SectionTopFixed from "@components/SlidedSection/_SectionTopFixed.astro";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
+import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -59,8 +60,14 @@ const { Content } = await render();
 	id={slug}
 	class={className}
 	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
+	{...forceFocusViewAttrObj}
 >
-	<AppearingText wordTimings={audioTextTimings||[]} wordsReference={[]} audioPath="" id={id}>
+	<AppearingText
+		wordTimings={audioTextTimings || []}
+		wordsReference={[]}
+		audioPath=""
+		id={id}
+	>
 		{title && <SectionItemTitle title={title} />}
 		<SectionTopFixed>
 			<SectionYear startYear={startYear} endYear={endYear} />
