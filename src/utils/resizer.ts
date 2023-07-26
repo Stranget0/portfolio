@@ -10,8 +10,8 @@ function onResizeScreen(handler: (dimensions: Dimensions) => void) {
 	const listener = () => {
 		handler(getScreenDimensions());
 	};
-	document.addEventListener("resize", listener);
-	return () => document.removeEventListener("resize", listener);
+	window.addEventListener("resize", listener);
+	return () => window.removeEventListener("resize", listener);
 }
 
 export default onResizeScreen;
