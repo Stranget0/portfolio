@@ -5,6 +5,7 @@ export function createAwaitSequence() {
 		sequence: T[],
 		sequenceAwait: (el: T) => Promise<unknown>
 	) {
+		isCanceled = false;
 		for (
 			let groupIndex = 0;
 			groupIndex < sequence.length && !isCanceled;

@@ -9,11 +9,10 @@ import TooltipWidget from "./TooltipWidget";
 
 	attachTooltipListeners({
 		"play-audio": (target) =>
-			import("@components/AppearingText/utils").then(({ playStage }) => {
+			import("@components/AppearingText/lib").then(({ playSingleStage }) => {
 				const stage = target.closest<HTMLElement>(stageSelector);
 				if (!stage) throw new Error("No stage selected");
-				const { finished, clean } = playStage(stage);
-				finished()?.then(clean);
+				playSingleStage(stage);
 			}),
 	});
 </script>
