@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from "astro/types";
+type Props = HTMLAttributes<"button">;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<button
+	title="play audio"
+	aria-label="play audio"
+	{...props}
+	class:list={["w-8 h-8", className]}
+	data-text-audio-run
+	><div
+		class="i-mingcute-volume-fill?mask w-full h-full transition-interactive"
+	>
+	</div></button
+>

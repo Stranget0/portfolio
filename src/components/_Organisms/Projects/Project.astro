@@ -12,6 +12,7 @@ import SectionLinks from "@components/SlidedSection/_SectionLinks.astro";
 import SectionHeading from "@components/SlidedSection/_SectionHeading.astro";
 import SectionYear from "@components/SlidedSection/_SectionYear.astro";
 import SectionTopFixed from "@components/SlidedSection/_SectionTopFixed.astro";
+import AppearingText from "@components/AppearingText/AppearingText.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -58,21 +59,21 @@ const { Content } = await render();
 	id={slug}
 	class={className}
 	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
-	data-audio-timings={audioTextTimings}
 >
-	{title && <SectionItemTitle title={title} />}
-	<SectionTopFixed>
-		<SectionYear startYear={startYear} endYear={endYear} />
-		<SectionLinks website={website} github={github} />
-	</SectionTopFixed>
-
-	<SectionItemDescription text={description}>
-		<Content
-			components={{
-				h1: SectionHeading,
-			}}
-		/>
-	</SectionItemDescription>
+	<AppearingText wordTimings={audioTextTimings||[]} wordsReference={[]} audioPath="">
+		{title && <SectionItemTitle title={title} />}
+		<SectionTopFixed>
+			<SectionYear startYear={startYear} endYear={endYear} />
+			<SectionLinks website={website} github={github} />
+		</SectionTopFixed>
+		<SectionItemDescription text={description}>
+			<Content
+				components={{
+					h1: SectionHeading,
+				}}
+			/>
+		</SectionItemDescription>
+	</AppearingText>
 
 	{
 		hasFullscreenImages && (

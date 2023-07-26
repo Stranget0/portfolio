@@ -1,19 +1,22 @@
 ---
-import type { TextTag } from "./types";
 import type { Polymorphic } from "astro/types";
+import type { TextTag } from "./types";
+import { playAudioTooltip } from "./serverUtils";
 
 type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	text: string;
 	class?: string;
 	group?: number;
+	dontShowTooltip?: boolean;
 };
 
 export type AppearingTextProps = Props;
 const {
 	as: Tag = "p",
 	class: className = "prose",
-	text: rawText="",
+	text: rawText = "",
 	group,
+	dontShowTooltip,
 	...other
 } = Astro.props;
 
@@ -23,17 +26,28 @@ for (const w of textArr) {
 	if (/^\s$/.test(w)) text[text.length - 1] += w;
 	else text.push(w);
 }
+const tooltipData = !dontShowTooltip && playAudioTooltip;
 ---
 
 <!-- TODO: FIX TYPE -->
-<Tag class:list={[className]} data-appearing-group={group} {...other as any}>
+<Tag
+	{...other as any}
+	{...tooltipData}
+	class:list={[className]}
+	data-appearing-group={group}
+	data-text-audio-run={dontShowTooltip ? undefined : true}
+>
 	{
 		text.map((w) => {
-			return <span  data-appearing-word class="transition-800 will-change-opacity">{w}</span>;
+			return (
+				<span data-appearing-word class="transition-800 will-change-opacity">
+					{w}
+				</span>
+			);
 		})
 	}
 </Tag>
 
 <script>
-	import "./init"
+	import "./utils";
 </script>

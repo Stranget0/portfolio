@@ -1,0 +1,19 @@
+---
+import TooltipWidget from "./TooltipWidget";
+---
+
+<TooltipWidget client:idle />
+<script>
+	import { stageSelector } from "@components/AppearingText/constants";
+	import attachTooltipListeners from "./initTooltip";
+
+	attachTooltipListeners({
+		"play-audio": (target) =>
+			import("@components/AppearingText/utils").then(({ playStage }) => {
+				const stage = target.closest<HTMLElement>(stageSelector);
+				if (!stage) throw new Error("No stage selected");
+				const { finished, clean } = playStage(stage);
+				finished()?.then(clean);
+			}),
+	});
+</script>

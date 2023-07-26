@@ -3,7 +3,7 @@ import createCleanFunction from "@utils/createCleanFunction";
 import addSingleEventListener from "@utils/singleEvent";
 import groupBy from "lodash/groupBy";
 import { z } from "zod";
-import { scrollToTargetAttr } from "./constants";
+import { scrollToTargetAttr, stageSelector } from "./constants";
 
 type WordData = {
 	node: HTMLElement;
@@ -27,30 +27,47 @@ const wordClasses = {
 };
 wordClasses.all = [wordClasses.low, wordClasses.semi, wordClasses.high].flat();
 
-const appearDuration = "200ms";
+const appearDuration = 200;
 
 const minDuration = 200;
 const stageWordsMap = new WeakMap<HTMLElement, WordsData>();
-const stages = document.querySelectorAll<HTMLElement>("[data-audio-timings]");
-
-setTimeout(() => play(stages[0]), 5000);
+const stages = document.querySelectorAll<HTMLElement>(stageSelector);
 
 function hasEndOfSentence(text: string, sentenceLength: number) {
 	return sentenceLength > 2 && /[,.!?$]/.test(text);
 }
 
-function play(stage: HTMLElement) {
+let globalClean: VoidFunction | null = null;
+export function playStage(stage: HTMLElement) {
+	globalClean?.();
 	const scrollToTarget =
 		stage.closest<HTMLElement>(`[${scrollToTargetAttr}]`) || stage;
-	scrollToElement(scrollToTarget);
 	const audioPath = stage.dataset.audioPath;
 	const audio = new Audio(`audio/${audioPath}`);
 	const wordData = getWordsFromStage(stage);
 
 	const cleanMenago = createCleanFunction();
+	let stagePromise: Promise<void> | null = null;
 
-	const stagePromise = audio.addEventListener("canplaythrough", async () => {
+	const onAudioReadyWrapper = () => {
+		stagePromise = onAudioReady();
+	};
+
+	audio.addEventListener("canplaythrough", onAudioReadyWrapper, {
+		once: true,
+	});
+
+	cleanMenago.push(() =>
+		audio.removeEventListener("canplaythrough", onAudioReadyWrapper)
+	);
+
+	globalClean = cleanMenago.clean;
+	return { clean: cleanMenago.clean, finished: () => stagePromise };
+
+	async function onAudioReady() {
+		cleanMenago.push(() => audio.pause());
 		await audio.play();
+		scrollToElement(scrollToTarget);
 		changeWordsVisibility(wordData, "invisible");
 
 		const groupsFinishedPromise = Promise.all(
@@ -60,9 +77,7 @@ function play(stage: HTMLElement) {
 		});
 
 		return groupsFinishedPromise;
-	});
-
-	return { clean: cleanMenago.clean, finished: stagePromise };
+	}
 
 	async function playWords(sentences: Sentence[]): Promise<void> {
 		const sentencesPromises = sentences.flatMap((sentence, sentenceIndex) => {
@@ -94,17 +109,17 @@ function showWord(
 ) {
 	return new Promise<void>((resolve) => {
 		const timeout1 = setTimeout(() => {
-			word.node.style.transitionDuration = appearDuration;
+			word.node.style.transitionDuration = `${appearDuration}ms`;
 			word.node.classList.remove("opacity-0");
 			word.node.classList.add(...wordClasses.high);
 
-			cleanMenago.push(
-				addSingleEventListener(word.node, "transitionend", () => {
-					word.node.style.transitionDuration = "";
-					word.node.classList.remove(...wordClasses.all);
-					word.node.classList.add(...wordClasses.semi);
-				})
-			);
+			const appearTimeout = setTimeout(() => {
+				word.node.style.transitionDuration = "";
+				word.node.classList.remove(...wordClasses.all);
+				word.node.classList.add(...wordClasses.semi);
+			}, appearDuration);
+			cleanMenago.push(() => clearTimeout(appearTimeout));
+
 			resolve();
 		}, word.timestamp);
 
