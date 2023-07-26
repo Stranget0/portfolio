@@ -33,7 +33,7 @@ const shortcuts = {
 	dialog:
 		"rounded pt-1 px-4 pb-2 relative before:(pseudo-full rounded bg-primary-50 opacity-10 pointer-events-none)",
 	"transition-interactive":
-		"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-75)",
+		"transform motion-safe:transition-transform hover:scale-105 focus-visible:scale-110 focus-within:scale-110 active:(scale-90 opacity-75)",
 	"flex-center": "flex justify-center items-center",
 	"flex-col-center": "flex-center flex-col",
 	"glass-backdrop":
@@ -50,7 +50,7 @@ const fontSizes = {
 };
 
 export default defineConfig({
-	safelist:["opacity-10","opacity-50", "filter-blur-2", "transform-scale-150"],
+	safelist:["opacity-10","opacity-50", "filter-blur-2", "transform-scale-150", "cursor-none"],
 	shortcuts,
 	theme: {
 		colors,
