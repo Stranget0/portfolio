@@ -4,6 +4,7 @@ import type { Polymorphic } from "astro/types";
 type Props<T extends "button" | "a"> = Polymorphic<{ as: T }> & {
 	visualType?: "simple" | "outline";
 	size?: "default" | "small";
+	invertColor?: boolean;
 };
 
 const {
@@ -11,7 +12,7 @@ const {
 	class: className,
 	as: Tag = "button",
 	size = "default",
-	group,
+	invertColor,
 	...rest
 } = Astro.props;
 ---
@@ -22,8 +23,9 @@ const {
 		size === "default" && "p-4 text-button",
 		size === "small" && "px-2 py-1 text-xs",
 		visualType === "simple" &&
-			"bg-primary-100 text-primary-950 hover:bg-accent-50",
+			"bg-primary-100 text-primary-950 hover:bg-primary-50",
 		visualType === "outline" && "border-2",
+		invertColor && "filter-invert",
 		className,
 	]}
 	{...rest}
