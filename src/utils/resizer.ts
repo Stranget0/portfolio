@@ -1,23 +1,17 @@
-import { createStore } from "zustand/vanilla";
-
-interface State {
+interface Dimensions {
 	width: number;
 	height: number;
-	onResized: VoidFunction;
+}
+function getScreenDimensions(): Dimensions {
+	return { width: window.innerWidth, height: window.innerHeight };
 }
 
-const getScreenDimensions = () => ({
-	width: window.innerWidth,
-	height: window.innerHeight,
-});
-
-const resizeScreenStore = createStore<State>((set) => ({
-	...getScreenDimensions(),
-	onResized: () => set(getScreenDimensions()),
-}));
-
-const { subscribe: onResizeScreen, setState } = resizeScreenStore;
-
-window.addEventListener("resize", () => setState(getScreenDimensions()));
+function onResizeScreen(handler: (dimensions: Dimensions) => void) {
+	const listener = () => {
+		handler(getScreenDimensions());
+	};
+	document.addEventListener("resize", listener);
+	return () => document.removeEventListener("resize", listener);
+}
 
 export default onResizeScreen;

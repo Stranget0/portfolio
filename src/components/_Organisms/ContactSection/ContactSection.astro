@@ -3,10 +3,11 @@ import SectionClip from "@components/SectionClip.astro";
 import SectionFixed from "@components/SectionFixed.astro";
 import Input from "@components/Input/Input.astro";
 import TextArea from "@components/Input/TextArea.astro";
-import Button from "@components/Button.astro";
+import Button from "@components/Button/Button.astro";
 import ContactInputContainer from "./ContactInputContainer.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
+import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 
 const md = 768;
 const waypointsData = {
@@ -28,6 +29,7 @@ const waypointsData = {
 	data-static-h="100vh"
 	data-static-h-type="min"
 	{...waypointsData}
+	{...forceFocusViewAttrObj}
 >
 	<SectionClip class="absolute inset-0">
 		<SectionFixed
@@ -35,7 +37,13 @@ const waypointsData = {
 		>
 			<ContactInputContainer>
 				<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1" />
-				<Input name="name" id="contact-name" label="name" wrapperClass="bg-primary-950" required/>
+				<Input
+					name="name"
+					id="contact-name"
+					label="name"
+					wrapperClass="bg-primary-950"
+					required
+				/>
 				<Input
 					id="contact-email"
 					name="email"

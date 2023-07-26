@@ -11,7 +11,7 @@ import {
 } from "unocss";
 
 import { colors, themeColorsRule } from "./unoUtils/colorsTheme";
-import { shake, marquee } from "./unoUtils/animations";
+import { shake, marquee, backgroundSlow } from "./unoUtils/animations";
 
 const shortcuts = {
 	"text-title-1": "font-serif text-5xl font-extrabold tracking-.3em uppercase",
@@ -33,11 +33,14 @@ const shortcuts = {
 	dialog:
 		"rounded pt-1 px-4 pb-2 relative before:(pseudo-full rounded bg-primary-50 opacity-10 pointer-events-none)",
 	"transition-interactive":
-		"transform motion-safe:transition-transform hover:scale-102 focus-visible:scale-102 focus-within:scale-102 active:(scale-98 opacity-75)",
+		"transform motion-safe:transition-transform hover:scale-105 focus-visible:scale-110 focus-within:scale-110 active:(scale-90 opacity-75)",
 	"flex-center": "flex justify-center items-center",
 	"flex-col-center": "flex-center flex-col",
 	"glass-backdrop":
 		"before:(pseudo-full opacity-80 bg-primary-100 -z-1) after:(pseudo-full backdrop-blur -z-1)",
+	"circle-button":
+		"p-4 rounded-full aspect-ratio-square text-label font-black uppercase",
+	"absolute-center": "absolute top-50% left-50% -translate-50%",
 };
 
 const fontSizes = {
@@ -50,16 +53,43 @@ const fontSizes = {
 };
 
 export default defineConfig({
+	content: {
+		pipeline: {
+			include: [/\.(vue|svelte|[jt]sx?|mdx?|astro|elm|php|phtml|html)($|\?)/],
+		},
+	},
+	safelist: [
+		"opacity-10",
+		"opacity-50",
+		"filter-blur-2",
+		"transform-scale-150",
+		"cursor-none",
+	],
 	shortcuts,
 	theme: {
 		colors,
 		fontSize: fontSizes,
 		animation: {
-			keyframes: { shake: shake.keyframes, marquee: marquee.keyframes },
-			durations: { shake: shake.duration, marquee: marquee.duration },
-			counts: { shake: shake.count, marquee: marquee.count },
-			properties: { shake: shake.properties },
-			timingFns: { shake: shake.easing },
+			keyframes: {
+				shake: shake.keyframes,
+				marquee: marquee.keyframes,
+				"bg-slow": backgroundSlow.keyframes,
+			},
+			durations: {
+				shake: shake.duration,
+				marquee: marquee.duration,
+				"bg-slow": backgroundSlow.duration,
+			},
+			counts: {
+				shake: shake.count,
+				marquee: marquee.count,
+				"bg-slow": backgroundSlow.count,
+			},
+			properties: {
+				shake: shake.properties,
+				"bg-slow": backgroundSlow.properties,
+			},
+			timingFns: { shake: shake.easing, "bg-slow": backgroundSlow.easing },
 		},
 		spacing: Object.fromEntries(
 			Object.entries(fontSizes).map(([k, v]) => [`font-${k}`, v])
@@ -73,6 +103,7 @@ export default defineConfig({
 			warn: true,
 			collections: {
 				mingcute: () => import("@iconify/json/json/mingcute.json"),
+				"svg-spinners": () => import("@iconify/json/json/svg-spinners.json"),
 			},
 			extraProperties: {
 				display: "inline-block",
@@ -250,5 +281,7 @@ export default defineConfig({
 				return { "--color-variable": color, color };
 			},
 		],
+		// ***************************************************************************************
+		[/^text-balance$/, () => ({ "text-wrap": "balance" })],
 	],
 });

@@ -1,45 +1,36 @@
 import {
-	stopAction,
 	playAction,
 	handleActionPlay,
 	createRepeatable,
+	sourceToLoader,
 } from "@utils/animation";
-import {
-	AnimationAction,
-	AnimationClip,
-	AnimationMixer,
-	Clock,
-	LoopRepeat,
-	Mesh,
-} from "three";
+import { AnimationMixer, Clock, Mesh } from "three";
 
-export default function startFoxAnimations(root: Mesh, clips: AnimationClip[]) {
+export default function startFoxAnimations(root: Mesh) {
 	const mixer = new AnimationMixer(root);
-	const actions = clips.map((a: AnimationClip) => {
-		const clipped = mixer.clipAction(a);
-		clipped.loop = LoopRepeat;
-		clipped.repetitions = 1;
-		stopAction(clipped);
-		return clipped;
-	}) as AnimationAction[];
 
-	const [
-		blink,
-		earsIdle,
-		furIdle,
-		grimase,
-		hearFront,
-		hearRight,
-		shakeHead,
-		smile,
-		sniff,
-	] = actions;
+	const sources = [
+		"foxBlink",
+		"foxGrimase",
+		"foxHearFront",
+		"foxHearRight",
+		"foxShakeHead",
+		"foxSmile",
+		"foxSniff",
+	];
+	const idleSources = ["foxEarsIdle", "foxFurIdle"];
 
-	[furIdle, earsIdle].forEach((a) => {
-		a.repetitions = Infinity;
-	});
+	const actions = sources.map(sourceToLoader(mixer));
+	const idleActions = idleSources.map(
+		sourceToLoader(mixer, (a) => {
+			a.repetitions = Infinity;
+		})
+	);
 
-	const idleActions = [earsIdle, furIdle];
+	const [blink, grimase, hearFront, hearRight, shakeHead, smile, sniff] =
+		actions;
+	const [earsIdle, furIdle] = idleActions;
+
 	const blockGroups = [
 		[earsIdle, hearFront, hearRight, shakeHead],
 		[grimase, smile],
@@ -49,7 +40,7 @@ export default function startFoxAnimations(root: Mesh, clips: AnimationClip[]) {
 	const clock = new Clock();
 
 	for (const idle of idleActions) {
-		playAction(idle);
+		idle.load().then(playAction);
 		const blockedBy = blockGroups.find((g) => g.includes(idle));
 		if (!blockedBy) continue;
 

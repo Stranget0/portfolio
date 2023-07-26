@@ -30,3 +30,28 @@ export const linkSchema = z.object({
 	href: z.string().url(),
 	class: z.string().regex(/^i-/),
 });
+
+export const transcriptSchema = z.object({
+	audio: z.string(),
+	results: z.array(
+		z.object({
+			languageCode: z.string(),
+			resultEndTime: z.string(),
+			alternatives: z.array(
+				z.object({
+					confidence: z.number(),
+					transcript: z.string(),
+					words: z.array(
+						z.object({
+							endTime: z.string(),
+							startTime: z.string(),
+							word: z.string(),
+						})
+					),
+				})
+			),
+		})
+	),
+});
+
+export type Transcripts = z.infer<typeof transcriptSchema>;

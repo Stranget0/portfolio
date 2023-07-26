@@ -14,3 +14,19 @@ export type TextTag =
 	| "i"
 	| "span"
 	| "mark";
+
+export type WordData = {
+	node: HTMLElement;
+	timestamp: number;
+};
+
+export type Sentence = WordData[];
+
+export type GroupEntry = [string, Sentence[]];
+
+export type WordsData = {
+	groups: GroupEntry[];
+	count: number;
+};
+
+export type States = "default" | "loading" | "running";

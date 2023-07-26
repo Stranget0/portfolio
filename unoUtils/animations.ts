@@ -32,10 +32,34 @@ export const shake = {
 		scale: "1.50",
 	},
 };
-const marqueeKeyframes='{0%, 100% {transform:translateX(0)} 50% {transform:translateX(-100%)} 50.01% {transform:translateX(100%)}}';
+
+const marqueeKeyframes =
+	"{0%, 100% {transform:translateX(0)} 50% {transform:translateX(-100%)} 50.01% {transform:translateX(100%)}}";
 export const marquee = {
 	keyframes: marqueeKeyframes,
 	duration: "4s",
 	count: "infinite",
 	easing: "linear",
+};
+
+const backgroundSlowKeyframes = `{
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}`;
+
+export const backgroundSlow = {
+	keyframes: backgroundSlowKeyframes,
+	duration: "15s",
+	easing: "ease",
+	count: "infinite",
+	properties: {
+		"background-size": "400% 400%",
+	},
 };

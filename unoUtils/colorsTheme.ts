@@ -26,7 +26,8 @@ export const themeColorsRule: Rule<any> = [
 		const style: ColorVariables = {};
 		validShades.forEach((i) => {
 			style[`--primary-${i}`] = theme.colors.gray[i];
-			style[`--accent-${i}`] = theme.colors.gray[i];
+			style[`--accent-${i}`] = theme.colors.orange[i];
+			style[`--tertiary-${i}`] = theme.colors.green[i];
 		});
 
 		return style;
@@ -44,5 +45,6 @@ function generateVariableColor(colorName: string) {
 export const colors = {
 	...generateVariableColor("primary"),
 	...generateVariableColor("accent"),
+	...generateVariableColor("tertiary"),
 	var: "var(--color-variable)"
 };

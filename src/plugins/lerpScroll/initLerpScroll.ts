@@ -1,15 +1,18 @@
 import { clamp } from "three/src/math/MathUtils";
-import NumberLerpable from "./NumberLerpable";
-import initLerpPositions from "./lerpPositions";
-import { onMiddleButtonScroll, onScrollbar } from "./eventHandlers";
-import { getScrollPos } from "./getScrollPos";
-import { getMaxPos } from "./getMaxPos";
-import createCleanFunction from "./createCleanFunction";
+import NumberLerpable from "@utils/NumberLerpable";
+import initLerpPositions from "@utils/lerpPositions";
+import { onMiddleButtonScroll, onScrollbar } from "@utils/eventHandlers";
+import { getScrollPos } from "@utils/getScrollPos";
+import { getMaxPos } from "@utils/getMaxPos";
+import createCleanFunction from "@utils/createCleanFunction";
 
 export type Target = Window | HTMLElement;
 export interface LerpControls {
 	clean: () => void;
-	scrollToElement: (scrollTarget: HTMLElement) => Promise<void>;
+	scrollToElement: (
+		scrollTarget: HTMLElement,
+		smooth?: boolean
+	) => Promise<void>;
 }
 
 export default function initLerpScroll(
@@ -53,6 +56,7 @@ export default function initLerpScroll(
 	cleanMenago.push(() => target.removeEventListener("wheel", onWheel));
 
 	handleAnchorsScroll();
+	handleFocusFix();
 
 	return { clean: cleanMenago.clean, scrollToElement };
 
@@ -91,7 +95,18 @@ export default function initLerpScroll(
 		}
 	}
 
-	function scrollToElement(scrollTarget: HTMLElement) {
+	function handleFocusFix() {
+		document.addEventListener("focusin", () => {
+			cancel();
+			synchroniseValues();
+		});
+	}
+
+	function scrollToElement(scrollTarget: HTMLElement, smooth = true) {
+		if (!smooth) {
+			scrollTarget.scrollIntoView();
+			return Promise.resolve();
+		}
 		const yPromise = new Promise<void>((resolve) => {
 			lastTargetY = handleDirection(
 				yLerp,

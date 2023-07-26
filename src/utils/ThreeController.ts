@@ -48,11 +48,11 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 		this.setSize(width, height);
 		this.renderer.shadowMap.enabled = true;
 		this.onDestroy(() => this.renderer.dispose());
-		const removeOnResize = onResizeScreen(({ width, height }) => {
-			this.setSize(width, height);
-		});
-
-		this.onDestroy(removeOnResize);
+		this.onDestroy(
+			onResizeScreen(({ width, height }) => {
+				this.setSize(width, height);
+			})
+		);
 	}
 
 	render() {
