@@ -128,6 +128,7 @@ export function sourceToLoader(
 		return {
 			action: null,
 			async load() {
+				if (this.action) return this.action;
 				const { animations } = await loadDracoGLTF(
 					`models/fox/individualAnimations/${source}.glb`
 				);
