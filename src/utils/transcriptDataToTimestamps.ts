@@ -1,5 +1,5 @@
 import type { Transcripts } from "src/schemas";
-import { lerp } from "three/src/math/MathUtils";
+import { lerp } from "three/src/math/MathUtils.js";
 
 export default function transcriptDataToTimestamps(data: Transcripts) {
 	const dataToMap = data.results.flatMap(({ alternatives }) =>
