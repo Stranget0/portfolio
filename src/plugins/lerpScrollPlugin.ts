@@ -1,6 +1,5 @@
 import type { LerpControls } from "@utils/initLerpScroll";
-
-const pointerMedia = matchMedia("(pointer:fine)");
+import { pointerMedia } from "src/constants";
 
 let lerpScroll: null | Promise<LerpControls> = null;
 
