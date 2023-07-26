@@ -1,4 +1,4 @@
-import { scrollToElement } from "@plugins/lerpScrollPlugin";
+import { scrollToElement } from "@plugins/lerpScroll/lerpScrollPlugin";
 import createCleanFunction from "@utils/createCleanFunction";
 import groupBy from "lodash/groupBy";
 import { scrollToTargetAttr, wordClasses } from "./constants";

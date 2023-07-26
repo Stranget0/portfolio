@@ -1,10 +1,10 @@
 import { clamp } from "three/src/math/MathUtils";
-import NumberLerpable from "./NumberLerpable";
-import initLerpPositions from "./lerpPositions";
-import { onMiddleButtonScroll, onScrollbar } from "./eventHandlers";
-import { getScrollPos } from "./getScrollPos";
-import { getMaxPos } from "./getMaxPos";
-import createCleanFunction from "./createCleanFunction";
+import NumberLerpable from "@utils/NumberLerpable";
+import initLerpPositions from "@utils/lerpPositions";
+import { onMiddleButtonScroll, onScrollbar } from "@utils/eventHandlers";
+import { getScrollPos } from "@utils/getScrollPos";
+import { getMaxPos } from "@utils/getMaxPos";
+import createCleanFunction from "@utils/createCleanFunction";
 
 export type Target = Window | HTMLElement;
 export interface LerpControls {

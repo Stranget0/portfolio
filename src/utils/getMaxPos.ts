@@ -1,4 +1,4 @@
-import type { Target } from "./initLerpScroll";
+import type { Target } from "../plugins/lerpScroll/initLerpScroll";
 
 export function getMaxPos(target: Target, direction: "x" | "y"): number {
 	const d = direction === "x" ? "Width" : "Height";

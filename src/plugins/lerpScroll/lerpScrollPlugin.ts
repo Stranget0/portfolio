@@ -1,10 +1,10 @@
-import type { LerpControls } from "@utils/initLerpScroll";
+import type { LerpControls } from "@plugins/lerpScroll/initLerpScroll";
 import { pointerMedia } from "src/constants";
 
 let lerpScroll: null | Promise<LerpControls> = null;
 
 if (pointerMedia.matches) {
-	lerpScroll = import("@utils/initLerpScroll").then(
+	lerpScroll = import("@plugins/lerpScroll/initLerpScroll").then(
 		({ default: initLerpScroll }) => {
 			return initLerpScroll(window, 0.075, 0.75);
 		}
