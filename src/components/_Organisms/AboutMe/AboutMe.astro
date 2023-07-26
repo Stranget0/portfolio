@@ -1,7 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import { Picture } from "@astrojs/image/components";
-import Button from "@components/Button.astro";
+import Button from "@components/Button/Button.astro";
 import myImage from "@assets/me.png";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
@@ -9,8 +9,9 @@ import SocialLinks from "@components/SocialLinks.astro";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 import { scrollToTargetAttrObj } from "@components/AppearingText/constants";
 import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
+import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
 
-const { data: aboutMeAudio } = await getEntry({
+const { data: aboutMeAudio, id: stageId } = await getEntry({
 	collection: "transcripts",
 	id: "about-me",
 });
@@ -40,6 +41,7 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 		wordTimings={aboutMeTranscript.timestamps}
 		audioPath={aboutMeAudio.audio}
 		class="flex flex-col flex-shrink align-end text-center prose md:(text-right basis-full)"
+		id={stageId}
 	>
 		<AppearingLine
 			as="h2"
@@ -57,6 +59,9 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 				fit="contain"
 				class="rounded-full"
 			/>
+		</div>
+		<div class="h-0 relative bottom-3">
+			<AppearingTextButton client:visible class="ml-auto" visualType="outline" stageId={stageId} />
 		</div>
 		<AppearingLine
 			class="text-8 text-balance"

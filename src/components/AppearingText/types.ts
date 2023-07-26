@@ -28,3 +28,5 @@ export type WordsData = {
 	groups: GroupEntry[];
 	count: number;
 };
+
+export type States = "default" | "loading" | "running";

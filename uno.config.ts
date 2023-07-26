@@ -11,7 +11,7 @@ import {
 } from "unocss";
 
 import { colors, themeColorsRule } from "./unoUtils/colorsTheme";
-import { shake, marquee } from "./unoUtils/animations";
+import { shake, marquee, backgroundSlow } from "./unoUtils/animations";
 
 const shortcuts = {
 	"text-title-1": "font-serif text-5xl font-extrabold tracking-.3em uppercase",
@@ -38,6 +38,9 @@ const shortcuts = {
 	"flex-col-center": "flex-center flex-col",
 	"glass-backdrop":
 		"before:(pseudo-full opacity-80 bg-primary-100 -z-1) after:(pseudo-full backdrop-blur -z-1)",
+	"circle-button":
+		"p-4 rounded-full aspect-ratio-square text-label font-black uppercase",
+	"absolute-center": "absolute top-50% left-50% -translate-50%",
 };
 
 const fontSizes = {
@@ -50,17 +53,43 @@ const fontSizes = {
 };
 
 export default defineConfig({
-	safelist:["opacity-10","opacity-50", "filter-blur-2", "transform-scale-150", "cursor-none"],
+	content: {
+		pipeline: {
+			include: [/\.(vue|svelte|[jt]sx?|mdx?|astro|elm|php|phtml|html)($|\?)/],
+		},
+	},
+	safelist: [
+		"opacity-10",
+		"opacity-50",
+		"filter-blur-2",
+		"transform-scale-150",
+		"cursor-none",
+	],
 	shortcuts,
 	theme: {
 		colors,
 		fontSize: fontSizes,
 		animation: {
-			keyframes: { shake: shake.keyframes, marquee: marquee.keyframes },
-			durations: { shake: shake.duration, marquee: marquee.duration },
-			counts: { shake: shake.count, marquee: marquee.count },
-			properties: { shake: shake.properties },
-			timingFns: { shake: shake.easing },
+			keyframes: {
+				shake: shake.keyframes,
+				marquee: marquee.keyframes,
+				"bg-slow": backgroundSlow.keyframes,
+			},
+			durations: {
+				shake: shake.duration,
+				marquee: marquee.duration,
+				"bg-slow": backgroundSlow.duration,
+			},
+			counts: {
+				shake: shake.count,
+				marquee: marquee.count,
+				"bg-slow": backgroundSlow.count,
+			},
+			properties: {
+				shake: shake.properties,
+				"bg-slow": backgroundSlow.properties,
+			},
+			timingFns: { shake: shake.easing, "bg-slow": backgroundSlow.easing },
 		},
 		spacing: Object.fromEntries(
 			Object.entries(fontSizes).map(([k, v]) => [`font-${k}`, v])
@@ -74,6 +103,7 @@ export default defineConfig({
 			warn: true,
 			collections: {
 				mingcute: () => import("@iconify/json/json/mingcute.json"),
+				"svg-spinners": () => import("@iconify/json/json/svg-spinners.json"),
 			},
 			extraProperties: {
 				display: "inline-block",
@@ -252,6 +282,6 @@ export default defineConfig({
 			},
 		],
 		// ***************************************************************************************
-		[/^text-balance$/,()=>({"text-wrap": "balance"})]
+		[/^text-balance$/, () => ({ "text-wrap": "balance" })],
 	],
 });

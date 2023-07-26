@@ -6,13 +6,25 @@ import TooltipWidget from "./TooltipWidget";
 <script>
 	import { stageSelector } from "@components/AppearingText/constants";
 	import attachTooltipListeners from "./initTooltip";
+	import {
+		appearingTextState,
+		setAppearingTextState,
+	} from "@components/AppearingText/state";
 
-	attachTooltipListeners({
-		"play-audio": (target) =>
-			import("@components/AppearingText/lib").then(({ playSingleStage }) => {
-				const stage = target.closest<HTMLElement>(stageSelector);
-				if (!stage) throw new Error("No stage selected");
-				playSingleStage(stage);
-			}),
-	});
+	attachTooltipListeners(
+		{
+			"play-audio": (target) => {
+				setAppearingTextState("loading");
+				import("@components/AppearingText/lib")
+					.then(({ playSingleStage }) => {
+						setAppearingTextState("running");
+						const stage = target.closest<HTMLElement>(stageSelector);
+						if (!stage) throw new Error("No stage selected");
+						return playSingleStage(stage);
+					})
+					.finally(() => setAppearingTextState("default"));
+			},
+		},
+		{ "play-audio": () => appearingTextState() === "default" }
+	);
 </script>

@@ -1,7 +1,6 @@
 import { scrollToElement } from "@plugins/lerpScrollPlugin";
 import createCleanFunction from "@utils/createCleanFunction";
 import groupBy from "lodash/groupBy";
-import { z } from "zod";
 import { scrollToTargetAttr, wordClasses } from "./constants";
 import type { GroupEntry, Sentence, WordData, WordsData } from "./types";
 import wait from "@utils/wait";
@@ -17,7 +16,9 @@ export function playStage(stage: HTMLElement) {
 	const audio = new Audio(`audio/${audioPath}`);
 	const wordData = getWordsFromStage(stage);
 
-	const cleanMenago = createCleanFunction();
+	const cleanMenago = createCleanFunction(() =>
+		changeWordsVisibility(wordData, "visible")
+	);
 
 	const finished = new Promise<void>((resolve) => {
 		async function onAudioReady() {
@@ -111,6 +112,7 @@ function changeWordsVisibility(
 	wordData.groups.forEach(([_, sentences]) => {
 		sentences.forEach((words) => {
 			words.forEach(({ node }) => {
+				node.style.transitionDuration = "";
 				node.classList.remove(...wordClasses.all);
 				if (visibility === "invisible") node.classList.add("opacity-0");
 				else node.classList.remove("opacity-0");
@@ -177,10 +179,13 @@ function parseTimings(stage: HTMLElement, words: HTMLElement[]) {
 		debugWords(words, wordReferences);
 	}
 
-	return z
-		.array(z.number().min(minDuration))
-		.length(words.length)
-		.parse(timings.map((time) => parseFloat(time)));
+	if (words.length !== timings.length) {
+		throw new Error(
+			`words and timings mismatch: ${words.length} !== ${timings.length}`
+		);
+	}
+
+	return timings.map((time) => parseFloat(time));
 }
 
 function groupWordsToSentences(words: WordData[]) {

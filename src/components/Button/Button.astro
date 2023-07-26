@@ -1,0 +1,25 @@
+---
+import { buttonClass } from "./utils";
+const {
+	visualType = "simple",
+	class: className,
+	as: Tag = "button",
+	size = "default",
+	invertColor,
+	classOverride,
+	...rest
+} = Astro.props;
+---
+
+<Tag
+	class={buttonClass({
+		class: className,
+		classOverride,
+		invertColor,
+		size,
+		visualType,
+	})}
+	{...rest as any}
+>
+	<slot>LOREM IPSUM NIHIL NOVI</slot>
+</Tag>

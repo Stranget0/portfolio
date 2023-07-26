@@ -4,10 +4,7 @@ import type { ParentProps } from "solid-js";
 
 export default function TooltipMotion(props: ParentProps<{ class?: string }>) {
 	const className = () =>
-		classNames(
-			"p-4 rounded-full aspect-ratio-square text-label font-black uppercase bg-primary-50 text-primary-950",
-			props.class
-		);
+		classNames("circle-button bg-primary-50 text-primary-950", props.class);
 
 	return (
 		<Motion

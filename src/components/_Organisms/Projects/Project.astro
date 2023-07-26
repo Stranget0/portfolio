@@ -19,7 +19,7 @@ interface Props {
 }
 
 const { frontmatter } = Astro.props;
-const { data, render, slug } = frontmatter;
+const { data, render, slug, id } = frontmatter;
 const {
 	fullscreenImages,
 	floatingImages,
@@ -60,7 +60,7 @@ const { Content } = await render();
 	class={className}
 	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
 >
-	<AppearingText wordTimings={audioTextTimings||[]} wordsReference={[]} audioPath="">
+	<AppearingText wordTimings={audioTextTimings||[]} wordsReference={[]} audioPath="" id={id}>
 		{title && <SectionItemTitle title={title} />}
 		<SectionTopFixed>
 			<SectionYear startYear={startYear} endYear={endYear} />

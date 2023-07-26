@@ -1,6 +1,5 @@
 import { scroll, animate, ScrollOptions, inView } from "motion";
 import createCleanFunction from "@utils/createCleanFunction";
-import { z } from "zod";
 
 const defaultKeyframes = {
 	transform: [0, 0.8, 1, 0.8, 0].map((scale) => `scale(${scale})`),
@@ -73,11 +72,10 @@ function getOffsetFromTargetRef(ref: HTMLElement) {
 	return scrollRefOffsets.split(" ") as any[];
 }
 
-const keyframesSchema = z.record(z.array(z.union([z.string(), z.number()])));
 function getKeyframesOfTarget(target: HTMLElement) {
 	try {
 		const { scrollTargetKeyframes = "" } = target.dataset;
-		return keyframesSchema.parse(JSON.parse(scrollTargetKeyframes));
+		return JSON.parse(scrollTargetKeyframes);
 	} catch (e) {
 		return undefined;
 	}
