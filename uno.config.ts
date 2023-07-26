@@ -53,17 +53,17 @@ const fontSizes = {
 };
 
 export default defineConfig({
-	content: {
-		pipeline: {
-			include: [/\.(vue|svelte|[jt]sx?|mdx?|astro|elm|php|phtml|html)($|\?)/],
-		},
-	},
 	safelist: [
 		"opacity-10",
 		"opacity-50",
 		"filter-blur-2",
 		"transform-scale-150",
-		"cursor-none",
+		"cursor-none","rounded","relative","outline-offset-4","transition-interactive","w-full","border-current","no-underline","disabled:(opacity-30","scale-100","bg-primary-500)",
+		"p-4","text-button",
+		"px-2","py-1","text-xs",
+			"bg-primary-100","text-primary-950","hover:bg-primary-50",
+		"border-2",
+		"filter-invert",
 	],
 	shortcuts,
 	theme: {
