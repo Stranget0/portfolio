@@ -1,4 +1,4 @@
-import { lerp } from "three/src/math/MathUtils";
+import { lerp } from "three/src/math/MathUtils.js";
 import type { LerpObject } from "./lerpPositions";
 
 export default class NumberLerpable implements LerpObject<number> {

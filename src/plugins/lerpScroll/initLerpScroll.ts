@@ -1,4 +1,4 @@
-import { clamp } from "three/src/math/MathUtils";
+import { clamp } from "three/src/math/MathUtils.js";
 import NumberLerpable from "@utils/NumberLerpable";
 import initLerpPositions from "@utils/lerpPositions";
 import { onMiddleButtonScroll, onScrollbar } from "@utils/eventHandlers";

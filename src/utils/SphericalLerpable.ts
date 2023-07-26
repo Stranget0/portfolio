@@ -1,6 +1,6 @@
 import { Spherical, Vector3 } from "three";
 import type { LerpObject } from "./lerpPositions";
-import { lerp } from "three/src/math/MathUtils";
+import { lerp } from "three/src/math/MathUtils.js";
 
 export default class SphericalLerpable
 	extends Spherical
