@@ -22,6 +22,8 @@ export default function elementWaypoints(
 			let waypointIndex = 0;
 
 			scroll(({ y }) => {
+				if (!y.velocity) return;
+
 				waypointIndex = waypoints.findLastIndex(
 					([_w, offsetTop]) => y.current - offsetTop > 0
 				);
