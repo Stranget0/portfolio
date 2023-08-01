@@ -1,6 +1,7 @@
 export interface LerpObject<T = unknown> {
-	distanceTo(target: T): number;
+	distanceTo(target: T | LerpObject<T>): number;
 	lerp(target: T, alpha: number): T;
+	clone(): LerpObject<T>;
 }
 
 export default function initLerpPositions(
@@ -15,6 +16,7 @@ export default function initLerpPositions(
 		from: LerpObject<T>,
 		to: T,
 		alpha: number,
+		last: LerpObject<T>,
 		localEPS: number,
 		onFinish?: VoidFunction
 	) {
@@ -26,8 +28,8 @@ export default function initLerpPositions(
 		}
 		frameId = requestAnimationFrame(() => {
 			from.lerp(to, alpha);
-			onUpdate();
-			lerpPositions(from, to, alpha, localEPS, onFinish);
+			if (last.distanceTo(from) >= EPS) onUpdate();
+			lerpPositions(from, to, alpha, last, localEPS, onFinish);
 		});
 	}
 
@@ -41,7 +43,8 @@ export default function initLerpPositions(
 		cancel();
 		isRunning = true;
 		onCancel = onFinish;
-		lerpPositions(from, to, alpha, localEPS, onFinish);
+		const last = from.clone();
+		lerpPositions(from, to, alpha, last, localEPS, onFinish);
 	}
 
 	function cancel() {

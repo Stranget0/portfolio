@@ -33,7 +33,10 @@ export default function initOrbit(controller: ThreeController) {
 
 	camera.lookAt(target);
 
-	const { startLerp, isRunning } = initLerpPositions(updateCameraPosition);
+	const { startLerp, isRunning } = initLerpPositions(
+		updateCameraPosition,
+		0.01
+	);
 
 	addEventListener("mousemove", handleMouseMove);
 	controller.onDestroy(() => removeEventListener("mousemove", handleMouseMove));
