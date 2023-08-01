@@ -1,4 +1,5 @@
 ---
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SectionClip from "../../SectionClip.astro";
 import SectionFixed from "../../SectionFixed.astro";
 import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
@@ -13,14 +14,14 @@ import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerA
 	{...waypoints.foxWaypointStiffness( 1, 1).waypoint()}
 
 >
-	<SectionFixed class="top-0dvh bottom-0dvh flex flex-col items-center justify-between">
-		<div>
-			<h2 text-title-1>My Website</h2>
-			<h2 text-title-2>My choice</h2>
-		</div>
-		<div>
-			<h3 text-title-2>Your website</h3>
-			<h3 text-title-1>Your choice</h3>
-		</div>
+	<SectionFixed as="h2" class="top-0dvh bottom-0dvh flex flex-col items-center justify-between">
+		<span class="flex-col-center">
+			<AppearingLine as="span" class="text-title-1" text="My Website" animatedOnView/>
+			<AppearingLine as="span" class="text-title-2" text="My choice" animatedOnView/>
+		</span>
+		<span class="flex-col-center">
+			<AppearingLine as="span" class="text-title-2" text="Your website" animatedOnView/>
+			<AppearingLine as="span" class="text-title-1" text="Your choice" animatedOnView/>
+		</span>
 	</SectionFixed>
 </SectionClip>

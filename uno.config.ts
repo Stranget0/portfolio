@@ -11,7 +11,12 @@ import {
 } from "unocss";
 
 import { colors, themeColorsRule } from "./unoUtils/colorsTheme";
-import { shake, marquee, backgroundSlow } from "./unoUtils/animations";
+import {
+	shake,
+	marquee,
+	backgroundSlow,
+	textAppear,
+} from "./unoUtils/animations";
 
 const shortcuts = {
 	"text-title-1": "font-serif text-5xl font-extrabold tracking-.3em uppercase",
@@ -58,10 +63,25 @@ export default defineConfig({
 		"opacity-50",
 		"filter-blur-2",
 		"transform-scale-150",
-		"cursor-none","rounded","relative","outline-offset-4","transition-interactive","w-full","border-current","no-underline","disabled:(opacity-30","scale-100","bg-primary-500)",
-		"p-4","text-button",
-		"px-2","py-1","text-xs",
-			"bg-primary-100","text-primary-950","hover:bg-primary-50",
+		"cursor-none",
+		"rounded",
+		"relative",
+		"outline-offset-4",
+		"transition-interactive",
+		"w-full",
+		"border-current",
+		"no-underline",
+		"disabled:(opacity-30",
+		"scale-100",
+		"bg-primary-500)",
+		"p-4",
+		"text-button",
+		"px-2",
+		"py-1",
+		"text-xs",
+		"bg-primary-100",
+		"text-primary-950",
+		"hover:bg-primary-50",
 		"border-2",
 		"filter-invert",
 	],
@@ -74,11 +94,13 @@ export default defineConfig({
 				shake: shake.keyframes,
 				marquee: marquee.keyframes,
 				"bg-slow": backgroundSlow.keyframes,
+				"text-appear": textAppear.keyframes,
 			},
 			durations: {
 				shake: shake.duration,
 				marquee: marquee.duration,
 				"bg-slow": backgroundSlow.duration,
+				"text-appear": textAppear.duration,
 			},
 			counts: {
 				shake: shake.count,

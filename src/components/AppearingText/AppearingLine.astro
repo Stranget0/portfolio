@@ -2,12 +2,14 @@
 import type { Polymorphic } from "astro/types";
 import type { TextTag } from "./types";
 import { playAudioTooltip } from "./serverUtils";
+import AnimatedText from "@components/AnimatedText.astro";
 
 type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	text: string;
 	class?: string;
 	group?: number;
 	dontShowTooltip?: boolean;
+	animatedOnView?: boolean;
 };
 
 export type AppearingTextProps = Props;
@@ -17,6 +19,7 @@ const {
 	text: rawText = "",
 	group,
 	dontShowTooltip,
+	animatedOnView = ["h1", "h2", "h3", "h4"].includes(Tag),
 	...other
 } = Astro.props;
 
@@ -27,6 +30,13 @@ for (const w of textArr) {
 	else text.push(w);
 }
 const tooltipData = !dontShowTooltip && playAudioTooltip;
+
+const commonProps = {
+	"data-appearing-word": true,
+	class: "transition-800 will-change-opacity",
+};
+
+let letterCount = 0;
 ---
 
 <!-- TODO: FIX TYPE -->
@@ -38,13 +48,13 @@ const tooltipData = !dontShowTooltip && playAudioTooltip;
 	data-text-audio-run={dontShowTooltip ? undefined : true}
 >
 	{
-		text.map((w) => {
-			return (
-				<span data-appearing-word class="transition-800 will-change-opacity">
-					{w}
-				</span>
-			);
+		text.map((w, i, arr) => {
+			if (animatedOnView) {
+				if (arr[i - 1]) letterCount += arr[i - 1].length;
+				return <AnimatedText {...commonProps} as="span" word={w} offset={letterCount} />;
+			}
+
+			return <span {...commonProps}>{w}</span>;
 		})
 	}
 </Tag>
-

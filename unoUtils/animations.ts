@@ -63,3 +63,19 @@ export const backgroundSlow = {
 		"background-size": "400% 400%",
 	},
 };
+
+const textAppearKeyframes = `{
+	0% {
+		opacity: 0;
+		transform: translate(.33em,.1em) scaleY(.01) rotate(-35deg);
+	}
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}`;
+
+export const textAppear = {
+	keyframes: textAppearKeyframes,
+	duration: "100ms"
+};

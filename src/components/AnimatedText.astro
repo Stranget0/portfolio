@@ -1,0 +1,28 @@
+---
+import type { Polymorphic } from "astro/types";
+import type { TextTag } from "./AppearingText/types";
+
+type Props<T extends TextTag> = Polymorphic<{ as: T }> & {
+	word: string;
+	offset?: number;
+};
+
+const { word, offset = 0, as: Tag, class: className, ...other } = Astro.props;
+---
+
+<Tag class:list={["whitespace-pre", className]}>
+	{
+		(word as string)
+			.trim()
+			.split("")
+			.map((letter, letterIndex) => (
+				<span
+					class:list={["inline-block animate-text-appear animate-duration-300 animate-both"]}
+					style={{"animation-delay": `${(letterIndex + offset) * 25}ms`}}
+					>
+					{letter}
+				</span>
+			))
+	}
+</Tag>
+{" "}
