@@ -4,7 +4,7 @@ import { loadDracoGLTF } from "@utils/loadDracoGLTF";
 import type { BufferGeometry, Mesh, MeshStandardMaterial } from "three";
 
 export default function loadFox(controller: ThreeController) {
-	const fox = loadDracoGLTF("models/fox/foxM.glb").then((foxGLTF) => {
+	const fox = loadDracoGLTF("models/fox/foxLow.glb").then((foxGLTF) => {
 		const fox = foxGLTF.scene as Mesh<BufferGeometry, MeshStandardMaterial>;
 		fox.matrixAutoUpdate = false;
 		fox.receiveShadow = true;
