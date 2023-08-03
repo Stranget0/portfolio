@@ -1,6 +1,7 @@
 export default class Menu extends HTMLElement {
 	timeoutId = -1;
 	listElement: HTMLElement | null = null;
+	toggleElement: HTMLElement | null = null;
 	constructor() {
 		super();
 
@@ -14,9 +15,12 @@ export default class Menu extends HTMLElement {
 	connectedCallback() {
 		if (!this.isConnected) return;
 
-		const toggleElement = this.querySelector<HTMLElement>("[data-menu-toggle]");
+		const toggleElement = (this.toggleElement =
+			this.querySelector<HTMLElement>("[data-menu-toggle]"));
+
 		const listElement = (this.listElement =
 			this.querySelector<HTMLElement>("[aria-expanded]"));
+
 		if (!toggleElement || !listElement)
 			throw new Error("missing required elements");
 
@@ -34,14 +38,20 @@ export default class Menu extends HTMLElement {
 
 	setIsOpen(isOpen: boolean) {
 		if (!this.listElement) return;
+		const expandedClasses = this.listElement.dataset.expandedClass?.split(
+			" "
+		) || [""];
+
+		console.log(expandedClasses);
+
 		this.listElement.setAttribute("aria-expanded", `${isOpen}`);
-		this.setAttribute("aria-hidden", `${isOpen}`);
+
 		if (isOpen) {
-			this.setAttribute("hidden", "");
+			this.listElement.classList.add(...expandedClasses);
 			this.timeoutId = window.setTimeout(this.addListeners);
 		} else {
 			clearTimeout(this.timeoutId);
-			this.removeAttribute("hidden");
+			this.listElement.classList.remove(...expandedClasses);
 			this.removeListeners();
 		}
 	}

@@ -13,7 +13,7 @@ export function buttonClass({
 >) {
 	return classNames(
 		classOverride || [
-			"rounded relative outline-offset-4 transition-interactive w-full border-current no-underline disabled:(opacity-30 scale-100 bg-primary-500)",
+			"rounded outline-offset-4 transition-interactive w-full border-current no-underline disabled:(opacity-30 scale-100 bg-primary-500)",
 			size === "default" && "p-4 text-button",
 			size === "small" && "px-2 py-1 text-xs",
 			visualType === "simple" &&

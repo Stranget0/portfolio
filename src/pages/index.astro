@@ -9,9 +9,10 @@ import ContactSection from "@components/_Organisms/ContactSection/ContactSection
 import AboutMe from "@components/_Organisms/AboutMe/AboutMe.astro";
 import { Toaster } from "solid-toast";
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
+import { mainpageTabs } from "src/constants";
 ---
 
-<Layout>
+<Layout tabs={mainpageTabs}>
 	<div data-taxi-view class="w-full">
 		<Toaster
 			client:idle

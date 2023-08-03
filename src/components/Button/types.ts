@@ -1,6 +1,6 @@
 import type { HTMLTag, Polymorphic } from "astro/types";
 
-export type ButtonProps<T extends HTMLTag = "button"> = Polymorphic<{
+export type ButtonProps<T extends HTMLTag> = Polymorphic<{
 	as: T;
 }> & {
 	visualType?: "simple" | "outline";

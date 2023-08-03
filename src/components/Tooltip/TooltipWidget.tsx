@@ -10,8 +10,8 @@ import {
 } from "solid-js";
 import PlayTextTooltip from "./options/PlayTextTooltip";
 import initLerpPositions from "@utils/lerpPositions";
-import { Vector2 } from "three";
 import onMouseMove from "@utils/mouse";
+import NumberLerpable from "@utils/NumberLerpable";
 
 const options: Partial<Record<string, Component>> = {
 	"play-audio": PlayTextTooltip,
@@ -28,15 +28,28 @@ export default function Tooltip() {
 	const [mouseY, setMouseY] = createSignal(startingY);
 
 	createEffect(() => {
-		const vec = new Vector2();
-		const to = new Vector2();
-		const { startLerp, cancel } = initLerpPositions(() => {
-			setMouseX(vec.x);
-			setMouseY(vec.y);
+		const x = new NumberLerpable(0);
+		const y = new NumberLerpable(0);
+		const { startLerp: startLerpX, cancel: cancelX } = initLerpPositions(() => {
+			setMouseX(x.value);
 		});
+		const { startLerp: startLerpY, cancel: cancelY } = initLerpPositions(() => {
+			setMouseY(y.value);
+		});
+
+		const cancel = () => {
+			cancelX();
+			cancelY();
+		};
+
 		const cleanMouseMove = onMouseMove((e) => {
-			to.set(e.clientX, e.clientY);
-			startLerp(vec, to);
+			if (tooltip()) {
+				startLerpX(x, e.clientX);
+				startLerpY(y, e.clientY);
+			} else {
+				setMouseX(x.value);
+				setMouseY(y.value);
+			}
 		});
 
 		onCleanup(() => {

@@ -2,7 +2,9 @@ import { scroll, animate, ScrollOptions, inView } from "motion";
 import createCleanFunction from "@utils/createCleanFunction";
 
 const defaultKeyframes = {
-	transform: [0, 0.8, 1, 0.8, 0].map((scale) => `scale(${scale})`),
+	transform: [1, 0.5, 0, -0.5, -1].map(
+		(val) => `translate3d(0, ${val * 25}%, 0)`
+	),
 	opacity: [0, 0.3, 1, 0.3, 0],
 };
 

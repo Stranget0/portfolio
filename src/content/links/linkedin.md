@@ -1,5 +1,5 @@
 ---
 title: linkedin profile
-class: i-mingcute-github-fill?mask
-href: https://github.com/Stranget0
+class: i-mingcute-linkedin-fill?mask
+href: https://www.linkedin.com/in/m-smarzewski/
 ---

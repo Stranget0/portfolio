@@ -1,5 +1,5 @@
 ---
 title: github profile
-class: i-mingcute-linkedin-fill?mask
+class: i-mingcute-github-fill?mask
 href: https://github.com/Stranget0
 ---

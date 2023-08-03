@@ -15,35 +15,46 @@ export default function elementWaypoints(
 			const lerpVector = new Vector3();
 			const waypointsElements = getDataElements(attribute);
 			const waypoints = handleWaypoints(controller, waypointsElements, key);
+			const getPAndQWaypoints = createWaypointPQGetter();
+			let hasScrolled = false;
 
 			const { startLerp } = initLerpPositions(() => {
 				onUpdate?.(lerpVector);
 			});
-			let waypointIndex = 0;
 
-			scroll(({ y }) => {
-				waypointIndex = waypoints.findLastIndex(
-					([_w, offsetTop]) => y.current - offsetTop > 0
+			function transitionToNewPosition(current: number, smooth = true) {
+				const { waypoint, nextWaypoint } = getPAndQWaypoints(
+					waypoints,
+					current
 				);
-				if (waypointIndex === -1) waypointIndex = 0;
-
-				const waypoint = waypoints[waypointIndex];
-				const nextWaypoint = waypoints[waypointIndex + 1];
 				if (waypoint) {
-					p.set(...(waypoint[2] as [number, number, number]));
-
-					if (nextWaypoint) {
-						q.set(...(nextWaypoint[2] as [number, number, number]));
-
-						const progressBetweenWaypoints =
-							(y.current - waypoint[1]) / (nextWaypoint[1] - waypoint[1]);
-
-						const to = p.lerp(q, progressBetweenWaypoints);
-
-						startLerp(lerpVector, to);
-					} else startLerp(lerpVector, p);
+					setPointBetweenToP(waypoint, nextWaypoint, current);
+					if (smooth) startLerp(lerpVector, p);
+					else onUpdate?.(lerpVector.copy(p));
 				}
+			}
+			scroll(({ y }) => {
+				if ((!y.velocity && hasScrolled) || !controller.isLooping) return;
+				transitionToNewPosition(y.current, hasScrolled);
+				hasScrolled = true;
 			});
+
+			function setPointBetweenToP(
+				waypoint: WaypointTuple,
+				nextWaypoint: WaypointTuple,
+				current: number
+			) {
+				p.set(...(waypoint[2] as [number, number, number]));
+
+				if (nextWaypoint) {
+					q.set(...(nextWaypoint[2] as [number, number, number]));
+
+					const progressBetweenWaypoints =
+						(current - waypoint[1]) / (nextWaypoint[1] - waypoint[1]);
+
+					p.lerp(q, progressBetweenWaypoints);
+				}
+			}
 		},
 	};
 }
@@ -118,4 +129,19 @@ function calculateBreakpoints(waypointBreakpoints: number[][]) {
 
 function sortWaypoints(waypoints: WaypointTuple[]) {
 	waypoints.sort(([_w1, top1], [_w2, top2]) => top1 - top2);
+}
+
+function createWaypointPQGetter() {
+	let waypointIndex = 0;
+	return function getWaypointPQ(waypoints: WaypointTuple[], current: number) {
+		waypointIndex = waypoints.findLastIndex(
+			([_w, offsetTop]) => current - offsetTop > 0
+		);
+		if (waypointIndex === -1) waypointIndex = 0;
+
+		const waypoint = waypoints[waypointIndex];
+		const nextWaypoint = waypoints[waypointIndex + 1];
+
+		return { waypoint, nextWaypoint };
+	};
 }

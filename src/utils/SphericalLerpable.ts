@@ -6,7 +6,7 @@ export default class SphericalLerpable
 	extends Spherical
 	implements LerpObject<Spherical>
 {
-	distanceTo(target: Spherical | Vector3): number {
+	distanceTo(target: Spherical): number {
 		const thisPosition = new Vector3().setFromSpherical(this);
 		const targetPosition =
 			target instanceof Vector3

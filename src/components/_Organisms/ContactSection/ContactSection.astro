@@ -8,6 +8,7 @@ import ContactInputContainer from "./ContactInputContainer.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
+import { mainpageTabs } from "src/constants";
 
 const md = 768;
 const waypointsData = {
@@ -24,7 +25,7 @@ const waypointsData = {
 ---
 
 <section
-	id="contact"
+	id={mainpageTabs.contact.id}
 	class="min-h-screen text-primary-50 relative text-right before:(pseudo-full bg-primary-950 -z-3)"
 	data-static-h="100vh"
 	data-static-h-type="min"
@@ -61,7 +62,7 @@ const waypointsData = {
 					minlength={10}
 					maxlength={1000}
 				/>
-				<Button type="submit" visualType="outline">Submit</Button>
+				<Button as="button" type="submit" visualType="outline">Submit</Button>
 			</ContactInputContainer>
 		</SectionFixed>
 	</SectionClip>

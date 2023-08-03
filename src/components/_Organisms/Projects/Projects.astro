@@ -4,11 +4,12 @@ import Project from "./Project.astro";
 import { getCollection } from "astro:content";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 const projects = await getCollection("projects");
+import { mainpageTabs } from "src/constants";
 ---
 
 <SlidedSection
 	title="Projects"
-	id="projects"
+	id={mainpageTabs.projects.id}
 	class="pt-50"
 	{...foxObstacleAttrObj}
 >

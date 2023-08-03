@@ -1,0 +1,58 @@
+---
+import type { Tabs } from "@/types";
+import Button from "@components/Button/Button.astro";
+interface Props {
+	tabs: Tabs;
+}
+export type TabsProps = Props;
+
+const { tabs } = Astro.props;
+const tabsEntries = Object.entries(tabs);
+---
+
+<header class="text-label color-white text-right">
+	<nav>
+		<toggled-menu class="block">
+			<Button
+				class="z-1000  fixed mix-blend-difference top-0 right-0 max-w-max mt-4 mr-4 mb-8"
+				visualType="outline"
+				size="small"
+				data-menu-toggle
+			>
+				menu
+			</Button>
+			<div
+				aria-expanded="false"
+				class="z-1000  fixed top-20 right-0 md:top-60 p-4 color-black motion-safe:transition-transform-300 transform-origin-r transform-gpu scale-0 glass-backdrop"
+				data-expanded-class="important:transform-none"
+			>
+				<ul class="flex flex-col gap-8 md:gap-12">
+					{
+						tabsEntries.map(([_, { id, label }]) => (
+							<li>
+								<a
+									is="nav-tab"
+									class="capitalize animated-underline animated-underline-right font-light"
+									href={`#${id}`}
+								>
+									{label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</toggled-menu>
+	</nav>
+</header>
+
+<style>
+	.active {
+		@apply before:scale-x-100;
+	}
+</style>
+
+<script>
+	import "./TabElement";
+	import "@components/_CustomElements/Menu";
+</script>
