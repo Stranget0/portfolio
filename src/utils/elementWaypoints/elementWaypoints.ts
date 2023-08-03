@@ -34,7 +34,7 @@ export default function elementWaypoints(
 				}
 			}
 			scroll(({ y }) => {
-				if (!y.velocity && hasScrolled) return;
+				if ((!y.velocity && hasScrolled) || !controller.isLooping) return;
 				transitionToNewPosition(y.current, hasScrolled);
 				hasScrolled = true;
 			});
