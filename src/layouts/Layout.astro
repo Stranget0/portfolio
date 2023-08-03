@@ -1,10 +1,14 @@
 ---
-import Header from "../components/Header.astro";
 import SEO from "../components/SEO.astro";
 import "@unocss/reset/tailwind-compat.css";
 import Background from "@components/Background.astro";
 import Tooltip from "@components/Tooltip/Tooltip.astro";
 import Plugins from "@plugins/Plugins.astro";
+import type { TabsProps } from "@components/Tabs/Tabs.astro";
+import Tabs from "@components/Tabs/Tabs.astro";
+import { mainpageTabs } from "src/constants";
+
+type Props = TabsProps;
 ---
 
 <!DOCTYPE html>
@@ -25,7 +29,7 @@ import Plugins from "@plugins/Plugins.astro";
 		class="theme-default text-primary-950 font-sans overflow-y-auto overflow-x-hidden drop-shadow-color-black drop-shadow-color-opacity-50"
 	>
 		<Background />
-		<Header />
+		<Tabs tabs={mainpageTabs} />
 		<Tooltip />
 		<main data-taxi>
 			<slot />

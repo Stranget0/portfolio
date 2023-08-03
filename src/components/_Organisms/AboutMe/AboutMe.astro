@@ -10,6 +10,7 @@ import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 import { scrollToTargetAttrObj } from "@components/AppearingText/constants";
 import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
+import { mainpageTabs } from "src/constants";
 
 const { data: aboutMeAudio, id: stageId } = await getEntry({
 	collection: "transcripts",
@@ -20,9 +21,10 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 ---
 
 <section
-	class="section font-serif relative flex flex-col justify-between gap-12 md:flex-row relative text-primary-950 glass-backdrop"
-	{...foxObstacleAttrObj}
+	id={mainpageTabs.aboutMe.id}
+	class="section font-serif relative flex flex-col justify-between gap-12 md:flex-row relative text-primary-950 bg-primary-50"
 	{...scrollToTargetAttrObj}
+	{...foxObstacleAttrObj}
 >
 	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block">
 		<Picture
@@ -61,7 +63,12 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 			/>
 		</div>
 		<div class="h-0 relative bottom-3">
-			<AppearingTextButton client:visible class="ml-auto" visualType="outline" stageId={stageId} />
+			<AppearingTextButton
+				client:visible
+				class="ml-auto"
+				visualType="outline"
+				stageId={stageId}
+			/>
 		</div>
 		<AppearingLine
 			class="text-8 text-balance"
@@ -86,7 +93,12 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 			class="ml-auto flex-center flex-wrap sm:justify-end gap-2 my-8 menu-opafocus opafocus-max-opacity-100 opafocus-min-opacity-80"
 		>
 			<SocialLinks />
-			<Button as="a" href="#contact" class="text-right max-w-max" invertColor>
+			<Button
+				as="a"
+				href={`#${mainpageTabs.contact}`}
+				class="text-right max-w-max"
+				invertColor
+			>
 				<div class="inline-block i-mingcute-message-3-fill w-8 h-8 mr-2"></div>
 				<AppearingLine
 					text="Contact me!"

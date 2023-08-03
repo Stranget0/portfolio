@@ -5,7 +5,7 @@ import type { Component } from "solid-js";
 import type { States } from "./types";
 import { appearingTextState, setAppearingTextState } from "./state";
 
-interface Props extends ButtonProps {
+interface Props extends ButtonProps<"button"> {
 	stageId?: string;
 	mainLabel?: string;
 	direction?: "row" | "column";

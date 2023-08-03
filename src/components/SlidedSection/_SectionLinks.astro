@@ -1,4 +1,5 @@
 ---
+import { mainpageTabs } from "src/constants";
 import SectionLink from "./_SectionLink.astro";
 
 interface Props {
@@ -13,7 +14,7 @@ const { github, website } = Astro.props;
 		class="pointer-events-auto flex flex-col items-end max-w-35vw h-max relative gap-2 menu-opafocus 2xl:(flex-row items-center)"
 	>
 		<SectionLink
-			href="#contact"
+			href=`#${mainpageTabs.contact}`
 			labelShort="Call me"
 			label="help me make more!"
 			wrapperClass="text-xs"
