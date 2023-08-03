@@ -10,6 +10,7 @@ type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	group?: number;
 	dontShowTooltip?: boolean;
 	animatedOnView?: boolean;
+	animatedInitially?: boolean;
 };
 
 export type AppearingTextProps = Props;
@@ -19,7 +20,8 @@ const {
 	text: rawText = "",
 	group,
 	dontShowTooltip,
-	animatedOnView = ["h1", "h2", "h3", "h4"].includes(Tag),
+	animatedOnView = true,
+	animatedInitially,
 	...other
 } = Astro.props;
 
@@ -49,9 +51,18 @@ let letterCount = 0;
 >
 	{
 		text.map((w, i, arr) => {
-			if (animatedOnView) {
+			if (animatedOnView || animatedInitially) {
 				if (arr[i - 1]) letterCount += arr[i - 1].length;
-				return <AnimatedText {...commonProps} as="span" word={w} offset={letterCount} />;
+				return (
+					<AnimatedText
+						{...commonProps}
+						as="span"
+						word={w}
+						offset={letterCount}
+						animatedInitially={animatedInitially}
+						animationSpeed={rawText.length}
+					/>
+				);
 			}
 
 			return <span {...commonProps}>{w}</span>;
