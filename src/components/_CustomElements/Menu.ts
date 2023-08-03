@@ -42,8 +42,6 @@ export default class Menu extends HTMLElement {
 			" "
 		) || [""];
 
-		console.log(expandedClasses);
-
 		this.listElement.setAttribute("aria-expanded", `${isOpen}`);
 
 		if (isOpen) {
