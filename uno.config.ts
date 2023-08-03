@@ -251,7 +251,7 @@ export default defineConfig({
 				@apply relative before:(pseudo-full top-auto w-full h-0.1em scale-x-0) hover:before:scale-x-100 focus-visible:before:scale-x-1 motion-safe:before:transition-transform;
 				
 				&::before{
-					background-color: var(--underline-color, black);
+					background-color: var(--underline-color, currentColor);
 					transform-origin: var(--underline-origin, center bottom);
 				}
 			}`;
