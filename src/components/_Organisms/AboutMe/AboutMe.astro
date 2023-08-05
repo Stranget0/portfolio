@@ -11,6 +11,8 @@ import { scrollToTargetAttrObj } from "@components/AppearingText/constants";
 import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
 import { mainpageTabs } from "src/constants";
+import { classInViewParent } from "@/plugins/classInView/serverUtils";
+
 
 const { data: aboutMeAudio, id: stageId } = await getEntry({
 	collection: "transcripts",
@@ -50,6 +52,8 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 			class="text-subtitle-1"
 			text="Nice to meet you!"
 			group={1}
+			animatedOnView
+			{...classInViewParent}
 		/>
 		<div class="md:hidden max-w-50 mx-auto mb-12">
 			<Picture
@@ -65,7 +69,7 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 		<div class="h-0 relative bottom-3">
 			<AppearingTextButton
 				client:visible
-				class="ml-auto"
+				class="ml-auto hover:text-accent-400 focus-visible:text-accent-400"
 				visualType="outline"
 				stageId={stageId}
 			/>
@@ -85,9 +89,10 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 		/>
 		<p
 			class="text-subtitle-3 text-balance text-9 mb-0 text-center sm:(text-right text-12 ml-auto max-w-80%)"
+			{...classInViewParent}
 		>
-			<AppearingLine as="span" text="Now, wanna make some" />
-			<AppearingLine as="strong" text=" good shit?" />
+			<AppearingLine as="span" text="Now, wanna make some" animatedOnView/>
+			<AppearingLine as="strong" offset={"Now, wanna make some".length} text=" good shit?" animatedOnView/>
 		</p>
 		<nav
 			class="ml-auto flex-center flex-wrap sm:justify-end gap-2 my-8 menu-opafocus opafocus-max-opacity-100 opafocus-min-opacity-80"
@@ -105,6 +110,8 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 					class="inline-block my-2"
 					group={3}
 					dontShowTooltip
+					animatedOnView
+					{...classInViewParent}
 				/>
 			</Button>
 		</nav>

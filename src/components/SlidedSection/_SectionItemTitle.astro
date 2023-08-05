@@ -1,4 +1,5 @@
 ---
+import { classInViewParent } from "@/plugins/classInView/serverUtils";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SectionTopSticky from "@components/SlidedSection/_SectionTopSticky.astro"
 
@@ -16,5 +17,7 @@ const { title, ...other } = Astro.props;
 	text={title}
 	class="text-subtitle-2"
 	group={2}
+	animatedOnView
+	{...classInViewParent}
 	/>
 </SectionTopSticky>
