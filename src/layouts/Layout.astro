@@ -17,9 +17,32 @@ type Props = TabsProps;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<style is:global>
+		<style is:global lang="scss">
 			:where(button) {
 				background-color: transparent;
+			}
+			/* ===== Scrollbar CSS ===== */
+			$thumb-color: theme("colors.accent.300");
+			$track-color: theme("colors.primary.950");
+			/* Firefox */
+			* {
+				scrollbar-width: thin;
+				scrollbar-color: $thumb-color $track-color;
+			}
+
+			/* Chrome, Edge, and Safari */
+			*::-webkit-scrollbar {
+				width: 12px;
+			}
+
+			*::-webkit-scrollbar-track {
+				background: $track-color;
+			}
+
+			*::-webkit-scrollbar-thumb {
+				background-color: $thumb-color;
+				border-radius: 12px;
+				border: 2px solid $track-color;
 			}
 		</style>
 		<SEO />
