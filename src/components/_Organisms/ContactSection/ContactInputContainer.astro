@@ -14,9 +14,12 @@
 
 	const form = document.querySelector("form[name='contact']");
 	if (!form) throw new Error("No form found");
+
 	form.addEventListener("submit", async (event) => {
 		const e = event as SubmitEvent;
 		e.preventDefault();
+		const activeElement = document.activeElement as HTMLElement | null;
+		activeElement?.blur();
 
 		const submitter = e.submitter as HTMLButtonElement;
 		submitter.disabled = true;
@@ -34,7 +37,8 @@
 			})
 			.catch((error) => {
 				toast.error(error + "");
-			}).finally(()=>{
+			})
+			.finally(() => {
 				prepareToUnlockButton(submitter);
 			});
 

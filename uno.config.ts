@@ -244,19 +244,20 @@ export default defineConfig({
 		// ***************************************************************************************
 		[/^clip-full$/, () => ({ "clip-path": "inset(0)" })],
 		// ***************************************************************************************
-		[
-			/^animated-underline$/,
-			() => {
-				return `.animated-underline {
-				@apply relative before:(pseudo-full top-auto w-full h-0.1em scale-x-0) hover:before:scale-x-100 focus-visible:before:scale-x-1 motion-safe:before:transition-transform;
+		// TODO: doesnt work, fix and replace the scss
+		// [ 
+		// 	/^animated-underline$/,
+		// 	() => {
+		// 		return `.animated-underline {
+		// 		@apply relative before:(pseudo-full top-auto w-full h-0.1em scale-x-0) hover:before:scale-x-100 focus-visible:before:scale-x-1 motion-safe:before:transition-transform;
 				
-				&::before{
-					background-color: var(--underline-color, currentColor);
-					transform-origin: var(--underline-origin, center bottom);
-				}
-			}`;
-			},
-		],
+		// 		&::before{
+		// 			background-color: var(--underline-color, currentColor);
+		// 			transform-origin: var(--underline-origin, center bottom);
+		// 		}
+		// 	}`;
+		// 	},
+		// ],
 		[
 			/^animated-underline-(left|right|center)$/,
 			([_, direction]) => {
@@ -305,5 +306,7 @@ export default defineConfig({
 		],
 		// ***************************************************************************************
 		[/^text-balance$/, () => ({ "text-wrap": "balance" })],
+		// ***************************************************************************************
+		[/^solid-shadow$/, () => ({ "box-shadow": "-.15em .15em 0px 0px currentColor" })],
 	],
 });

@@ -9,6 +9,8 @@ import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { mainpageTabs } from "src/constants";
+import { classInViewParent } from "@/plugins/classInView/serverUtils";
+import AnimatedText from "@/components/AnimatedText.astro";
 
 const md = 768;
 const waypointsData = {
@@ -37,7 +39,7 @@ const waypointsData = {
 			class="section inset-4 justify-end items-center md:items-end -z-3"
 		>
 			<ContactInputContainer>
-				<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1" />
+				<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1" animatedOnView {...classInViewParent}/>
 				<Input
 					name="name"
 					id="contact-name"
@@ -62,7 +64,7 @@ const waypointsData = {
 					minlength={10}
 					maxlength={1000}
 				/>
-				<Button as="button" type="submit" visualType="outline">Submit</Button>
+				<Button as="button" type="submit" visualType="outline"><AnimatedText word="Submit"/></Button>
 			</ContactInputContainer>
 		</SectionFixed>
 	</SectionClip>
