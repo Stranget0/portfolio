@@ -13,7 +13,7 @@ export default defineConfig({
 	}), mdx(), solidJs()],
 	vite: {
 		plugins: [visualizer({
-			template: "treemap",
+			template: "sunburst",
 			open: true,
 			gzipSize: true,
 			brotliSize: true,
