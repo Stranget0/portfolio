@@ -6,15 +6,12 @@ import {
 
 const parentToTargets = new WeakMap<HTMLElement, HTMLElement[]>();
 
-const intersectionObserver = new IntersectionObserver(
-	(observerEntries) => {
-		for (const { target: parent, isIntersecting } of observerEntries) {
-			const targets = getTargets(parent as HTMLElement);
-			targets.forEach(isIntersecting ? toggleTargetOn : toggleTargetOff);
-		}
-	},
-	{ root: null, threshold: 1 }
-);
+const intersectionObserver = new IntersectionObserver((observerEntries) => {
+	for (const { target: parent, isIntersecting } of observerEntries) {
+		const targets = getTargets(parent as HTMLElement);
+		targets.forEach(isIntersecting ? toggleTargetOn : toggleTargetOff);
+	}
+});
 
 for (const toBeObserved of document.querySelectorAll(
 	`[${classInViewContainerAttr}]`
