@@ -29,8 +29,8 @@ const calculatedAttributes = classInView("animate-text-appear");
 				.map((letter, letterIndex) => (
 					<span
 						class:list={[
-							"inline-block animate-duration-300 animate-both",
-							animatedInitially && "animate-text-appear ",
+							"inline-block animate-duration-300 animate-both transition-color-3000 hover:text-accent-200 hover:duration-150",
+							animatedInitially && "animate-text-appear",
 						]}
 						style={{ "animation-delay": `${(letterIndex + offset) * 1000 / animationSpeed}ms` }}
 						{...calculatedAttributes}
