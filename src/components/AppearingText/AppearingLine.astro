@@ -11,6 +11,7 @@ type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	dontShowTooltip?: boolean;
 	animatedOnView?: boolean;
 	animatedInitially?: boolean;
+	offset?: number
 };
 
 export type AppearingTextProps = Props;
@@ -20,8 +21,8 @@ const {
 	text: rawText = "",
 	group,
 	dontShowTooltip,
-	animatedOnView = true,
-	animatedInitially,
+	animatedOnView,
+	animatedInitially,offset=0,
 	...other
 } = Astro.props;
 
@@ -38,7 +39,7 @@ const commonProps = {
 	class: "transition-800 will-change-opacity",
 };
 
-let letterCount = 0;
+let letterCount = offset;
 ---
 
 <!-- TODO: FIX TYPE -->
@@ -60,7 +61,7 @@ let letterCount = 0;
 						word={w}
 						offset={letterCount}
 						animatedInitially={animatedInitially}
-						animationSpeed={rawText.length}
+						animationSpeed={(offset+rawText.length) * 2}
 					/>
 				);
 			}
