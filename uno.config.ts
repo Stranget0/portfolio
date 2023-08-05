@@ -83,7 +83,7 @@ export default defineConfig({
 		"text-primary-950",
 		"hover:bg-primary-50",
 		"border-2",
-		"filter-invert",
+		"filter-invert","solid-shadow"
 	],
 	shortcuts,
 	theme: {
