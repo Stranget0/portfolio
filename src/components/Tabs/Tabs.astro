@@ -1,6 +1,7 @@
 ---
 import type { Tabs } from "@/types";
 import Button from "@components/Button/Button.astro";
+import { scrollVelocityTransform } from "@plugins/scrollVelocityTransform/serverUtils";
 
 interface Props {
 	tabs: Tabs;
@@ -15,23 +16,24 @@ const tabsEntries = Object.entries(tabs);
 	<nav>
 		<toggled-menu class="block">
 			<Button
-				class="z-1000 fixed mix-blend-difference top-0 right-0 max-w-max mt-4 mr-4 mb-8 -translate-y-50 motion-safe:transition-transform-300 hover:text-accent-200 focus-visible:text-accent-200"
+				class="z-1000 fixed mix-blend-difference top-0 right-0 max-w-max mt-4 mr-4 mb-8 -translate-y-50 motion-safe:transition-transform hover:text-accent-200 focus-visible:text-accent-200"
 				visualType="outline"
 				size="small"
 				data-menu-toggle
 				title="menu"
+				{...scrollVelocityTransform(2)}
 			>
 				<div class="i-mingcute-menu-line?mask"></div>
 			</Button>
 			<div
 				aria-expanded="false"
-				class="z-1000 color-primary-950 fixed rounded-2 overflow-hidden top-20 right-0 p-4 glass-backdrop transform-origin-r shadow transform-gpu scale-0 -translate-y-20 md:-translate-y-60 md:top-60 motion-safe:transition-transform-300"
+				class="z-1000 color-primary-950 fixed rounded-l-2 overflow-hidden top-20 right-0 bottom-0 max-h-50 p-4 glass-backdrop transform-origin-r shadow transform-gpu scale-0 -translate-y-20 md:-translate-y-60 md:top-60 motion-safe:transition-transform-300"
 				data-expanded-class="important:transform-none"
 			>
-				<ul class="flex flex-col gap-8 md:gap-12">
+				<ul class="flex flex-col justify-between h-full">
 					{
 						tabsEntries.map(([_, { id, label }]) => (
-							<li>
+							<li {...scrollVelocityTransform(5)} class="motion-safe:transition-transform">
 								<a
 									is="nav-tab"
 									class="capitalize animated-underline animated-underline-right font-light"
@@ -59,7 +61,6 @@ const tabsEntries = Object.entries(tabs);
 	import "./TabElement";
 	import "@components/_CustomElements/Menu";
 	import { scroll } from "motion";
-	import { clamp } from "three/src/math/MathUtils.js";
 
 	const toggleButton = document.querySelector<HTMLElement>("header button");
 	if (toggleButton) {
@@ -67,10 +68,6 @@ const tabsEntries = Object.entries(tabs);
 			scroll(({ y }) => {
 				if (y.current < 100) toggleButton.classList.add("-translate-y-50");
 				else toggleButton.classList.remove("-translate-y-50");
-
-				const pageVelocity = clamp(y.velocity / window.innerHeight, -1, 1);
-				const transform = `translate3d(0,${1 - pageVelocity * 5}px,0)`;
-				toggleButton.style.transform = transform;
 			});
 		}
 	}

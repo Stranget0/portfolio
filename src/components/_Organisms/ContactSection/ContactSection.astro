@@ -10,6 +10,7 @@ import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerA
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { mainpageTabs } from "src/constants";
 import AnimatedText from "@/components/AnimatedText.astro";
+import { scrollVelocityTransform } from "@/plugins/scrollVelocityTransform/serverUtils";
 
 const md = 768;
 const waypointsData = {
@@ -35,10 +36,16 @@ const waypointsData = {
 >
 	<SectionClip class="absolute inset-0">
 		<SectionFixed
-			class="section inset-4 justify-end items-center md:items-end -z-3"
+			class="section inset-4 justify-end items-center md:items-end -z-3 motion-safe:transition-transform"
+			{...scrollVelocityTransform(5)}
 		>
 			<ContactInputContainer>
-				<AppearingLine as="h2" text="Contact me!" class="text-subtitle-1" animatedOnView />
+				<AppearingLine
+					as="h2"
+					text="Contact me!"
+					class="text-subtitle-1"
+					animatedOnView
+				/>
 				<Input
 					name="name"
 					id="contact-name"
@@ -63,7 +70,9 @@ const waypointsData = {
 					minlength={10}
 					maxlength={1000}
 				/>
-				<Button as="button" type="submit" visualType="outline"><AnimatedText word="Submit"/></Button>
+				<Button as="button" type="submit" visualType="outline">
+					<AnimatedText word="Submit" />
+				</Button>
 			</ContactInputContainer>
 		</SectionFixed>
 	</SectionClip>

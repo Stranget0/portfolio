@@ -5,6 +5,7 @@ import SectionFixed from "@components/SectionFixed.astro";
 import type { ImageString } from "src/utilTypes/image";
 import SectionFloatingImagesReferences from "./_SectionFloatingImagesReferences.astro";
 import resolveImageImport from "@utils/resolveImageImport";
+import { scrollVelocityTransform } from "@/plugins/scrollVelocityTransform/serverUtils";
 
 type Props = { images: ImageString[]; floatingImages?: ImageString[] };
 const { images, floatingImages } = Astro.props;
@@ -26,7 +27,8 @@ const hasFloatingImages = !!floatingImages?.length;
 								alt={alt || ""}
 								width={1000}
 								fit="contain"
-								class="object-contain mx-auto rounded-2xl w-max max-w-full max-h-full transition-transform"
+								class="object-contain mx-auto rounded-2xl w-max max-w-full max-h-full motion-safe:transition-transform"
+								{...scrollVelocityTransform(15)}
 							/>
 						</SectionFixed>
 						{showFloatingImagesRefs && (
