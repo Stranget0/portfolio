@@ -1,17 +1,16 @@
 import { scrollToElement } from "@plugins/lerpScroll/lerpScrollPlugin";
 import createCleanFunction from "@utils/createCleanFunction";
 import groupBy from "lodash/groupBy";
-import { scrollToTargetAttr, wordClasses } from "./constants";
+import { wordClasses } from "./constants";
 import type { GroupEntry, Sentence, WordData, WordsData } from "./types";
 import wait from "@utils/wait";
 
 const appearDuration = 200;
-const minDuration = 200;
 const stageWordsMap = new WeakMap<HTMLElement, WordsData>();
+let lastLinePlayed: HTMLElement | null = null;
 
 export function playStage(stage: HTMLElement) {
-	const scrollToTarget =
-		stage.closest<HTMLElement>(`[${scrollToTargetAttr}]`) || stage;
+	lastLinePlayed = null;
 	const audioPath = stage.dataset.audioPath;
 	const audio = new Audio(`audio/${audioPath}`);
 	const wordData = getWordsFromStage(stage);
@@ -24,7 +23,6 @@ export function playStage(stage: HTMLElement) {
 		async function onAudioReady() {
 			cleanMenago.push(() => audio.pause());
 			await audio.play();
-			scrollToElement(scrollToTarget);
 			changeWordsVisibility(wordData, "invisible");
 
 			const groupsFinishedPromise = Promise.all(
@@ -61,7 +59,8 @@ export function playStage(stage: HTMLElement) {
 		const sentencesPromises = sentences.flatMap((sentence, sentenceIndex) => {
 			const sentencePromise = Promise.all(
 				sentence.map((word, wordIndex) =>
-					showWord(word, cleanMenago).then(() => {
+					// It resolves when is shown
+					queueWord(word, cleanMenago).then(() => {
 						const lastSentence = sentences[sentenceIndex - 1];
 						const isFirstWord = wordIndex === 0;
 						const shouldNotHideLastSentence = !isFirstWord || !lastSentence;
@@ -74,14 +73,13 @@ export function playStage(stage: HTMLElement) {
 					})
 				)
 			);
-
 			return sentencePromise;
 		});
 		await Promise.all(sentencesPromises);
 	}
 }
 
-function showWord(
+function queueWord(
 	word: WordData,
 	cleanMenago: { push(f: VoidFunction): void; clean(): void }
 ) {
@@ -90,6 +88,8 @@ function showWord(
 			word.node.style.transitionDuration = `${appearDuration}ms`;
 			word.node.classList.remove("opacity-0");
 			word.node.classList.add(...wordClasses.high);
+
+			handleScrollToLineOfWord(word);
 
 			const appearTimeout = setTimeout(() => {
 				word.node.style.transitionDuration = "";
@@ -103,6 +103,17 @@ function showWord(
 
 		cleanMenago.push(() => clearTimeout(timeout1));
 	});
+}
+
+function handleScrollToLineOfWord(word: WordData) {
+	const line = word.node.closest<HTMLElement>("p,h1,h2,h3,h4,h5,h6");
+
+	if (line && line !== lastLinePlayed) {
+		scrollToElement(line);
+		lastLinePlayed = line;
+	} else if (!line) {
+		console.error("No line for played word found, invalid structure!", word);
+	}
 }
 
 function changeWordsVisibility(
