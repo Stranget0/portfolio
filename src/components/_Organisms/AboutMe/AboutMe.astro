@@ -7,7 +7,6 @@ import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SocialLinks from "@components/SocialLinks.astro";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
-import { scrollToTargetAttrObj } from "@components/AppearingText/constants";
 import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
 import { mainpageTabs } from "src/constants";
@@ -28,7 +27,6 @@ const appearInViewScale = classInView("opacity-0 scale-0", "opacity-100 scale-10
 <section
 	id={mainpageTabs.aboutMe.id}
 	class="section font-serif relative flex flex-col justify-between gap-12 md:flex-row relative text-primary-950 bg-primary-50"
-	{...scrollToTargetAttrObj}
 	{...foxObstacleAttrObj}
 >
 	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block">
@@ -36,10 +34,10 @@ const appearInViewScale = classInView("opacity-0 scale-0", "opacity-100 scale-10
 			src={myImage}
 			alt="Picture of me"
 			fit="contain"
-			aspect-ratio="1:20"
+			aspect-ratio="1:1"
 			sizes="(max-width: 768px) 320px, (max-width:1428px) 500px, 700px"
 			widths={[320, 500, 700]}
-			class="sticky top-4 object-contain rounded-100% motion-safe:transition-600 md:(top-8 max-h-80vh max-w-min w-full)"
+			class="sticky top-4 object-contain rounded-full aspect-ratio-square bg-accent-100 p-4 motion-safe:transition-600 md:(top-8 max-h-80vh max-w-min w-full)"
 			{...appearInViewScale}
 		/>
 	</div>
@@ -58,7 +56,7 @@ const appearInViewScale = classInView("opacity-0 scale-0", "opacity-100 scale-10
 			group={1}
 			lettersTransition
 		/>
-		<div class="md:hidden max-w-50 mx-auto mb-12">
+		<div class="md:hidden max-w-50 mx-auto mb-12 mt-12 bg-accent-100 rounded-full">
 			<Picture
 				src={myImage}
 				alt="Picture of me"
@@ -66,7 +64,7 @@ const appearInViewScale = classInView("opacity-0 scale-0", "opacity-100 scale-10
 				sizes="200px"
 				widths={[200]}
 				fit="contain"
-				class="rounded-full motion-safe:transition-600"
+				class="rounded-full object-contain motion-safe:transition-600 p-4 aspect-square"
 				{...appearInViewScale}
 			/>
 		</div>
