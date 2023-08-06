@@ -1,23 +1,26 @@
 ---
 import type { Polymorphic } from "astro/types";
 import type { TextTag } from "./AppearingText/types";
-import { classInView } from "@plugins/classInView/serverUtils";
 
 type Props<T extends TextTag> = Polymorphic<{ as: T }> & {
 	word: string;
 	offset?: number;
 	animatedInitially?: boolean;
+	lettersTransition?: boolean;
 	animationSpeed?: number;
+	letterClass?: string;
 };
 
 const {
 	word,
 	offset = 0,
 	as: Tag = "span",
-	animatedInitially,animationSpeed=100,
+	animatedInitially,
+	animationSpeed = 100,
+	letterClass,
+	lettersTransition,
 	...other
 } = Astro.props;
-const calculatedAttributes = classInView("animate-text-appear");
 ---
 
 <Tag {...other}>
@@ -29,11 +32,17 @@ const calculatedAttributes = classInView("animate-text-appear");
 				.map((letter, letterIndex) => (
 					<span
 						class:list={[
-							"inline-block animate-duration-300 animate-both transition-color-3000 hover:text-accent-200 hover:duration-150",
-							animatedInitially && "animate-text-appear",
+							"inline-block animate-duration-300 animate-both",
+							animatedInitially && "motion-safe:animate-text-appear",
+							lettersTransition &&
+								" motion-safe:transition-color-3000 hover:text-accent-200 hover:duration-150",
+							letterClass,
 						]}
-						style={{ "animation-delay": `${(letterIndex + offset) * 1000 / animationSpeed}ms` }}
-						{...calculatedAttributes}
+						style={{
+							"animation-delay": `${
+								((letterIndex + offset) * 1000) / animationSpeed
+							}ms`,
+						}}
 					>
 						{letter}
 					</span>
