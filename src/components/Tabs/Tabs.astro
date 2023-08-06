@@ -15,7 +15,7 @@ const tabsEntries = Object.entries(tabs);
 	<nav>
 		<toggled-menu class="block">
 			<Button
-				class="z-1000 fixed mix-blend-difference top-0 right-0 max-w-max mt-4 mr-4 mb-8 motion-safe:transition-transform-300 hover:text-accent-200 focus-visible:text-accent-200"
+				class="z-1000 fixed mix-blend-difference top-0 right-0 max-w-max mt-4 mr-4 mb-8 -translate-y-50 motion-safe:transition-transform-300 hover:text-accent-200 focus-visible:text-accent-200"
 				visualType="outline"
 				size="small"
 				data-menu-toggle
@@ -59,6 +59,7 @@ const tabsEntries = Object.entries(tabs);
 	import "./TabElement";
 	import "@components/_CustomElements/Menu";
 	import { scroll } from "motion";
+	import { clamp } from "three/src/math/MathUtils.js";
 
 	const toggleButton = document.querySelector<HTMLElement>("header button");
 	if (toggleButton) {
@@ -67,8 +68,8 @@ const tabsEntries = Object.entries(tabs);
 				if (y.current < 100) toggleButton.classList.add("-translate-y-50");
 				else toggleButton.classList.remove("-translate-y-50");
 
-				const pageVelocity = y.velocity / window.innerHeight;
-				const transform = `translate3d(0,${1 - pageVelocity / 10},0)`;
+				const pageVelocity = clamp(y.velocity / window.innerHeight, -1, 1);
+				const transform = `translate3d(0,${1 - pageVelocity * 5}px,0)`;
 				toggleButton.style.transform = transform;
 			});
 		}
