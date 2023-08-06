@@ -26,13 +26,6 @@ if (motionSafeMedia.matches) {
 	}, 0.00001);
 
 	inView(`[${scrollVelocityTransformAttr}]`, ({ target }) => {
-		if (
-			!target.classList.contains("motion-safe:transition-transform") &&
-			!target.classList.contains("transition-interactive")
-		) {
-			console.warn("NO transition for", target);
-		}
-
 		elements.push(target as HTMLElement);
 		return () => {
 			const elementIndex = elements.indexOf(target as HTMLElement);
