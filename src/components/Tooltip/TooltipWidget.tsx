@@ -20,21 +20,21 @@ const options: Partial<Record<string, Component>> = {
 const startingX = globalThis.innerWidth / 2 || 0;
 const startingY = globalThis.innerHeight / 2 || 0;
 
+const [tooltipX, setTooltipX] = createSignal(startingX);
+const [tooltipY, setTooltipY] = createSignal(startingY);
+
 export default function Tooltip() {
 	const [tooltip] = tooltipSignal;
 	let ref: HTMLDivElement | undefined;
 
-	const [mouseX, setMouseX] = createSignal(startingX);
-	const [mouseY, setMouseY] = createSignal(startingY);
-
 	createEffect(() => {
-		const x = new NumberLerpable(0);
-		const y = new NumberLerpable(0);
+		const x = new NumberLerpable(startingX);
+		const y = new NumberLerpable(startingY);
 		const { startLerp: startLerpX, cancel: cancelX } = initLerpPositions(() => {
-			setMouseX(x.value);
+			setTooltipX(x.value);
 		});
 		const { startLerp: startLerpY, cancel: cancelY } = initLerpPositions(() => {
-			setMouseY(y.value);
+			setTooltipY(y.value);
 		});
 
 		const cancel = () => {
@@ -47,8 +47,8 @@ export default function Tooltip() {
 				startLerpX(x, e.clientX);
 				startLerpY(y, e.clientY);
 			} else {
-				setMouseX(x.value);
-				setMouseY(y.value);
+				setTooltipX(x.value);
+				setTooltipY(y.value);
 			}
 		});
 
@@ -58,14 +58,16 @@ export default function Tooltip() {
 		});
 	});
 
+	const style = () => ({
+		transform: `translate(-50%, -50%) translate(${tooltipX()}px, ${tooltipY()}px)`,
+	});
+
 	return (
 		<div
 			ref={ref}
 			id="tooltip"
 			class="fixed left-0 top-0 z-15 pointer-events-none mix-blend-difference"
-			style={{
-				transform: `translate(-50%, -50%) translate(${mouseX()}px, ${mouseY()}px)`,
-			}}
+			style={style()}
 		>
 			<Presence exitBeforeEnter>
 				<Dynamic component={options[tooltip() || ""]} />
