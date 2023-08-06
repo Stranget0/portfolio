@@ -16,6 +16,7 @@ import {
 	marquee,
 	backgroundSlow,
 	textAppear,
+	appear,
 } from "./unoUtils/animations";
 
 const shortcuts = {
@@ -83,7 +84,8 @@ export default defineConfig({
 		"text-primary-950",
 		"hover:bg-primary-50",
 		"border-2",
-		"filter-invert","solid-shadow"
+		"filter-invert",
+		"solid-shadow",
 	],
 	shortcuts,
 	theme: {
@@ -95,12 +97,14 @@ export default defineConfig({
 				marquee: marquee.keyframes,
 				"bg-slow": backgroundSlow.keyframes,
 				"text-appear": textAppear.keyframes,
+				appear: appear.keyframes,
 			},
 			durations: {
 				shake: shake.duration,
 				marquee: marquee.duration,
 				"bg-slow": backgroundSlow.duration,
 				"text-appear": textAppear.duration,
+				appear: appear.duration,
 			},
 			counts: {
 				shake: shake.count,
@@ -245,12 +249,12 @@ export default defineConfig({
 		[/^clip-full$/, () => ({ "clip-path": "inset(0)" })],
 		// ***************************************************************************************
 		// TODO: doesnt work, fix and replace the scss
-		// [ 
+		// [
 		// 	/^animated-underline$/,
 		// 	() => {
 		// 		return `.animated-underline {
 		// 		@apply relative before:(pseudo-full top-auto w-full h-0.1em scale-x-0) hover:before:scale-x-100 focus-visible:before:scale-x-1 motion-safe:before:transition-transform;
-				
+
 		// 		&::before{
 		// 			background-color: var(--underline-color, currentColor);
 		// 			transform-origin: var(--underline-origin, center bottom);
@@ -307,6 +311,26 @@ export default defineConfig({
 		// ***************************************************************************************
 		[/^text-balance$/, () => ({ "text-wrap": "balance" })],
 		// ***************************************************************************************
-		[/^solid-shadow$/, () => ({ "box-shadow": "-.15em .15em 0px 0px currentColor" })],
+		[
+			/^solid-shadow$/,
+			() => ({ "box-shadow": "-.15em .15em 0px 0px currentColor" }),
+		],
+		[
+			/^solid-text-shadow$/,
+			() => ({
+				"text-shadow":
+					"0 .04em  0 var(--solid-text-shadow-color, black), 0 .02em  0 var(--solid-text-shadow-color, black)",
+			}),
+		],
+		[
+			/^solid-text-shadow-([a-z-]+)(?:-(\d+))$/,
+			([_, colorVariant, shade], { theme }) => {
+				let color = theme.colors[colorVariant];
+				if (colorVariant.startsWith("#")) color = colorVariant;
+				if (shade !== undefined) color = color?.[shade];
+				if (!color) return;
+				return { "--solid-text-shadow-color": color, color };
+			},
+		],
 	],
 });
