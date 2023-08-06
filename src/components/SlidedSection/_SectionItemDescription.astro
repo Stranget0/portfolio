@@ -1,7 +1,6 @@
 ---
 import { classInView } from "@/plugins/classInView/serverUtils";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
-import SectionFixed from "@components/SectionFixed.astro";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"div"> {
@@ -11,44 +10,47 @@ interface Props extends HTMLAttributes<"div"> {
 const { text, class: className, ...other } = Astro.props;
 const descClass = ["text-body prose", className];
 
-const referenceData = classInView("reference-hidden","reference-visible")
+const referenceData = classInView("reference-hidden", "reference-visible");
+const keyframes = JSON.stringify({
+	transform: [null,"translateY(-5%)","translateY(-15%)","translateY(-50%)","translateY(-100%)"],
+});
 ---
 
+<div class="w-full my-100 h-200" {...referenceData} data-scroll-target-ref></div>
 <div
-	class="w-full my-125 h-50"
-	{...referenceData}
+	class="description fixed overflow-hidden transform translate-y-25% scale-0 z-200 text-balance flex-col-center justify-center items-center prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
 >
+	<div class="" data-scroll-target data-scroll-target-keyframes={keyframes}>
+		<!-- TODO: FIX TYPE -->{
+			text ? (
+				text
+					.split("\n")
+					.map((t) => (
+						<AppearingLine
+							{...(other as any)}
+							text={t}
+							class={descClass}
+							group="description"
+						/>
+					))
+			) : (
+				<div class:list={descClass}>
+					<slot />
+				</div>
+			)
+		}
+	</div>
 </div>
-<SectionFixed
-	class="description z-200 text-balance flex-col-center justify-center items-center prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-600 lg:(right-36 left-36 bottom-8)"
->
-	<!-- TODO: FIX TYPE -->{
-		text ? (
-			text
-				.split("\n")
-				.map((t) => (
-					<AppearingLine
-						{...(other as any)}
-						text={t}
-						class={descClass}
-						group="description"
-					/>
-				))
-		) : (
-			<div class:list={descClass}>
-				<slot />
-			</div>
-		)
-	}
-</SectionFixed>
 
 <style>
 	.reference-hidden + .description {
 		opacity: 0;
-		transform: translateY(50%) scale(0);
-	} 
+		--un-scale-x: 0;
+		--un-scale-y: 0;
+	}
 	.reference-visible + .description {
 		opacity: 1;
-		transform: translateY(50%) scale(1);
-	} 
+		--un-scale-x: 1;
+		--un-scale-y: 1;
+	}
 </style>
