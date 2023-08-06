@@ -67,7 +67,7 @@ export const backgroundSlow = {
 const textAppearKeyframes = `{
 	0% {
 		opacity: 0;
-		transform: translate(.33em,.1em) scaleY(.01) rotate(-35deg);
+		transform: translate3d(.33em,.1em,0) scale3d(0,.01,0) rotate3d(0,0,1,-35deg);
 	}
 	100% {
 		opacity: 1;
@@ -78,4 +78,20 @@ const textAppearKeyframes = `{
 export const textAppear = {
 	keyframes: textAppearKeyframes,
 	duration: "100ms"
+};
+
+const appearKeyframes = `{
+	0% {
+		opacity: 0;
+		transform: scale3d(0,0,0);
+	}
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}`;
+
+export const appear = {
+	keyframes: appearKeyframes,
+	duration: "600ms"
 };

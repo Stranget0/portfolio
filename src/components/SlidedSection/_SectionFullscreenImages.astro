@@ -3,42 +3,34 @@ import { Image } from "@astrojs/image/components";
 import SectionClip from "@components/SectionClip.astro";
 import SectionFixed from "@components/SectionFixed.astro";
 import type { ImageString } from "src/utilTypes/image";
-import SectionFloatingImagesReferences from "./_SectionFloatingImagesReferences.astro";
 import resolveImageImport from "@utils/resolveImageImport";
-import { velocityTransformAttrObj,velocityTransformReversedAttrObj } from "@/plugins/scrollVelocityTransform/serverUtils";
 
 type Props = { images: ImageString[]; floatingImages?: ImageString[] };
-const { images, floatingImages } = Astro.props;
-const hasFloatingImages = !!floatingImages?.length;
+const { images } = Astro.props;
+
+const keyframes = JSON.stringify({
+	transform: [null,null,"translateY(-10%)","translateY(-100%)"],
+});
+// data-scroll-target-ref
+// data-scroll-target data-scroll-target-keyframes={keyframes}
 ---
 
 <ul class="w-full isolate clip-full">
 	{
 		images.map(([name, alt], i, { length }) => {
-			const isLast = i === length - 1;
-			const showFloatingImagesRefs = isLast && hasFloatingImages;
-
 			return (
 				<li style={{ "z-index": length - i }}>
-					<SectionClip class="min-h-150 w-full flex flex-col">
-						<SectionFixed class="inset-4 top-42 bottom-4 flex justify-center items-center">
-							<div class="transition-transform overflow-hidden w-full h-full" {...velocityTransformAttrObj}>
-								<Image
-									src={resolveImageImport(name)}
-									alt={alt || ""}
-									width={1000}
-									fit="contain"
-									class="object-contain mx-auto rounded-2xl w-max max-w-full max-h-full transition-transform"
-									{...velocityTransformReversedAttrObj}
-								/>
-							</div>
-						</SectionFixed>
-						{showFloatingImagesRefs && (
-							<SectionFloatingImagesReferences
-								images={floatingImages}
-								class="mt-100"
+					<SectionClip class="min-h-150 w-full flex flex-col" data-scroll-target-ref>
+						<SectionFixed class="inset-4 top-42 overflow-hidden bottom-4 flex justify-center items-center">
+							<Image
+								src={resolveImageImport(name)}
+								alt={alt || ""}
+								width={1000}
+								fit="contain"
+								class="object-contain mx-auto rounded-2xl w-max max-w-full max-h-full motion-safe:transition-transform"
+								data-scroll-target data-scroll-target-keyframes={keyframes}
 							/>
-						)}
+						</SectionFixed>
 					</SectionClip>
 				</li>
 			);

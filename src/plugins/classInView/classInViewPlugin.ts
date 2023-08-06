@@ -1,61 +1,62 @@
+import { inView } from "motion";
 import {
 	classInViewAttr,
-	classInViewContainerAttr,
 	classInViewDataKey,
+	classInViewThresholdDataKey,
 } from "./constants";
+import isInViewport from "@/utils/isInViewport";
 
-const parentToTargets = new WeakMap<HTMLElement, HTMLElement[]>();
+const targets = document.querySelectorAll<HTMLElement>(`[${classInViewAttr}]`);
+for (const target of targets) {
+	const threshold = parseInt(target.dataset[classInViewThresholdDataKey] || "");
+	if (!isInViewport(target)) toggleTargetOff(target);
 
-const intersectionObserver = new IntersectionObserver(
-	(observerEntries) => {
-		for (const { target: parent, isIntersecting } of observerEntries) {
-			const targets = getTargets(parent as HTMLElement);
-			targets.forEach(isIntersecting ? toggleTargetOn : toggleTargetOff);
-		}
-	},
-	{ root: null, threshold: 1 }
-);
-
-for (const toBeObserved of document.querySelectorAll(
-	`[${classInViewContainerAttr}]`
-)) {
-	intersectionObserver.observe(toBeObserved);
-}
-
-function getTargets(parent: HTMLElement): HTMLElement[] {
-	const cached = parentToTargets.get(parent);
-	if (cached) {
-		return cached;
-	}
-
-	const targets = Array.from(
-		parent.querySelectorAll<HTMLElement>(`[${classInViewAttr}]`)
+	inView(
+		target,
+		() => {
+			toggleTargetOn(target);
+			return () => toggleTargetOff(target);
+		},
+		{ amount: Number.isNaN(threshold) ? 0 : threshold }
 	);
-
-	// Cache
-	parentToTargets.set(parent, targets);
-	return targets;
 }
 
 function toggleTargetOn(target: HTMLElement): void {
-	const className = getToggledClassName(target);
+	const [outClass, inClass] = getToggledClassName(target);
 
-	const isAnimation = className.includes("animate-");
-	const hasClassName = target.classList.contains(className);
+	const isAnimation = inClass.some((c) => c.includes("animate-"));
+	const hasClassName = inClass.every((c) => target.classList.contains(c));
 	if (isAnimation && hasClassName) {
-		target.classList.remove(className);
+		target.classList.remove(...inClass);
 		// trigger reflow to restart animation
 		void target.offsetWidth;
 	} else if (hasClassName) return;
-
-	target.classList.add(className);
+	switchClasses(target, outClass, inClass);
 }
 
 function toggleTargetOff(target: HTMLElement): void {
-	const className = getToggledClassName(target);
-	target.classList.remove(className);
+	const [outClass, inClass] = getToggledClassName(target);
+	switchClasses(target, inClass, outClass);
 }
 
-function getToggledClassName(target: HTMLElement): string {
-	return target.dataset[classInViewDataKey] || "";
+function getToggledClassName(target: HTMLElement): string[][] {
+	return (
+		target.dataset[classInViewDataKey]
+			?.split(";")
+			.map((str) => str.trim().split(" ")) || [[], []]
+	);
+}
+
+function switchClasses(
+	target: HTMLElement,
+	classesToRemove: string[],
+	classesToAdd: string[]
+) {
+	try {
+		if (classesToRemove.some((c) => c))
+			target.classList.remove(...classesToRemove);
+		if (classesToAdd.some((c) => c)) target.classList.add(...classesToAdd);
+	} catch (e) {
+		console.error({ outClass: classesToRemove, inClass: classesToAdd }, e);
+	}
 }

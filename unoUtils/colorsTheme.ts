@@ -27,7 +27,7 @@ export const themeColorsRule: Rule<any> = [
 		validShades.forEach((i) => {
 			style[`--primary-${i}`] = theme.colors.gray[i];
 			style[`--accent-${i}`] = theme.colors.orange[i];
-			style[`--tertiary-${i}`] = theme.colors.green[i];
+			style[`--tertiary-${i}`] = theme.colors.blue[i];
 		});
 
 		return style;

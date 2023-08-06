@@ -12,10 +12,34 @@ endYear: 2021
 website: https://swiadomosc.vercel.app/
 github: https://github.com/Stranget0/mily-blog
 class: bg-primary-700 color-var-warmgray-400
+titleClass: text-orange-200
 draft: false
 ---
 
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 
-<AppearingLine text="Blog for exchanging knowledge, sharing support, building groups and organizing meetings." />
-<AppearingLine text="Sadly, it is on hold for now." />
+<AppearingLine
+	class="text-subtitle-3  text-orange-300 solid-text-shadow"
+	text="Professional Blog for Knowledge Exchange, Support Sharing, Group Collaboration, and Meeting Organization."
+	lettersTransition
+/>
+<p>
+	<AppearingLine as="span" text="The platform includes a well-organized " />
+	<AppearingLine as="span" class="text-orange-200" text=" main page " />
+	<AppearingLine as="span" text=" with " />
+	<AppearingLine
+		as="span"
+		class="text-orange-200"
+		text=" essential information,"
+	/>
+	<AppearingLine as="span" text=" the " />
+	<AppearingLine as="span" class="text-orange-200" text=" latest video," />
+	<AppearingLine as="span" text=" and various supplementary pages with a " />
+	<AppearingLine
+		as="span"
+		class="text-orange-200"
+		text="calendar, comments, posts, "
+	/>
+	<AppearingLine as="span" text=" and more." />
+</p>
+<AppearingLine class="text-label" text="Currently on temporary hiatus." />

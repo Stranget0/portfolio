@@ -1,18 +1,33 @@
 ---
-interface Props{
+import AppearingLine from "../AppearingText/AppearingLine.astro";
+interface Props {
 	startYear: number;
 	endYear?: number;
 }
-const {startYear,endYear} = Astro.props
+const { startYear, endYear } = Astro.props;
 ---
-	<p class="pointer-events-auto text-lg font-leading-80% font-serif flex flex-col md:flex-row">
-		<span>{startYear}</span>
-		{
-			!!endYear && startYear !== endYear && (
-				<>
-					<span>-</span>
-					<span>{endYear}</span>
-				</>
-			)
-		}
-	</p>
+
+<p
+	class="pointer-events-auto text-lg font-leading-80% font-serif flex flex-col md:flex-row"
+>
+	<AppearingLine as="span" text={`${startYear}`} animatedOnView />
+	{
+		!!endYear && startYear !== endYear && (
+			<>
+				<AppearingLine
+					as="span"
+					offset={`${startYear}`.length}
+					
+					text="-"
+					animatedOnView
+				/>
+				<AppearingLine
+					as="span"
+					offset={`${startYear}-`.length}
+					text={`${endYear}`}
+					animatedOnView
+				/>
+			</>
+		)
+	}
+</p>

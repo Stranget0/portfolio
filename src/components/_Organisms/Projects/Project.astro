@@ -14,6 +14,7 @@ import SectionYear from "@components/SlidedSection/_SectionYear.astro";
 import SectionTopFixed from "@components/SlidedSection/_SectionTopFixed.astro";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
+import { preloadImagesInContainer } from "@plugins/preloadImagesInContainer/serverUtils";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -31,6 +32,7 @@ const {
 	startYear,
 	endYear,
 	class: className = "bg-primary-50 color-var-primary-900",
+	titleClass,
 	github,
 	website,
 } = data;
@@ -47,7 +49,6 @@ const isDarkBg = /(bleed|bg)-.+-(700|800|900|950)/.test(className);
 
 const hasFullscreenImages = !!fullscreenImages?.length;
 const hasFloatingImages = !!floatingImages?.length;
-const showFloatingRefsInMain = hasFloatingImages && !hasFullscreenImages;
 
 const isScrollRefFeature = true;
 
@@ -60,19 +61,20 @@ const { Content } = await render();
 	id={slug}
 	class={className}
 	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
+	{...preloadImagesInContainer}
 	{...forceFocusViewAttrObj}
 >
+	<SectionTopFixed>
+		<SectionYear startYear={startYear} endYear={endYear} />
+		<SectionLinks website={website} github={github} />
+	</SectionTopFixed>
 	<AppearingText
 		wordTimings={audioTextTimings || []}
 		wordsReference={[]}
 		audioPath=""
 		id={id}
 	>
-		{title && <SectionItemTitle title={title} />}
-		<SectionTopFixed>
-			<SectionYear startYear={startYear} endYear={endYear} />
-			<SectionLinks website={website} github={github} />
-		</SectionTopFixed>
+		{title && <SectionItemTitle title={title} class={titleClass} />}
 		<SectionItemDescription text={description}>
 			<Content
 				components={{
@@ -92,7 +94,7 @@ const { Content } = await render();
 	}
 	{hasFloatingImages && <SectionFloatingImages images={floatingImages} />}
 	{
-		showFloatingRefsInMain && (
+		hasFloatingImages && (
 			<SectionFloatingImagesReferences images={floatingImages} />
 		)
 	}

@@ -1,9 +1,19 @@
+---
+import type { HTMLAttributes } from "astro/types";
+type Props = HTMLAttributes<"form">;
+const { class: className, ...props } = Astro.props;
+---
+
 <form
 	netlify
+	{...props}
 	name="contact"
 	method="post"
 	action="#"
-	class="flex flex-col gap-4 w-full max-h-50vh min-h-55 flex-1 md:(max-w-70 h-full max-h-120) lg:max-w-50% xl:max-w-xl"
+	class:list={[
+		"flex flex-col justify-end gap-4 w-full flex-1 md:(max-w-70 h-full max-h-120) lg:(w-40% max-w-xl)",
+		className,
+	]}
 >
 	<slot />
 </form>

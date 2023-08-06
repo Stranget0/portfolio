@@ -3,6 +3,8 @@ import type { Polymorphic } from "astro/types";
 import type { TextTag } from "./types";
 import { playAudioTooltip } from "./serverUtils";
 import AnimatedText from "@components/AnimatedText.astro";
+import { classInView } from "@/plugins/classInView/serverUtils";
+import classNames from "classnames";
 
 type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	text: string;
@@ -11,7 +13,9 @@ type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	dontShowTooltip?: boolean;
 	animatedOnView?: boolean;
 	animatedInitially?: boolean;
-	offset?: number
+	lettersTransition?: boolean;
+	letterClass?: string;
+	offset?: number;
 };
 
 export type AppearingTextProps = Props;
@@ -22,7 +26,10 @@ const {
 	group,
 	dontShowTooltip,
 	animatedOnView,
-	animatedInitially,offset=0,
+	animatedInitially,
+	offset = 0,
+	letterClass,
+	lettersTransition = animatedInitially || animatedOnView,
 	...other
 } = Astro.props;
 
@@ -40,6 +47,8 @@ const commonProps = {
 };
 
 let letterCount = offset;
+const calculatedData =
+	(animatedOnView || animatedInitially) && classInView("", "anim-text");
 ---
 
 <!-- TODO: FIX TYPE -->
@@ -49,10 +58,11 @@ let letterCount = offset;
 	class:list={[className]}
 	data-appearing-group={group}
 	data-text-audio-run={dontShowTooltip ? undefined : true}
+	{...calculatedData}
 >
 	{
 		text.map((w, i, arr) => {
-			if (animatedOnView || animatedInitially) {
+			if (animatedOnView || animatedInitially || lettersTransition) {
 				if (arr[i - 1]) letterCount += arr[i - 1].length;
 				return (
 					<AnimatedText
@@ -61,7 +71,9 @@ let letterCount = offset;
 						word={w}
 						offset={letterCount}
 						animatedInitially={animatedInitially}
-						animationSpeed={(offset+rawText.length) * 2}
+						animationSpeed={offset + rawText.length}
+						lettersTransition={lettersTransition}
+						letterClass={classNames("letter", letterClass)}
 					/>
 				);
 			}
@@ -70,3 +82,9 @@ let letterCount = offset;
 		})
 	}
 </Tag>
+
+<style lang="scss" is:global>
+	.anim-text .letter {
+		@apply animate-text-appear opacity-0 animate-both;
+	}
+</style>

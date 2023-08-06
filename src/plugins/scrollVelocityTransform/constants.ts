@@ -1,2 +1,2 @@
-export const velocityTransformAttr = "data-velocity-transform";
-export const velocityTransformReversedAttr = "data-velocity-transform-reversed";
+export const scrollVelocityTransformAttr = "data-scroll-velocity-transform";
+export const scrollVelocityTransformDataKey = "scrollVelocityTransform";

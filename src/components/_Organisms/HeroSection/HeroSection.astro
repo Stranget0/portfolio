@@ -3,6 +3,9 @@ import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SectionClip from "../../SectionClip.astro";
 import SectionFixed from "../../SectionFixed.astro";
 import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
+import { classInView } from "@/plugins/classInView/serverUtils";
+
+const appearInView = classInView("opacity-0 scale-0", "opacity-100 scale-100");
 ---
 
 <SectionClip
@@ -16,32 +19,36 @@ import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerA
 		as="h2"
 		class="top-0dvh bottom-0dvh flex flex-col items-center justify-between"
 	>
-		<span class="flex-col-center">
+		<span class="flex-col-center" {...appearInView}>
 			<AppearingLine
 				as="span"
-				class="text-title-1"
+				class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
 				text="My Website"
-				animatedInitially
+				lettersTransition
+				{...appearInView}
 			/>
 			<AppearingLine
 				as="span"
-				class="text-title-2"
+				class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
 				text="My choice"
-				animatedInitially
+				lettersTransition
+				{...appearInView}
 			/>
 		</span>
-		<span class="flex-col-center">
+		<span class="flex-col-center" {...appearInView}>
 			<AppearingLine
 				as="span"
-				class="text-title-2"
+				class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
 				text="Your website"
-				animatedInitially
+				lettersTransition
+				{...appearInView}
 			/>
 			<AppearingLine
 				as="span"
-				class="text-title-1"
+				class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear "
 				text="Your choice"
-				animatedInitially
+				lettersTransition
+				{...appearInView}
 			/>
 		</span>
 	</SectionFixed>

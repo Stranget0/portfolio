@@ -7,12 +7,12 @@ import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SocialLinks from "@components/SocialLinks.astro";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
-import { scrollToTargetAttrObj } from "@components/AppearingText/constants";
 import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
 import { mainpageTabs } from "src/constants";
-import { classInViewParent } from "@/plugins/classInView/serverUtils";
-
+import {
+	classInView,
+} from "@/plugins/classInView/serverUtils";
 
 const { data: aboutMeAudio, id: stageId } = await getEntry({
 	collection: "transcripts",
@@ -20,12 +20,13 @@ const { data: aboutMeAudio, id: stageId } = await getEntry({
 });
 
 const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
+const appearInView = classInView("opacity-0", "opacity-100", 1);
+const appearInViewScale = classInView("opacity-0 scale-0", "opacity-100 scale-100");
 ---
 
 <section
 	id={mainpageTabs.aboutMe.id}
 	class="section font-serif relative flex flex-col justify-between gap-12 md:flex-row relative text-primary-950 bg-primary-50"
-	{...scrollToTargetAttrObj}
 	{...foxObstacleAttrObj}
 >
 	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block">
@@ -33,10 +34,11 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 			src={myImage}
 			alt="Picture of me"
 			fit="contain"
-			aspect-ratio="1:20"
+			aspect-ratio="1:1"
 			sizes="(max-width: 768px) 320px, (max-width:1428px) 500px, 700px"
 			widths={[320, 500, 700]}
-			class="sticky top-4 object-contain rounded-100% md:(top-8 max-h-80vh max-w-min w-full)"
+			class="sticky top-4 object-contain rounded-full aspect-ratio-square bg-accent-100 p-4 motion-safe:transition-600 md:(top-8 max-h-80vh max-w-min w-full)"
+			{...appearInViewScale}
 		/>
 	</div>
 	<AppearingText
@@ -49,13 +51,12 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 	>
 		<AppearingLine
 			as="h2"
-			class="text-subtitle-1"
+			class="text-subtitle-1 solid-text-shadow"
 			text="Nice to meet you!"
 			group={1}
-			animatedOnView
-			{...classInViewParent}
+			lettersTransition
 		/>
-		<div class="md:hidden max-w-50 mx-auto mb-12">
+		<div class="md:hidden max-w-50 mx-auto mb-12 mt-12 bg-accent-100 rounded-full">
 			<Picture
 				src={myImage}
 				alt="Picture of me"
@@ -63,36 +64,44 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 				sizes="200px"
 				widths={[200]}
 				fit="contain"
-				class="rounded-full"
+				class="rounded-full object-contain motion-safe:transition-600 p-4 aspect-square"
+				{...appearInViewScale}
 			/>
 		</div>
 		<div class="h-0 relative bottom-3">
 			<AppearingTextButton
 				client:visible
-				class="ml-auto hover:text-accent-400 focus-visible:text-accent-400"
+				class="ml-auto motion-safe:transition-color-300 hover:text-tertiary-900 focus-visible:text-tertiary-900"
 				visualType="outline"
 				stageId={stageId}
 			/>
 		</div>
 		<AppearingLine
-			class="text-8 text-balance"
+			class="text-8 text-balance motion-safe:transition-opacity-1000"
 			text="My name is Marcin and I am a Web Developer with a UX/UI side."
 			group={2}
+	{...appearInView}
 		/>
 		<AppearingLine
 			text="My goal is to deliver functional, dynamic websites that will stand out from the ones that you see everyday."
-			class="text-6 text-balance"
+			class="text-6 text-balance motion-safe:transition-opacity-1000"
+	{...appearInView}
 		/>
 		<AppearingLine
-			class="text-6 text-balance"
+			class="text-6 text-balance motion-safe:transition-opacity-1000"
 			text="I believe that leaving good customer experience will make your brand recognizable."
-		/>
+	{...appearInView}
+			/>
 		<p
-			class="text-subtitle-3 text-balance text-9 mb-0 text-center sm:(text-right text-12 ml-auto max-w-80%)"
-			{...classInViewParent}
+			class="text-subtitle-3 text-balance text-9 mb-0 text-center solid-text-shadow sm:(text-right text-12 ml-auto max-w-80%)"
 		>
-			<AppearingLine as="span" text="Now, wanna make some" animatedOnView/>
-			<AppearingLine as="strong" offset={"Now, wanna make some".length} text=" good shit?" animatedOnView/>
+			<AppearingLine as="span" text="Now, wanna make some" animatedOnView />
+			<AppearingLine
+				as="strong"
+				offset={"Now, wanna make some".length}
+				text=" good shit?"
+				animatedOnView
+			/>
 		</p>
 		<nav
 			class="ml-auto flex-center flex-wrap sm:justify-end gap-2 my-8 menu-opafocus opafocus-max-opacity-100 opafocus-min-opacity-80"
@@ -111,7 +120,6 @@ const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 					group={3}
 					dontShowTooltip
 					animatedOnView
-					{...classInViewParent}
 				/>
 			</Button>
 		</nav>

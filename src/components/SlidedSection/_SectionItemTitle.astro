@@ -1,23 +1,23 @@
 ---
-import { classInViewParent } from "@/plugins/classInView/serverUtils";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
-import SectionTopSticky from "@components/SlidedSection/_SectionTopSticky.astro"
+import SectionTopSticky from "@components/SlidedSection/_SectionTopSticky.astro";
 
 import type { HTMLAttributes } from "astro/types";
+import classNames from "classnames";
 
 interface Props extends Omit<HTMLAttributes<"h3">, "title"> {
 	title: string;
 }
-const { title, ...other } = Astro.props;
+const { title, class: className, ...other } = Astro.props;
 ---
+
 <SectionTopSticky>
 	<AppearingLine
-	{...other as any}
-	as="h3"
-	text={title}
-	class="text-subtitle-2"
-	group={2}
-	animatedOnView
-	{...classInViewParent}
+		{...other as any}
+		as="h3"
+		text={title}
+		class={classNames("text-subtitle-2 solid-text-shadow", className)}
+		group={2}
+		animatedOnView
 	/>
 </SectionTopSticky>

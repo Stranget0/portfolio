@@ -1,7 +1,11 @@
-import { classInViewAttr, classInViewContainerAttr } from "./constants";
+import { classInViewAttr, classInViewThresholdAttr } from "./constants";
 
-export const classInView = (className: string) => ({
-	[classInViewAttr]: className,
+export const classInView = (
+	classOut: string,
+	classIn: string,
+	threshold?: number
+) => ({
+	[classInViewAttr]: `${classOut || " "};${classIn || " "}`,
+	[classInViewThresholdAttr]:
+		typeof threshold === "number" ? threshold : undefined,
 });
-
-export const classInViewParent = { [classInViewContainerAttr]: true };

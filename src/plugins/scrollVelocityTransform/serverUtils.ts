@@ -1,9 +1,5 @@
-import {
-	velocityTransformAttr,
-	velocityTransformReversedAttr,
-} from "./constants";
+import { scrollVelocityTransformAttr } from "./constants";
 
-export const velocityTransformAttrObj = { [velocityTransformAttr]: true };
-export const velocityTransformReversedAttrObj = {
-	[velocityTransformReversedAttr]: true,
-};
+export function scrollVelocityTransform(ratio: number) {
+	return { [scrollVelocityTransformAttr]: ratio };
+}

@@ -1,6 +1,6 @@
 export interface LerpObject<T = unknown> {
 	distanceTo(target: T | LerpObject<T>): number;
-	lerp(target: T, alpha: number): T;
+	lerp(target: T | LerpObject<T>, alpha: number): T;
 	clone(): LerpObject<T>;
 }
 
@@ -14,7 +14,7 @@ export default function initLerpPositions(
 
 	function lerpPositions<T>(
 		from: LerpObject<T>,
-		to: T,
+		to: T | LerpObject<T>,
 		alpha: number,
 		last: LerpObject<T>,
 		localEPS: number,
@@ -35,7 +35,7 @@ export default function initLerpPositions(
 
 	function startLerp<T>(
 		from: LerpObject<T>,
-		to: T,
+		to: T | LerpObject<T>,
 		alpha = 0.1,
 		localEPS = EPS,
 		onFinish?: VoidFunction
