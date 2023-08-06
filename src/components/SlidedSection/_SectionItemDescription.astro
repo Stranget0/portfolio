@@ -1,4 +1,5 @@
 ---
+import { classInView } from "@/plugins/classInView/serverUtils";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SectionFixed from "@components/SectionFixed.astro";
 import type { HTMLAttributes } from "astro/types";
@@ -9,11 +10,17 @@ interface Props extends HTMLAttributes<"div"> {
 
 const { text, class: className, ...other } = Astro.props;
 const descClass = ["text-body prose", className];
+
+const referenceData = classInView("reference-hidden","reference-visible")
 ---
 
+<div
+	class="w-full my-150 bg-red bg-opacity-10"
+	{...referenceData}
+>
+</div>
 <SectionFixed
-	class="z-200 text-balance flex-col-center justify-center items-center prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 lg:(right-36 left-36 bottom-8)"
-	data-scroll-target
+	class="description z-200 motion-safe:transition-600 text-balance flex-col-center justify-center items-center prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 lg:(right-36 left-36 bottom-8)"
 >
 	<!-- TODO: FIX TYPE -->{
 		text ? (
@@ -34,9 +41,14 @@ const descClass = ["text-body prose", className];
 		)
 	}
 </SectionFixed>
-<div
-	class="w-full h-600"
-	data-scroll-target-ref
-	data-scroll-ref-offsets="start end 0.5 0.5"
->
-</div>
+
+<style>
+	.reference-hidden + .description {
+		opacity: 0;
+		transform: scale(0);
+	} 
+	.reference-visible + .description {
+		opacity: 1;
+		transform: scale(1);
+	} 
+</style>

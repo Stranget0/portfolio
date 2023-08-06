@@ -12,7 +12,7 @@ const imagesImports = [...images].reverse().map<[ImageSrc, string]>(([name, alt]
 <SectionFixed class="top-42 bottom-4 flex justify-center">
 	<ImagesCheckboard
 		images={imagesImports}
-		imageProps={{ "data-scroll-target": true, class:"shadow-lg shadow-black transition"}}
+		imageProps={{ "data-scroll-target": true, class:"shadow-lg shadow-black motion-safe:transition"}}
 		class="absolute z-5 mx-auto h-full inset-4 top-0 lg:(right-36 left-36 bottom-8)"
 	/>
 </SectionFixed>
