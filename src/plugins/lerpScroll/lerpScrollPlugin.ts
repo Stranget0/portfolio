@@ -15,5 +15,10 @@ export async function scrollToElement(element: HTMLElement, smooth = true) {
 	if (lerpScroll) {
 		const { scrollToElement } = await lerpScroll;
 		return scrollToElement(element, smooth);
-	} else element.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
+	} else
+		element.scrollIntoView({
+			behavior: smooth ? "smooth" : "auto",
+			block: "center",
+			inline: "center",
+		});
 }
