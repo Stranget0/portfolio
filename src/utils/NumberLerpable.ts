@@ -11,8 +11,12 @@ export default class NumberLerpable implements LerpObject<number> {
 			target instanceof NumberLerpable ? target.value : (target as number);
 		return Math.abs(value - this.value);
 	}
-	lerp(target: number, alpha: number): number {
-		this.value = lerp(this.value, target, alpha);
+	lerp(target: number | NumberLerpable, alpha: number): number {
+		this.value = lerp(
+			this.value,
+			typeof target === "number" ? target : target.value,
+			alpha
+		);
 		return this.value;
 	}
 	clone(): LerpObject<number> {
