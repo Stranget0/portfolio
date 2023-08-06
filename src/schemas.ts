@@ -9,6 +9,7 @@ export const projectSchema = z.object({
 	fullscreenImages: imagesSchema.optional(),
 	audioTextTimings: z.array(z.number()).optional(),
 	class: z.string().optional(),
+	titleClass: z.string().optional(),
 	technologies: z.array(reference("technologies")).optional(),
 	startYear: z.number(),
 	endYear: z.number().optional(),

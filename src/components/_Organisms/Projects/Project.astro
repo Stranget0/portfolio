@@ -32,6 +32,7 @@ const {
 	startYear,
 	endYear,
 	class: className = "bg-primary-50 color-var-primary-900",
+	titleClass,
 	github,
 	website,
 } = data;
@@ -70,7 +71,7 @@ const { Content } = await render();
 		audioPath=""
 		id={id}
 	>
-		{title && <SectionItemTitle title={title} />}
+		{title && <SectionItemTitle title={title} class={titleClass}/>}
 		<SectionTopFixed>
 			<SectionYear startYear={startYear} endYear={endYear} />
 			<SectionLinks website={website} github={github} />
