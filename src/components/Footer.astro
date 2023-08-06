@@ -1,14 +1,11 @@
 ---
 import SocialLinks from "./SocialLinks.astro";
 import Copyright from "./Copyright.astro";
-
 ---
-<div class="relative h-120 bg-primary-950 -z-4 -my-px"></div>
+
 <footer
-	class="flex justify-between items-center bg-primary-950 px-8 py-4 op-98"
+	class="flex justify-between items-center absolute bottom-0 w-full bg-primary-950 px-8 py-2 op-98 z-100"
 >
-		<nav class="menu-opafocus flex"><SocialLinks small/></nav>
-	<Copyright/>
+	<nav class="menu-opafocus flex"><SocialLinks small /></nav>
+	<Copyright />
 </footer>
-
-

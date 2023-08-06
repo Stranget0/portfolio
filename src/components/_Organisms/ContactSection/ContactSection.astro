@@ -11,6 +11,7 @@ import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { mainpageTabs } from "src/constants";
 import AnimatedText from "@/components/AnimatedText.astro";
 import { scrollVelocityTransform } from "@/plugins/scrollVelocityTransform/serverUtils";
+import { classInView } from "@/plugins/classInView/serverUtils";
 
 const md = 768;
 const waypointsData = {
@@ -36,10 +37,10 @@ const waypointsData = {
 >
 	<SectionClip class="absolute inset-0">
 		<SectionFixed
-			class="section inset-4 justify-end items-center md:items-end -z-3 motion-safe:transition-transform"
+			class="section pb-4 inset-4 justify-end items-center md:items-end motion-safe:transition"
 			{...scrollVelocityTransform(5)}
 		>
-			<ContactInputContainer>
+			<ContactInputContainer class="transition-1000" {...classInView("scale-0", "scale-100", .25)}>
 				<AppearingLine
 					as="h2"
 					text="Contact me!"
@@ -65,7 +66,7 @@ const waypointsData = {
 					id="contact-message"
 					label="message"
 					name="message"
-					wrapperClass="bg-primary-950"
+					wrapperClass="bg-primary-950 max-h-20 md:max-h-60"
 					required
 					minlength={10}
 					maxlength={1000}
