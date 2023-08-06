@@ -49,7 +49,6 @@ const isDarkBg = /(bleed|bg)-.+-(700|800|900|950)/.test(className);
 
 const hasFullscreenImages = !!fullscreenImages?.length;
 const hasFloatingImages = !!floatingImages?.length;
-const showFloatingRefsInMain = hasFloatingImages && !hasFullscreenImages;
 
 const isScrollRefFeature = true;
 
@@ -95,7 +94,7 @@ const { Content } = await render();
 	}
 	{hasFloatingImages && <SectionFloatingImages images={floatingImages} />}
 	{
-		showFloatingRefsInMain && (
+		hasFloatingImages && (
 			<SectionFloatingImagesReferences images={floatingImages} />
 		)
 	}
