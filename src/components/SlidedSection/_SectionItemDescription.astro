@@ -20,7 +20,7 @@ const referenceData = classInView("reference-hidden","reference-visible")
 >
 </div>
 <SectionFixed
-	class="description z-200 motion-safe:transition-600 text-balance flex-col-center justify-center items-center prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 lg:(right-36 left-36 bottom-8)"
+	class="description z-200 text-balance flex-col-center justify-center items-center prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-600 lg:(right-36 left-36 bottom-8)"
 >
 	<!-- TODO: FIX TYPE -->{
 		text ? (
@@ -45,10 +45,10 @@ const referenceData = classInView("reference-hidden","reference-visible")
 <style>
 	.reference-hidden + .description {
 		opacity: 0;
-		transform: scale(0);
+		transform: translateY(50%) scale(0);
 	} 
 	.reference-visible + .description {
 		opacity: 1;
-		transform: scale(1);
+		transform: translateY(50%) scale(1);
 	} 
 </style>
