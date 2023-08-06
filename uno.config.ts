@@ -317,10 +317,23 @@ export default defineConfig({
 		],
 		[
 			/^solid-text-shadow$/,
-			() => ({
-				"text-shadow":
-					"0 .04em  0 var(--solid-text-shadow-color, black), 0 .02em  0 var(--solid-text-shadow-color, black)",
-			}),
+			() => {
+				const max = 0.17;
+				const steps = 4;
+				return {
+					"text-shadow": generateTextShadow(steps, max),
+				};
+			},
+		],
+		[
+			/^solid-text-shadow-sm$/,
+			() => {
+				const max = 0.1;
+				const steps = 2;
+				return {
+					"text-shadow": generateTextShadow(steps, max),
+				};
+			},
 		],
 		[
 			/^solid-text-shadow-([a-z-]+)(?:-(\d+))$/,
@@ -334,3 +347,15 @@ export default defineConfig({
 		],
 	],
 });
+function generateTextShadow(steps: number, max: number) {
+	const textShadow: string[] = [];
+	for (let i = 1; i <= steps; i++) {
+		textShadow.push(
+			`0 ${max / i}rem  0 var(--solid-text-shadow-color, black)`
+		);
+	}
+
+	const res = textShadow.join(", ");
+	return res;
+}
+

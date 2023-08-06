@@ -64,17 +64,17 @@ const { Content } = await render();
 	{...preloadImagesInContainer}
 	{...forceFocusViewAttrObj}
 >
+	<SectionTopFixed>
+		<SectionYear startYear={startYear} endYear={endYear} />
+		<SectionLinks website={website} github={github} />
+	</SectionTopFixed>
 	<AppearingText
 		wordTimings={audioTextTimings || []}
 		wordsReference={[]}
 		audioPath=""
 		id={id}
 	>
-		{title && <SectionItemTitle title={title} class={titleClass}/>}
-		<SectionTopFixed>
-			<SectionYear startYear={startYear} endYear={endYear} />
-			<SectionLinks website={website} github={github} />
-		</SectionTopFixed>
+		{title && <SectionItemTitle title={title} class={titleClass} />}
 		<SectionItemDescription text={description}>
 			<Content
 				components={{
