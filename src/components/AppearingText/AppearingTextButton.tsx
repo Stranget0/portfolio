@@ -38,7 +38,7 @@ const AppearingTextButton: Component<Props> = (props) => {
 
 	return (
 		<button
-			aria-label={label}
+			aria-label={label()}
 			{...(other as any)}
 			class={classNames([
 				className,

@@ -18,8 +18,8 @@ const controller = initHeroController(
 	elementWaypointsInit
 );
 
-Promise.all([controller.orbit, controller.elementWaypoints]).then(
-	([orbit, waypoints]) => {
+Promise.all([controller.orbit, controller.elementWaypoints])
+	.then(([orbit, waypoints]) => {
 		waypoints.foxWaypointTarget.setWaypointTarget((vec) =>
 			orbit.setLookAtOffset(vec)
 		);
@@ -32,19 +32,21 @@ Promise.all([controller.orbit, controller.elementWaypoints]).then(
 			orbit.stiffness.x = vec.x;
 			orbit.stiffness.y = vec.y;
 		});
-	}
-);
+	})
+	.catch((e) => console.error("Failed to load orbit", e));
 
 Promise.all([
 	controller.fox,
 	controller.leafs,
 	controller.lights,
 	controller.fog,
-]).then(() => {
-	controller.renderer.domElement.classList.remove("opacity-0");
-	controller.startLoop();
-	controller.setObstacleSelector(`[${foxObstacleAttr}]`);
-});
+])
+	.then(() => {
+		controller.renderer.domElement.classList.remove("opacity-0");
+		controller.startLoop();
+		controller.setObstacleSelector(`[${foxObstacleAttr}]`);
+	})
+	.catch((e) => console.error("Failed to load scene", e));
 
 export type FoxControllerType = typeof controller;
 export default controller;

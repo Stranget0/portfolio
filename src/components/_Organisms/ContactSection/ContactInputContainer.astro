@@ -52,7 +52,7 @@ const { class: className, ...props } = Astro.props;
 				prepareToUnlockButton(submitter);
 			});
 
-		foxController.then((c) => c.foxAnimations.then((fox) => fox.smile()));
+		foxController.then((c) => c.foxAnimations.then((fox) => fox?.smile()));
 	});
 
 	function prepareToUnlockButton(submitter: HTMLButtonElement) {
