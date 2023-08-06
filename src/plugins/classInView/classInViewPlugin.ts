@@ -4,10 +4,13 @@ import {
 	classInViewDataKey,
 	classInViewThresholdDataKey,
 } from "./constants";
+import isInViewport from "@/utils/isInViewport";
 
 const targets = document.querySelectorAll<HTMLElement>(`[${classInViewAttr}]`);
 for (const target of targets) {
 	const threshold = parseInt(target.dataset[classInViewThresholdDataKey] || "");
+	if (!isInViewport(target)) toggleTargetOff(target);
+
 	inView(
 		target,
 		() => {
