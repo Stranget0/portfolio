@@ -11,16 +11,16 @@ const { text, class: className, ...other } = Astro.props;
 const descClass = ["text-body prose", className];
 
 const referenceData = classInView("reference-hidden", "reference-visible");
-const keyframes = JSON.stringify({
-	transform: [null,"translateY(-5%)","translateY(-15%)","translateY(-50%)","translateY(-100%)"],
-});
+// const keyframes = JSON.stringify({
+// 	transform: [null,"translateY(-5%)","translateY(-15%)","translateY(-50%)","translateY(-100%)"],
+// });
 ---
 
-<div class="w-full my-100 h-200" {...referenceData} data-scroll-target-ref></div>
+<div class="w-full mt-100 mb-150 h-200" {...referenceData}></div>
 <div
 	class="description fixed overflow-hidden transform translate-y-25% scale-0 z-200 text-balance flex-col-center justify-center items-center prose h-max m-auto text-center max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
 >
-	<div class="" data-scroll-target data-scroll-target-keyframes={keyframes}>
+	<div>
 		<!-- TODO: FIX TYPE -->{
 			text ? (
 				text
