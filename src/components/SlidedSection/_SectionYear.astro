@@ -8,24 +8,25 @@ const { startYear, endYear } = Astro.props;
 ---
 
 <p
-	class="pointer-events-auto text-lg font-leading-80% font-serif flex flex-col md:flex-row"
+	class="pointer-events-auto text-lg font-leading-80% text-center mx-auto font-serif flex-center"
 >
-	<AppearingLine as="span" text={`${startYear}`} animatedOnView />
+	<AppearingLine as="span" text={`${startYear}`} animatedOnView ignoreAudio />
 	{
 		!!endYear && startYear !== endYear && (
 			<>
 				<AppearingLine
 					as="span"
 					offset={`${startYear}`.length}
-					
 					text="-"
 					animatedOnView
+					ignoreAudio
 				/>
 				<AppearingLine
 					as="span"
 					offset={`${startYear}-`.length}
 					text={`${endYear}`}
 					animatedOnView
+					ignoreAudio
 				/>
 			</>
 		)

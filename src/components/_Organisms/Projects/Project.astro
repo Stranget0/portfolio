@@ -74,8 +74,8 @@ const { Content } = await render();
 		id={id}
 	>
 		{title && <SectionItemTitle title={title} class={titleClass} />}
-		<SectionYear startYear={startYear} endYear={endYear} />
 
+		<SectionYear startYear={startYear} endYear={endYear} />
 		<SectionItemDescription text={description}>
 			<Content
 				components={{
@@ -84,6 +84,7 @@ const { Content } = await render();
 			/>
 		</SectionItemDescription>
 	</AppearingText>
+	<SectionLinks website={website} github={github} />
 
 	{
 		hasFullscreenImages && (
@@ -99,7 +100,6 @@ const { Content } = await render();
 			<SectionFloatingImagesReferences images={floatingImages} />
 		)
 	}
-	<SectionLinks website={website} github={github} />
 
 	{
 		hasTech && (
