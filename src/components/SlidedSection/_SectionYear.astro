@@ -1,31 +1,35 @@
 ---
 import AppearingLine from "../AppearingText/AppearingLine.astro";
+import { classInView } from "@/plugins/classInView/serverUtils";
 interface Props {
 	startYear: number;
 	endYear?: number;
 }
 const { startYear, endYear } = Astro.props;
+
+const appear = classInView("opacity-0", "transition-delay-1000", 1);
 ---
 
 <p
-	class="pointer-events-auto text-lg font-leading-80% text-center mx-auto font-serif flex-center"
+	class="pointer-events-auto text-lg font-leading-80% text-center mx-auto font-serif flex-center motion-safe:transition-600"
+	{...appear}
 >
-	<AppearingLine as="span" text={`${startYear}`} animatedOnView ignoreAudio />
+	<AppearingLine as="span" text={`${startYear}`} ignoreAudio />
 	{
 		!!endYear && startYear !== endYear && (
 			<>
 				<AppearingLine
 					as="span"
-					offset={`${startYear}`.length}
+					class="delay-1000"
+					offset={`${startYear}`.length + 10}
 					text="-"
-					animatedOnView
 					ignoreAudio
 				/>
 				<AppearingLine
 					as="span"
-					offset={`${startYear}-`.length}
+					class="delay-1000"
+					offset={`${startYear}-`.length + 10}
 					text={`${endYear}`}
-					animatedOnView
 					ignoreAudio
 				/>
 			</>
