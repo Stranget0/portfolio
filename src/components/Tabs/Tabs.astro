@@ -21,12 +21,12 @@ const tabsEntries = Object.entries(tabs);
 				size="small"
 				data-menu-toggle
 				title="menu"
+				aria-expanded="false"
 				{...scrollVelocityTransform(2)}
 			>
 				<div class="i-mingcute-menu-line?mask"></div>
 			</Button>
 			<div
-				aria-expanded="false"
 				class="z-1000 color-primary-950 fixed rounded-l-2 overflow-hidden top-20 right-0 bottom-0 max-h-50 p-4 glass-backdrop transform-origin-r shadow transform-gpu scale-0 -translate-y-20 md:-translate-y-60 md:top-60 motion-safe:transition-transform-300"
 				data-expanded-class="important:transform-none"
 			>
@@ -38,6 +38,7 @@ const tabsEntries = Object.entries(tabs);
 									is="nav-tab"
 									class="capitalize animated-underline animated-underline-right font-light"
 									href={`#${id}`}
+									data-tab-active-class="before:scale-x-100"
 								>
 									{label}
 								</a>
@@ -49,12 +50,6 @@ const tabsEntries = Object.entries(tabs);
 		</toggled-menu>
 	</nav>
 </header>
-
-<style>
-	.active {
-		@apply before:scale-x-100;
-	}
-</style>
 
 <script>
 	import { motionSafeMedia } from "@/constants";

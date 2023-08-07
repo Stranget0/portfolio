@@ -18,14 +18,15 @@ export default class Menu extends HTMLElement {
 		const toggleElement = (this.toggleElement =
 			this.querySelector<HTMLElement>("[data-menu-toggle]"));
 
-		const listElement = (this.listElement =
-			this.querySelector<HTMLElement>("[aria-expanded]"));
+		const listElement = (this.listElement = this.querySelector<HTMLElement>(
+			"[data-expanded-class]"
+		));
 
 		if (!toggleElement || !listElement)
 			throw new Error("missing required elements");
 
 		toggleElement.addEventListener("click", () => {
-			const willBeExpanded = this.getIsExpanded(listElement) === "false";
+			const willBeExpanded = this.getIsExpanded(toggleElement) === "false";
 			this.setIsOpen(willBeExpanded);
 		});
 	}
@@ -42,7 +43,7 @@ export default class Menu extends HTMLElement {
 			" "
 		) || [""];
 
-		this.listElement.setAttribute("aria-expanded", `${isOpen}`);
+		this.toggleElement?.setAttribute("aria-expanded", `${isOpen}`);
 
 		if (isOpen) {
 			this.listElement.classList.add(...expandedClasses);
@@ -54,8 +55,8 @@ export default class Menu extends HTMLElement {
 		}
 	}
 
-	getIsExpanded(listElement: HTMLElement) {
-		return listElement.getAttribute("aria-expanded");
+	getIsExpanded(toggleElement: HTMLElement) {
+		return toggleElement.getAttribute("aria-expanded");
 	}
 	addListeners() {
 		window.addEventListener("click", this.handleCloseClick);
