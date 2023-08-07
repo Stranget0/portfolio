@@ -21,10 +21,13 @@ export default class Tab extends HTMLAnchorElement {
 	}
 
 	setActive() {
-		Tab.activeTab?.classList.remove("active");
+		Tab.activeTab?.classList.remove(getActiveClass(Tab.activeTab));
 		Tab.activeTab = this;
-		this.classList.add("active");
+		this.classList.add(getActiveClass(Tab.activeTab));
 	}
 }
 
 customElements.define("nav-tab", Tab, { extends: "a" });
+function getActiveClass(tab: Tab): string {
+	return tab.dataset["tabActiveClass"] || "";
+}
