@@ -9,7 +9,7 @@ type Props = { images: ImageString[]; floatingImages?: ImageString[] };
 const { images } = Astro.props;
 
 const keyframes = JSON.stringify({
-	transform: [null,null,"translateY(-10%)","translateY(-100%)"],
+	transform: [null,null,null,null,"translateY(-10%)","translateY(-100%)"],
 });
 // data-scroll-target-ref
 // data-scroll-target data-scroll-target-keyframes={keyframes}
