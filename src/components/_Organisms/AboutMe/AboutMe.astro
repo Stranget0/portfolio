@@ -19,7 +19,10 @@ const { data: aboutMeAudio, id: stageId } = await getEntry({
 
 const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 const appearInView = classInView("opacity-0", "opacity-100", 1, true);
-const appearInViewScale = classInView("opacity-0 scale-0", "opacity-100 scale-100");
+const appearInViewScale = classInView(
+	"opacity-0 scale-0",
+	"opacity-100 scale-100"
+);
 ---
 
 <section
@@ -93,14 +96,15 @@ const appearInViewScale = classInView("opacity-0 scale-0", "opacity-100 scale-10
 			{...appearInView}
 		/>
 		<p
-			class="text-subtitle-3 text-balance text-9 mb-0 text-center solid-text-shadow sm:(text-right text-12 ml-auto max-w-80%)"
+			class="text-subtitle-3 text-balance text-9 mb-0 text-center solid-text-shadow motion-safe:transition-opacity-1000 sm:(text-right text-12 ml-auto max-w-80%)"
+			{...appearInView}
 		>
-			<AppearingLine as="span" text="Now, wanna make some" animatedOnView />
+			<AppearingLine as="span" text="Now, wanna make some" lettersTransition />
 			<AppearingLine
 				as="strong"
 				offset={"Now, wanna make some".length}
 				text=" good shit?"
-				animatedOnView
+				lettersTransition
 			/>
 		</p>
 		<nav
