@@ -13,15 +13,15 @@ import AnimatedText from "@/components/AnimatedText.astro";
 import { scrollVelocityTransform } from "@/plugins/scrollVelocityTransform/serverUtils";
 import { classInView } from "@/plugins/classInView/serverUtils";
 
-const md = 768;
+const lg = 1024;
 const waypointsData = {
 	...waypoints
 		.foxWaypointCameraSpatial(3, 1.5, -0.421)
-		.addBreakpoint(md, 2, 1.5, -0.421)
+		.addBreakpoint(lg, 2, 1.5, -0.421)
 		.waypoint(),
 	...waypoints
 		.foxWaypointTarget(0, -1, 0)
-		.addBreakpoint(md, 1, -0.5, 0)
+		.addBreakpoint(lg, 1, -0.5, 0)
 		.waypoint(),
 	...waypoints.foxWaypointStiffness(3, 4).waypoint(),
 };
@@ -37,7 +37,7 @@ const waypointsData = {
 >
 	<SectionClip class="absolute inset-0">
 		<SectionFixed
-			class="section pb-4 inset-4 justify-end items-center md:items-end motion-safe:transition"
+			class="section pb-4 inset-4 justify-end items-center lg:items-end motion-safe:transition"
 			{...scrollVelocityTransform(5)}
 		>
 			<ContactInputContainer {...classInView("opacity-0 scale-0", "transition-300", .25)}>
