@@ -1,4 +1,0 @@
-[[headers]]
-  for = "https://msmarzewski.pl/*"
-  [headers.values]
-    X-Robots-Tag: all

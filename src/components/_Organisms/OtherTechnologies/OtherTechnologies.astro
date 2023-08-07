@@ -28,51 +28,40 @@ const techsArr = partition(
 	({ data }) => data.importance < 10
 ).flatMap((arr) => chunk(arr, 4));
 
-const stagger = 20;
+// const stagger = 20;
 
-const rightToLeft = (i: number) =>
-	JSON.stringify({ transform: [`${25 + stagger * i}%`, `-${25 + stagger * i}%`].map(x=>`translateX(${x})`) });
+// const rightToLeft = (i: number) =>
+// 	JSON.stringify({
+// 		transform: [`${25 + stagger * i}%`, `-${25 + stagger * i}%`].map(
+// 			(x) => `translateX(${x})`
+// 		),
+// 	});
 ---
 
 {
 	!!technologies.length && (
-		<scroll-reference
-			data-scroll-feature-refs
-			class="section block relative overflow-hidden max-w-full"
-		>
+		<section class="section block relative overflow-hidden max-w-full">
 			<article
 				class="w-full glass-backdrop pt-4 pb-6 text-center"
 				data-scroll-target-ref
 			>
-				<div
-					class="w-full"
-					data-scroll-target
-					data-scroll-target-keyframes={rightToLeft(0)}
-				>
 					<AppearingLine
 						as="h2"
 						text="Other skills"
 						class="text-subtitle-2 mb-4 mx-auto"
 					/>
-				</div>
-				<section class="flex flex-col gap-4">
-					{techsArr.map((tech, i) => {
+				<div class="flex flex-col gap-4">
+					{techsArr.map((tech) => {
 						return (
-							<div
-								class="w-full"
-								data-scroll-target
-								data-scroll-target-keyframes={rightToLeft((i % 2) + 1)}
-							>
-								<Technologies
-									entries={tech}
-									defaultColor="white"
-									class="justify-center mx-auto"
-								/>
-							</div>
+							<Technologies
+								entries={tech}
+								defaultColor="white"
+								class="justify-center mx-auto"
+							/>
 						);
 					})}
-				</section>
+				</div>
 			</article>
-		</scroll-reference>
+		</section>
 	)
 }

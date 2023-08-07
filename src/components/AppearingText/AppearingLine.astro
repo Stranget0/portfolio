@@ -15,6 +15,7 @@ type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	animatedInitially?: boolean;
 	lettersTransition?: boolean;
 	letterClass?: string;
+	ignoreAudio?: boolean;
 	offset?: number;
 };
 
@@ -22,6 +23,7 @@ export type AppearingTextProps = Props;
 const {
 	as: Tag = "p",
 	class: className = "prose",
+	ignoreAudio,
 	text: rawText = "",
 	group,
 	dontShowTooltip,
@@ -42,7 +44,7 @@ for (const w of textArr) {
 const tooltipData = !dontShowTooltip && playAudioTooltip;
 
 const commonProps = {
-	"data-appearing-word": true,
+	"data-appearing-word": ignoreAudio ? undefined : true,
 	class: "transition-800 will-change-opacity",
 };
 
@@ -56,8 +58,8 @@ const calculatedData =
 	{...other as any}
 	{...tooltipData}
 	class:list={[className]}
-	data-appearing-group={group}
-	data-text-audio-run={dontShowTooltip ? undefined : true}
+	data-appearing-group={ignoreAudio ? undefined : group}
+	data-text-audio-run={dontShowTooltip || ignoreAudio ? undefined : true}
 	{...calculatedData}
 >
 	{
