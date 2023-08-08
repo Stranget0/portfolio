@@ -342,7 +342,7 @@ export default defineConfig({
 				if (colorVariant.startsWith("#")) color = colorVariant;
 				if (shade !== undefined) color = color?.[shade];
 				if (!color) return;
-				return { "--solid-text-shadow-color": color, color };
+				return { "--solid-text-shadow-color": color };
 			},
 		],
 	],
@@ -351,7 +351,7 @@ function generateTextShadow(steps: number, max: number) {
 	const textShadow: string[] = [];
 	for (let i = 1; i <= steps; i++) {
 		textShadow.push(
-			`0 ${max / i}rem  0 var(--solid-text-shadow-color, black)`
+			`0 ${max / i}rem  0 var(--solid-text-shadow-color, #111111)`
 		);
 	}
 

@@ -6,36 +6,23 @@ import sortTechnologies from "@utils/sortTechnologies";
 import partition from "lodash/partition";
 import chunk from "lodash/chunk";
 
-const projects = await getCollection("projects");
-const usedTechnologies = projects.flatMap(({ data }) => {
-	const { technologies } = data;
-	return technologies?.map(({ slug }) => slug) || [];
-});
 
-const unusedTechCollection = await getCollection(
+
+const techCollection = await getCollection(
 	"technologies",
-	({ slug }) => !usedTechnologies.includes(slug)
 );
 
 const technologies = sortTechnologies(
 	await Promise.all(
-		unusedTechCollection.map(({ slug }) => getEntryBySlug("technologies", slug))
+		techCollection.map(({ slug }) => getEntryBySlug("technologies", slug))
 	)
 );
 
 const techsArr = partition(
 	technologies,
 	({ data }) => data.importance < 10
-).flatMap((arr) => chunk(arr, 4));
+).flatMap((arr) => chunk(arr, 5));
 
-// const stagger = 20;
-
-// const rightToLeft = (i: number) =>
-// 	JSON.stringify({
-// 		transform: [`${25 + stagger * i}%`, `-${25 + stagger * i}%`].map(
-// 			(x) => `translateX(${x})`
-// 		),
-// 	});
 ---
 
 {
@@ -47,16 +34,17 @@ const techsArr = partition(
 			>
 					<AppearingLine
 						as="h2"
-						text="Other skills"
+						text="Skills"
 						class="text-subtitle-2 mb-4 mx-auto"
 					/>
-				<div class="flex flex-col gap-4">
+				<div class="flex flex-wrap gap-8">
 					{techsArr.map((tech) => {
 						return (
 							<Technologies
 								entries={tech}
 								defaultColor="white"
-								class="justify-center mx-auto"
+								class="justify-center flex-col mx-auto"
+								chipClass="grayscale-50 md:grayscale-75 md:hover:grayscale-0 motion-safe:transition-filter-600"
 							/>
 						);
 					})}
