@@ -11,7 +11,8 @@ const { title, ...other } = Astro.props;
 {...other as any}
 	tag="h2"
 	text={title}
-	class="sticky z-12 top-4 text-subtitle-1 mb-4 mix-blend-difference mt-1px solid-text-shadow-sm solid-text-shadow-primary-200"
+	class="sticky z-12 top-4 text-subtitle-1 mb-4 mix-blend-difference mt-1px solid-text-shadow  solid-text-shadow-primary-500 invert text-primary-900"
 	group={1}
 	lettersTransition
+	letterClass="hover:text-accent-200"
 />

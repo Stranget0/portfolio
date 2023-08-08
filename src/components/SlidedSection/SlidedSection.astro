@@ -10,7 +10,7 @@ const { class: className, title, ...other } = Astro.props;
 ---
 
 <section class:list={["bg-primary-50", className]} {...other}>
-	<div class="text-primary-100 text-center pt-4">
+	<div class="text-center pt-4">
 		<SectionTitle title={title}/>
 		<slot/>
 	</div>
