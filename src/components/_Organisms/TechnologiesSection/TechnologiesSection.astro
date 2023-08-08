@@ -27,7 +27,7 @@ const techsArr = partition(
 
 {
 	!!technologies.length && (
-		<section class="section block relative overflow-hidden max-w-full">
+		<section class="section block relative overflow-hidden max-w-full prose">
 			<article
 				class="w-full glass-backdrop pt-4 pb-6 text-center"
 				data-scroll-target-ref
@@ -35,7 +35,7 @@ const techsArr = partition(
 					<AppearingLine
 						as="h2"
 						text="Skills"
-						class="text-subtitle-2 mb-4 mx-auto"
+						class="text-subtitle-2 mb-20 mx-auto"
 					/>
 				<div class="flex flex-wrap gap-8">
 					{techsArr.map((tech) => {
@@ -44,7 +44,7 @@ const techsArr = partition(
 								entries={tech}
 								defaultColor="white"
 								class="justify-center flex-col mx-auto"
-								chipClass="grayscale-50 md:grayscale-75 md:hover:grayscale-0 motion-safe:transition-filter-600"
+								chipClass="grayscale-50 md:grayscale-75 md:hover:grayscale-0 list-none motion-safe:transition-filter-600"
 							/>
 						);
 					})}
