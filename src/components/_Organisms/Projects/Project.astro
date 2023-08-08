@@ -4,14 +4,11 @@ import SectionFullscreenImages from "@components/SlidedSection/_SectionFullscree
 import SectionItem from "@components/SlidedSection/_SectionItem.astro";
 import SectionItemDescription from "@components/SlidedSection/_SectionItemDescription.astro";
 import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro";
-import { type CollectionEntry, getEntryBySlug } from "astro:content";
+import type {  CollectionEntry } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
-import SectionTechnologies from "@components/SlidedSection/_SectionTechnologies.astro";
-import sortTechnologies from "@utils/sortTechnologies";
 import SectionLinks from "@components/SlidedSection/_SectionLinks.astro";
 import SectionHeading from "@components/SlidedSection/_SectionHeading.astro";
 import SectionYear from "@components/SlidedSection/_SectionYear.astro";
-import SectionTopFixed from "@components/SlidedSection/_SectionTopFixed.astro";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { preloadImagesInContainer } from "@plugins/preloadImagesInContainer/serverUtils";
@@ -28,7 +25,6 @@ const {
 	title,
 	description,
 	audioTextTimings,
-	technologies: technologiesCollectionData,
 	startYear,
 	endYear,
 	class: className = "bg-primary-50 color-var-primary-900",
@@ -37,22 +33,12 @@ const {
 	website,
 } = data;
 
-const technologies =
-	technologiesCollectionData &&
-	(await Promise.all(
-		technologiesCollectionData.map(({ slug }) =>
-			getEntryBySlug("technologies", slug)
-		)
-	).then((arr) => sortTechnologies(arr)));
-
-const isDarkBg = /(bleed|bg)-.+-(700|800|900|950)/.test(className);
 
 const hasFullscreenImages = !!fullscreenImages?.length;
 const hasFloatingImages = !!floatingImages?.length;
 
 const isScrollRefFeature = true;
 
-const hasTech = !!technologies?.length;
 
 const { Content } = await render();
 ---
@@ -101,15 +87,6 @@ const { Content } = await render();
 		)
 	}
 
-	{
-		hasTech && (
-			<SectionTechnologies
-				entries={technologies}
-				defaultColor={isDarkBg ? "black" : "white"}
-				isTopSpacing={hasFullscreenImages}
-			/>
-		)
-	}
 </SectionItem>
 
 <script>
