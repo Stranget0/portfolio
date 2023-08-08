@@ -16,10 +16,12 @@ const referenceData = classInView("reference-hidden", "reference-visible");
 // });
 ---
 
-<div class="w-full my-200" {...referenceData}></div>
+<div class="w-full my-200" data-scroll-target-ref {...referenceData}></div>
 <div
 	class="description fixed overflow-hidden transform translate-y-25% scale-0 z-200 text-balance flex-col-center justify-center items-center prose h-max text-center m-auto max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
->
+	data-scroll-target
+	data-scroll-target-keyframes={JSON.stringify({y:[null,"-15%"]})}
+	>
 	<div>
 		<!-- TODO: FIX TYPE -->{
 			text ? (
