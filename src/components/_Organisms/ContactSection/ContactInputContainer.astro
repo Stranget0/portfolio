@@ -20,7 +20,7 @@ const { class: className, ...props } = Astro.props;
 
 <script>
 	import toast from "solid-toast";
-	import foxController from "@components/ThreeScene/fox";
+	import foxController from "@/components/ThreeScene/foxController";
 
 	const form = document.querySelector("form[name='contact']");
 	if (!form) throw new Error("No form found");
@@ -52,7 +52,7 @@ const { class: className, ...props } = Astro.props;
 				prepareToUnlockButton(submitter);
 			});
 
-		foxController.then((c) => c.foxAnimations.then((fox) => fox?.smile()));
+		foxController.foxAnimations.then((fox) => fox?.smile());
 	});
 
 	function prepareToUnlockButton(submitter: HTMLButtonElement) {

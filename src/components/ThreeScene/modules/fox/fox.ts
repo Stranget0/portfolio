@@ -42,6 +42,7 @@ export default function loadFox(controller: ThreeController) {
 					animationManager.sniff(() => Math.random() * 10000 + sniffDuration);
 				})
 				.catch(console.error);
+
 			animationManager.attention(() => Math.random() * 20000 + 10000);
 			animationManager.shakeHead();
 
