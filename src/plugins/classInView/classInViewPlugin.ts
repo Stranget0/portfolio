@@ -17,9 +17,9 @@ for (const target of targets) {
 
 	inView(
 		target,
-		() => {
-			toggleTargetOn(target);
-			return () => toggleTargetOff(target);
+		({ target }) => {
+			toggleTargetOn(target as HTMLElement);
+			return ({ target }) => toggleTargetOff(target as HTMLElement);
 		},
 		{ amount: Number.isNaN(threshold) ? 0 : threshold }
 	);

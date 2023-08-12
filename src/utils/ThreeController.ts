@@ -90,6 +90,6 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	}
 
 	destroy() {
-		this.destroyObservable.call();
+		this.destroyObservable.runListeners();
 	}
 }

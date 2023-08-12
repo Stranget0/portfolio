@@ -8,9 +8,7 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 ) {
 	const camera = new PerspectiveCamera(
 		70,
-		window.innerWidth / window.innerHeight,
-		0.1,
-		1000
+		window.innerWidth / window.innerHeight
 	);
 
 	camera.position.set(-1, 1, 3);
