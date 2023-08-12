@@ -51,14 +51,16 @@ export default function orbit(controller: ThreeController) {
 	}
 
 	return {
-		stiffness,
-		setLookAtOffset(vec: Vector3) {
-			target.copy(vec);
-			camera.lookAt(target);
-		},
-		setCameraSpatial(vec: Vector3) {
-			sphericalOffset.set(...vec.toArray());
-			startPositionLerp(thetaLeading, phiLeading);
+		orbit: {
+			stiffness,
+			setLookAtOffset(vec: Vector3) {
+				target.copy(vec);
+				camera.lookAt(target);
+			},
+			setCameraSpatial(vec: Vector3) {
+				sphericalOffset.set(...vec.toArray());
+				startPositionLerp(thetaLeading, phiLeading);
+			},
 		},
 	};
 }
