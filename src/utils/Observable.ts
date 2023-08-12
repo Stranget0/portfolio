@@ -27,11 +27,7 @@ export default class Observable<T> {
 		this.listeners.splice(indexOfListener, 1);
 	}
 
-	call() {
-		this.runListeners();
-	}
-
-	private runListeners() {
+	runListeners() {
 		this.listeners.forEach((l) => l(this.value));
 	}
 }

@@ -61,8 +61,8 @@ const { Content } = await render();
 	>
 		{title && <SectionItemTitle title={title} class={titleClass} />}
 
-		<SectionYear startYear={startYear} endYear={endYear} />
 		<SectionItemDescription text={description}>
+			<SectionYear startYear={startYear} endYear={endYear} />
 			<Content
 				components={{
 					h1: SectionHeading,
@@ -70,16 +70,15 @@ const { Content } = await render();
 			/>
 		</SectionItemDescription>
 	</AppearingText>
-	<SectionLinks website={website} github={github} />
-
+	
 	{
 		hasFullscreenImages && (
 			<SectionFullscreenImages
-				images={fullscreenImages}
+			images={fullscreenImages}
 				floatingImages={floatingImages}
-			/>
-		)
-	}
+				/>
+				)
+			}
 	{hasFloatingImages && <SectionFloatingImages images={floatingImages} />}
 	{
 		hasFloatingImages && (
@@ -87,6 +86,9 @@ const { Content } = await render();
 		)
 	}
 
+	<div class="fixed bottom-4">
+		<SectionLinks website={website} github={github} class="w-full" />
+	</div>
 </SectionItem>
 
 <script>

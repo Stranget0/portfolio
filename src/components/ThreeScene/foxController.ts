@@ -1,9 +1,9 @@
 import initHeroController from "./foxRoot";
-import elementWaypointsInit from "./modules/waypoints/elementWaypointsInit";
-import fog from "./modules/fog/fog";
+import elementWaypointsInit from "./modules/waypoints/elementWaypoints";
+import fog from "./modules/fog";
 import loadFox from "./modules/fox/fox";
 import addLeaves from "./modules/leaves/leaves";
-import lights from "./modules/lights/lights";
+import lights from "./modules/lights";
 import orbit from "./modules/orbit";
 import renderObstacles from "./modules/renderObstacles/renderObstaclesInit";
 import { foxObstacleAttr } from "./constants";
@@ -18,29 +18,20 @@ const controller = initHeroController(
 	elementWaypointsInit
 );
 
-Promise.all([controller.orbit, controller.elementWaypoints])
-	.then(([orbit, waypoints]) => {
-		waypoints.foxWaypointTarget.setWaypointTarget((vec) =>
-			orbit.setLookAtOffset(vec)
-		);
+controller.waypoints.foxWaypointTarget.setWaypointTarget((vec) =>
+	controller.orbit.setLookAtOffset(vec)
+);
 
-		waypoints.foxWaypointCameraSpatial.setWaypointTarget((vec) =>
-			orbit.setCameraSpatial(vec)
-		);
+controller.waypoints.foxWaypointCameraSpatial.setWaypointTarget((vec) =>
+	controller.orbit.setCameraSpatial(vec)
+);
 
-		waypoints.foxWaypointStiffness.setWaypointTarget((vec) => {
-			orbit.stiffness.x = vec.x;
-			orbit.stiffness.y = vec.y;
-		});
-	})
-	.catch((e) => console.error("Failed to load orbit", e));
+controller.waypoints.foxWaypointStiffness.setWaypointTarget((vec) => {
+	controller.orbit.stiffness.x = vec.x;
+	controller.orbit.stiffness.y = vec.y;
+});
 
-Promise.all([
-	controller.fox,
-	controller.leafs,
-	controller.lights,
-	controller.fog,
-])
+Promise.all([controller.fox, controller.leafs])
 	.then(() => {
 		controller.renderer.domElement.classList.remove("opacity-0");
 		controller.startLoop();
