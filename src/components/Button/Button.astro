@@ -3,7 +3,7 @@ import type { HTMLTag } from "astro/types";
 import type { ButtonProps } from "./types";
 import { buttonClass } from "./utils";
 
-type Props<T extends HTMLTag = "button"> = ButtonProps<T>
+type Props<T extends HTMLTag = "button"> = ButtonProps<T>;
 
 const {
 	visualType = "simple",
@@ -12,6 +12,9 @@ const {
 	size = "default",
 	invertColor,
 	classOverride,
+	targetSelector,
+	targetClassToggle,
+	closeType,
 	...rest
 } = Astro.props;
 ---
@@ -24,7 +27,14 @@ const {
 		size,
 		visualType,
 	})}
+	data-target-selector={targetSelector}
+	data-target-class-toggle={targetClassToggle}
+	data-close-type={closeType}
 	{...rest as any}
 >
 	<slot>LOREM IPSUM NIHIL NOVI</slot>
 </Tag>
+
+<script>
+	import "./buttonFunctionality";
+</script>

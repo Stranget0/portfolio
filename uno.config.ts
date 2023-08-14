@@ -345,6 +345,17 @@ export default defineConfig({
 				return { "--solid-text-shadow-color": color };
 			},
 		],
+		// ***************************************************************************************
+		[
+			/^clip-circle-top-right(-full)?$/,
+			([_, full]) => {
+				const value = full ? "150vmax" : "0px";
+				
+				return {
+					"clip-path": `circle(${value} at top right)`,
+				};
+			},
+		],
 	],
 });
 function generateTextShadow(steps: number, max: number) {
@@ -358,4 +369,3 @@ function generateTextShadow(steps: number, max: number) {
 	const res = textShadow.join(", ");
 	return res;
 }
-
