@@ -5,12 +5,9 @@ import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import sortTechnologies from "@utils/sortTechnologies";
 import partition from "lodash/partition";
 import chunk from "lodash/chunk";
+import { mainpageTabs } from "@/constants";
 
-
-
-const techCollection = await getCollection(
-	"technologies",
-);
+const techCollection = await getCollection("technologies");
 
 const technologies = sortTechnologies(
 	await Promise.all(
@@ -22,21 +19,23 @@ const techsArr = partition(
 	technologies,
 	({ data }) => data.importance < 10
 ).flatMap((arr) => chunk(arr, 5));
-
 ---
 
 {
 	!!technologies.length && (
-		<section class="section block relative overflow-hidden max-w-full prose">
+		<section
+			id={mainpageTabs.skills.id}
+			class="section block relative overflow-hidden max-w-full prose"
+		>
 			<article
 				class="w-full glass-backdrop pt-4 pb-6 text-center"
 				data-scroll-target-ref
 			>
-					<AppearingLine
-						as="h2"
-						text="Skills"
-						class="text-subtitle-2 mb-20 mx-auto"
-					/>
+				<AppearingLine
+					as="h2"
+					text="Skills"
+					class="text-subtitle-2 mb-20 mx-auto"
+				/>
 				<div class="flex flex-wrap gap-8">
 					{techsArr.map((tech) => {
 						return (

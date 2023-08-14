@@ -6,7 +6,9 @@ export const motionSafeMedia = matchMedia(
 );
 
 export const mainpageTabs = {
-	aboutMe: { id: "aboutMe", label: "about me" },
+	play: { id: "play-website", label: "play" },
+	aboutMe: { id: "about-me", label: "about me" },
 	projects: { id: "projects", label: "projects" },
+	skills: { id: "skills", label: "skills" },
 	contact: { id: "contact", label: "contact me" },
 };
