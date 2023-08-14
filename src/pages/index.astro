@@ -10,10 +10,12 @@ import AboutMe from "@components/_Organisms/AboutMe/AboutMe.astro";
 import { Toaster } from "solid-toast";
 import { mainpageTabs } from "src/constants";
 import PlayStagesSection from "@/components/_Organisms/PlayStagesSection/PlayStagesSection.astro";
+import {  foxObstacleAttrObj } from "@/components/ThreeScene/constants";
 ---
 
 <Layout tabs={mainpageTabs}>
 	<div data-taxi-view class="w-full">
+		<div {...foxObstacleAttrObj} class="h-200vh w-full bg-orange"></div>
 		<Toaster
 			client:idle
 			position="bottom-left"
