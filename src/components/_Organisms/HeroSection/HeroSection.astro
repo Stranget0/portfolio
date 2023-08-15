@@ -18,6 +18,7 @@ const disappearOnFoxLoading = {
 	...classOnFoxLoaded("hidden"),
 };
 const appearOnFoxLoading = classOnFoxLoading("important:opacity-100");
+const removeOnFoxLoaded = classOnFoxLoaded("hidden")
 
 const projects = await getCollection("projects");
 const techs = await getCollection(
@@ -88,6 +89,7 @@ const spinnedTexts = [
 		aria-label="loading fox model"
 		aria-hidden="true"
 		{...appearOnFoxLoading}
+		{...removeOnFoxLoaded}
 		class="i-svg-spinners-12-dots-scale-rotate?mask w-40 h-40 lg:(w-80 h-80) fixed left-50% top-50% -translate-50% opacity-0 motion-safe:transition-opacity"
 	>
 	</div>
