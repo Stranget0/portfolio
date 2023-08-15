@@ -1,22 +1,19 @@
-import { foxObstacleAttr } from "./constants";
+import { foxClassOnLoadingAttr, foxClassOnLoadingDataKey } from "./constants";
 import type { FoxControllerType } from "./foxController";
-const selector = `[${foxObstacleAttr}]`;
+import { foxHandleOnClasses } from "./serverUtils";
 
 let foxPromise: null | Promise<FoxControllerType> = null;
 
-const observer = new IntersectionObserver(
-	(entries) => {
-		if (!entries.some(({ isIntersecting }) => isIntersecting)) load();
-	},
-	{ rootMargin: `${-window.innerHeight / 1.1}px 0px 0px 0px`, root: null }
-);
+document.addEventListener("scroll", onScroll);
 
-for (const obstacle of document.querySelectorAll<HTMLElement>(selector)) {
-	observer.observe(obstacle);
+function onScroll() {
+	if (window.scrollY > 0) {
+		document.removeEventListener("scroll", onScroll);
+		load();
+	}
 }
-
 function load() {
-	observer.disconnect();
+	foxHandleOnClasses(foxClassOnLoadingAttr, foxClassOnLoadingDataKey);
 	foxPromise = import("./foxController").then(({ default: d }) => d);
 }
 

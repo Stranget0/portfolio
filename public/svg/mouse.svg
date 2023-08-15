@@ -1,0 +1,20 @@
+<svg width="96" height="136" viewBox="0 0 96 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<style>
+		@keyframes scroll{
+			40%{
+				opacity: .5;
+			}
+			60%,100%{
+				opacity:0;
+			}
+			100%{
+				transform: translateY(25%);
+			}
+		}
+		.scroll{
+			animation: scroll 1s ease-out infinite;
+		}
+	</style>
+<rect class="shape" x="2" y="2" width="92" height="132" rx="43.5" stroke="white" stroke-width="4"/>
+<rect class="scroll" x="44" y="38" width="8" height="12" rx="4" fill="white"/>
+</svg>

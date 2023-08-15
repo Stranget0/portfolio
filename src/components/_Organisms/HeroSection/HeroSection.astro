@@ -4,22 +4,103 @@ import SectionClip from "../../SectionClip.astro";
 import SectionFixed from "../../SectionFixed.astro";
 import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
 import { classInView } from "@/plugins/classInView/serverUtils";
+import {
+	classOnFoxLoading,
+	classOnFoxLoaded,
+} from "@components/ThreeScene/serverUtils";
+import { getCollection } from "astro:content";
 
 const appearInView = classInView("opacity-0 scale-0", "opacity-100 scale-100");
+const appearOnFoxLoaded = classOnFoxLoaded("important:(opacity-100 scale-100)");
+
+const disappearOnFoxLoading = {
+	...classOnFoxLoading("important:(opacity-0 scale-0)"),
+	...classOnFoxLoaded("hidden"),
+};
+const appearOnFoxLoading = classOnFoxLoading("important:opacity-100");
+
+const projects = await getCollection("projects");
+const techs = await getCollection(
+	"technologies",
+	({ data }) => data.importance < 10
+);
+
+const spinnedTexts = [
+	`${projects.length} projects`,
+	"experience",
+	"design",
+	`${techs.length} technologies`,
+];
 ---
 
 <SectionClip
 	as="section"
-	class="section h-screen min-h-md text-center"
+	class="section h-150vh min-h-md text-center"
+	data-static-h="150vh"
 	{...waypoints.foxWaypointCameraSpatial(3.316, 1.264, -0.321).waypoint()}
 	{...waypoints.foxWaypointTarget(0.5, -0.3, -1).waypoint()}
 	{...waypoints.foxWaypointStiffness(1, 1).waypoint()}
 >
+	<div
+		class="fox-bg fixed flex-col-center inset-0 z-2 text-primary-50 bg-primary-50"
+		{...disappearOnFoxLoading}
+	>
+		<AppearingLine
+			as="h1"
+			class="w-min text-subtitle-1 solid-text-shadow mix-blend-difference"
+			text="Web development"
+			lettersTransition
+		/>
+		{
+			spinnedTexts.map((text, i, { length }) => {
+				const deg = ((i - 0.15) / (length - 1)) * 200;
+				return (
+					<div
+						class="hidden sm:block text-subtitle-4 solid-text-shadow text-5 opacity-50 font-serif absolute -translate-50% mix-blend-difference"
+						style={{
+							left: `calc(50% + min(200px, 25vmin) * cos(${deg}deg))`,
+							top: `calc(50% + min(200px, 25vmin) * sin(${deg}deg))`,
+						}}
+					>
+						<p
+							class="motion-safe:animate-bounce-in important:animate-fill-both"
+							style={{
+								"animation-delay": `${(length - i + 1) * 200}ms`,
+							}}
+						>
+							{text}
+						</p>
+					</div>
+				);
+			})
+		}
+	</div>
+
+	<div
+		{...disappearOnFoxLoading}
+		class="mix-blend-difference flex-col-center text-primary-50 z-100 fixed left-50% bottom-4 -translate-x-50%"
+	>
+		<div class="mouse w-6 h-6 motion-safe:animate-bounce"></div>
+		<p class="text-label motion-safe:animate-bounce">scroll</p>
+	</div>
+
+	<div
+		aria-label="loading fox model"
+		aria-hidden="true"
+		{...appearOnFoxLoading}
+		class="i-svg-spinners-12-dots-scale-rotate?mask w-40 h-40 lg:(w-80 h-80) fixed left-50% top-50% -translate-50% opacity-0 motion-safe:transition-opacity"
+	>
+	</div>
+
 	<SectionFixed
 		as="h2"
 		class="top-0vh bottom-0vh important:(top-0lvh bottom-0lvh) flex flex-col items-center justify-between"
 	>
-		<span class="flex-col-center" {...appearInView}>
+		<span
+			class="flex-col-center motion-safe:transition-600 important:(opacity-0 scale-0)"
+			{...appearInView}
+			{...appearOnFoxLoaded}
+		>
 			<AppearingLine
 				as="span"
 				class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
@@ -35,7 +116,11 @@ const appearInView = classInView("opacity-0 scale-0", "opacity-100 scale-100");
 				{...appearInView}
 			/>
 		</span>
-		<span class="flex-col-center" {...appearInView}>
+		<span
+			class="flex-col-center motion-safe:transition-600 important:(opacity-0 scale-0)"
+			{...appearInView}
+			{...appearOnFoxLoaded}
+		>
 			<AppearingLine
 				as="span"
 				class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
@@ -45,7 +130,7 @@ const appearInView = classInView("opacity-0 scale-0", "opacity-100 scale-100");
 			/>
 			<AppearingLine
 				as="span"
-				class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear "
+				class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
 				text="Your choice"
 				lettersTransition
 				{...appearInView}
@@ -53,3 +138,14 @@ const appearInView = classInView("opacity-0 scale-0", "opacity-100 scale-100");
 		</span>
 	</SectionFixed>
 </SectionClip>
+<style lang="scss">
+	.fox-bg {
+		@apply bg-no-repeat bg-center;
+		background-image: url("svg/fox-no-bg.svg");
+		background-size: min(20rem, 50vmin);
+	}
+	.mouse {
+		@apply bg-no-repeat bg-center bg-contain;
+		background-image: url("svg/mouse.svg");
+	}
+</style>

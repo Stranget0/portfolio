@@ -6,7 +6,14 @@ import addLeaves from "./modules/leaves/leaves";
 import lights from "./modules/lights";
 import orbit from "./modules/orbit";
 import renderObstacles from "./modules/renderObstacles/renderObstaclesInit";
-import { foxObstacleAttr } from "./constants";
+import {
+	foxClassOnLoadedAttr,
+	foxClassOnLoadedDataKey,
+	foxClassOnLoadingAttr,
+	foxClassOnLoadingDataKey,
+	foxObstacleAttr,
+} from "./constants";
+import { foxHandleOnClasses } from "./serverUtils";
 
 const controller = initHeroController(
 	loadFox,
@@ -33,7 +40,12 @@ controller.waypoints.foxWaypointStiffness.setWaypointTarget((vec) => {
 
 Promise.all([controller.fox, controller.leafs])
 	.then(() => {
-		controller.renderer.domElement.classList.remove("opacity-0");
+		foxHandleOnClasses(
+			foxClassOnLoadingAttr,
+			foxClassOnLoadingDataKey,
+			"remove"
+		);
+		foxHandleOnClasses(foxClassOnLoadedAttr, foxClassOnLoadedDataKey);
 		controller.startLoop();
 		controller.setObstacleSelector(`[${foxObstacleAttr}]`);
 	})
