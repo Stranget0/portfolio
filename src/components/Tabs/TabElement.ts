@@ -1,8 +1,17 @@
-const observer = new IntersectionObserver((targets) => {
-	for (const { isIntersecting, target } of targets) {
-		if (isIntersecting) Tab.tabs[target.id].setActive();
+const observer = new IntersectionObserver(
+	(targets) => {
+		for (const { isIntersecting, target } of targets) {
+			if (isIntersecting) Tab.tabs[target.id].setActive();
+		}
+	},
+	{
+		threshold: 0,
+		root: null,
+		rootMargin: `${-window.innerHeight / 2.1}px 0px ${
+			-window.innerHeight / 2.1
+		}px 0px`,
 	}
-});
+);
 
 export default class Tab extends HTMLAnchorElement {
 	static activeTab: Tab | null = null;
@@ -11,9 +20,14 @@ export default class Tab extends HTMLAnchorElement {
 
 	connectedCallback() {
 		if (!this.isConnected) return;
-		this.idRef = /#(\w+)$/i.exec(this.href)?.[1] || "";
-		if (!this.idRef) return;
-		observer.observe(document.querySelector(`#${this.idRef}`) as HTMLElement);
+		this.idRef = /#(.+)$/i.exec(this.href)?.[1] || "";
+		const pointedElement =
+			this.idRef && document.querySelector(`#${this.idRef}`);
+		if (!pointedElement) {
+			console.error(`No element with id ${this.idRef} found`);
+			return;
+		}
+		observer.observe(pointedElement as HTMLElement);
 		Tab.tabs[this.idRef] = this;
 	}
 	disconnectedCallback() {

@@ -1,25 +1,22 @@
 ---
-
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
+import { mainpageTabs } from "src/constants";
 import { classInView } from "@plugins/classInView/serverUtils";
 
-const appearingClass =classInView("rotate-135 scale-0 ", "", 1)
+const appearingClass = classInView("rotate-135 scale-0 ", "", 1);
 ---
 
-
 <section
-class="section relative py-40 flex-center before:(pseudo-full bg-primary-950 -z-3) after:(pseudo-full bg-primary-950 opacity-75 -z-1)"
+	id={mainpageTabs.play.id}
+	class="section relative py-40 flex-center before:(pseudo-full bg-primary-950 -z-3) after:(pseudo-full bg-primary-950 opacity-75 -z-1)"
 >
-<div
-	class="transition-600"
-	{...appearingClass}
->
-	<AppearingTextButton
-		client:visible
-		classOverride="circle-button relative text-accent-100 backdrop-blur border-current border-2 border-dotted transition-interactive before:(pseudo-full -inset-5 rounded-full bg-current brightness-20 opacity-50 -z-1)"
-		iconClass="w-8 h-8"
-		direction="column"
-		mainLabel="Play website!"
-	/>
-</div>
+	<div class="transition-600" {...appearingClass}>
+		<AppearingTextButton
+			client:visible
+			classOverride="circle-button relative text-accent-100 backdrop-blur border-current border-2 border-dotted transition-interactive before:(pseudo-full -inset-5 rounded-full bg-current brightness-20 opacity-50 -z-1)"
+			iconClass="w-8 h-8"
+			direction="column"
+			mainLabel="Play website!"
+		/>
+	</div>
 </section>

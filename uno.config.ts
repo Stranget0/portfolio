@@ -173,11 +173,11 @@ export default defineConfig({
 				opacity: 90%;
 			}
 			:where(.menu-opafocus:is(:hover, :focus-within) .menu-opafocus-option){
-				opacity: var(--opafocus-min-opacity, 0.5);
+				opacity: var(--opafocus-min-opacity, 0.5) !important;
 				scale: var(--opafocus-min-scale, 0.9);
 			}
 			:where(.menu-opafocus .menu-opafocus-option:is(:hover, :focus-visible)) {
-				opacity: var(--opafocus-max-opacity, 1);
+				opacity: var(--opafocus-max-opacity, 1) !important;
 				scale: var(--opafocus-max-scale, 1.1);
 			}`;
 			},
@@ -345,6 +345,17 @@ export default defineConfig({
 				return { "--solid-text-shadow-color": color };
 			},
 		],
+		// ***************************************************************************************
+		[
+			/^clip-circle-top-right(-full)?$/,
+			([_, full]) => {
+				const value = full ? "150vmax" : "0px";
+				
+				return {
+					"clip-path": `circle(${value} at top right)`,
+				};
+			},
+		],
 	],
 });
 function generateTextShadow(steps: number, max: number) {
@@ -358,4 +369,3 @@ function generateTextShadow(steps: number, max: number) {
 	const res = textShadow.join(", ");
 	return res;
 }
-
