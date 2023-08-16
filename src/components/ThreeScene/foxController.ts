@@ -40,16 +40,18 @@ controller.waypoints.foxWaypointStiffness.setWaypointTarget((vec) => {
 
 Promise.all([controller.fox, controller.leafs])
 	.then(() => {
+		controller.startLoop();
+		controller.setObstacleSelector(`[${foxObstacleAttr}]`);
+	})
+	.catch((e) => console.error("Failed to load scene", e))
+	.finally(() => {
 		foxHandleOnClasses(
 			foxClassOnLoadingAttr,
 			foxClassOnLoadingDataKey,
 			"remove"
 		);
 		foxHandleOnClasses(foxClassOnLoadedAttr, foxClassOnLoadedDataKey);
-		controller.startLoop();
-		controller.setObstacleSelector(`[${foxObstacleAttr}]`);
-	})
-	.catch((e) => console.error("Failed to load scene", e));
+	});
 
 export type FoxControllerType = typeof controller;
 export default controller;
