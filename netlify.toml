@@ -1,0 +1,14 @@
+[[headers]]
+  for = "/msmarzewski.pl/*"
+  [headers.values]
+	X-Robots-Tag = "all"
+
+[[headers]]
+  for = "/www.msmarzewski.pl/*"
+  [headers.values]
+	X-Robots-Tag = "all"
+
+[[headers]]
+  for = "/smarzewski.netlify.app/*"
+  [headers.values]
+	X-Robots-Tag = "all"
