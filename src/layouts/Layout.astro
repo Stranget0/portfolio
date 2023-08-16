@@ -17,7 +17,24 @@ type Props = TabsProps;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-317175ZQN9"
+			is:inline
+		></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				// eslint-disable-next-line no-undef
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+
+			gtag("config", "G-317175ZQN9");
+		</script>
+
 		<style is:global lang="scss">
 			:where(button) {
 				background-color: transparent;
