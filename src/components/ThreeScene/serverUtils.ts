@@ -26,6 +26,9 @@ export function foxHandleOnClasses(
 
 			element.ariaHidden = null;
 		}
+		if (mode === "add" && className.includes("hidden")) {
+			element.remove();
+		}
 
 		element.classList[mode](...className.split(" "));
 	}
