@@ -4,4 +4,4 @@
     X-Frame-Options = "SAMEORIGIN"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
-    Content-Security-Policy = "default-src 'self'; style-src msmarzewski.pl *smarzewski.netlify.app 'self'; form-action msmarzewski.pl *smarzewski.netlify.app 'self'; script-src msmarzewski.pl *smarzewski.netlify.app 'self'; connect-src msmarzewski.pl *smarzewski.netlify.app 'self'; img-src msmarzewski.pl *smarzewski.netlify.app 'self'; base-uri 'self'; font-src fonts.gstatic.com 'self'"
+    Content-Security-Policy = "default-src 'self'; style-src msmarzewski.pl *smarzewski.netlify.app cloudfront.net *.cloudfront.net 'self'; form-action msmarzewski.pl *smarzewski.netlify.app cloudfront.net *.cloudfront.net 'self'; script-src msmarzewski.pl *smarzewski.netlify.app cloudfront.net *.cloudfront.net 'self'; connect-src msmarzewski.pl *smarzewski.netlify.app cloudfront.net *.cloudfront.net 'self'; img-src msmarzewski.pl *smarzewski.netlify.app cloudfront.net *.cloudfront.net 'self'; base-uri 'self'; font-src fonts.gstatic.com 'self'"
