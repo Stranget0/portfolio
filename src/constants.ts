@@ -12,3 +12,16 @@ export const mainpageTabs = {
 	skills: { id: "skills-tab", label: "skills" },
 	contact: { id: "contact-tab", label: "contact me" },
 };
+
+export const availableBreakpoints = [756, 1024] as const;
+export type AvailableBreakpoints = (typeof availableBreakpoints)[number];
+
+export type BreakpointsDict = Record<
+	(typeof availableBreakpoints)[number],
+	MediaQueryList
+>;
+
+export const breakpoints = availableBreakpoints.reduce((acc, b) => {
+	acc[b] = matchMedia(`(min-width: ${b}px)`);
+	return acc;
+}, {} as BreakpointsDict);

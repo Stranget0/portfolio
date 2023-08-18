@@ -1,3 +1,5 @@
+import type { AvailableBreakpoints } from "@/constants";
+
 export type WaypointData = number[];
 
 // Element, offsetY, dataArray
@@ -12,6 +14,9 @@ export type CreateWaypoint<C extends number[]> = (
 	minWidth: Waypoint,
 	...coords: C
 ) => {
-	addBreakpoint: (w: number, ...coords: C) => ReturnType<CreateWaypoint<C>>;
+	addBreakpoint: (
+		w: AvailableBreakpoints,
+		...coords: C
+	) => ReturnType<CreateWaypoint<C>>;
 	waypoint: () => { [key: string]: string };
 };

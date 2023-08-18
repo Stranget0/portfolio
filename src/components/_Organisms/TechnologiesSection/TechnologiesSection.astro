@@ -6,6 +6,7 @@ import sortTechnologies from "@utils/sortTechnologies";
 import partition from "lodash/partition";
 import chunk from "lodash/chunk";
 import { mainpageTabs } from "@/constants";
+import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 
 const techCollection = await getCollection("technologies");
 
@@ -25,10 +26,11 @@ const techsArr = partition(
 	!!technologies.length && (
 		<section
 			id={mainpageTabs.skills.id}
-			class="section block relative overflow-hidden max-w-full prose"
+			class="section block relative overflow-hidden max-w-full prose bg-primary-50 lg:(glass-backdrop bg-transparent)"
+			{...foxObstacleAttrObj}
 		>
 			<article
-				class="w-full glass-backdrop pt-4 pb-6 text-center"
+				class="w-full pt-4 pb-6 text-center"
 				data-scroll-target-ref
 			>
 				<AppearingLine

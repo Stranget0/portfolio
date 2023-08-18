@@ -10,18 +10,16 @@ import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerA
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { mainpageTabs } from "src/constants";
 import AnimatedText from "@/components/AnimatedText.astro";
-import { scrollVelocityTransform } from "@/plugins/scrollVelocityTransform/serverUtils";
 import { classInView } from "@/plugins/classInView/serverUtils";
 
-const lg = 1024;
 const waypointsData = {
 	...waypoints
 		.foxWaypointCameraSpatial(3, 1.5, -0.421)
-		.addBreakpoint(lg, 2, 1.5, -0.421)
+		.addBreakpoint(1024, 2, 1.5, -0.421)
 		.waypoint(),
 	...waypoints
 		.foxWaypointTarget(0, -1, 0)
-		.addBreakpoint(lg, 1, -0.5, 0)
+		.addBreakpoint(1024, 1, -0.5, 0)
 		.waypoint(),
 	...waypoints.foxWaypointStiffness(3, 4).waypoint(),
 };
@@ -29,8 +27,8 @@ const waypointsData = {
 
 <section
 	id={mainpageTabs.contact.id}
-	class="min-h-screen text-primary-50 relative text-right before:(pseudo-full bg-primary-950 -z-3)"
-	data-static-h="100vh"
+	class="min-h-120vh text-primary-50 relative text-right before:(pseudo-full bg-primary-950 -z-3)"
+	data-static-h="120vh"
 	data-static-h-type="min"
 	{...waypointsData}
 	{...forceFocusViewAttrObj}
@@ -38,7 +36,6 @@ const waypointsData = {
 	<SectionClip class="absolute inset-0">
 		<SectionFixed
 			class="section pb-4 inset-4 justify-end items-center lg:items-end motion-safe:transition"
-			{...scrollVelocityTransform(5)}
 		>
 			<ContactInputContainer {...classInView("opacity-0 scale-0", "transition-300", .25)}>
 				<AppearingLine
