@@ -3,6 +3,7 @@ import initLerpPositions from "@utils/lerpPositions";
 import { scroll } from "motion";
 import type { WaypointTuple, Waypoint } from "./types";
 import { Vector3 } from "three";
+import { AvailableBreakpoints, breakpoints } from "@/constants";
 
 export default function elementWaypoints(
 	controller: ThreeController,
@@ -33,10 +34,20 @@ export default function elementWaypoints(
 					else onUpdate?.(lerpVector.copy(p));
 				}
 			}
-			scroll(({ y }) => {
-				if ((!y.velocity && hasScrolled) || !controller.isLooping) return;
-				transitionToNewPosition(y.current, hasScrolled);
-				hasScrolled = true;
+			let cancel: VoidFunction | null = null;
+
+			controller.isLooping.listeners.push((isLooping) => {
+				if (!isLooping) {
+					cancel?.();
+					return;
+				}
+
+				cancel = scroll(({ y }) => {
+					if (!y.velocity && hasScrolled) return;
+
+					transitionToNewPosition(y.current, hasScrolled);
+					hasScrolled = true;
+				});
 			});
 
 			function setPointBetweenToP(
@@ -62,8 +73,16 @@ export default function elementWaypoints(
 export type ElementWaypointInitReturnType = ReturnType<typeof elementWaypoints>;
 
 function handleOnResize(controller: ThreeController, onResize: VoidFunction) {
-	window.addEventListener("resize", onResize);
-	const clean = () => window.removeEventListener("resize", onResize);
+	let lastWidth = 0;
+	function onResizeListener() {
+		const isSmallChange = Math.abs(window.innerWidth - lastWidth) < 150;
+		lastWidth = window.innerWidth;
+		if (isSmallChange) return;
+		onResize();
+	}
+
+	window.addEventListener("resize", onResizeListener);
+	const clean = () => window.removeEventListener("resize", onResizeListener);
 	controller.onDestroy(clean);
 }
 
@@ -119,7 +138,8 @@ function calculateBreakpoints(waypointBreakpoints: number[][]) {
 	const winnerWaypoint = waypointBreakpoints.reduce((acc, w, i) => {
 		if (i === 0) return w;
 		const [breakpoint, ...coords] = w;
-		const breakpointMedia = matchMedia(`(min-width: ${breakpoint}px)`);
+
+		const breakpointMedia = breakpoints[breakpoint as AvailableBreakpoints];
 		if (breakpointMedia.matches) return coords;
 		return acc;
 	}, [] as number[]);
