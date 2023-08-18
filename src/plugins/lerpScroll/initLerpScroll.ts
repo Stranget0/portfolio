@@ -104,11 +104,11 @@ export default function initLerpScroll(
 
 	function scrollToElement(scrollTarget: HTMLElement, smooth = true) {
 		if (!smooth) {
-			scrollTarget.scrollIntoView();
+			scrollTarget.scrollIntoView({ block: "start" });
 			return Promise.resolve();
 		}
 
-		const { topOffset, leftOffset } = getOffsetsToCenter(scrollTarget);
+		const { topOffset, leftOffset } = getOffsetsToElement(scrollTarget);
 
 		const yPromise = new Promise<void>((resolve) => {
 			lastTargetY = handleDirection(
@@ -186,13 +186,11 @@ export default function initLerpScroll(
 	}
 }
 
-function getOffsetsToCenter(scrollTarget: HTMLElement) {
+function getOffsetsToElement(scrollTarget: HTMLElement) {
 	const rect = scrollTarget.getBoundingClientRect();
 
-	const topOffset =
-		window.scrollY + rect.top - window.innerHeight / 2 + rect.height / 2;
-	const leftOffset =
-		window.scrollY + rect.left - window.innerWidth / 2 + rect.width / 2;
+	const topOffset = window.scrollY + rect.top;
+	const leftOffset = window.scrollY + rect.left;
 
 	return { topOffset, leftOffset };
 }

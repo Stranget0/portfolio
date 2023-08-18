@@ -18,7 +18,7 @@ export async function scrollToElement(element: HTMLElement, smooth = true) {
 	} else
 		element.scrollIntoView({
 			behavior: smooth ? "smooth" : "auto",
-			block: "center",
+			block: "start",
 			inline: "center",
 		});
 }
