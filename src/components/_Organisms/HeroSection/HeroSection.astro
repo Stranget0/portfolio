@@ -37,8 +37,7 @@ const spinnedTexts = [
 
 <SectionClip
 	as="section"
-	class="section h-150vh min-h-md text-center"
-	data-static-h="150vh"
+	class="section h-120vh lg:h-150vh min-h-md text-center"
 	{...waypoints.foxWaypointCameraSpatial(3.316, 1.264, -0.321).waypoint()}
 	{...waypoints.foxWaypointTarget(0.5, -0.3, -1).waypoint()}
 	{...waypoints.foxWaypointStiffness(1, 1).waypoint()}
@@ -100,7 +99,7 @@ const spinnedTexts = [
 
 	<SectionFixed
 		as="h2"
-		class="top-0vh bottom-0vh important:(top-0lvh bottom-0lvh) flex flex-col items-center justify-between"
+		class="inset-0lvh flex flex-col items-center justify-between"
 	>
 		<span
 			class="flex-col-center motion-safe:transition-600 important:(opacity-0 scale-0)"

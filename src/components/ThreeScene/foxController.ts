@@ -29,9 +29,11 @@ controller.waypoints.foxWaypointTarget.setWaypointTarget((vec) =>
 	controller.orbit.setLookAtOffset(vec)
 );
 
-controller.waypoints.foxWaypointCameraSpatial.setWaypointTarget((vec) =>
-	controller.orbit.setCameraSpatial(vec)
-);
+let initialSpatial = true;
+controller.waypoints.foxWaypointCameraSpatial.setWaypointTarget((vec) => {
+	controller.orbit.setCameraSpatial(vec, !initialSpatial);
+	initialSpatial = false;
+});
 
 controller.waypoints.foxWaypointStiffness.setWaypointTarget((vec) => {
 	controller.orbit.stiffness.x = vec.x;

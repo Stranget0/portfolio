@@ -39,7 +39,8 @@ function parseViewportUnit(viewportUnit: string) {
 			? window.innerHeight
 			: window.innerWidth;
 		const ratio = parseFloat(matchStr) / 100;
-		const value = ratio * dimension * window.devicePixelRatio;
+
+		const value = ratio * dimension;
 
 		viewportUnit = viewportUnit.replace(matchStr, `${value}px`);
 	}
