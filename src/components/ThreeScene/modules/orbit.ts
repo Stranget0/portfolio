@@ -8,7 +8,11 @@ export default function orbit(controller: ThreeController) {
 		camera.position.setFromSpherical(spherical);
 		camera.lookAt(target);
 	}
-	function startPositionLerp(thetaLeading: number, phiLeading: number) {
+	function startPositionLerp(
+		thetaLeading: number,
+		phiLeading: number,
+		smooth = true
+	) {
 		const thetaTarget =
 			initialSpherical.theta - thetaLeading + sphericalOffset.theta;
 		const phiTarget = initialSpherical.phi - phiLeading + sphericalOffset.phi;
@@ -18,7 +22,10 @@ export default function orbit(controller: ThreeController) {
 		sphericalTarget.radius = initialSpherical.radius + sphericalOffset.radius;
 		sphericalTarget.makeSafe();
 
-		if (!isRunning()) startLerp(spherical, sphericalTarget);
+		if (!isRunning() && smooth) startLerp(spherical, sphericalTarget);
+		else if (!isRunning()) {
+			spherical.copy(sphericalTarget);
+		}
 	}
 
 	let thetaLeading = 0;
@@ -57,9 +64,9 @@ export default function orbit(controller: ThreeController) {
 				target.copy(vec);
 				camera.lookAt(target);
 			},
-			setCameraSpatial(vec: Vector3) {
+			setCameraSpatial(vec: Vector3, smooth = true) {
 				sphericalOffset.set(...vec.toArray());
-				startPositionLerp(thetaLeading, phiLeading);
+				startPositionLerp(thetaLeading, phiLeading, smooth);
 			},
 		},
 	};

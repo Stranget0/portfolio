@@ -1,4 +1,4 @@
-import { motionSafeMedia } from "@/constants";
+import { motionSafeMedia, pointerMedia } from "@/constants";
 import {
 	scrollVelocityTransformAttr,
 	scrollVelocityTransformDataKey,
@@ -8,7 +8,7 @@ import { inView, scroll } from "motion";
 import initLerpPositions from "@/utils/lerpPositions";
 import NumberLerpable from "@/utils/NumberLerpable";
 
-if (motionSafeMedia.matches) {
+if (motionSafeMedia.matches && pointerMedia.matches) {
 	const elements: HTMLElement[] = [];
 	const from = new NumberLerpable(0);
 	const to = new NumberLerpable(0);
