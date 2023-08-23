@@ -7,6 +7,10 @@
         "name": "@astrojs/ts-plugin"
       }
     ],
+		"types": [
+      "cypress",
+      "cypress-visual-regression"
+		],
     "paths": {
 			"@/*": ["src/*"],
       "@components/*": [
