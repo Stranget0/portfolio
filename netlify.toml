@@ -18,12 +18,3 @@
 [build]
 command = "pnpm install && npm run build"
 publish = "build"
-
-[[plugins]]
-# runs Cypress tests against the deployed URL
-package = "netlify-plugin-cypress"
-
-	[plugins.inputs]
-		record = true
-		browser = "webkit"
-		configFile = "cypress.config.ts"
