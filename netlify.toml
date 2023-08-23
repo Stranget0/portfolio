@@ -34,4 +34,3 @@ package = "netlify-plugin-cypress"
 		record = true
 		browser = "webkit"
 		configFile = "cypress.config.ts"
-		spa = true
