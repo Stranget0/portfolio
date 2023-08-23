@@ -8,7 +8,7 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"test": "cypress --browser webkit --record --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0",
+		"test": "cypress run --browser webkit --record --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0",
 		"prepare": "husky install",
 		"prettier": "prettier --write ./src/**",
 		"lint": "eslint src/** --fix --debug",
