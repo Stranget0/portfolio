@@ -99,50 +99,50 @@ const spinnedTexts = [
 
 	<SectionFixed
 		as="h2"
-		class="inset-0lvh flex flex-col items-center justify-between"
+		class="absolute inset-0 h-screen important:h-100svh flex flex-col justify-between py-8"
 	>
-		<span
-			class="flex-col-center motion-safe:transition-600 important:(opacity-0 scale-0)"
-			{...appearInView}
-			{...appearOnFoxLoaded}
-			aria-hidden="true"
-		>
-			<AppearingLine
-				as="span"
-				class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
-				text="My Website"
-				lettersTransition
+			<span
+				class="flex-col-center motion-safe:transition-600 important:(opacity-0 scale-0)"
 				{...appearInView}
-			/>
-			<AppearingLine
-				as="span"
-				class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
-				text="My choice"
-				lettersTransition
+				{...appearOnFoxLoaded}
+				aria-hidden="true"
+			>
+				<AppearingLine
+					as="span"
+					class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
+					text="My Website"
+					lettersTransition
+					{...appearInView}
+				/>
+				<AppearingLine
+					as="span"
+					class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
+					text="My choice"
+					lettersTransition
+					{...appearInView}
+				/>
+			</span>
+			<span
+				class="flex-col-center motion-safe:transition-600 important:(opacity-0 scale-0)"
 				{...appearInView}
-			/>
-		</span>
-		<span
-			class="flex-col-center motion-safe:transition-600 important:(opacity-0 scale-0)"
-			{...appearInView}
-			{...appearOnFoxLoaded}
-			aria-hidden="true"
-		>
-			<AppearingLine
-				as="span"
-				class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
-				text="Your website"
-				lettersTransition
-				{...appearInView}
-			/>
-			<AppearingLine
-				as="span"
-				class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
-				text="Your choice"
-				lettersTransition
-				{...appearInView}
-			/>
-		</span>
+				{...appearOnFoxLoaded}
+				aria-hidden="true"
+			>
+				<AppearingLine
+					as="span"
+					class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
+					text="Your website"
+					lettersTransition
+					{...appearInView}
+				/>
+				<AppearingLine
+					as="span"
+					class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
+					text="Your choice"
+					lettersTransition
+					{...appearInView}
+				/>
+			</span>
 	</SectionFixed>
 </SectionClip>
 <style lang="scss">
