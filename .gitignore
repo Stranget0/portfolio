@@ -20,3 +20,6 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 generated
+
+cypress/videos
+cypress/screenshots
