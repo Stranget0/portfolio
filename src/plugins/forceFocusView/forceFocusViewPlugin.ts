@@ -10,7 +10,7 @@ for (const container of document.querySelectorAll<HTMLElement>(
 
 	for (const navigable of navigables) {
 		navigable.addEventListener("focus", () =>
-			scrollToElement(container, false)
+			scrollToElement(container, { behavior: "instant" })
 		);
 	}
 }

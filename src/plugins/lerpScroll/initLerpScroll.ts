@@ -7,12 +7,19 @@ import { getMaxPos } from "@utils/getMaxPos";
 import createCleanFunction from "@utils/createCleanFunction";
 
 export type Target = Window | HTMLElement;
+
+export type LerpScrollToElementOptions = Required<
+	Pick<ScrollIntoViewOptions, "block" | "inline">
+>;
+
+export type LerpScrollToElement = (
+	scrollTarget: HTMLElement,
+	options: LerpScrollToElementOptions
+) => void;
+
 export interface LerpControls {
 	clean: () => void;
-	scrollToElement: (
-		scrollTarget: HTMLElement,
-		smooth?: boolean
-	) => Promise<void>;
+	lerpScrollToElement: LerpScrollToElement;
 }
 
 export default function initLerpScroll(
@@ -58,7 +65,7 @@ export default function initLerpScroll(
 	handleAnchorsScroll();
 	handleFocusFix();
 
-	return { clean: cleanMenago.clean, scrollToElement };
+	return { clean: cleanMenago.clean, lerpScrollToElement };
 
 	function cancel() {
 		cancelX();
@@ -86,7 +93,7 @@ export default function initLerpScroll(
 				const scrollTarget = document.querySelector<HTMLElement>(selector);
 				if (!scrollTarget) return;
 
-				scrollToElement(scrollTarget);
+				// lerpScrollToElement(scrollTarget);
 			};
 			anchor.addEventListener("click", handleAnchorScroll);
 			cleanMenago.push(() =>
@@ -102,39 +109,24 @@ export default function initLerpScroll(
 		});
 	}
 
-	function scrollToElement(scrollTarget: HTMLElement, smooth = true) {
-		if (!smooth) {
-			scrollTarget.scrollIntoView({ block: "start" });
-			return Promise.resolve();
-		}
+	function lerpScrollToElement(
+		scrollTarget: HTMLElement,
+		options: LerpScrollToElementOptions
+	) {
+		const { topOffset, leftOffset } = getOffsetsToElement(
+			scrollTarget,
+			options
+		);
 
-		const { topOffset, leftOffset } = getOffsetsToElement(scrollTarget);
+		lastTargetY = handleDirection(yLerp, topOffset, startLerpY, "y", undefined);
 
-		const yPromise = new Promise<void>((resolve) => {
-			lastTargetY = handleDirection(
-				yLerp,
-				topOffset,
-				startLerpY,
-				"y",
-				undefined,
-				resolve
-			);
-		});
-
-		const xPromise = new Promise<void>((resolve) => {
-			lastTargetX = handleDirection(
-				xLerp,
-				leftOffset,
-				startLerpX,
-				"x",
-				undefined,
-				resolve
-			);
-		});
-
-		// Make promise type to void only
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		return Promise.all([xPromise, yPromise]).then(() => {});
+		lastTargetX = handleDirection(
+			xLerp,
+			leftOffset,
+			startLerpX,
+			"x",
+			undefined
+		);
 	}
 
 	function onWheel(e: WheelEvent | Event): void {
@@ -186,11 +178,27 @@ export default function initLerpScroll(
 	}
 }
 
-function getOffsetsToElement(scrollTarget: HTMLElement) {
-	const rect = scrollTarget.getBoundingClientRect();
+function partSize(size: number, offset: ScrollLogicalPosition) {
+	switch (offset) {
+		case "start":
+			return 0;
+		case "center":
+			return size / 2;
+		case "end":
+			return size;
+		default:
+			console.warn(offset, "not supported");
+			return size / 2;
+	}
+}
 
-	const topOffset = window.scrollY + rect.top;
-	const leftOffset = window.scrollY + rect.left;
+function getOffsetsToElement(
+	scrollTarget: HTMLElement,
+	{ block, inline }: Required<Pick<ScrollIntoViewOptions, "block" | "inline">>
+) {
+	const rect = scrollTarget.getBoundingClientRect();
+	const topOffset = window.scrollY + rect.top + partSize(rect.height, block);
+	const leftOffset = window.scrollY + rect.left + partSize(rect.width, inline);
 
 	return { topOffset, leftOffset };
 }

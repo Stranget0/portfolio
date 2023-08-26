@@ -1,9 +1,10 @@
 import type { LerpControls } from "@plugins/lerpScroll/initLerpScroll";
-import { pointerMedia } from "src/constants";
+import { motionSafeMedia, pointerMedia } from "src/constants";
+import isomorphicScrollToElement from "./isomorphicScrollToElement";
 
 let lerpScroll: null | Promise<LerpControls> = null;
 
-if (pointerMedia.matches) {
+if (pointerMedia.matches && motionSafeMedia.matches) {
 	lerpScroll = import("@plugins/lerpScroll/initLerpScroll").then(
 		({ default: initLerpScroll }) => {
 			return initLerpScroll(window, 0.075, 0.75);
@@ -11,14 +12,10 @@ if (pointerMedia.matches) {
 	);
 }
 
-export async function scrollToElement(element: HTMLElement, smooth = true) {
-	if (lerpScroll) {
-		const { scrollToElement } = await lerpScroll;
-		return scrollToElement(element, smooth);
-	} else
-		element.scrollIntoView({
-			behavior: smooth ? "smooth" : "auto",
-			block: "start",
-			inline: "center",
-		});
+export async function scrollToElement(
+	element: HTMLElement,
+	options?: ScrollIntoViewOptions
+) {
+	const { lerpScrollToElement } = (await lerpScroll) || {};
+	isomorphicScrollToElement(lerpScrollToElement, element, options);
 }
