@@ -1,7 +1,10 @@
 ---
 import { threeCanvasId } from "./constants";
-import { classOnFoxLoaded } from "./serverUtils";
+import { classOnFoxLoaded, classOnFoxLoading } from "./serverUtils";
 const appearOnFoxLoaded = classOnFoxLoaded("opacity-100")
+
+const appearOnFoxLoading = classOnFoxLoading("important:opacity-100");
+const removeOnFoxLoaded = classOnFoxLoaded("hidden");
 ---
 
 <div class="inset-0 h-screen important:h-100svh fixed -z-2">
@@ -11,6 +14,15 @@ const appearOnFoxLoaded = classOnFoxLoaded("opacity-100")
 		{...appearOnFoxLoaded}
 		id={threeCanvasId}></canvas>
 </div>
+<div
+		role="region"
+		aria-label="loading fox model"
+		aria-hidden="true"
+		{...appearOnFoxLoading}
+		{...removeOnFoxLoaded}
+		class="mix-blend-difference text-primary-50 i-svg-spinners-12-dots-scale-rotate?mask z-100 h-60 max-h-10vh w-full fixed bottom-4 opacity-0 motion-safe:transition-opacity-900"
+	>
+	</div>
 <script>
 	import "./foxApi";
 </script>
