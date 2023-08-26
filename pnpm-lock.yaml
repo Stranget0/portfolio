@@ -106,9 +106,6 @@ devDependencies:
   cssnano:
     specifier: ^6.0.0
     version: 6.0.0(postcss@8.4.23)
-  cypress:
-    specifier: ^12.17.4
-    version: 12.17.4
   cypress-visual-regression:
     specifier: ^3.0.0
     version: 3.0.0(cypress@12.17.4)
