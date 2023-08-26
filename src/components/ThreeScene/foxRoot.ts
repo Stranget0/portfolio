@@ -2,6 +2,7 @@ import ThreeController, { ThreeModule } from "@utils/ThreeController";
 import { threeCanvasId } from "./constants";
 
 import { ACESFilmicToneMapping, PerspectiveCamera, VSMShadowMap } from "three";
+import { breakpoints } from "@/constants";
 
 export default function initHeroController<Ms extends ThreeModule[]>(
 	...modules: Ms
@@ -15,15 +16,30 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 
 	const heroController = ThreeController.createWithModules(
 		`#${threeCanvasId}`,
-		window.innerWidth,
-		window.innerHeight,
 		camera,
-		...modules
+		{ modules }
 	);
 
 	heroController.renderer.toneMapping = ACESFilmicToneMapping;
 	heroController.renderer.toneMappingExposure = 2;
 	heroController.renderer.shadowMap.type = VSMShadowMap;
+
+	let { innerWidth: lastWidth, innerHeight: lastHeight } = window;
+
+	window.addEventListener("resize", () => {
+		const diffH = Math.abs(window.innerHeight - lastHeight);
+
+		const isResizeDueMobileBar =
+			!breakpoints[756].matches &&
+			diffH < 300 &&
+			lastWidth === window.innerWidth;
+
+		if (isResizeDueMobileBar) return;
+
+		lastWidth = window.innerWidth;
+		lastHeight = window.innerHeight;
+		heroController.setSize(lastWidth, lastHeight);
+	});
 
 	return heroController;
 }

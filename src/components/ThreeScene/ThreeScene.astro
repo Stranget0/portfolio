@@ -4,9 +4,9 @@ import { classOnFoxLoaded } from "./serverUtils";
 const appearOnFoxLoaded = classOnFoxLoaded("opacity-100")
 ---
 
-<div class="inset-0 important:inset-0svh fixed -z-2">
+<div class="inset-0 h-screen important:h-100svh fixed -z-2">
 	<canvas
-		class="motion-safe:transition-opacity motion-safe:duration-500 opacity-0"
+		class="h-full w-full motion-safe:transition-opacity motion-safe:duration-500 opacity-0"
 		aria-hidden="true"
 		{...appearOnFoxLoaded}
 		id={threeCanvasId}></canvas>
