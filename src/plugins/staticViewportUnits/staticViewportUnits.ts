@@ -3,10 +3,15 @@ export {};
 const elements = document.querySelectorAll<HTMLElement>(
 	"[data-static-w], [data-static-h]"
 );
-for (const e of elements) {
-	const { staticH, staticW, staticHType, staticWType } = e.dataset;
-	if (staticH) setStaticViewportSize("Height", e, staticH, staticHType);
-	if (staticW) setStaticViewportSize("Width", e, staticW, staticWType);
+
+updateElements();
+
+function updateElements() {
+	for (const e of elements) {
+		const { staticH, staticW, staticHType, staticWType } = e.dataset;
+		if (staticH) setStaticViewportSize("Height", e, staticH, staticHType);
+		if (staticW) setStaticViewportSize("Width", e, staticW, staticWType);
+	}
 }
 
 function setStaticViewportSize(
@@ -31,13 +36,18 @@ function setStaticViewportSize(
 }
 
 function parseViewportUnit(viewportUnit: string) {
+	const isRotated = screen?.orientation?.angle > 0;
+
+	const screenSizes = [window.innerWidth, window.innerHeight];
 	const regexMatch = /\d+v[hw]/g;
 	const matches = viewportUnit.match(regexMatch);
+
 	if (!matches) return viewportUnit;
+
+	if (isRotated) screenSizes.reverse();
+
 	for (const matchStr of matches) {
-		const dimension = matchStr.endsWith("vh")
-			? window.innerHeight
-			: window.innerWidth;
+		const dimension = matchStr.endsWith("vh") ? screenSizes[1] : screenSizes[0];
 		const ratio = parseFloat(matchStr) / 100;
 
 		const value = ratio * dimension;
