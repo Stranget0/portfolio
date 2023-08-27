@@ -356,6 +356,13 @@ export default defineConfig({
 				};
 			},
 		],
+		// ***************************************************************************************
+		[
+			/^double-line$/,
+			() => ({
+				"text-decoration-line":"underline overline"
+			})
+		],
 	],
 });
 function generateTextShadow(steps: number, max: number) {
