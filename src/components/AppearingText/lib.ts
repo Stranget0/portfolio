@@ -32,7 +32,10 @@ export async function playAllStages() {
 
 	try {
 		const { runSequence, cancel } = createAwaitSequence();
-		const cleanMenago = createCleanFunction(cancel);
+		const cleanMenago = createCleanFunction(cancel, () => {
+			globalClean = null;
+		});
+
 		globalClean = cleanMenago.clean;
 
 		await runSequence(stages, (stage) => {
