@@ -90,9 +90,6 @@ async function loadSingleLeaf(num: string) {
 		})
 	);
 
-	leaf.castShadow = true;
-	leaf.receiveShadow = true;
-
 	return leaf;
 }
 

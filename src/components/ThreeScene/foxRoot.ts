@@ -14,6 +14,7 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 
 	camera.position.set(-1, 1, 3);
 
+	const isBigScreen = breakpoints[1024].matches;
 	const heroController = ThreeController.createWithModules(
 		`#${threeCanvasId}`,
 		camera,
@@ -40,6 +41,5 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 		lastHeight = window.innerHeight;
 		heroController.setSize(lastWidth, lastHeight);
 	});
-
 	return heroController;
 }

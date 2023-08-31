@@ -8,8 +8,6 @@ export default function loadFox(controller: ThreeController) {
 		.then((foxGLTF) => {
 			const fox = foxGLTF.scene as Mesh<BufferGeometry, MeshStandardMaterial>;
 			fox.matrixAutoUpdate = false;
-			fox.receiveShadow = true;
-			fox.castShadow = true;
 
 			controller.scene.add(fox);
 			controller.render();

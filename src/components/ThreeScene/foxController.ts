@@ -15,6 +15,7 @@ import {
 } from "./constants";
 import { foxHandleOnClasses } from "./serverUtils";
 
+// Stworzenie obiektu ThreeController z modułami z pomocą helpera ustawiającego podstawowe parametry
 const controller = initHeroController(
 	loadFox,
 	addLeaves,
@@ -25,6 +26,7 @@ const controller = initHeroController(
 	elementWaypointsInit
 );
 
+// obracanie kamerą oraz tranzycja właściwości orbitowania w zależności od przewinięcia strony
 controller.waypoints.foxWaypointTarget.setWaypointTarget((vec) =>
 	controller.orbit.setLookAtOffset(vec)
 );
@@ -40,13 +42,17 @@ controller.waypoints.foxWaypointStiffness.setWaypointTarget((vec) => {
 	controller.orbit.stiffness.y = vec.y;
 });
 
+// Gdy lis i liście zostaną załadowane...
 Promise.all([controller.fox, controller.leafs])
 	.then(() => {
+		// Uruchom pętlę renderowania
 		controller.startLoop();
+		// Zainicjalizuj obstacleModule poprzez określenie selektora elementów zasłaniających
 		controller.setObstacleSelector(`[${foxObstacleAttr}]`);
 	})
 	.catch((e) => console.error("Failed to load scene", e))
 	.finally(() => {
+		// Usuń i dodaj określone przez element klasy
 		foxHandleOnClasses(
 			foxClassOnLoadingAttr,
 			foxClassOnLoadingDataKey,

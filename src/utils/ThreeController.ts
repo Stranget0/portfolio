@@ -1,4 +1,4 @@
-import { Scene, WebGLRenderer } from "three";
+import { Scene, WebGLRenderer, WebGLRendererParameters } from "three";
 
 import type { PerspectiveCamera, OrthographicCamera } from "three";
 
@@ -10,8 +10,15 @@ export type ThreeModule = (
 
 export type CameraOptions = PerspectiveCamera | OrthographicCamera;
 
-export interface ThreeControllerOptions<Ms extends ThreeModule[]> {
-	modules?: Ms;
+type RendererOrArgs = WebGLRendererParameters | WebGLRenderer;
+
+const defaultRendererArgs: WebGLRendererParameters = {
+	antialias: true,
+	alpha: true,
+};
+
+export interface ThreeControllerOptions {
+	renderer?: RendererOrArgs;
 }
 
 export default class ThreeController<C extends CameraOptions = CameraOptions> {
@@ -28,9 +35,9 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	static createWithModules<C extends CameraOptions, Ms extends ThreeModule[]>(
 		selector: string,
 		camera: C,
-		{ modules }: ThreeControllerOptions<Ms> = {}
+		{ modules, renderer }: ThreeControllerOptions & { modules?: Ms } = {}
 	) {
-		const root = new ThreeController(selector, camera);
+		const root = new ThreeController(selector, camera, { renderer });
 		const controller = root as typeof root &
 			UnionToIntersection<ReturnType<Ms[number]>>;
 		modules?.forEach((m) => {
@@ -40,15 +47,26 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 		return controller;
 	}
 
-	constructor(selector: string, camera: C) {
+	constructor(
+		selector: string,
+		camera: C,
+		{ renderer: rendererOrRendererOptions }: ThreeControllerOptions
+	) {
 		const canvas = document.querySelector(selector);
 		if (!canvas) throw new Error(`Can not find canvas ${selector}`);
 
 		this.camera = camera;
-		this.renderer = new WebGLRenderer({ antialias: true, alpha: true, canvas });
+		this.renderer =
+			rendererOrRendererOptions instanceof WebGLRenderer
+				? rendererOrRendererOptions
+				: new WebGLRenderer({
+						canvas,
+						...defaultRendererArgs,
+						...rendererOrRendererOptions,
+						// eslint-disable-next-line no-mixed-spaces-and-tabs
+				  });
 
 		this.setSize(canvas.clientWidth, canvas.clientHeight);
-		this.renderer.shadowMap.enabled = true;
 		this.onDestroy(() => this.renderer.dispose());
 	}
 
