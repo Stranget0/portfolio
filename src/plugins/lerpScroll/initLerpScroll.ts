@@ -5,6 +5,7 @@ import { onMiddleButtonScroll, onScrollbar } from "@utils/eventHandlers";
 import { getScrollPos } from "@utils/getScrollPos";
 import { getMaxPos } from "@utils/getMaxPos";
 import createCleanFunction from "@utils/createCleanFunction";
+import isomorphicScrollToElement from "./isomorphicScrollToElement";
 
 export type Target = Window | HTMLElement;
 
@@ -93,7 +94,7 @@ export default function initLerpScroll(
 				const scrollTarget = document.querySelector<HTMLElement>(selector);
 				if (!scrollTarget) return;
 
-				// lerpScrollToElement(scrollTarget);
+				isomorphicScrollToElement(lerpScrollToElement, scrollTarget);
 			};
 			anchor.addEventListener("click", handleAnchorScroll);
 			cleanMenago.push(() =>
@@ -183,12 +184,12 @@ function partSize(size: number, offset: ScrollLogicalPosition) {
 		case "start":
 			return 0;
 		case "center":
-			return size / 2;
+			return -window.innerHeight / 2 + size / 2;
 		case "end":
-			return size;
+			return -window.innerHeight + size;
 		default:
 			console.warn(offset, "not supported");
-			return size / 2;
+			return -window.innerHeight / 2 + size / 2;
 	}
 }
 
