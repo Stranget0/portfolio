@@ -9,7 +9,7 @@ import addSingleEventListener from "./singleEvent";
 import { loadDracoGLTF } from "./loadDracoGLTF";
 
 export type ActionLoader = {
-	action: null | AnimationAction;
+	action: null | Promise<AnimationAction>;
 	load: () => Promise<AnimationAction>;
 };
 
@@ -32,7 +32,7 @@ export async function handleActionPlay<T extends Animation>(
 	let isActionFadeIn = false;
 	let isBlocked = false;
 	for (const blockedActionOrLoader of blockedBy) {
-		const blockedAction = getAction(blockedActionOrLoader);
+		const blockedAction = await getAction(blockedActionOrLoader);
 		if (blockedAction?.isRunning()) {
 			if (idleActionsOrLoaders.includes(blockedActionOrLoader))
 				isActionFadeIn = true;
@@ -129,23 +129,25 @@ export function sourceToLoader(
 			action: null,
 			async load() {
 				if (this.action) return this.action;
-				const { animations } = await loadDracoGLTF(
+				this.action = loadDracoGLTF(
 					`models/fox/individualAnimations/${source}.glb`
-				);
-				const clip: AnimationClip = animations[0];
-				const clipped = mixer.clipAction(clip);
-				clipped.loop = LoopRepeat;
-				clipped.repetitions = 1;
-				stopAction(clipped);
-				onLoad?.(clipped);
-				this.action = clipped;
-				return clipped;
+				).then(({ animations }) => {
+					const clip: AnimationClip = animations[0];
+					const clipped = mixer.clipAction(clip);
+					clipped.loop = LoopRepeat;
+					clipped.repetitions = 1;
+					stopAction(clipped);
+					onLoad?.(clipped);
+					return clipped;
+				});
+
+				return this.action;
 			},
 		};
 	};
 }
 
-function getAction(actionOrActionLoader: Animation) {
+async function getAction(actionOrActionLoader: Animation) {
 	return "action" in actionOrActionLoader
 		? actionOrActionLoader.action
 		: actionOrActionLoader;
