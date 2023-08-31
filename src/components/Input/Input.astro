@@ -2,18 +2,30 @@
 import type { HTMLAttributes } from "astro/types";
 import InputWrapper from "./InputWrapper.astro";
 
-type Props = HTMLAttributes<"input"> & {
+type Props = Omit<HTMLAttributes<"input">, "autocomplete"> & {
 	id: string;
 	label: string;
 	name: string;
 	wrapperClass?: string;
+	autocomplete?: boolean;
 };
 
-const { label, name, class: className, wrapperClass, ...other } = Astro.props;
+const {
+	label,
+	name,
+	class: className,
+	wrapperClass,
+	autocomplete,
+	...other
+} = Astro.props;
 
 const common = { name, ...other };
 ---
 
 <InputWrapper for={common.id} label={label} class={wrapperClass}>
-	<input {...common} class:list={["bg-transparent", className]} />
+	<input
+		{...common}
+		autocomplete={autocomplete ? "true" : undefined}
+		class:list={["bg-transparent", className]}
+	/>
 </InputWrapper>
