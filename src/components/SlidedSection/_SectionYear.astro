@@ -7,12 +7,10 @@ interface Props {
 }
 const { startYear, endYear } = Astro.props;
 
-const appear = classInView("opacity-0", "transition-delay-300", 1);
 ---
 
 <p
 	class="pointer-events-auto text-lg font-leading-80% text-center mx-auto font-serif flex-center motion-safe:transition-600"
-	{...appear}
 >
 	<AppearingLine as="span" text={`${startYear}`} ignoreAudio />
 	{
@@ -20,13 +18,11 @@ const appear = classInView("opacity-0", "transition-delay-300", 1);
 			<>
 				<AppearingLine
 					as="span"
-					offset={`${startYear}`.length + 10}
 					text="-"
 					ignoreAudio
 				/>
 				<AppearingLine
 					as="span"
-					offset={`${startYear}-`.length + 10}
 					text={`${endYear}`}
 					ignoreAudio
 				/>

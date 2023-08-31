@@ -1,58 +1,31 @@
 ---
 import { classInView } from "@/plugins/classInView/serverUtils";
-import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"div"> {
-	text?: string;
-}
+type Props = HTMLAttributes<"div">;
 
-const { text, class: className, ...other } = Astro.props;
-const descClass = ["text-body prose", className];
+const { class: className, ...other } = Astro.props;
+const descClass = [
+	"text-body prose appear-item motion-safe:transition-600",
+	className,
+];
 
-const referenceData = classInView("reference-hidden", "reference-visible");
-// const keyframes = JSON.stringify({
-// 	transform: [null,"translateY(-5%)","translateY(-15%)","translateY(-50%)","translateY(-100%)"],
-// });
+const appear = classInView("opacity-0", "", 1);
 ---
 
-<div class="w-full my-200" data-scroll-target-ref {...referenceData}></div>
 <div
-	class="description fixed overflow-hidden transform translate-y-25% scale-0 z-200 text-balance flex-col-center justify-center items-center prose h-max text-center m-auto max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
-	data-scroll-target
-	data-scroll-target-keyframes={JSON.stringify({y:[null,"-15%"]})}
+	class="text-balance flex-col-center justify-center items-center prose h-max text-center m-auto max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
+>
+	<div
+		{...other}
+		data-scroll-target-keyframes={JSON.stringify({
+			transform: ["translateY(100svh) scale(0)", "none", null],
+			opacity: [0, 0, 1, 0, 0],
+		})}
+		data-scroll-target
+		data-scroll-target-ref
+		class:list={descClass}
 	>
-	<div>
-		<!-- TODO: FIX TYPE -->{
-			text ? (
-				text
-					.split("\n")
-					.map((t) => (
-						<AppearingLine
-							{...(other as any)}
-							text={t}
-							class={descClass}
-							group="description"
-						/>
-					))
-			) : (
-				<div class:list={descClass}>
-					<slot />
-				</div>
-			)
-		}
+		<slot />
 	</div>
 </div>
-
-<style>
-	.reference-hidden + .description {
-		opacity: 0;
-		--un-scale-x: 0;
-		--un-scale-y: 0;
-	}
-	.reference-visible + .description {
-		opacity: 1;
-		--un-scale-x: 1;
-		--un-scale-y: 1;
-	}
-</style>
