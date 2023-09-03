@@ -22,7 +22,7 @@ export default function orbit(controller: ThreeController) {
 		sphericalTarget.radius = initialSpherical.radius + sphericalOffset.radius;
 		sphericalTarget.makeSafe();
 
-		if (!isRunning() && smooth) startLerp(spherical, sphericalTarget);
+		if (!isRunning() && smooth) startLerp(spherical, sphericalTarget, 0.02);
 		else if (!isRunning()) {
 			spherical.copy(sphericalTarget);
 		}
