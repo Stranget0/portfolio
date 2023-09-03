@@ -44,8 +44,8 @@ export default function Tooltip() {
 
 		const cleanMouseMove = onMouseMove((e) => {
 			if (tooltip()) {
-				startLerpX(x, e.clientX);
-				startLerpY(y, e.clientY);
+				startLerpX(x, e.clientX, 0.08);
+				startLerpY(y, e.clientY, 0.08);
 			} else {
 				setTooltipX(x.value);
 				setTooltipY(y.value);
