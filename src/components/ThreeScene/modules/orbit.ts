@@ -11,7 +11,7 @@ export default function orbit(controller: ThreeController) {
 	function startPositionLerp(
 		thetaLeading: number,
 		phiLeading: number,
-		smooth = true
+		smooth = true,
 	) {
 		const thetaTarget =
 			initialSpherical.theta - thetaLeading + sphericalOffset.theta;
@@ -52,6 +52,16 @@ export default function orbit(controller: ThreeController) {
 		startPositionLerp(thetaLeading, phiLeading);
 	}
 
+	function removeMouseMoveIfDeviceOrientation({
+		gamma,
+		beta,
+		alpha,
+	}: DeviceOrientationEvent): void {
+		if ([gamma, beta, alpha].every((v) => v !== null)) {
+			removeEventListener("mousemove", handleMouseMove);
+		}
+	}
+
 	let thetaLeading = 0;
 	let phiLeading = 0;
 	let initialRoll: number;
@@ -68,10 +78,13 @@ export default function orbit(controller: ThreeController) {
 
 	const { startLerp, isRunning } = initLerpPositions(
 		updateCameraPosition,
-		0.01
+		0.01,
 	);
 
 	addEventListener("mousemove", handleMouseMove);
+	addEventListener("deviceorientation", removeMouseMoveIfDeviceOrientation, {
+		once: true,
+	});
 	addEventListener("deviceorientation", handleOrientation);
 
 	controller.onDestroy(() => {
