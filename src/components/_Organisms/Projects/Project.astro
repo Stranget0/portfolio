@@ -23,7 +23,7 @@ const {
 	fullscreenImages,
 	floatingImages,
 	title,
-	description,
+	description:_description,
 	audioTextTimings,
 	startYear,
 	endYear,
@@ -60,8 +60,7 @@ const { Content } = await render();
 		id={id}
 	>
 		{title && <SectionItemTitle title={title} class={titleClass} />}
-
-		<SectionItemDescription text={description}>
+		<SectionItemDescription>
 			<SectionYear startYear={startYear} endYear={endYear} />
 			<Content
 				components={{

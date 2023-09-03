@@ -9,7 +9,7 @@ type Props = { images: ImageString[]; floatingImages?: ImageString[] };
 const { images } = Astro.props;
 ---
 
-<ul class="w-full flex-col-center mt-100 mb-16 isolate">
+<ul class="w-full flex-col-center gap-8 lg:gap-0 mt-100 mb-16 isolate">
 	{
 		images.map(([name, alt], i, { length }) => {
 			return (

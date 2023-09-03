@@ -1,25 +1,23 @@
 ---
-import { classInView } from "@/plugins/classInView/serverUtils";
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"div">;
 
 const { class: className, ...other } = Astro.props;
 const descClass = [
-	"text-body prose appear-item motion-safe:transition-600",
+	"text-body prose appear-item transition-transform-10000",
 	className,
 ];
 
-const appear = classInView("opacity-0", "", 1);
 ---
 
 <div
-	class="text-balance flex-col-center justify-center items-center prose h-max text-center m-auto max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
+	class="text-balance flex-col-center justify-center items-center prose h-max text-center mx-auto mt-25 max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
 >
 	<div
 		{...other}
 		data-scroll-target-keyframes={JSON.stringify({
-			transform: ["translateY(100svh) scale(0)", "none", null],
+			transform: ["translate3d(0,300px,0) scale3d(0,0,0)", "none", null],
 			opacity: [0, 0, 1, 0, 0],
 		})}
 		data-scroll-target
