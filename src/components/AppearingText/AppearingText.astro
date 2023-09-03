@@ -1,5 +1,6 @@
 ---
 import type { HTMLTag, Polymorphic } from "astro/types";
+import { playAudioContainerTooltip } from "./serverUtils";
 
 type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 	wordTimings: number[];
@@ -22,6 +23,7 @@ const {
 <!-- TODO: Fix typing error -->
 <Tag
 	{...other as any}
+	{...playAudioContainerTooltip}
 	data-audio-timings={wordTimings}
 	data-audio-reference={wordsReference}
 	data-audio-path={audioPath}

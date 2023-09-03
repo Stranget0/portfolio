@@ -1,18 +1,25 @@
 import { scrollToElement } from "@plugins/lerpScroll/lerpScrollPlugin";
 import createCleanFunction from "@utils/createCleanFunction";
 import groupBy from "lodash/groupBy";
-import { wordClasses } from "./constants";
+import {
+	nonWordifiedAttr,
+	nonWordifiedDataKey,
+	wordClasses,
+} from "./constants";
 import type { GroupEntry, Sentence, WordData, WordsData } from "./types";
 import wait from "@utils/wait";
+import { transformLineToWords } from "./transform";
 
 const appearDuration = 200;
-const stageWordsMap = new WeakMap<HTMLElement, WordsData>();
+const toWordifySelector = `[${nonWordifiedAttr}]`;
+// const stageWordsMap = new WeakMap<HTMLElement, WordsData>();
 let lastLinePlayed: HTMLElement | null = null;
 
 export function playStage(stage: HTMLElement) {
 	lastLinePlayed = null;
 	const audioPath = stage.dataset.audioPath;
 	const audio = new Audio(`audio/${audioPath}`);
+	wordifyStage(stage);
 	const wordData = getWordsFromStage(stage);
 
 	const cleanMenago = createCleanFunction(() =>
@@ -49,6 +56,8 @@ export function playStage(stage: HTMLElement) {
 			audio.removeEventListener("canplaythrough", onAudioReady);
 		});
 	});
+
+	finished.finally(() => dewordifyStage(stage));
 
 	return {
 		clean: cleanMenago.clean,
@@ -134,7 +143,7 @@ function changeWordsVisibility(
 
 function getWordsFromStage(stage: HTMLElement): WordsData {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	if (stageWordsMap.has(stage)) return stageWordsMap.get(stage)!;
+	// if (stageWordsMap.has(stage)) return stageWordsMap.get(stage)!;
 
 	const wordNodes = Array.from(
 		stage.querySelectorAll<HTMLElement>("[data-appearing-word]")
@@ -164,7 +173,7 @@ function getWordsFromStage(stage: HTMLElement): WordsData {
 		count: wordNodes.length,
 		groups: wordsGroupSentences,
 	};
-	stageWordsMap.set(stage, words);
+	// stageWordsMap.set(stage, words);
 	return words;
 }
 
@@ -191,6 +200,7 @@ function parseTimings(stage: HTMLElement, words: HTMLElement[]) {
 	}
 
 	if (words.length !== timings.length) {
+		console.error(words.map(({ textContent }) => textContent));
 		throw new Error(
 			`words and timings mismatch: ${words.length} !== ${timings.length}`
 		);
@@ -218,4 +228,54 @@ function groupWordsToSentences(words: WordData[]) {
 }
 function hasEndOfSentence(text: string, sentenceLength: number) {
 	return sentenceLength > 2 && /[,.!?$]/.test(text);
+}
+
+function wordifyStage(stage: HTMLElement) {
+	const lines = stage.querySelectorAll<HTMLElement>(toWordifySelector);
+
+	for (const line of lines) {
+		const wordProps = getWordPropsFromLine(line);
+		const words = transformLineToWords(line.textContent || "");
+		const frag = document.createDocumentFragment();
+		words.forEach((w) => {
+			const n = document.createElement("span");
+			assignAttributes(n, wordProps);
+			n.textContent = w;
+			frag.appendChild(n);
+		});
+
+		line.textContent = null;
+		line.appendChild(frag);
+	}
+}
+
+function dewordifyStage(stage: HTMLElement) {
+	const lines = stage.querySelectorAll<HTMLElement>(toWordifySelector);
+	for (const line of lines) {
+		const text = line.textContent || "";
+		for (const child of line.childNodes) child.remove();
+		line.innerText = text;
+	}
+}
+
+function getWordPropsFromLine(container: HTMLElement) {
+	try {
+		return JSON.parse(container.dataset[nonWordifiedDataKey] || "");
+	} catch (e) {
+		console.error(e);
+		return Object.create(null);
+	}
+}
+
+function assignAttributes(
+	word: HTMLElement,
+	attributes: { [k: string]: unknown }
+) {
+	for (const key of Object.keys(attributes)) {
+		const value = attributes[key];
+		word.setAttribute(
+			key,
+			typeof value === "string" ? value : JSON.stringify(value)
+		);
+	}
 }

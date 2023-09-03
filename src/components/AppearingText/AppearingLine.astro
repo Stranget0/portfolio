@@ -1,16 +1,15 @@
 ---
 import type { Polymorphic } from "astro/types";
 import type { TextTag } from "./types";
-import { playAudioTooltip } from "./serverUtils";
 import AnimatedText from "@components/AnimatedText.astro";
 import { classInView } from "@/plugins/classInView/serverUtils";
+import { transformLineToWords } from "./transform";
 import classNames from "classnames";
 
 type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	text: string;
 	class?: string;
 	group?: number;
-	dontShowTooltip?: boolean;
 	animatedOnView?: boolean;
 	animatedInitially?: boolean;
 	lettersTransition?: boolean;
@@ -26,7 +25,6 @@ const {
 	ignoreAudio,
 	text: rawText = "",
 	group,
-	dontShowTooltip,
 	animatedOnView,
 	animatedInitially,
 	offset = 0,
@@ -35,53 +33,51 @@ const {
 	...other
 } = Astro.props;
 
-const textArr = rawText.split(/(\s)/);
-const text = [];
-for (const w of textArr) {
-	if (/^\s$/.test(w)) text[text.length - 1] += w;
-	else text.push(w);
-}
-const tooltipData = !dontShowTooltip && playAudioTooltip;
+const words = transformLineToWords(rawText);
 
 const commonProps = {
 	"data-appearing-word": ignoreAudio ? undefined : true,
 	class: "transition-800 will-change-opacity",
 };
 
-let letterCount = offset;
 const calculatedData =
 	(animatedOnView || animatedInitially) && classInView("", "anim-text");
+
+const isWordified = (!!calculatedData || lettersTransition) && !ignoreAudio;
+
+let letterCount = offset;
 ---
 
 <!-- TODO: FIX TYPE -->
 <Tag
 	{...other as any}
-	{...tooltipData}
 	class:list={[className]}
 	data-appearing-group={ignoreAudio ? undefined : group}
-	data-text-audio-run={dontShowTooltip || ignoreAudio ? undefined : true}
+	data-non-wordified={!isWordified && !ignoreAudio ? JSON.stringify(commonProps) : undefined}
 	{...calculatedData}
 >
 	{
-		text.map((w, i, arr) => {
-			if (animatedOnView || animatedInitially || lettersTransition) {
-				if (arr[i - 1]) letterCount += arr[i - 1].length;
-				return (
-					<AnimatedText
-						{...commonProps}
-						as="span"
-						word={w}
-						offset={letterCount}
-						animatedInitially={animatedInitially}
-						animationSpeed={offset + rawText.length}
-						lettersTransition={lettersTransition}
-						letterClass={classNames("letter", letterClass)}
-					/>
-				);
-			}
+		!isWordified
+			? rawText
+			: words.map((w, i, arr) => {
+					if (animatedOnView || animatedInitially || lettersTransition) {
+						if (arr[i - 1]) letterCount += arr[i - 1].length;
+						return (
+							<AnimatedText
+								{...commonProps}
+								as="span"
+								word={w}
+								offset={letterCount}
+								animatedInitially={animatedInitially}
+								animationSpeed={offset + rawText.length}
+								lettersTransition={lettersTransition}
+								letterClass={classNames("letter", letterClass)}
+							/>
+						);
+					}
 
-			return <span {...commonProps}>{w}</span>;
-		})
+					return <span {...commonProps}>{w}</span>;
+			  })
 	}
 </Tag>
 

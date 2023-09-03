@@ -49,3 +49,7 @@ export async function playAllStages() {
 		runGlobalClean();
 	}
 }
+
+export function cancelPlayingStages() {
+	runGlobalClean();
+}

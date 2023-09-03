@@ -9,6 +9,7 @@ for (const target of document.querySelectorAll<HTMLElement>(
 	const pointedElement =
 		targetSelector && document.querySelector<HTMLElement>(targetSelector);
 	const cleanMenago = createCleanFunction();
+
 	if (!pointedElement || !targetSelector) {
 		if (!pointedElement) {
 			console.error(

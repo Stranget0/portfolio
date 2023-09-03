@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { tooltipIgnore } from "./Tooltip/serverUtils";
 const links = await getCollection("links");
 
 interface Props {
@@ -24,6 +25,7 @@ const { small: isSmall } = Astro.props;
 						isSmall ? "w-12 h-12" : "h-16 w-16",
 						className,
 					]}
+					{...tooltipIgnore}
 				>
 					{" "}
 				</a>

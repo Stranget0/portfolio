@@ -1,1 +1,1 @@
-export const tabDataAttr = "data-tab";
+export const tabAttr = "data-tab";

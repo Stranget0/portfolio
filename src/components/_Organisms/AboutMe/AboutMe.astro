@@ -6,6 +6,7 @@ import myImage from "@assets/me.png";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import SocialLinks from "@components/SocialLinks.astro";
+import { tooltipIgnore } from "@/components/Tooltip/serverUtils";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
@@ -108,7 +109,8 @@ const appearInViewScale = classInView(
 			/>
 		</p>
 		<nav
-			class="ml-auto flex-center flex-wrap sm:justify-end gap-2 my-8 menu-opafocus opafocus-max-opacity-100 opafocus-min-opacity-80"
+			class="ml-auto flex-center flex-wrap sm:justify-end gap-2 my-8 menu-opafocus opafocus-max-opacity-100 opafocus-min-opacity-80 cursor-auto"
+			{...tooltipIgnore}
 		>
 			<SocialLinks />
 			<Button
@@ -122,7 +124,6 @@ const appearInViewScale = classInView(
 					text="Contact me!"
 					class="inline-block my-2"
 					group={3}
-					dontShowTooltip
 					animatedOnView
 				/>
 			</Button>

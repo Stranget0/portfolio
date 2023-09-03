@@ -4,6 +4,7 @@ import classNames from "classnames";
 import type { Component } from "solid-js";
 import type { States } from "./types";
 import { appearingTextState, setAppearingTextState } from "./state";
+import { tooltipIgnore } from "../Tooltip/serverUtils";
 
 interface Props extends ButtonProps<"button"> {
 	stageId?: string;
@@ -36,10 +37,15 @@ const AppearingTextButton: Component<Props> = (props) => {
 
 	const label = () => labels[appearingTextState()];
 
+	const isDefault = () => appearingTextState() !== "default";
+	const isLoading = () => appearingTextState() !== "loading";
+	const isRunning = () => appearingTextState() !== "running";
+
 	return (
 		<button
-			aria-label={label()}
 			{...(other as any)}
+			{...tooltipIgnore}
+			aria-label={label()}
 			class={classNames([
 				className,
 				"relative",
@@ -72,10 +78,11 @@ const AppearingTextButton: Component<Props> = (props) => {
 			<div
 				class="gap-2 motion-safe:transition-transform-300"
 				classList={{
-					"scale-0": appearingTextState() !== "default",
+					"scale-0": isDefault(),
 					"flex-center": direction === "row",
 					"flex-col-center": direction === "column",
 				}}
+				aria-hidden={!isDefault()}
 			>
 				{mainLabel}
 				<div
@@ -83,17 +90,20 @@ const AppearingTextButton: Component<Props> = (props) => {
 					classList={{ [iconClass]: true }}
 				></div>
 			</div>
+
 			<div
 				class="absolute-center i-svg-spinners-gooey-balls-1?mask motion-safe:transition-transform-300"
 				classList={{
-					"scale-0": appearingTextState() !== "loading",
+					"scale-0": isLoading(),
 					[iconClass]: true,
 				}}
+				aria-hidden={!isLoading()}
 			></div>
+
 			<div
 				class="absolute-center gap-2 motion-safe:transition-transform-300"
 				classList={{
-					"scale-0": appearingTextState() !== "running",
+					"scale-0": isRunning(),
 					"flex-center": direction === "row",
 					"flex-col-center": direction === "column",
 				}}
@@ -102,6 +112,7 @@ const AppearingTextButton: Component<Props> = (props) => {
 				<div
 					class="i-mingcute-close-fill?mask"
 					classList={{ [iconClass]: true }}
+					aria-hidden={!isRunning()}
 				></div>
 			</div>
 		</button>

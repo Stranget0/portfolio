@@ -6,5 +6,6 @@ export default function createCleanFunction(...cleanArr: VoidFunction[]) {
 		clean() {
 			while (cleanArr.length) cleanArr.pop()?.();
 		},
+		length: () => cleanArr.length,
 	};
 }

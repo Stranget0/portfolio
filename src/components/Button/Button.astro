@@ -2,6 +2,8 @@
 import type { HTMLTag } from "astro/types";
 import type { ButtonProps } from "./types";
 import { buttonClass } from "./utils";
+import { tooltipIgnore } from "../Tooltip/serverUtils";
+import { tooltipAttr } from "../Tooltip/constants";
 
 type Props<T extends HTMLTag = "button"> = ButtonProps<T>;
 
@@ -17,6 +19,8 @@ const {
 	closeType,
 	...rest
 } = Astro.props;
+
+const tooltipIgnoreData = (rest as any)[tooltipAttr] ? null : tooltipIgnore;
 ---
 
 <Tag
@@ -30,6 +34,7 @@ const {
 	data-target-selector={targetSelector}
 	data-target-class-toggle={targetClassToggle}
 	data-close-type={closeType}
+	{...tooltipIgnoreData}
 	{...rest as any}
 >
 	<slot>LOREM IPSUM NIHIL NOVI</slot>

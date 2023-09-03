@@ -6,4 +6,8 @@ export const wordClasses = {
 	high: ["transform-scale-150"],
 	all: [] as string[],
 };
+
 wordClasses.all = [wordClasses.low, wordClasses.semi, wordClasses.high].flat();
+
+export const nonWordifiedAttr = "data-non-wordified";
+export const nonWordifiedDataKey = "nonWordified";
