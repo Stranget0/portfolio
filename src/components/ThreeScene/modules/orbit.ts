@@ -27,9 +27,35 @@ export default function orbit(controller: ThreeController) {
 			spherical.copy(sphericalTarget);
 		}
 	}
+	function handleOrientation(event: DeviceOrientationEvent) {
+		const roll = event.gamma;
+		const pitch = event.beta;
+		if (roll === null || pitch === null) return;
+
+		initialRoll ||= roll;
+		initialPitch ||= pitch;
+
+		const rolldiff = initialRoll - roll;
+		const pitchdiff = initialPitch - pitch;
+
+		thetaLeading = rolldiff / 180 / stiffness.x;
+		phiLeading = pitchdiff / 180 / stiffness.y;
+
+		startPositionLerp(thetaLeading, phiLeading);
+	}
+	function handleMouseMove(e: MouseEvent) {
+		thetaLeading =
+			mouseDToSphericalD(e.clientX, window.innerWidth) / 12 / stiffness.x;
+		phiLeading =
+			mouseDToSphericalD(e.clientY, window.innerHeight) / 12 / stiffness.y;
+
+		startPositionLerp(thetaLeading, phiLeading);
+	}
 
 	let thetaLeading = 0;
 	let phiLeading = 0;
+	let initialRoll: number;
+	let initialPitch: number;
 	const camera = controller.camera;
 	const target = new Vector3();
 	const spherical = new SphericalLerpable(0);
@@ -46,16 +72,12 @@ export default function orbit(controller: ThreeController) {
 	);
 
 	addEventListener("mousemove", handleMouseMove);
-	controller.onDestroy(() => removeEventListener("mousemove", handleMouseMove));
+	addEventListener("deviceorientation", handleOrientation);
 
-	function handleMouseMove(e: MouseEvent) {
-		thetaLeading =
-			mouseDToSphericalD(e.clientX, window.innerWidth) / 12 / stiffness.x;
-		phiLeading =
-			mouseDToSphericalD(e.clientY, window.innerHeight) / 12 / stiffness.y;
-
-		startPositionLerp(thetaLeading, phiLeading);
-	}
+	controller.onDestroy(() => {
+		removeEventListener("mousemove", handleMouseMove);
+		removeEventListener("deviceorientation", handleOrientation);
+	});
 
 	return {
 		orbit: {
