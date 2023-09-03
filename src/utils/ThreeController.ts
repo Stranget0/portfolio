@@ -1,7 +1,6 @@
 import { Scene, WebGLRenderer, WebGLRendererParameters } from "three";
-
 import type { PerspectiveCamera, OrthographicCamera } from "three";
-
+// import Stats from "stats.js";
 import Observable from "./Observable";
 
 export type ThreeModule = (
@@ -11,15 +10,19 @@ export type ThreeModule = (
 export type CameraOptions = PerspectiveCamera | OrthographicCamera;
 
 type RendererOrArgs = WebGLRendererParameters | WebGLRenderer;
+export interface ThreeControllerOptions {
+	renderer?: RendererOrArgs;
+}
 
 const defaultRendererArgs: WebGLRendererParameters = {
 	antialias: true,
 	alpha: true,
 };
 
-export interface ThreeControllerOptions {
-	renderer?: RendererOrArgs;
-}
+// const stats = new Stats();
+// stats.showPanel(2);
+
+// document.body.appendChild(stats.dom);
 
 export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	[k: string]: any;
@@ -27,7 +30,6 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	camera: C;
 	renderer: WebGLRenderer;
 	frameListeners: VoidFunction[] = [];
-	frameId = -1;
 
 	isLooping = new Observable(false);
 	private destroyObservable = new Observable(undefined);
@@ -84,21 +86,25 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 		this.render();
 	}
 
-	private raf() {
-		this.frameId = requestAnimationFrame(() => this.raf());
-		this.render();
-		this.frameListeners.forEach((f) => f());
-	}
-
 	startLoop() {
-		this.stopLoop();
 		this.isLooping.setValue(true);
-		this.raf();
+		this.renderer.setAnimationLoop(() => {
+			// stats.begin();
+			this.render();
+			this.frameListeners.forEach((f) => f());
+			// stats.end();
+		});
 		this.onDestroy(() => this.stopLoop());
 	}
 	stopLoop() {
 		this.isLooping.setValue(false);
-		cancelAnimationFrame(this.frameId);
+		this.renderer.setAnimationLoop(
+			null
+			// 	() => {
+			// 	stats.begin();
+			// 	stats.end();
+			// }
+		);
 	}
 	onDestroy(listener: VoidFunction) {
 		return this.destroyObservable.on(listener);

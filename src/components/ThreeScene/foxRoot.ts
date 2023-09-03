@@ -14,11 +14,11 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 
 	camera.position.set(-1, 1, 3);
 
-	const isBigScreen = breakpoints[1024].matches;
+	const isBigScreen = breakpoints[756].matches;
 	const heroController = ThreeController.createWithModules(
 		`#${threeCanvasId}`,
 		camera,
-		{ modules }
+		{ modules, renderer: { precision: "lowp", antialias: isBigScreen } }
 	);
 
 	heroController.renderer.toneMapping = ACESFilmicToneMapping;

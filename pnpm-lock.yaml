@@ -56,6 +56,9 @@ dependencies:
   solid-toast:
     specifier: ^0.5.0
     version: 0.5.0(solid-js@1.7.8)
+  stats.js:
+    specifier: ^0.17.0
+    version: 0.17.0
   three:
     specifier: ^0.152.2
     version: 0.152.2
@@ -82,6 +85,9 @@ devDependencies:
   '@types/ramda':
     specifier: ^0.29.1
     version: 0.29.1
+  '@types/stats.js':
+    specifier: ^0.17.0
+    version: 0.17.0
   '@types/three':
     specifier: ^0.152.0
     version: 0.152.0
@@ -10350,6 +10356,10 @@ packages:
   /stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
     dev: true
+
+  /stats.js@0.17.0:
+    resolution: {integrity: sha512-hNKz8phvYLPEcRkeG1rsGmV5ChMjKDAWU7/OJJdDErPBNChQXxCo3WZurGpnWc6gZhAzEPFad1aVgyOANH1sMw==}
+    dev: false
 
   /statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
