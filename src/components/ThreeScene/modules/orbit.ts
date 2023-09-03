@@ -43,11 +43,12 @@ export default function orbit(controller: ThreeController) {
 
 		startPositionLerp(thetaLeading, phiLeading);
 	}
-	function handleMouseMove(e: MouseEvent) {
-		thetaLeading =
-			mouseDToSphericalD(e.clientX, window.innerWidth) / 12 / stiffness.x;
-		phiLeading =
-			mouseDToSphericalD(e.clientY, window.innerHeight) / 12 / stiffness.y;
+	function handlePointerMove(e: MouseEvent | TouchEvent) {
+		const isTouch = "touches" in e;
+		const x = isTouch ? e.touches[0].clientX : e.clientX;
+		const y = isTouch ? e.touches[0].clientY : e.clientY;
+		thetaLeading = mouseDToSphericalD(x, window.innerWidth) / 12 / stiffness.x;
+		phiLeading = mouseDToSphericalD(y, window.innerHeight) / 12 / stiffness.y;
 
 		startPositionLerp(thetaLeading, phiLeading);
 	}
@@ -58,7 +59,8 @@ export default function orbit(controller: ThreeController) {
 		alpha,
 	}: DeviceOrientationEvent): void {
 		if ([gamma, beta, alpha].every((v) => v !== null)) {
-			removeEventListener("mousemove", handleMouseMove);
+			removeEventListener("mousemove", handlePointerMove);
+			removeEventListener("touchmove", handlePointerMove);
 		}
 	}
 
@@ -81,14 +83,16 @@ export default function orbit(controller: ThreeController) {
 		0.01,
 	);
 
-	addEventListener("mousemove", handleMouseMove);
+	addEventListener("mousemove", handlePointerMove);
+	addEventListener("touchmove", handlePointerMove);
+
 	addEventListener("deviceorientation", removeMouseMoveIfDeviceOrientation, {
 		once: true,
 	});
 	addEventListener("deviceorientation", handleOrientation);
 
 	controller.onDestroy(() => {
-		removeEventListener("mousemove", handleMouseMove);
+		removeEventListener("mousemove", handlePointerMove);
 		removeEventListener("deviceorientation", handleOrientation);
 	});
 
