@@ -1,4 +1,4 @@
-import { motionSafeMedia } from "@/constants";
+import { motionSafeMedia } from "@/medias";
 import type { LerpScrollToElement } from "@plugins/lerpScroll/initLerpScroll";
 
 export default function isomorphicScrollToElement(
@@ -8,7 +8,7 @@ export default function isomorphicScrollToElement(
 		behavior = motionSafeMedia.matches ? "smooth" : "instant",
 		block = element.clientHeight >= window.innerHeight ? "start" : "center",
 		inline = element.clientWidth >= window.innerWidth ? "start" : "center",
-	}: ScrollIntoViewOptions = {}
+	}: ScrollIntoViewOptions = {},
 ) {
 	if (lerpScrollToElement && behavior === "smooth") {
 		lerpScrollToElement(element, {

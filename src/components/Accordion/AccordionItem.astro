@@ -1,7 +1,7 @@
 ---
 /* eslint-disable astro/no-unused-css-selector */
 // Disable eslint for css selectors, as some selectors are used in other components
-import { Image } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import Chip from "@components/Chip.astro";
 import { generateUUID } from "three/src/math/MathUtils.js";
 
@@ -15,7 +15,7 @@ export type AccordionItemProps = Props;
 
 const { background, chips, title, class: className } = Astro.props;
 const id = generateUUID();
-const titleId = `heading-${id}` 
+const titleId = `heading-${id}`;
 ---
 
 <li class:list={["accordion-panel", className]}>
@@ -53,7 +53,7 @@ const titleId = `heading-${id}`
 			<div
 				class="accordion-bg rounded-xl overflow-hidden absolute inset-0 -z-1 motion-safe:transition-filter motion-safe:duration-300"
 			>
-				<Image src={background} alt="" width={1152} height={400} fit="cover" />
+				<Image src={background} alt="" width={1152} height={400} />
 			</div>
 		</button>
 	</div>

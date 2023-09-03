@@ -1,5 +1,4 @@
 import { defineConfig } from "astro/config";
-import image from "@astrojs/image";
 import UnoCSS from "unocss/astro";
 import { visualizer } from "rollup-plugin-visualizer";
 import mdx from "@astrojs/mdx";
@@ -9,11 +8,8 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [UnoCSS(), image({
-    serviceEntryPoint: "@astrojs/image/sharp"
-		// TODO: Add localization to sitemap
-  }), mdx(), solidJs(), sitemap()],
-  vite: {
+  integrations: [UnoCSS(), mdx(), solidJs(), sitemap()],
+	vite: {
     plugins: [visualizer({
       template: "sunburst",
       open: true,

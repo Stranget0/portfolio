@@ -2,7 +2,7 @@
 import { scrollVelocityTransform } from "@/plugins/scrollVelocityTransform/serverUtils";
 import SectionClip from "@components/SectionClip.astro";
 import Technologies, {
-	TechnologiesProps,
+	type TechnologiesProps,
 } from "@components/Technologies.astro";
 import classNames from "classnames";
 
@@ -23,6 +23,11 @@ const techChips = entries.map((e) => {
 	<div
 		class="fixed bottom-4 left-4 right-4 mt-auto pt-4 mb-4 flex justify-center"
 	>
-		<Technologies {...props} entries={techChips} class="justify-center motion-safe:transition-transform" {...scrollVelocityTransform(25)}/>
+		<Technologies
+			{...props}
+			entries={techChips}
+			class="justify-center motion-safe:transition-transform"
+			{...scrollVelocityTransform(25)}
+		/>
 	</div>
 </SectionClip>

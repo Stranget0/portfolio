@@ -1,4 +1,3 @@
-import { motionSafeMedia, pointerMedia } from "@/constants";
 import {
 	scrollVelocityTransformAttr,
 	scrollVelocityTransformDataKey,
@@ -7,6 +6,7 @@ import { clamp } from "three/src/math/MathUtils.js";
 import { inView, scroll } from "motion";
 import initLerpPositions from "@/utils/lerpPositions";
 import NumberLerpable from "@/utils/NumberLerpable";
+import { motionSafeMedia, pointerMedia } from "@/medias";
 
 if (motionSafeMedia.matches && pointerMedia.matches) {
 	const elements: HTMLElement[] = [];
@@ -18,7 +18,7 @@ if (motionSafeMedia.matches && pointerMedia.matches) {
 
 		elements.forEach((e) => {
 			const ratio = parseFloat(
-				e.dataset[scrollVelocityTransformDataKey] || "5"
+				e.dataset[scrollVelocityTransformDataKey] || "5",
 			);
 			const transform = `translate3d(0,${1 - pageVelocity * ratio}px,0)`;
 			e.style.transform = transform;

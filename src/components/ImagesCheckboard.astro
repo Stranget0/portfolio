@@ -1,5 +1,5 @@
 ---
-import { Image } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import type { HTMLAttributes } from "astro/types";
 import type { ImageSrc } from "src/utilTypes/image";
 
@@ -30,7 +30,7 @@ const {
 					]}
 					{...otherImageProps}
 				>
-					<Image  src={src} alt={alt || ""} width={1000} aspectRatio={3/2}/>
+					<Image src={src} alt={alt || ""} width={1000} height={1000 * 2 / 3}/>
 				</li>
 			);
 		})

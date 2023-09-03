@@ -1,6 +1,6 @@
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader";
-import { OnProgress, loadGLTF } from "./loadGLTF";
+import { type OnProgress, loadGLTF } from "./loadGLTF";
 
 const draco = new DRACOLoader();
 draco.setDecoderConfig({ type: "js" });

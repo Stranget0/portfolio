@@ -1,6 +1,6 @@
 ---
 import { getEntry } from "astro:content";
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import Button from "@components/Button/Button.astro";
 import myImage from "@assets/me.png";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
@@ -32,13 +32,11 @@ const appearInViewScale = classInView(
 	{...foxObstacleAttrObj}
 >
 	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block">
-		<Picture
+		<Image
 			src={myImage}
 			alt="Picture of me"
-			fit="contain"
-			aspect-ratio="1:1"
 			sizes="(max-width: 768px) 320px, (max-width:1428px) 500px, 700px"
-			widths={[320, 500, 700]}
+			
 			class="sticky top-4 object-contain rounded-full aspect-ratio-square bg-accent-100 p-4 motion-safe:transition-600 md:(top-8 max-h-80vh max-w-min w-full)"
 			{...appearInViewScale}
 		/>
@@ -61,13 +59,11 @@ const appearInViewScale = classInView(
 		<div
 			class="md:hidden max-w-50 mx-auto mb-12 mt-12 bg-accent-100 rounded-full"
 		>
-			<Picture
+			<Image
 				src={myImage}
 				alt="Picture of me"
 				aspect-ratio="1:1"
 				sizes="200px"
-				widths={[200]}
-				fit="contain"
 				class="rounded-full object-contain motion-safe:transition-600 p-4 aspect-square"
 				{...appearInViewScale}
 			/>

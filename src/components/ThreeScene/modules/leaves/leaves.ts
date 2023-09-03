@@ -17,12 +17,12 @@ import textureLoader from "@utils/textureLoader";
 import mulberry32 from "@utils/seedableRandom";
 import randomBetween from "@utils/randomBetween";
 import { loadDracoGLTF } from "@utils/loadDracoGLTF";
-import { AnimationControls, animate } from "motion";
+import { type AnimationControls, animate } from "motion";
 import type ThreeController from "@utils/ThreeController";
 
 const goodLookingSeeds = [64, 342];
 const random = mulberry32(
-	goodLookingSeeds[Math.round(randomBetween(0, goodLookingSeeds.length - 1))]
+	goodLookingSeeds[Math.round(randomBetween(0, goodLookingSeeds.length - 1))],
 );
 
 export default function addLeaves(controller: ThreeController) {
@@ -42,24 +42,24 @@ async function loadLeafs(
 	amount: number,
 	radiusFrom: number,
 	radiusTo: number,
-	variants: number
+	variants: number,
 ) {
 	const leafMeshes = await Promise.all(
-		["05", "11"].map((n) => loadSingleLeaf(n))
+		["05", "11"].map((n) => loadSingleLeaf(n)),
 	);
 
 	const amountPerType = Math.floor(amount / leafMeshes.length);
 	const instancedLeafTypes = makeLeafInstances(
 		leafMeshes,
 		amountPerType,
-		variants
+		variants,
 	);
 
 	const animations = handleTransformsAnims(
 		instancedLeafTypes,
 		amount,
 		radiusFrom,
-		radiusTo
+		radiusTo,
 	);
 
 	return { leafs: instancedLeafTypes, animations };
@@ -87,7 +87,7 @@ async function loadSingleLeaf(num: string) {
 			transparent: true,
 			side: DoubleSide,
 			alphaTest: 0.5,
-		})
+		}),
 	);
 
 	return leaf;
@@ -97,14 +97,14 @@ function handleTransformsAnims(
 	instancedLeafTypes: InstancedMesh[],
 	amount: number,
 	radiusFrom: number,
-	radiusTo: number
+	radiusTo: number,
 ) {
 	const matrix = new Matrix4();
 	const randomPositions = randomSpherePointsFromTo(
 		amount,
 		radiusFrom,
 		radiusTo,
-		random
+		random,
 	);
 
 	const animationControls: AnimationControls[] = [];
@@ -129,7 +129,7 @@ function handleTransformsAnims(
 function startAnimate(
 	instances: InstancedMesh<BufferGeometry>,
 	initialMatrix: Matrix4,
-	index: number
+	index: number,
 ) {
 	const p = new Vector3().setFromMatrixPosition(initialMatrix);
 	const p_initial = p.clone();
@@ -151,7 +151,7 @@ function startAnimate(
 			duration: 10,
 			repeat: Infinity,
 			direction: "alternate",
-		}
+		},
 	);
 
 	const controls2 = animate(
@@ -167,7 +167,7 @@ function startAnimate(
 			delay: -stagger,
 			repeat: Infinity,
 			direction: "alternate",
-		}
+		},
 	);
 
 	return [controls1, controls2];
@@ -182,20 +182,20 @@ function startAnimate(
 function makeLeafInstances(
 	leafMeshes: Mesh<BufferGeometry, MeshStandardMaterial>[],
 	amountPerType: number,
-	variantsPerType: number
+	variantsPerType: number,
 ) {
 	const instances: InstancedMesh[] = [];
 	for (const leaf of leafMeshes) {
 		let variants = variantsPerType;
 		while (variants) {
 			leaf.material.color = new Color(
-				randomColorBetween(2 * 0xffffff, 0xffaaaa)
+				randomColorBetween(2 * 0xffffff, 0xffaaaa),
 			);
 			const amountToCreate = Math.floor(amountPerType / variantsPerType);
 			const leafInstance = new InstancedMesh(
 				leaf.geometry,
 				leaf.material.clone(),
-				amountToCreate
+				amountToCreate,
 			);
 			instances.push(leafInstance);
 			variants--;

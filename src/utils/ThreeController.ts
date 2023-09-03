@@ -1,10 +1,10 @@
-import { Scene, WebGLRenderer, WebGLRendererParameters } from "three";
+import { Scene, WebGLRenderer, type WebGLRendererParameters } from "three";
 import type { PerspectiveCamera, OrthographicCamera } from "three";
 // import Stats from "stats.js";
 import Observable from "./Observable";
 
 export type ThreeModule = (
-	controller: ThreeController
+	controller: ThreeController,
 ) => Record<string, any> | void;
 
 export type CameraOptions = PerspectiveCamera | OrthographicCamera;
@@ -37,7 +37,7 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	static createWithModules<C extends CameraOptions, Ms extends ThreeModule[]>(
 		selector: string,
 		camera: C,
-		{ modules, renderer }: ThreeControllerOptions & { modules?: Ms } = {}
+		{ modules, renderer }: ThreeControllerOptions & { modules?: Ms } = {},
 	) {
 		const root = new ThreeController(selector, camera, { renderer });
 		const controller = root as typeof root &
@@ -52,7 +52,7 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	constructor(
 		selector: string,
 		camera: C,
-		{ renderer: rendererOrRendererOptions }: ThreeControllerOptions
+		{ renderer: rendererOrRendererOptions }: ThreeControllerOptions,
 	) {
 		const canvas = document.querySelector(selector);
 		if (!canvas) throw new Error(`Can not find canvas ${selector}`);
@@ -99,7 +99,7 @@ export default class ThreeController<C extends CameraOptions = CameraOptions> {
 	stopLoop() {
 		this.isLooping.setValue(false);
 		this.renderer.setAnimationLoop(
-			null
+			null,
 			// 	() => {
 			// 	stats.begin();
 			// 	stats.end();

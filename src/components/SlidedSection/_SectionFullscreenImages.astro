@@ -1,5 +1,5 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 // import SectionClip from "@components/SectionClip.astro";
 // import SectionFixed from "@components/SectionFixed.astro";
 import type { ImageString } from "src/utilTypes/image";
@@ -18,14 +18,12 @@ const { images } = Astro.props;
 					data-scroll-target-ref
 					data-scroll-ref-offsets=".1 .5"
 				>
-					<Picture
+					<Image
 						style={{ "z-index": length - i }}
 						src={resolveImageImport(name)}
 						alt={alt || ""}
-						fit="contain"
 						sizes="(max-width: 768px) 768px, (max-width:1428px) 1428px, (max-width:1920px) 1920px, (max-width:3840px) 3840px"
-						widths={[768, 1428, 1920, 3840]}
-						class="mx-auto max-w-full rounded-2xl max-h-screen important:max-h-100svh object-contain solid-shadow color-dark color-opacity-20"
+						class="mx-auto w-min max-w-full rounded-2xl max-h-screen important:max-h-100svh object-contain solid-shadow color-dark color-opacity-20"
 						data-scroll-target
 						data-scroll-target-keyframes={JSON.stringify({
 							transform: [

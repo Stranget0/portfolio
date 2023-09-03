@@ -1,15 +1,15 @@
-import ThreeController, { ThreeModule } from "@utils/ThreeController";
+import ThreeController, { type ThreeModule } from "@utils/ThreeController";
 import { threeCanvasId } from "./constants";
 
 import { ACESFilmicToneMapping, PerspectiveCamera, VSMShadowMap } from "three";
-import { breakpoints } from "@/constants";
+import { breakpoints } from "@/medias";
 
 export default function initHeroController<Ms extends ThreeModule[]>(
 	...modules: Ms
 ) {
 	const camera = new PerspectiveCamera(
 		70,
-		window.innerWidth / window.innerHeight
+		window.innerWidth / window.innerHeight,
 	);
 
 	camera.position.set(-1, 1, 3);
@@ -18,7 +18,7 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 	const heroController = ThreeController.createWithModules(
 		`#${threeCanvasId}`,
 		camera,
-		{ modules, renderer: { precision: "lowp", antialias: isBigScreen } }
+		{ modules, renderer: { precision: "lowp", antialias: isBigScreen } },
 	);
 
 	heroController.renderer.toneMapping = ACESFilmicToneMapping;

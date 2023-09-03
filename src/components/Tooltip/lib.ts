@@ -1,4 +1,4 @@
-import { pointerMedia } from "src/constants";
+import { pointerMedia } from "@/medias";
 import {
 	tooltipAttr,
 	tooltipDataKey,
@@ -21,18 +21,18 @@ type Checkers = Partial<{
 
 export default function attachTooltipListeners(
 	handlers?: Handlers,
-	checkers?: Checkers
+	checkers?: Checkers,
 ) {
 	if (!pointerMedia.matches) return;
 	const [tooltip, setTooltip] = tooltipSignal;
 	const ignoredElements = document.querySelectorAll<HTMLElement>(
-		`[${tooltipIgnoreAttr}]`
+		`[${tooltipIgnoreAttr}]`,
 	);
 
 	let ignoredNum = 0;
 
 	for (const target of document.querySelectorAll<HTMLElement>(
-		`[${tooltipAttr}]`
+		`[${tooltipAttr}]`,
 	)) {
 		const tooltipOption = target.dataset[tooltipDataKey] as Tooltip;
 		const checker = checkers?.[tooltipOption];
@@ -44,7 +44,7 @@ export default function attachTooltipListeners(
 			checker,
 			target,
 			tooltipOption,
-			handlers
+			handlers,
 		);
 
 		if (hasRequiredParentIfAny) return;
@@ -73,7 +73,7 @@ export default function attachTooltipListeners(
 		checker?: Checker,
 		target?: HTMLElement,
 		tooltipOption?: Tooltip,
-		handlers?: Handlers
+		handlers?: Handlers,
 	) {
 		function checkChecker() {
 			return checker && !checker();

@@ -1,9 +1,9 @@
+import { pointerMedia } from "@/medias";
 import { stageSelector } from "@components/AppearingText/constants";
 import {
 	appearingTextState,
 	setAppearingTextState,
 } from "@components/AppearingText/state";
-import { pointerMedia } from "@/constants";
 
 if (pointerMedia.matches) {
 	import("./lib").then(({ default: attachTooltipListeners }) => {
@@ -11,7 +11,7 @@ if (pointerMedia.matches) {
 			{
 				"play-audio": (target) => {
 					setAppearingTextState(
-						appearingTextState() === "default" ? "loading" : "default"
+						appearingTextState() === "default" ? "loading" : "default",
 					);
 					import("@components/AppearingText/lib")
 						.then(({ playSingleStage }) => {
@@ -23,14 +23,14 @@ if (pointerMedia.matches) {
 						.finally(() => setAppearingTextState("default"));
 				},
 			},
-			{ "play-audio": () => appearingTextState() !== "loading" }
+			{ "play-audio": () => appearingTextState() !== "loading" },
 		);
 	});
 } else {
 	const cancelPlayingStage = () => {
 		if (appearingTextState() === "running")
 			import("@components/AppearingText/lib").then(({ cancelPlayingStages }) =>
-				cancelPlayingStages()
+				cancelPlayingStages(),
 			);
 	};
 	// cancel audio fallback

@@ -28,7 +28,7 @@
         "src/serverPlugins/*"
       ]
     },
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "jsxImportSource": "solid-js"
   }
 }

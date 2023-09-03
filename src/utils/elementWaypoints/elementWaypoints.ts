@@ -3,11 +3,12 @@ import initLerpPositions from "@utils/lerpPositions";
 import { scroll } from "motion";
 import type { WaypointTuple, Waypoint } from "./types";
 import { Vector3 } from "three";
-import { AvailableBreakpoints, breakpoints } from "@/constants";
+import { breakpoints } from "@/medias";
+import type { AvailableBreakpoints } from "@/types";
 
 export default function elementWaypoints(
 	controller: ThreeController,
-	{ attribute, key }: Waypoint
+	{ attribute, key }: Waypoint,
 ) {
 	const p = new Vector3();
 	const q = new Vector3();
@@ -26,7 +27,7 @@ export default function elementWaypoints(
 			function transitionToNewPosition(current: number, smooth = true) {
 				const { waypoint, nextWaypoint } = getPAndQWaypoints(
 					waypoints,
-					current
+					current,
 				);
 				if (waypoint) {
 					setPointBetweenToP(waypoint, nextWaypoint, current);
@@ -53,7 +54,7 @@ export default function elementWaypoints(
 			function setPointBetweenToP(
 				waypoint: WaypointTuple,
 				nextWaypoint: WaypointTuple,
-				current: number
+				current: number,
 			) {
 				p.set(...(waypoint[2] as [number, number, number]));
 
@@ -89,7 +90,7 @@ function handleOnResize(controller: ThreeController, onResize: VoidFunction) {
 function handleWaypoints(
 	controller: ThreeController,
 	waypointElements: NodeListOf<HTMLElement>,
-	datasetKey: string
+	datasetKey: string,
 ) {
 	const waypoints: WaypointTuple[] = [];
 	for (const element of waypointElements) {
@@ -155,7 +156,7 @@ function createWaypointPQGetter() {
 	let waypointIndex = 0;
 	return function getWaypointPQ(waypoints: WaypointTuple[], current: number) {
 		waypointIndex = waypoints.findLastIndex(
-			([_w, offsetTop]) => current - offsetTop > 0
+			([_w, offsetTop]) => current - offsetTop > 0,
 		);
 		if (waypointIndex === -1) waypointIndex = 0;
 
