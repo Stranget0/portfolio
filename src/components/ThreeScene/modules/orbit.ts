@@ -78,10 +78,7 @@ export default function orbit(controller: ThreeController) {
 
 	camera.lookAt(target);
 
-	const { startLerp, isRunning } = initLerpPositions(
-		updateCameraPosition,
-		0.01,
-	);
+	const { startLerp, isRunning } = initLerpPositions(updateCameraPosition);
 
 	addEventListener("mousemove", handlePointerMove);
 	addEventListener("touchmove", handlePointerMove);
