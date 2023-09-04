@@ -4,11 +4,10 @@ import { visualizer } from "rollup-plugin-visualizer";
 import mdx from "@astrojs/mdx";
 import solidJs from "@astrojs/solid-js";
 
-import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [UnoCSS(), mdx(), solidJs(), sitemap()],
+  integrations: [UnoCSS(), mdx(), solidJs()],
 	vite: {
     plugins: [visualizer({
       template: "sunburst",
