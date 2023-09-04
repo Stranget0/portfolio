@@ -6,9 +6,9 @@ import { clamp } from "three/src/math/MathUtils.js";
 import { inView, scroll } from "motion";
 import initLerpPositions from "@/utils/lerpPositions";
 import NumberLerpable from "@/utils/NumberLerpable";
-import { motionSafeMedia, pointerMedia } from "@/medias";
+import { motionSafeMedia } from "@/medias";
 
-if (motionSafeMedia.matches && pointerMedia.matches) {
+if (motionSafeMedia.matches) {
 	const elements: HTMLElement[] = [];
 	const from = new NumberLerpable(0);
 	const to = new NumberLerpable(0);
