@@ -11,7 +11,6 @@ export default defineConfig({
 	vite: {
     plugins: [visualizer({
       template: "sunburst",
-      open: true,
       gzipSize: true,
       brotliSize: true,
       filename: "generated/bundle.html"
