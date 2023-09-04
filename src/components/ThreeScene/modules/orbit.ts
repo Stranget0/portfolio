@@ -83,10 +83,10 @@ export default function orbit(controller: ThreeController) {
 	addEventListener("mousemove", handlePointerMove);
 	addEventListener("touchmove", handlePointerMove);
 
-	addEventListener("deviceorientation", removeMouseMoveIfDeviceOrientation, {
-		once: true,
-	});
-	addEventListener("deviceorientation", handleOrientation);
+	// addEventListener("deviceorientation", removeMouseMoveIfDeviceOrientation, {
+	// 	once: true,
+	// });
+	// addEventListener("deviceorientation", handleOrientation);
 
 	controller.onDestroy(() => {
 		removeEventListener("mousemove", handlePointerMove);
