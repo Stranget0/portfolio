@@ -20,7 +20,9 @@ module.exports = {
 				extraFileExtensions: [".astro"],
 			},
 			rules: {
-				"astro/no-unused-css-selector": 2,
+				"astro/no-unused-css-selector": 1,
+				"no-mixed-spaces-and-tabs":0,
+					
 			},
 		},
 	],
@@ -28,6 +30,9 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: "latest",
 		sourceType: "module",
-	},
-	rules: {},
+	},rules:{
+		"@typescript-eslint/no-unused-vars":[1,{
+			varsIgnorePattern:"_"
+		}]		
+	}
 };

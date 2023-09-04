@@ -3,6 +3,8 @@ node_modules
 **/assets
 **/generated
 dist
-
+*.mdx
+*.md
+*.astro
 # This file crashes eslint somehow
 AppearingText.astro

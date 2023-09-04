@@ -12,3 +12,6 @@
   for = "/smarzewski.netlify.app/*"
   [headers.values]
 	X-Robots-Tag = "all"
+
+[build]
+	command = "npm run test && npm run build"
