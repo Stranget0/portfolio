@@ -38,8 +38,8 @@ export default function orbit(controller: ThreeController) {
 		const rolldiff = initialRoll - roll;
 		const pitchdiff = initialPitch - pitch;
 
-		thetaLeading = rolldiff / 180 / stiffness.x;
-		phiLeading = pitchdiff / 180 / stiffness.y;
+		thetaLeading = rolldiff / 90 / stiffness.x;
+		phiLeading = pitchdiff / 90 / stiffness.y;
 
 		startPositionLerp(thetaLeading, phiLeading);
 	}
