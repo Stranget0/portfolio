@@ -17,7 +17,7 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 	const heroController = ThreeController.createWithModules(
 		`#${threeCanvasId}`,
 		camera,
-		{ modules, renderer: { antialias: true } },
+		{ modules, renderer: { antialias: breakpoints[1024].matches } },
 	);
 
 	heroController.renderer.toneMapping = ACESFilmicToneMapping;
