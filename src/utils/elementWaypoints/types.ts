@@ -1,4 +1,4 @@
-import type { AvailableBreakpoints } from "@/constants";
+import type { AvailableBreakpoints } from "@/types";
 
 export type WaypointData = number[];
 
