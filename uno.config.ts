@@ -118,7 +118,7 @@ export default defineConfig({
 			timingFns: { shake: shake.easing, "bg-slow": backgroundSlow.easing },
 		},
 		spacing: Object.fromEntries(
-			Object.entries(fontSizes).map(([k, v]) => [`font-${k}`, v])
+			Object.entries(fontSizes).map(([k, v]) => [`font-${k}`, v]),
 		),
 	},
 	presets: [
@@ -350,10 +350,24 @@ export default defineConfig({
 			/^clip-circle-top-right(-full)?$/,
 			([_, full]) => {
 				const value = full ? "150vmax" : "0px";
-				
+
 				return {
 					"clip-path": `circle(${value} at top right)`,
 				};
+			},
+		],
+		// ***************************************************************************************
+		[
+			/^no-transform-mobile$/,
+			(_, { theme }) => {
+				const lg = theme.breakpoints.lg;
+				return `
+			@media (max-width: ${lg}) {
+				.no-transform-mobile{
+					transform: none !important;
+				}
+			}
+			`;
 			},
 		],
 	],
@@ -362,7 +376,7 @@ function generateTextShadow(steps: number, max: number) {
 	const textShadow: string[] = [];
 	for (let i = 1; i <= steps; i++) {
 		textShadow.push(
-			`0 ${max / i}rem  0 var(--solid-text-shadow-color, #111111)`
+			`0 ${max / i}rem  0 var(--solid-text-shadow-color, #111111)`,
 		);
 	}
 
