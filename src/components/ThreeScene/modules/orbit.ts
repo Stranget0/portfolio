@@ -47,8 +47,8 @@ export default function orbit(controller: ThreeController) {
 		const isTouch = "touches" in e;
 		const x = isTouch ? e.touches[0].clientX : e.clientX;
 		const y = isTouch ? e.touches[0].clientY : e.clientY;
-		thetaLeading = mouseDToSphericalD(x, window.innerWidth) / 4 / stiffness.x;
-		phiLeading = mouseDToSphericalD(y, window.innerHeight) / 4 / stiffness.y;
+		thetaLeading = mouseDToSphericalD(x, window.innerWidth) / 12 / stiffness.x;
+		phiLeading = mouseDToSphericalD(y, window.innerHeight) / 12 / stiffness.y;
 
 		startPositionLerp(thetaLeading, phiLeading);
 	}
