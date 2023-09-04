@@ -52,7 +52,7 @@ export default function Tooltip() {
 	const style = () => ({
 		transform: `translate(-50%, -50%) translate(${tooltipX()}px, ${tooltipY()}px)`,
 	});
-	createEffect(() => console.log(tooltip()));
+
 	return (
 		<div
 			ref={ref}
