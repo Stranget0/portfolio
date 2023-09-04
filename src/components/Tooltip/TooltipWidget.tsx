@@ -1,21 +1,12 @@
-import { Dynamic } from "solid-js/web";
+import { Match, Switch } from "solid-js/web";
 import { Presence } from "@motionone/solid";
 import { tooltipSignal } from "./utils";
 import type { Tooltip } from "./types";
-import {
-	type Component,
-	onCleanup,
-	createSignal,
-	createEffect,
-} from "solid-js";
+import { onCleanup, createSignal, createEffect } from "solid-js";
 import PlayTextTooltip from "./options/PlayTextTooltip";
 import initLerpPositions from "@utils/lerpPositions";
 import onMouseMove from "@utils/mouse";
 import NumberLerpable from "@utils/NumberLerpable";
-
-const options: Partial<Record<string, Component>> = {
-	"play-audio": PlayTextTooltip,
-};
 
 const startingX = globalThis.innerWidth / 2 || 0;
 const startingY = globalThis.innerHeight / 2 || 0;
@@ -61,10 +52,7 @@ export default function Tooltip() {
 	const style = () => ({
 		transform: `translate(-50%, -50%) translate(${tooltipX()}px, ${tooltipY()}px)`,
 	});
-	createEffect(() => {
-		console.log("TOOLTIP", tooltip());
-	});
-
+	createEffect(() => console.log(tooltip()));
 	return (
 		<div
 			ref={ref}
@@ -73,7 +61,11 @@ export default function Tooltip() {
 			style={style()}
 		>
 			<Presence exitBeforeEnter>
-				<Dynamic component={options[tooltip() || ""]} />
+				<Switch>
+					<Match when={tooltip() === "play-audio"}>
+						<PlayTextTooltip />
+					</Match>
+				</Switch>
 			</Presence>
 		</div>
 	);
