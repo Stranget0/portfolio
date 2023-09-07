@@ -113,7 +113,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 				"Tworzę funkcjonalne, dynamiczne strony internetowe, które wyróżnią się spośród tych, które widzisz na co dzień.",
 				"Wierzę, że sprawienie dobrego wrażenia u klienta sprawi, że Twoja marka się wyróżni.",
 				"Więc jak tam, chcesz stworzyć coś ",
-				"świetnego?",
+				"ciekawego?",
 			],
 		},
 		input: {
