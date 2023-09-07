@@ -67,10 +67,10 @@ async function loadLeafs(
 
 async function loadSingleLeaf(num: string) {
 	const [{ scene: leafS }, leafD, leafR, leafN] = await Promise.all([
-		loadDracoGLTF(`models/leaves/leaf${num}.glb`),
-		textureLoader.loadAsync(`models/leaves/leaf${num}_D.png`),
-		textureLoader.loadAsync(`models/leaves/leaf${num}_R.png`),
-		textureLoader.loadAsync(`models/leaves/leaf${num}_N.png`),
+		loadDracoGLTF(`/models/leaves/leaf${num}.glb`),
+		textureLoader.loadAsync(`/models/leaves/leaf${num}_D.png`),
+		textureLoader.loadAsync(`/models/leaves/leaf${num}_R.png`),
+		textureLoader.loadAsync(`/models/leaves/leaf${num}_N.png`),
 	]);
 
 	[leafD, leafR, leafN].forEach((t) => {

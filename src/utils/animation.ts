@@ -130,7 +130,7 @@ export function sourceToLoader(
 			async load() {
 				if (this.action) return this.action;
 				this.action = loadDracoGLTF(
-					`models/fox/individualAnimations/${source}.glb`
+					`/models/fox/individualAnimations/${source}.glb`
 				).then(({ animations }) => {
 					const clip: AnimationClip = animations[0];
 					const clipped = mixer.clipAction(clip);
