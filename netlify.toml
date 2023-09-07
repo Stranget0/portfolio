@@ -14,4 +14,4 @@
 	X-Robots-Tag = "all"
 
 [build]
-	command = "npm run test && npm run build"
+	command = "cypress install && npm run test && npm run build"
