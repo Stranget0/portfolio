@@ -13,7 +13,7 @@ interface Props {
 export type HeaderProps = Props;
 
 const dialogIds = { tabs: "tabs-dialog", locales: "locales-dialog" };
-const t = useTranslations(Astro.url)
+const t = useTranslations(Astro.url);
 
 const { tabs } = Astro.props;
 ---
@@ -22,8 +22,16 @@ const { tabs } = Astro.props;
 	class="text-label -translate-y-50 color-white text-right z-1000 fixed mix-blend-difference top-4 right-4 motion-safe:transition-transform"
 >
 	<nav class="flex flex-col items-end gap-2" {...scrollVelocityTransform(2)}>
-		<DialogButton dialogId={dialogIds.tabs} icon="burger" label={t("header.menu")}/>
-		<DialogButton dialogId={dialogIds.locales} icon="locales" label={t("header.language")} />
+		<DialogButton
+			dialogId={dialogIds.tabs}
+			icon="burger"
+			label={t("header.menu")}
+		/>
+		<DialogButton
+			dialogId={dialogIds.locales}
+			icon="locales"
+			label={t("header.language")}
+		/>
 	</nav>
 </header>
 
@@ -36,9 +44,13 @@ const { tabs } = Astro.props;
 </Dialog>
 
 <script>
-	const hiddenClass = "-translate-y-50";
-	const header = document.querySelector<HTMLElement>("header");
-	header?.classList.remove(hiddenClass)
+	import runOnEachPage from "@utils/runOnEachPage";
+
+	runOnEachPage(() => {
+		const hiddenClass = "-translate-y-50";
+		const header = document.querySelector<HTMLElement>("header");
+		header?.classList.remove(hiddenClass);
+	});
 </script>
 
 <style lang="scss" is:global>

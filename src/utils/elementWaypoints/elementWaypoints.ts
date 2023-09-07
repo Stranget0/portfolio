@@ -5,6 +5,8 @@ import type { WaypointTuple, Waypoint } from "./types";
 import { Vector3 } from "three";
 import { breakpoints } from "@/medias";
 import type { AvailableBreakpoints } from "@/types";
+import createCleanFunction from "../createCleanFunction";
+import runOnEachPage from "../runOnEachPage";
 
 export default function elementWaypoints(
 	controller: ThreeController,
@@ -12,19 +14,65 @@ export default function elementWaypoints(
 ) {
 	const p = new Vector3();
 	const q = new Vector3();
-	return {
-		setWaypointTarget(onUpdate?: (newTarget: Vector3) => void) {
-			const lerpVector = new Vector3();
-			const waypointsElements = getDataElements(attribute);
-			const waypoints = handleWaypoints(controller, waypointsElements, key);
-			const getPAndQWaypoints = createWaypointPQGetter();
-			let hasScrolled = false;
+	let updateListeners: VoidFunction[] = [];
 
+	const cleanMenago = createCleanFunction(() => {
+		updateListeners = [];
+	});
+
+	controller.onDestroy(() => {
+		cleanMenago.clean();
+	});
+
+	return {
+		updateWaypointPosition() {
+			runUpdateListeners();
+		},
+		setWaypointTarget(onUpdate?: (newTarget: Vector3) => void) {
+			cleanMenago.clean();
+			window.addEventListener("resize", runUpdateListeners);
+			cleanMenago.push(() =>
+				window.removeEventListener("resize", runUpdateListeners),
+			);
+
+			const getPAndQWaypoints = createWaypointPQGetter();
+			const lerpVector = new Vector3();
+			let hasScrolled = false;
 			const { startLerp } = initLerpPositions(() => {
 				onUpdate?.(lerpVector);
 			});
+			let waypoints: WaypointTuple[] | null = null;
+			controller.isLooping.listeners.push((isLooping) =>
+				onIsLooping(isLooping),
+			);
 
-			function transitionToNewPosition(current: number, smooth = true) {
+			runOnUpdate(() => waypoints && transitionToNewPosition(waypoints));
+
+			runOnEachPage(() => {
+				const waypointsElements = getDataElements(attribute);
+				waypoints = handleWaypoints(waypointsElements, key);
+			});
+
+			function onIsLooping(isLooping: boolean) {
+					if (!isLooping) {
+						cleanMenago.clean();
+						return;
+					}
+
+					cleanMenago.push(
+						scroll(({ y }) => {
+							if (!y.velocity && hasScrolled) return;
+
+							waypoints && transitionToNewPosition(waypoints, y.current, hasScrolled);
+							hasScrolled = true;
+						}),
+					);
+			}
+			function transitionToNewPosition(
+				waypoints: WaypointTuple[],
+				current = window.scrollY,
+				smooth = true,
+			) {
 				const { waypoint, nextWaypoint } = getPAndQWaypoints(
 					waypoints,
 					current,
@@ -35,22 +83,6 @@ export default function elementWaypoints(
 					else onUpdate?.(lerpVector.copy(p));
 				}
 			}
-			let cancel: VoidFunction | null = null;
-
-			controller.isLooping.listeners.push((isLooping) => {
-				if (!isLooping) {
-					cancel?.();
-					return;
-				}
-
-				cancel = scroll(({ y }) => {
-					if (!y.velocity && hasScrolled) return;
-
-					transitionToNewPosition(y.current, hasScrolled);
-					hasScrolled = true;
-				});
-			});
-
 			function setPointBetweenToP(
 				waypoint: WaypointTuple,
 				nextWaypoint: WaypointTuple,
@@ -69,57 +101,49 @@ export default function elementWaypoints(
 			}
 		},
 	};
+
+	function runUpdateListeners() {
+		updateListeners.forEach((l) => l());
+	}
+
+	function runOnUpdate(onUpdate: VoidFunction) {
+		updateListeners.push(onUpdate);
+	}
+	function handleWaypoints(
+		waypointElements: NodeListOf<HTMLElement>,
+		datasetKey: string,
+	) {
+		const waypoints: WaypointTuple[] = [];
+		for (const element of waypointElements) {
+			const waypointBreakpoints = readBreakpoints(element, datasetKey);
+			const waypointData = calculateBreakpoints(waypointBreakpoints);
+
+			const waypoint = [
+				element,
+				element.offsetTop,
+				waypointData,
+			] as WaypointTuple;
+
+			waypoints.push(waypoint);
+
+			runOnUpdate(() => {
+				waypoint[1] = waypoint[0].offsetTop;
+				if (waypointBreakpoints.length > 1)
+					waypoint[2] = calculateBreakpoints(waypointBreakpoints);
+			});
+		}
+
+		sortWaypoints(waypoints);
+
+		runOnUpdate(() => {
+			sortWaypoints(waypoints);
+		});
+
+		return waypoints;
+	}
 }
 
 export type ElementWaypointInitReturnType = ReturnType<typeof elementWaypoints>;
-
-function handleOnResize(controller: ThreeController, onResize: VoidFunction) {
-	let lastWidth = 0;
-	function onResizeListener() {
-		const isSmallChange = Math.abs(window.innerWidth - lastWidth) < 150;
-		lastWidth = window.innerWidth;
-		if (isSmallChange) return;
-		onResize();
-	}
-
-	window.addEventListener("resize", onResizeListener);
-	const clean = () => window.removeEventListener("resize", onResizeListener);
-	controller.onDestroy(clean);
-}
-
-function handleWaypoints(
-	controller: ThreeController,
-	waypointElements: NodeListOf<HTMLElement>,
-	datasetKey: string,
-) {
-	const waypoints: WaypointTuple[] = [];
-	for (const element of waypointElements) {
-		const waypointBreakpoints = readBreakpoints(element, datasetKey);
-		const waypointData = calculateBreakpoints(waypointBreakpoints);
-
-		const waypoint = [
-			element,
-			element.offsetTop,
-			waypointData,
-		] as WaypointTuple;
-
-		waypoints.push(waypoint);
-
-		handleOnResize(controller, () => {
-			waypoint[1] = waypoint[0].offsetTop;
-			if (waypointBreakpoints.length > 1)
-				waypoint[2] = calculateBreakpoints(waypointBreakpoints);
-		});
-	}
-
-	sortWaypoints(waypoints);
-
-	handleOnResize(controller, () => {
-		sortWaypoints(waypoints);
-	});
-
-	return waypoints;
-}
 
 function getDataElements(dataStr: string) {
 	return document.querySelectorAll<HTMLElement>(`[${dataStr}]`);

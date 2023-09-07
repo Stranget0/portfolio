@@ -1,6 +1,10 @@
 import { motionSafeMedia } from "@/medias";
 import type { LerpScrollToElement } from "@plugins/lerpScroll/initLerpScroll";
 
+interface ScrollOptions extends ScrollIntoViewOptions {
+	onInstantScroll?: VoidFunction;
+}
+
 export default function isomorphicScrollToElement(
 	lerpScrollToElement: LerpScrollToElement | undefined,
 	element: HTMLElement,
@@ -8,7 +12,8 @@ export default function isomorphicScrollToElement(
 		behavior = motionSafeMedia.matches ? "smooth" : "instant",
 		block = element.clientHeight >= window.innerHeight ? "start" : "center",
 		inline = element.clientWidth >= window.innerWidth ? "start" : "center",
-	}: ScrollIntoViewOptions = {},
+		onInstantScroll,
+	}: ScrollOptions = {},
 ) {
 	if (lerpScrollToElement && behavior === "smooth") {
 		lerpScrollToElement(element, {
@@ -21,5 +26,6 @@ export default function isomorphicScrollToElement(
 			block,
 			inline,
 		});
+		onInstantScroll?.();
 	}
 }

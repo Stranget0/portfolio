@@ -7,26 +7,37 @@ import {
 } from "./constants";
 import isInViewport from "@/utils/isInViewport";
 import getUserAgent from "@/utils/getUserAgent";
+import runOnEachPage from "@/utils/runOnEachPage";
 
-const isEdge = getUserAgent() === "edge";
-const targets = document.querySelectorAll<HTMLElement>(`[${classInViewAttr}]`);
-
-for (const target of targets) {
-	const threshold = parseFloat(
-		target.dataset[classInViewThresholdDataKey] || ""
+runOnEachPage(() => {
+	const isEdge = getUserAgent() === "edge";
+	const targets = document.querySelectorAll<HTMLElement>(
+		`[${classInViewAttr}]`,
 	);
-	if (!isInViewport(target)) toggleTargetOff(target);
 
-	inView(
-		target,
-		({ target }) => {
-			toggleTargetOn(target as HTMLElement);
-			return ({ target }) => toggleTargetOff(target as HTMLElement);
-		},
-		{ amount: Number.isNaN(threshold) ? 0 : threshold }
-	);
-}
+	for (const target of targets) {
+		const threshold = parseFloat(
+			target.dataset[classInViewThresholdDataKey] || "",
+		);
+		if (!isInViewport(target)) toggleTargetOff(target);
 
+		inView(
+			target,
+			({ target }) => {
+				toggleTargetOn(target as HTMLElement);
+				return ({ target }) => toggleTargetOff(target as HTMLElement);
+			},
+			{ amount: Number.isNaN(threshold) ? 0 : threshold },
+		);
+	}
+	function toggleTargetOff(target: HTMLElement): void {
+		const isWorkaround = classInViewWorkaroundDataKey in target.dataset;
+	
+		if (isWorkaround && isEdge && isInViewport(target)) return;
+		const [outClass, inClass] = getToggledClassName(target);
+		switchClasses(target, inClass, outClass);
+	}
+});
 function toggleTargetOn(target: HTMLElement): void {
 	const [outClass, inClass] = getToggledClassName(target);
 
@@ -40,13 +51,7 @@ function toggleTargetOn(target: HTMLElement): void {
 	switchClasses(target, outClass, inClass);
 }
 
-function toggleTargetOff(target: HTMLElement): void {
-	const isWorkaround = classInViewWorkaroundDataKey in target.dataset;
 
-	if (isWorkaround && isEdge && isInViewport(target)) return;
-	const [outClass, inClass] = getToggledClassName(target);
-	switchClasses(target, inClass, outClass);
-}
 
 function getToggledClassName(target: HTMLElement): string[][] {
 	return (
@@ -59,7 +64,7 @@ function getToggledClassName(target: HTMLElement): string[][] {
 function switchClasses(
 	target: HTMLElement,
 	classesToRemove: string[],
-	classesToAdd: string[]
+	classesToAdd: string[],
 ) {
 	try {
 		if (classesToRemove.some((c) => c))

@@ -1,6 +1,9 @@
+import runOnEachPage from "@/utils/runOnEachPage";
 import importInView from "@utils/importInView/importInView";
 
-importInView(
-	"[data-static-h], [data-static-w]",
-	() => import("@plugins/staticViewportUnits/staticViewportUnits")
-);
+runOnEachPage(() => {
+	importInView(
+		"[data-static-h], [data-static-w]",
+		() => import("@plugins/staticViewportUnits/staticViewportUnits"),
+	);
+});

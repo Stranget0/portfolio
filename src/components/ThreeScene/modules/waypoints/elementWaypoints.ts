@@ -4,7 +4,12 @@ import type { ElementWaypointInitReturnType } from "@utils/elementWaypoints/elem
 import elementWaypoints from "@utils/elementWaypoints/elementWaypoints";
 
 export default function elementWaypointsInit(controller: ThreeController) {
-	return {
+	const waypointControls = {
+		updateWaypointsPositions() {
+			Object.values(this.waypoints).forEach(({ updateWaypointPosition }) => {
+				updateWaypointPosition();
+			});
+		},
 		waypoints: waypoints.reduce(
 			(acc, waypoint) => ({
 				...acc,
@@ -12,7 +17,9 @@ export default function elementWaypointsInit(controller: ThreeController) {
 			}),
 			{} as {
 				[k in (typeof waypoints)[number]["key"]]: ElementWaypointInitReturnType;
-			}
+			},
 		),
 	};
+	
+	return waypointControls;
 }

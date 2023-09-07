@@ -6,6 +6,7 @@ import { getScrollPos } from "@utils/getScrollPos";
 import { getMaxPos } from "@utils/getMaxPos";
 import createCleanFunction from "@utils/createCleanFunction";
 import isomorphicScrollToElement from "./isomorphicScrollToElement";
+import runOnEachPage from "@/utils/runOnEachPage";
 
 export type Target = Window | HTMLElement;
 
@@ -15,18 +16,19 @@ export type LerpScrollToElementOptions = Required<
 
 export type LerpScrollToElement = (
 	scrollTarget: HTMLElement,
-	options: LerpScrollToElementOptions
+	options: LerpScrollToElementOptions,
 ) => void;
 
 export interface LerpControls {
 	clean: () => void;
 	lerpScrollToElement: LerpScrollToElement;
+	synchronizeValues: VoidFunction;
 }
 
 export default function initLerpScroll(
 	target: Target,
 	lerpAlpha: number,
-	strength: number
+	strength: number,
 ): LerpControls {
 	const xLerp = new NumberLerpable(getScrollPos(target, "x"));
 	const yLerp = new NumberLerpable(getScrollPos(target, "y"));
@@ -48,7 +50,7 @@ export default function initLerpScroll(
 	const cleanScrollbarClick = onScrollbar((isActive) => {
 		isScrollbarActive = isActive;
 		if (isActive) cancel();
-		else synchroniseValues();
+		else synchronizeValues();
 	});
 	cleanMenago.push(cleanScrollbarClick);
 
@@ -56,30 +58,34 @@ export default function initLerpScroll(
 	const cleanMiddleButton = onMiddleButtonScroll((isScrolling) => {
 		isMiddleButtonScrolling = isScrolling;
 		if (isScrolling) cancel();
-		else synchroniseValues();
+		else synchronizeValues();
 	});
 	cleanMenago.push(cleanMiddleButton);
 
 	target.addEventListener("wheel", onWheel, { passive: false });
 	cleanMenago.push(() => target.removeEventListener("wheel", onWheel));
 
-	handleAnchorsScroll();
+	runOnEachPage(() => {
+		handleAnchorsScroll();
+		synchronizeValues();
+	});
+
 	handleFocusFix();
 
-	return { clean: cleanMenago.clean, lerpScrollToElement };
+	return { clean: cleanMenago.clean, lerpScrollToElement, synchronizeValues };
 
 	function cancel() {
 		cancelX();
 		cancelY();
 	}
-	function synchroniseValues() {
+	function synchronizeValues() {
 		xLerp.value = lastTargetX = getScrollPos(target, "x");
 		yLerp.value = lastTargetY = getScrollPos(target, "y");
 	}
 
 	function handleAnchorsScroll() {
 		for (const anchor of document.querySelectorAll<HTMLAnchorElement>(
-			'a[href^="#"]'
+			'a[href^="#"]',
 		)) {
 			const handleAnchorScroll = (e: MouseEvent): void => {
 				e.preventDefault();
@@ -94,11 +100,14 @@ export default function initLerpScroll(
 				const scrollTarget = document.querySelector<HTMLElement>(selector);
 				if (!scrollTarget) return;
 
-				isomorphicScrollToElement(lerpScrollToElement, scrollTarget);
+				isomorphicScrollToElement(lerpScrollToElement, scrollTarget, {
+					behavior: "instant",
+					onInstantScroll: synchronizeValues,
+				});
 			};
 			anchor.addEventListener("click", handleAnchorScroll);
 			cleanMenago.push(() =>
-				anchor.removeEventListener("click", handleAnchorScroll)
+				anchor.removeEventListener("click", handleAnchorScroll),
 			);
 		}
 	}
@@ -106,17 +115,17 @@ export default function initLerpScroll(
 	function handleFocusFix() {
 		document.addEventListener("focusin", () => {
 			cancel();
-			synchroniseValues();
+			synchronizeValues();
 		});
 	}
 
 	function lerpScrollToElement(
 		scrollTarget: HTMLElement,
-		options: LerpScrollToElementOptions
+		options: LerpScrollToElementOptions,
 	) {
 		const { topOffset, leftOffset } = getOffsetsToElement(
 			scrollTarget,
-			options
+			options,
 		);
 
 		lastTargetY = handleDirection(yLerp, topOffset, startLerpY, "y", undefined);
@@ -126,7 +135,7 @@ export default function initLerpScroll(
 			leftOffset,
 			startLerpX,
 			"x",
-			undefined
+			undefined,
 		);
 	}
 
@@ -152,12 +161,12 @@ export default function initLerpScroll(
 		const toX = clamp(
 			fromX + e.deltaX * multiplier * strength,
 			0,
-			getMaxPos(target, "x")
+			getMaxPos(target, "x"),
 		);
 		const toY = clamp(
 			fromY + e.deltaY * multiplier * strength,
 			0,
-			getMaxPos(target, "y")
+			getMaxPos(target, "y"),
 		);
 
 		lastTargetX = handleDirection(xLerp, toX, startLerpX, "x", 1);
@@ -170,7 +179,7 @@ export default function initLerpScroll(
 		startLerp: ReturnType<typeof initLerpPositions>["startLerp"],
 		d: "x" | "y",
 		EPS?: number,
-		onFinish?: VoidFunction
+		onFinish?: VoidFunction,
 	) {
 		lerpObject.value = getScrollPos(target, d);
 		startLerp(lerpObject, to, lerpAlpha, EPS, onFinish);
@@ -195,7 +204,7 @@ function partSize(size: number, offset: ScrollLogicalPosition) {
 
 function getOffsetsToElement(
 	scrollTarget: HTMLElement,
-	{ block, inline }: Required<Pick<ScrollIntoViewOptions, "block" | "inline">>
+	{ block, inline }: Required<Pick<ScrollIntoViewOptions, "block" | "inline">>,
 ) {
 	const rect = scrollTarget.getBoundingClientRect();
 	const topOffset = window.scrollY + rect.top + partSize(rect.height, block);

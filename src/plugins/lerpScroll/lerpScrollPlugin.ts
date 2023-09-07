@@ -7,7 +7,10 @@ let lerpScroll: null | Promise<LerpControls> = null;
 if (pointerMedia.matches && motionSafeMedia.matches) {
 	lerpScroll = import("@plugins/lerpScroll/initLerpScroll").then(
 		({ default: initLerpScroll }) => {
-			return initLerpScroll(window, 0.075, 0.75);
+			const controls = initLerpScroll(window, 0.075, 0.75);
+
+
+			return controls;
 		},
 	);
 }
