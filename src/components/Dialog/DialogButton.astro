@@ -1,0 +1,31 @@
+---
+import type { ButtonProps } from "@/components/Button/types";
+import Button from "@components/Button/Button.astro";
+import type { HTMLTag } from "astro/types";
+
+const icons = {
+	burger: "i-mingcute-menu-line?mask",
+	locales: "i-heroicons-language",
+};
+
+type Props<T extends HTMLTag> = ButtonProps<T> & {
+	dialogId: string;
+	icon?: keyof typeof icons;
+};
+
+const { dialogId, icon, ...other } = Astro.props;
+---
+
+<Button
+	class="max-w-max hover:text-accent-200 focus-visible:text-accent-200"
+	visualType="outline"
+	size="small"
+	title="menu"
+	aria-expanded="false"
+	targetSelector={`#${dialogId}`}
+	targetClassToggle="important:clip-circle-top-right-full"
+	closeType="any-click"
+	{...other}
+>
+	{icon && <div class={icons[icon as keyof typeof icons]} />}
+</Button>

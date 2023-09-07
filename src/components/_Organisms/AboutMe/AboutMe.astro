@@ -12,18 +12,25 @@ import transcriptDataToTimestamps from "@utils/transcriptDataToTimestamps";
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
 import { mainpageTabs } from "src/constants";
 import { classInView } from "@/plugins/classInView/serverUtils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
-const { data: aboutMeAudio, id: stageId } = await getEntry({
+const lang = getLangFromUrl(Astro.url);
+
+const { data: aboutMeAudio, id: entryId } = await getEntry({
 	collection: "transcripts",
-	id: "about-me",
+	id: `${lang}/about-me`,
 });
+
+const stageId = entryId.split("/")[1];
 
 const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 const appearInView = classInView("opacity-0", "opacity-100", 1, true);
 const appearInViewScale = classInView(
 	"opacity-0 scale-0",
-	"opacity-100 scale-100"
+	"opacity-100 scale-100",
 );
+
+const t = useTranslations(lang);
 ---
 
 <section
@@ -36,7 +43,6 @@ const appearInViewScale = classInView(
 			src={myImage}
 			alt="Picture of me"
 			sizes="(max-width: 768px) 320px, (max-width:1428px) 500px, 700px"
-			
 			class="sticky top-4 object-contain rounded-full aspect-ratio-square bg-accent-100 p-4 motion-safe:transition-600 md:(top-8 max-h-80vh max-w-min w-full)"
 			{...appearInViewScale}
 		/>
@@ -52,55 +58,59 @@ const appearInViewScale = classInView(
 		<AppearingLine
 			as="h2"
 			class="text-subtitle-1 solid-text-shadow"
-			text="Nice to meet you!"
+			text={t("about-me.text.0")}
 			group={1}
 			lettersTransition
 		/>
 		<div
-			class="md:hidden max-w-50 mx-auto mb-12 mt-12 bg-accent-100 rounded-full"
+			class:list={["md:hidden max-w-50 mx-auto my-12 bg-accent-100 rounded-full"]}
 		>
 			<Image
 				src={myImage}
-				alt="Picture of me"
+				alt={t("about-me.profile-alt")}
 				aspect-ratio="1:1"
 				sizes="200px"
 				class="rounded-full object-contain motion-safe:transition-600 p-4 aspect-square"
 				{...appearInViewScale}
 			/>
 		</div>
-		<div class="h-0 relative bottom-3">
-			<AppearingTextButton
-				client:visible
-				class="ml-auto motion-safe:transition-color-300 hover:text-tertiary-900 focus-visible:text-tertiary-900"
-				visualType="outline"
-				stageId={stageId}
-			/>
-		</div>
+		{
+			aboutMeAudio.audio && (
+				<div class="h-0 relative bottom-3">
+					<AppearingTextButton
+						client:visible
+						class="ml-auto motion-safe:transition-color-300 hover:text-tertiary-900 focus-visible:text-tertiary-900"
+						visualType="outline"
+						stageId={stageId}
+					/>
+				</div>
+			)
+		}
 		<AppearingLine
 			class="text-primary-600 text-8 text-balance motion-safe:transition-opacity-1000"
-			text="My name is Marcin and I am a Web Developer with a UX/UI side."
+			text={t("about-me.text.1")}
 			group={2}
 			{...appearInView}
 		/>
 		<AppearingLine
-			text="My goal is to deliver functional, dynamic websites that will stand out from the ones that you see everyday."
+			text={t("about-me.text.2")}
 			class="text-primary-600 text-6 text-balance motion-safe:transition-opacity-1000"
 			{...appearInView}
 		/>
 		<AppearingLine
 			class="text-primary-600 text-6 text-balance motion-safe:transition-opacity-1000"
-			text="I believe that leaving good customer experience will make your brand recognizable."
+			text={t("about-me.text.3")}
 			{...appearInView}
 		/>
 		<p
 			class="text-subtitle-3 text-balance text-9 mb-0 text-center solid-text-shadow motion-safe:transition-opacity-1000 sm:(text-right text-12 ml-auto max-w-80%)"
 			{...appearInView}
 		>
-			<AppearingLine as="span" text="Now, wanna make some" lettersTransition />
+			<AppearingLine as="span" text={t("about-me.text.4")} />
 			<AppearingLine
 				as="strong"
-				offset={"Now, wanna make some".length}
-				text=" good shit?"
+				offset={t("about-me.text.4").length}
+				text={t("about-me.text.5")}
 				lettersTransition
 			/>
 		</p>
@@ -117,7 +127,7 @@ const appearInViewScale = classInView(
 			>
 				<div class="inline-block i-mingcute-message-3-fill w-8 h-8 mr-2"></div>
 				<AppearingLine
-					text="Contact me!"
+					text={t("common.contact-me")}
 					class="inline-block my-2"
 					group={3}
 					animatedOnView

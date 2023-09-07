@@ -1,4 +1,5 @@
 import { z, reference } from "astro:content";
+import { translations } from "./i18n/constants";
 
 export const imagesSchema = z.array(z.tuple([z.string(), z.string()]));
 
@@ -26,8 +27,16 @@ export const technologySchema = z.object({
 	accent: z.string().optional(),
 });
 
+const linkTitles = Object.keys(translations.en.profile).map(
+	(k) => `profile.${k}`,
+) as [
+	`profile.${keyof typeof translations.en.profile}`,
+	...`profile.${keyof typeof translations.en.profile}`[],
+];
+const linkTitle = z.enum(linkTitles);
+
 export const linkSchema = z.object({
-	title: z.string(),
+	title: linkTitle,
 	href: z.string().url(),
 	class: z.string().regex(/^i-/),
 });
@@ -47,12 +56,14 @@ export const transcriptSchema = z.object({
 							endTime: z.string(),
 							startTime: z.string(),
 							word: z.string(),
-						})
+						}),
 					),
-				})
+				}),
 			),
-		})
+		}),
 	),
 });
 
-export type Transcripts = z.infer<typeof transcriptSchema>;
+export type Transcript = z.infer<typeof transcriptSchema>;
+export type Project = z.infer<typeof projectSchema>;
+export type ProfileTranslations = z.infer<typeof linkTitle>;

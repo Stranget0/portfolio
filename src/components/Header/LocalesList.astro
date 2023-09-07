@@ -1,0 +1,21 @@
+---
+import { languages, supportedLanguages } from "@/i18n/constants";
+import { getTargetLangUrl } from "@/i18n/utils";
+---
+
+<ul class="flex-col-center gap-6 h-full">
+	{
+		supportedLanguages.map((lang) => (
+			<li class="motion-safe:transition-transform">
+				<a
+					is="nav-tab"
+					class="animated-underline animated-underline-right font-light"
+					href={getTargetLangUrl(Astro.url, lang)}
+					data-tab-active-class="before:important:scale-x-100"
+				>
+					{languages[lang]}
+				</a>
+			</li>
+		))
+	}
+</ul>

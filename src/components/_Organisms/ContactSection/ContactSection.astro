@@ -10,6 +10,9 @@ import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { mainpageTabs } from "src/constants";
 import AnimatedText from "@/components/AnimatedText.astro";
 import { classInView } from "@/plugins/classInView/serverUtils";
+import { useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(Astro.url);
 
 const waypointsData = {
 	...waypoints
@@ -37,17 +40,20 @@ const waypointsData = {
 			<div
 				class="sticky section pb-4 top-0 h-screen important:h-100svh justify-end items-center lg:items-end"
 			>
-				<ContactInputContainer class="motion-safe:transition-300" {...classInView("opacity-0 scale-0", "", .33)}>
+				<ContactInputContainer
+					class="motion-safe:transition-300"
+					{...classInView("opacity-0 scale-0", "", 0.33)}
+				>
 					<AppearingLine
 						as="h2"
-						text="Contact me!"
+						text={t("common.contact-me")}
 						class="text-subtitle-1 solid-text-shadow"
 						animatedOnView
 					/>
 					<Input
 						name="name"
 						id="contact-name"
-						label="name"
+						label={t("input.name")}
 						wrapperClass="bg-primary-950"
 						required
 						autocomplete
@@ -55,7 +61,7 @@ const waypointsData = {
 					<Input
 						id="contact-email"
 						name="email"
-						label="email"
+						label={t("input.email")}
 						type="email"
 						wrapperClass="bg-primary-950"
 						required
@@ -63,7 +69,7 @@ const waypointsData = {
 					/>
 					<TextArea
 						id="contact-message"
-						label="message"
+						label={t("input.message")}
 						name="message"
 						wrapperClass="bg-primary-950 max-h-20 md:max-h-60"
 						required
@@ -71,7 +77,7 @@ const waypointsData = {
 						maxlength={1000}
 					/>
 					<Button as="button" type="submit" visualType="outline">
-						<AnimatedText word="Submit" />
+						<AnimatedText word={t("input.submit")} />
 					</Button>
 				</ContactInputContainer>
 			</div>

@@ -1,0 +1,42 @@
+---
+title: Miły Blog
+technologies: ["react", "next", "typescript", "scss", graphql]
+fullscreenImages:
+  [
+    ["MilyBlogFull.jpg", "Full screen of the website"],
+    ["MilyBlogKalendarz.jpg", "Calendar of meetings"],
+    ["MilyBlogPosty.jpg", "Blog posts on the website"],
+  ]
+startYear: 2021
+endYear: 2021
+# website: https://swiadomosc.vercel.app/
+github: https://github.com/Stranget0/mily-blog
+class: bg-primary-700 color-var-warmgray-300
+titleClass: text-orange-200
+draft: false
+---
+
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+
+<AppearingLine
+	class="text-subtitle-3 text-orange-300 solid-text-shadow"
+	text="Profesjonalny Blog do Wymiany Wiedzy, Wspierania Dzielenia się, Współpracy Grupowej i Organizacji Spotkań."
+/>
+<p>
+	<AppearingLine as="span" text="Platforma zawiera dobrze zorganizowaną " />
+	<AppearingLine as="span" class="text-orange-200" text="stronę główną" />
+	<AppearingLine as="span" text=" z " />
+	<AppearingLine
+		as="span"
+		class="text-orange-200"
+		text="istotnymi informacjami,"
+	/>
+	<AppearingLine as="span" text=" najnowszym wideo i różnymi dodatkowymi stronami, takimi jak " />
+	<AppearingLine
+		as="span"
+		class="text-orange-200"
+		text="kalendarz, komentarze, wpisy"
+	/>
+	<AppearingLine as="span" text=" i wiele więcej." />
+</p>
+<AppearingLine class="text-label" text="Obecnie w tymczasowym zawieszeniu." />

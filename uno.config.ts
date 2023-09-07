@@ -130,6 +130,7 @@ export default defineConfig({
 			collections: {
 				mingcute: () => import("@iconify/json/json/mingcute.json"),
 				"svg-spinners": () => import("@iconify/json/json/svg-spinners.json"),
+				"heroicons": () => import("@iconify/json/json/heroicons.json"),
 			},
 			extraProperties: {
 				display: "inline-block",

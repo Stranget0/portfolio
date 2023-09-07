@@ -1,0 +1,61 @@
+---
+import type { Tabs } from "@/types";
+import Button from "@components/Button/Button.astro";
+import { scrollVelocityTransform } from "@plugins/scrollVelocityTransform/serverUtils";
+import DialogButton from "../Dialog/DialogButton.astro";
+import Dialog from "../Dialog/Dialog.astro";
+import TabsList from "./TabsList.astro";
+import LocalesList from "./LocalesList.astro";
+
+interface Props {
+	tabs: Tabs;
+}
+export type HeaderProps = Props;
+
+const { tabs } = Astro.props;
+const dialogIds = { tabs: "tabs-dialog", locales: "locales-dialog" };
+---
+
+<header
+	class="text-label color-white text-right z-1000 fixed mix-blend-difference top-4 right-4 motion-safe:transition-transform"
+>
+	<nav class="flex flex-col gap-2" {...scrollVelocityTransform(2)}>
+		<DialogButton dialogId={dialogIds.tabs} icon="burger" />
+		<DialogButton dialogId={dialogIds.locales} icon="locales" />
+	</nav>
+</header>
+
+<Dialog dialogId={dialogIds.tabs}>
+	<TabsList tabs={tabs} />
+</Dialog>
+
+<Dialog dialogId={dialogIds.locales}>
+	<LocalesList tabs={tabs} />
+</Dialog>
+
+<script>
+	import { motionSafeMedia } from "@/medias";
+	import { scroll } from "motion";
+	const hiddenClass = "-translate-y-50";
+
+	const header = document.querySelector<HTMLElement>("header");
+	if (header) {
+		if (motionSafeMedia.matches) {
+			scroll(({ y }) => {
+				if (y.current < 100) header.classList.add(hiddenClass);
+				else header.classList.remove(hiddenClass);
+			});
+		}
+	}
+</script>
+
+<style lang="scss" is:global>
+	.animated-underline {
+		@apply relative before:(pseudo-full top-auto w-full h-0.1em scale-x-0) hover:before:scale-x-100 focus-visible:before:scale-x-1 motion-safe:before:transition-transform;
+
+		&::before {
+			background-color: var(--underline-color, currentColor);
+			transform-origin: var(--underline-origin, center bottom);
+		}
+	}
+</style>

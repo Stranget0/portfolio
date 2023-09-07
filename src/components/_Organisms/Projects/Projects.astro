@@ -3,12 +3,20 @@ import SlidedSection from "@components/SlidedSection/SlidedSection.astro";
 import Project from "./Project.astro";
 import { getCollection } from "astro:content";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
-const projects = await getCollection("projects");
+
+const lang = getLangFromUrl(Astro.url);
+const projects = await getCollection("projects", ({ slug }) =>
+	slug.startsWith(lang),
+);
+
+const t = useTranslations(lang);
+
 import { mainpageTabs } from "src/constants";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 ---
 
 <SlidedSection
-	title="Projects"
+	title={t("sections.projects")}
 	id={mainpageTabs.projects.id}
 	class="pt-50"
 	{...foxObstacleAttrObj}
@@ -17,7 +25,8 @@ import { mainpageTabs } from "src/constants";
 		projects
 			.sort(
 				({ data: a }, { data: b }) =>
-					(b.importance || 0) - (a.importance || 0) || a.startYear - b.startYear
+					(b.importance || 0) - (a.importance || 0) ||
+					a.startYear - b.startYear,
 			)
 			.map((ft) => <Project frontmatter={ft} />)
 	}

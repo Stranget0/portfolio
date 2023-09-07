@@ -15,9 +15,9 @@ if (pointerMedia.matches) {
 					);
 					import("@components/AppearingText/lib")
 						.then(({ playSingleStage }) => {
-							setAppearingTextState("running");
 							const stage = target.closest<HTMLElement>(stageSelector);
 							if (!stage) throw new Error("No stage selected");
+							setAppearingTextState("running");
 							return playSingleStage(stage);
 						})
 						.finally(() => setAppearingTextState("default"));

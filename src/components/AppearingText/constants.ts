@@ -1,4 +1,4 @@
-export const stageSelector = '[data-audio-timings*=","]';
+export const stageSelector = '[data-audio-timings]';
 
 export const wordClasses = {
 	low: ["opacity-10", "filter-blur-2"],

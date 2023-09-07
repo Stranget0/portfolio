@@ -2,6 +2,7 @@
 import { mainpageTabs } from "src/constants";
 import SectionLink from "./_SectionLink.astro";
 import type { HTMLAttributes } from "astro/types";
+import { useTranslations } from "@/i18n/utils";
 
 interface Props extends HTMLAttributes<"nav"> {
 	website?: string;
@@ -9,6 +10,8 @@ interface Props extends HTMLAttributes<"nav"> {
 }
 
 const { github, website, class: className, ...other } = Astro.props;
+
+const t = useTranslations(Astro.url);
 ---
 
 <nav
@@ -22,7 +25,7 @@ const { github, website, class: className, ...other } = Astro.props;
 		website && (
 			<SectionLink
 				href={website}
-				label="website"
+				label={t("common.website")}
 				iconClass="i-mingcute-earth-line"
 			/>
 		)
@@ -38,7 +41,7 @@ const { github, website, class: className, ...other } = Astro.props;
 	}
 	<SectionLink
 		href={`#${mainpageTabs.contact.id}`}
-		label="Contact"
+		label={t("sections.contact-me")}
 		wrapperClass="text-xs"
 		iconClass="i-mingcute-message-3-fill"
 	/>

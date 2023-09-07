@@ -2,8 +2,11 @@ import { type Component } from "solid-js";
 import TooltipMotion from "../TooltipMotion";
 import classNames from "classnames";
 import { appearingTextState } from "@/components/AppearingText/state";
+import { useTranslations } from "@/i18n/utils";
+
 
 const PlayTextTooltip: Component = () => {
+	const t =  useTranslations(new URL(window.location.href))
 	const isDefault = appearingTextState() === "default";
 
 	return (
@@ -16,7 +19,7 @@ const PlayTextTooltip: Component = () => {
 						: "i-mingcute-close-fill?mask",
 				)}
 			></div>
-			<p>{isDefault ? "Play Audio" : "Cancel"}</p>
+			<p>{isDefault ? t("common.play-audio") : t("common.cancel")}</p>
 		</TooltipMotion>
 	);
 };

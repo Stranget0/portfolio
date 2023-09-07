@@ -1,0 +1,29 @@
+---
+import type { Tabs } from "@/types";
+interface Props {
+	tabs: Tabs;
+}
+
+const { tabs } = Astro.props;
+const tabsEntries = Object.entries(tabs);
+---
+
+<ul class="flex-col-center gap-6 h-full">
+	{
+		tabsEntries.map(
+			async ([_, { id, label, filter }]) =>
+				(!filter || (await filter(Astro.url))) && (
+					<li class="motion-safe:transition-transform">
+						<a
+							is="nav-tab"
+							class="animated-underline animated-underline-right font-light"
+							href={`#${id}`}
+							data-tab-active-class="before:important:scale-x-100"
+						>
+							{label(Astro.url)}
+						</a>
+					</li>
+				),
+		)
+	}
+</ul>

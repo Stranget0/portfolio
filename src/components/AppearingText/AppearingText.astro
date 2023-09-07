@@ -7,7 +7,7 @@ type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 	wordsReference: string[];
 	audioPath: string;
 	isDebug?: boolean;
-	id:string
+	id: string;
 };
 
 const {
@@ -18,14 +18,17 @@ const {
 	isDebug,
 	...other
 } = Astro.props;
+
+const tooltipData =
+	audioPath && wordTimings.length > 0 && playAudioContainerTooltip;
 ---
 
 <!-- TODO: Fix typing error -->
 <Tag
 	{...other as any}
-	{...playAudioContainerTooltip}
+	{...tooltipData}
 	data-audio-timings={wordTimings}
-	data-audio-reference={wordsReference}
+	data-audio-reference={isDebug ? wordsReference : undefined}
 	data-audio-path={audioPath}
 	data-debug={isDebug}
 >

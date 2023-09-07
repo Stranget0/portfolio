@@ -15,3 +15,13 @@
 
 [build]
 	command = "cypress install && npx playwright install && npm run test && npm run build"
+
+[[redirects]]
+  from = "/"
+  to = "/pl"
+  conditions = {Language = ["pl"]}
+
+	
+[[redirects]]
+  from = "/"
+  to = "/en"

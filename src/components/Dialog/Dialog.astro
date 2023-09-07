@@ -1,0 +1,13 @@
+---
+interface Props {
+	dialogId: string;
+}
+const { dialogId } = Astro.props;
+---
+
+<section
+	id={dialogId}
+	class="fixed inset-0 z-1000 cursor-pointer flex-center text-subtitle-2 text-center text-primary-950 bg-white bg-opacity-99 clip-circle-top-right motion-safe:transition-clip-path-600 transition-ease-in"
+>
+	<slot />
+</section>

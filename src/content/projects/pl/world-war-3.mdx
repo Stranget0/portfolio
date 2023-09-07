@@ -1,0 +1,49 @@
+---
+title: World War III
+technologies:
+  [
+    "react",
+    "redux",
+    "typescript",
+    "scss",
+    "jest",
+    "webpack",
+    "jira",
+    "coherent",
+  ]
+fullscreenImages:
+  [
+    ["WorldWar3.jpg", "Splashscreen"],
+    ["WorldWar3Weapon.jpg", "Weapon in hub menu"],
+    ["WorldWar3Formatting.jpg", "Text formatting"],
+  ]
+startYear: 2021
+endYear: 2023
+website: https://worldwar3.com/pl
+class: bg-primary-950 color-var-primary-50
+titleClass: text-yellow-200
+draft: false
+---
+
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+
+<AppearingLine class="text-subtitle-3 text-yellow-200 solid-text-shadow" text="Interfejs do gry typu First Person Shooter"/>
+<p>
+	<AppearingLine as="span" text="Zaprojektowany, aby być " />
+	<AppearingLine as="strong" class="text-yellow-200" text="interaktywnym " />
+	<AppearingLine
+		as="span"
+		text="przy zachowaniu jak największej optymalizacji. "
+	/>
+</p>
+<p>
+	<AppearingLine as="span" text="Oprócz " />
+	<AppearingLine as="strong" text="widoków, " />
+	<AppearingLine as="span" text="wdrożone zostały funkcje takie jak " />
+	<AppearingLine
+		as="strong"
+		class="text-yellow-200"
+		text="formatowanie tekstu, wsparcie dla tekstu arabskiego, niestandardowy system CMS "
+	/>
+	<AppearingLine as="span" text="i wiele innych!" />
+</p>

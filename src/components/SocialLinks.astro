@@ -1,12 +1,16 @@
 ---
 import { getCollection } from "astro:content";
 import { tooltipIgnore } from "./Tooltip/serverUtils";
+import { useTranslations } from "@/i18n/utils";
+import type {ProfileTranslations} from "@/schemas"
 const links = await getCollection("links");
 
 interface Props {
 	small?: boolean;
 }
 const { small: isSmall } = Astro.props;
+
+const t = useTranslations(Astro.url)
 ---
 
 {
@@ -17,8 +21,8 @@ const { small: isSmall } = Astro.props;
 			return (
 				<a
 					href={href}
-					title={title}
-					aria-label={title}
+					title={t(title as ProfileTranslations)}
+					aria-label={t(title as ProfileTranslations)}
 					target="_blank"
 					class:list={[
 						"block bg-primary-50 menu-opafocus-option mix-blend-difference",

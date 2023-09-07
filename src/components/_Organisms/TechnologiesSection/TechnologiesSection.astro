@@ -7,6 +7,9 @@ import partition from "lodash/partition";
 import chunk from "lodash/chunk";
 import { mainpageTabs } from "@/constants";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
+import { useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(Astro.url)
 
 const techCollection = await getCollection("technologies");
 
@@ -37,7 +40,7 @@ const techsArr = partition(
 			>
 				<AppearingLine
 					as="h2"
-					text="Skills"
+					text={t("sections.skills")}
 					class="text-subtitle-1 mb-20 mx-auto solid-text-shadow relative p-y-4 before:(pseudo-full b-t-4 b-b-4 b-current)"
 					lettersTransition
 				/>
