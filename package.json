@@ -12,7 +12,6 @@
 		"test:cypress": "cypress run --record -b webkit --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0",
 		"test:cypress:parallel": "cypress run --record -b webkit --parallel --ci-build-id netlify --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0",
 		"test:files": "npm run lint && npm run type-check",
-		"prepare": "husky install",
 		"prettier": "prettier --write ./src/**",
 		"lint": "eslint src/** --fix",
 		"type-check": "astro check && tsc --noEmit"
@@ -63,7 +62,6 @@
 		"eslint-plugin-astro": "^0.27.0",
 		"eslint-plugin-import": "^2.27.5",
 		"eslint-plugin-jsx-a11y": "^6.7.1",
-		"husky": "^8.0.3",
 		"jsdom": "^21.1.2",
 		"lint-staged": "^13.2.2",
 		"playwright-webkit": "1.34",
