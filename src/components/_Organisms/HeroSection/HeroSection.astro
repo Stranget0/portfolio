@@ -12,6 +12,7 @@ import {
 import { getCollection } from "astro:content";
 
 import { useTranslations } from "@/i18n/utils";
+import { mainpageTabs } from "@/constants";
 
 const t = useTranslations(Astro.url);
 
@@ -39,6 +40,7 @@ const spinnedTexts = [
 ---
 
 <SectionClip
+	id={mainpageTabs.hero.id}
 	as="section"
 	class="section h-120vh min-h-md text-center"
 	data-static-h="120vh"

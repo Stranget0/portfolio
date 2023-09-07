@@ -15,6 +15,13 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			loader: "Web development",
 			"3d": ["My website", "my choice", "your website", "your choice"],
 		},
+		seo: {
+			title: "Marcin Smarzewski - Web Development",
+			description:
+				"Web Development is my craft. Want to build an awesome website? Give me a visit",
+			keywords:
+				"web developer, freelance web developer, frontend developer, web development, web design, UX/UI design, frontend, front-end",
+		},
 		profile: { github: "Github profile", linkedin: "LinkedIn profile" },
 		info: {
 			design: "design",
@@ -32,6 +39,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			loading: "loading...",
 		},
 		sections: {
+			hero: "Fox",
 			"about-me": "About me",
 			"contact-me": "Contact me",
 			play: "Play",
@@ -55,12 +63,9 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			name: "name",
 			submit: "submit",
 		},
-		seo: {
-			title: "Marcin Smarzewski - Web Development",
-			description:
-				"Web Development is my craft. Want to build an awesome website? Give me a visit",
-			keywords:
-				"web developer, freelance web developer, frontend developer, web development, web design, UX/UI design, frontend, front-end",
+		header: {
+			language: "Language",
+			menu: "Menu",
 		},
 	},
 
@@ -68,6 +73,13 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 		titles: {
 			"3d": ["Moja strona", "mój wybór", "Twoja strona", "Twój wybór"],
 			loader: "Web development",
+		},
+		seo: {
+			title: "Marcin Smarzewski - Tworzenie stron internetowych",
+			description:
+				"Hej! Jestem Marcin i tworzę unikalne strony internetowe. Chcesz zbudować wspaniałą stronę internetową? Napisz do mnie!.",
+			keywords:
+				"web developer, niezależny twórca stron internetowych, programista front-end, tworzenie stron internetowych, projektowanie stron internetowych, projektowanie UX/UI, frontend, front-end",
 		},
 		profile: { github: "Profil github", linkedin: "Profil linkedin" },
 		info: {
@@ -86,6 +98,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			loading: "ładowanie...",
 		},
 		sections: {
+			hero: "Lis",
 			"about-me": "O mnie",
 			"contact-me": "Kontakt",
 			play: "Odtwórz stronę",
@@ -109,12 +122,6 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			name: "imie",
 			submit: "wyślij",
 		},
-		seo: {
-			title: "Marcin Smarzewski - Tworzenie stron internetowych",
-			description:
-				"Hej! Jestem Marcin i tworzę unikalne strony internetowe. Chcesz zbudować wspaniałą stronę internetową? Napisz do mnie!.",
-			keywords:
-				"web developer, niezależny twórca stron internetowych, programista front-end, tworzenie stron internetowych, projektowanie stron internetowych, projektowanie UX/UI, frontend, front-end",
-		},
+		header: { language: "Język", menu: "Menu" },
 	},
 };

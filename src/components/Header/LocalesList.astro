@@ -1,17 +1,28 @@
 ---
 import { languages, supportedLanguages } from "@/i18n/constants";
-import { getTargetLangUrl } from "@/i18n/utils";
+import {
+	getLangFromUrl,
+	getTargetLangUrl,
+	useTranslations,
+} from "@/i18n/utils";
+
+import ListTitle from "./ListTitle.astro";
+const pageLang = getLangFromUrl(Astro.url);
+const t = useTranslations(pageLang);
 ---
 
-<ul class="flex-col-center gap-6 h-full">
+<ListTitle>{t("header.language")}</ListTitle>
+<ul class="absolute-center flex-col-center gap-6">
 	{
 		supportedLanguages.map((lang) => (
 			<li class="motion-safe:transition-transform">
 				<a
 					is="nav-tab"
-					class="animated-underline animated-underline-right font-light"
+					class:list={[
+						"animated-underline animated-underline-right font-light",
+						pageLang === lang && "before:important:scale-x-100",
+					]}
 					href={getTargetLangUrl(Astro.url, lang)}
-					data-tab-active-class="before:important:scale-x-100"
 				>
 					{languages[lang]}
 				</a>

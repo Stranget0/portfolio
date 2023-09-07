@@ -31,6 +31,7 @@ export interface TranslationObject {
 		projects: string;
 		skills: string;
 		"contact-me": string;
+		hero: string;
 	};
 
 	"about-me": { "profile-alt": string; text: string[] };
@@ -46,6 +47,11 @@ export interface TranslationObject {
 		title: string;
 		description: string;
 		keywords: string;
+	};
+
+	header: {
+		menu: string;
+		language: string;
 	};
 }
 

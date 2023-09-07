@@ -11,21 +11,29 @@ const icons = {
 type Props<T extends HTMLTag> = ButtonProps<T> & {
 	dialogId: string;
 	icon?: keyof typeof icons;
+	label?: string;
 };
 
-const { dialogId, icon, ...other } = Astro.props;
+const { dialogId, icon, label, ...other } = Astro.props;
 ---
 
 <Button
-	class="max-w-max hover:text-accent-200 focus-visible:text-accent-200"
+	class="flex justify-end items-center gap-2 max-w-8 motion-safe:transition-max-width-600 important:ease-out hover:(text-accent-200 max-w-27) focus-visible:text-accent-200"
 	visualType="outline"
 	size="small"
-	title="menu"
+	title={label}
 	aria-expanded="false"
 	targetSelector={`#${dialogId}`}
 	targetClassToggle="important:clip-circle-top-right-full"
 	closeType="any-click"
 	{...other}
 >
-	{icon && <div class={icons[icon as keyof typeof icons]} />}
+	{
+		label && (
+			<p class="flex items-center overflow-hidden">
+				{label}
+			</p>
+		)
+	}
+	{icon && <div class:list={["flex-shrink-0",icons[icon as keyof typeof icons]]} />}
 </Button>

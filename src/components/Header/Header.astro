@@ -1,27 +1,29 @@
 ---
 import type { Tabs } from "@/types";
-import Button from "@components/Button/Button.astro";
 import { scrollVelocityTransform } from "@plugins/scrollVelocityTransform/serverUtils";
 import DialogButton from "../Dialog/DialogButton.astro";
 import Dialog from "../Dialog/Dialog.astro";
 import TabsList from "./TabsList.astro";
 import LocalesList from "./LocalesList.astro";
+import { useTranslations } from "@/i18n/utils";
 
 interface Props {
 	tabs: Tabs;
 }
 export type HeaderProps = Props;
 
-const { tabs } = Astro.props;
 const dialogIds = { tabs: "tabs-dialog", locales: "locales-dialog" };
+const t = useTranslations(Astro.url)
+
+const { tabs } = Astro.props;
 ---
 
 <header
-	class="text-label color-white text-right z-1000 fixed mix-blend-difference top-4 right-4 motion-safe:transition-transform"
+	class="text-label -translate-y-50 color-white text-right z-1000 fixed mix-blend-difference top-4 right-4 motion-safe:transition-transform"
 >
-	<nav class="flex flex-col gap-2" {...scrollVelocityTransform(2)}>
-		<DialogButton dialogId={dialogIds.tabs} icon="burger" />
-		<DialogButton dialogId={dialogIds.locales} icon="locales" />
+	<nav class="flex flex-col items-end gap-2" {...scrollVelocityTransform(2)}>
+		<DialogButton dialogId={dialogIds.tabs} icon="burger" label={t("header.menu")}/>
+		<DialogButton dialogId={dialogIds.locales} icon="locales" label={t("header.language")} />
 	</nav>
 </header>
 

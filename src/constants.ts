@@ -5,6 +5,10 @@ import hasTranscripts from "./utils/hasTranscripts";
 export const TEXT_NODE = 3;
 
 export const mainpageTabs = {
+	hero: {
+		id: "hero-website-tab",
+		label: (url) => useTranslations(url)("sections.hero"),
+	},
 	play: {
 		id: "play-website-tab",
 		label: (url) => useTranslations(url)("sections.play"),
