@@ -7,6 +7,7 @@ import Plugins from "@plugins/Plugins.astro";
 import type { HeaderProps } from "@components/Header/Header.astro";
 import Header from "@components/Header/Header.astro";
 import { mainpageTabs } from "src/constants";
+import { ViewTransitions } from "astro:transitions";
 
 type Props = HeaderProps;
 ---
@@ -19,6 +20,7 @@ type Props = HeaderProps;
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<ViewTransitions />
 		<!-- Google tag (gtag.js) -->
 		<script
 			src="https://www.googletagmanager.com/gtag/js?id=G-317175ZQN9"
