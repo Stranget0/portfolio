@@ -14,7 +14,7 @@
 	X-Robots-Tag = "all"
 
 [build]
-	command = "cypress install && npx playwright install && npm run test && npm run build"
+	command = "cypress install && npx playwright install webkit && npm run test && npm run build"
 
 [[redirects]]
   from = "/"
