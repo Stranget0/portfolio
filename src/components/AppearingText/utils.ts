@@ -18,7 +18,7 @@ let lastLinePlayed: HTMLElement | null = null;
 export function playStage(stage: HTMLElement) {
 	lastLinePlayed = null;
 	const audioPath = stage.dataset.audioPath;
-	const audio = new Audio(`audio/${audioPath}`);
+	const audio = new Audio(`/audio/${audioPath}`);
 	wordifyStage(stage);
 	const wordData = getWordsFromStage(stage);
 
