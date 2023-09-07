@@ -23,3 +23,5 @@ generated
 
 cypress/videos
 cypress/screenshots
+# Sentry Auth Token
+.sentryclirc

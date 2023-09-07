@@ -10,6 +10,7 @@ import partytown from "@astrojs/partytown";
 export default defineConfig({
   integrations: [UnoCSS(), mdx(), solidJs(), partytown({config:{forward:["dataLayer.push"]}})],
   vite: {
+		build:{sourcemap:"inline"},
     plugins: [visualizer({
       template: "sunburst",
       gzipSize: true,
