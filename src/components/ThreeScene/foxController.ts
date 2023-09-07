@@ -61,7 +61,9 @@ Promise.all([controller.fox, controller.leafs])
 			foxClassOnLoadingDataKey,
 			"remove",
 		);
-		foxHandleOnClasses(foxClassOnLoadedAttr, foxClassOnLoadedDataKey);
+		runOnEachPage(() => {
+			foxHandleOnClasses(foxClassOnLoadedAttr, foxClassOnLoadedDataKey);
+		});
 	});
 
 export type FoxControllerType = typeof controller;
