@@ -112,7 +112,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 				"Nazywam się Marcin i jestem tak zwanym Web Developerem.",
 				"Tworzę funkcjonalne, dynamiczne strony internetowe, które wyróżnią się spośród tych, które widzisz na co dzień.",
 				"Wierzę, że sprawienie dobrego wrażenia u klienta sprawi, że Twoja marka się wyróżni.",
-				"więc jak tam, chcesz stworzyć coś ",
+				"Więc jak tam, chcesz stworzyć coś ",
 				"świetnego?",
 			],
 		},
