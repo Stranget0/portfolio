@@ -21,8 +21,7 @@ module.exports = {
 			},
 			rules: {
 				"astro/no-unused-css-selector": 1,
-				"no-mixed-spaces-and-tabs":0,
-					
+				
 			},
 		},
 	],
@@ -31,6 +30,7 @@ module.exports = {
 		ecmaVersion: "latest",
 		sourceType: "module",
 	},rules:{
+		"no-mixed-spaces-and-tabs":0,
 		"@typescript-eslint/no-unused-vars":[1,{
 			varsIgnorePattern:"_"
 		}]		
