@@ -36,19 +36,9 @@ const { tabs } = Astro.props;
 </Dialog>
 
 <script>
-	import { motionSafeMedia } from "@/medias";
-	import { scroll } from "motion";
 	const hiddenClass = "-translate-y-50";
-
 	const header = document.querySelector<HTMLElement>("header");
-	if (header) {
-		if (motionSafeMedia.matches) {
-			scroll(({ y }) => {
-				if (y.current < 100) header.classList.add(hiddenClass);
-				else header.classList.remove(hiddenClass);
-			});
-		}
-	}
+	header?.classList.remove(hiddenClass)
 </script>
 
 <style lang="scss" is:global>
