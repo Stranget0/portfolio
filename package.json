@@ -14,8 +14,7 @@
     "test:files": "npm run lint && npm run type-check",
     "prettier": "prettier --write ./src/**",
     "lint": "eslint src/** --fix",
-    "type-check": "astro check && tsc --noEmit",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org marcin-smarzewski-e894af586 --project portfolio ./dist && sentry-cli sourcemaps upload --org marcin-smarzewski-e894af586 --project portfolio ./dist"
+    "type-check": "astro check && tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.0",
