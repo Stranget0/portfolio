@@ -14,4 +14,4 @@
 	X-Robots-Tag = "all"
 
 [build]
-	command = "cypress install && npx playwright install && playwright install-deps  && npm run test && npm run build"
+	command = "npx cypress install && npx playwright install && npx playwright install-deps  && npm run test && npm run build"
