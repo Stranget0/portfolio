@@ -19,9 +19,11 @@
 [[redirects]]
   from = "/"
   to = "/pl"
+	force = true
   conditions = {Language = ["pl"]}
 
 	
 [[redirects]]
   from = "/"
+	force = true
   to = "/en"
