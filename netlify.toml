@@ -1,17 +1,53 @@
 [[headers]]
   for = "/msmarzewski.pl/*"
   [headers.values]
-	X-Robots-Tag = "all"
+	default-src = "'self';"
+	script-src = "'report-sample' 'self' https://browser.sentry-cdn.com/7.68.0/bundle.tracing.replay.min.js https://js.sentry-cdn.com/b95fd0cbd5c29e6d281ffa59e7de1742.min.js;"
+	style-src = "'report-sample' 'self';"
+	object-src = "'none';"
+	base-uri = "'self';"
+	connect-src = "'self' blob: https://o4505841586077696.ingest.sentry.io https://www.gstatic.com;"
+	font-src = "'self' https://fonts.gstatic.com;"
+	frame-src = "'self';"
+	img-src = "'self' data:;"
+	manifest-src = "'self';"
+	media-src = "'self';"
+	report-uri = "https://64fa655c15b491ee727135ca.endpoint.csper.io/?v=0;"
+	worker-src = "blob:;"
 
 [[headers]]
   for = "/www.msmarzewski.pl/*"
   [headers.values]
-	X-Robots-Tag = "all"
+	default-src = "'self';"
+	script-src = "'report-sample' 'self' https://browser.sentry-cdn.com/7.68.0/bundle.tracing.replay.min.js https://js.sentry-cdn.com/b95fd0cbd5c29e6d281ffa59e7de1742.min.js;"
+	style-src = "'report-sample' 'self';"
+	object-src = "'none';"
+	base-uri = "'self';"
+	connect-src = "'self' blob: https://o4505841586077696.ingest.sentry.io https://www.gstatic.com;"
+	font-src = "'self' https://fonts.gstatic.com;"
+	frame-src = "'self';"
+	img-src = "'self' data:;"
+	manifest-src = "'self';"
+	media-src = "'self';"
+	report-uri = "https://64fa655c15b491ee727135ca.endpoint.csper.io/?v=0;"
+	worker-src = "blob:;"
 
 [[headers]]
   for = "/smarzewski.netlify.app/*"
   [headers.values]
-	X-Robots-Tag = "all"
+	default-src = "'self';"
+	script-src = "'report-sample' 'self' https://browser.sentry-cdn.com/7.68.0/bundle.tracing.replay.min.js https://js.sentry-cdn.com/b95fd0cbd5c29e6d281ffa59e7de1742.min.js;"
+	style-src = "'report-sample' 'self';"
+	object-src = "'none';"
+	base-uri = "'self';"
+	connect-src = "'self' blob: https://o4505841586077696.ingest.sentry.io https://www.gstatic.com;"
+	font-src = "'self' https://fonts.gstatic.com;"
+	frame-src = "'self';"
+	img-src = "'self' data:;"
+	manifest-src = "'self';"
+	media-src = "'self';"
+	report-uri = "https://64fa655c15b491ee727135ca.endpoint.csper.io/?v=0;"
+	worker-src = "blob:;"
 
 [build]
 	command = "cypress install && npx playwright install webkit && npm run test && npm run build"
