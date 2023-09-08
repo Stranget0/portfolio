@@ -8,12 +8,15 @@ import type { HeaderProps } from "@components/Header/Header.astro";
 import Header from "@components/Header/Header.astro";
 import { mainpageTabs } from "src/constants";
 import { ViewTransitions } from "astro:transitions";
+import { getLangFromUrl } from "@/i18n/utils";
 
 type Props = HeaderProps;
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -39,7 +42,6 @@ type Props = HeaderProps;
 		<script
 			src="https://js.sentry-cdn.com/b95fd0cbd5c29e6d281ffa59e7de1742.min.js"
 			crossorigin="anonymous"></script>
-
 
 		<script>
 			import "@/polyfills";
