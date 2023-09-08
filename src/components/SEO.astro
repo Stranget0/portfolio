@@ -7,10 +7,7 @@ const t = useTranslations(Astro.url);
 <title>{t("seo.title")}</title>
 <link rel="icon" type="image/svg+xml" href="/svg/fox.svg" />
 <meta name="description" content={t("seo.description")} />
-<meta
-	name="keywords"
-	content={t("seo.keywords")}
-/>
+<meta name="keywords" content={t("seo.keywords")} />
 <meta name="author" content="Marcin Smarzewski" />
 
 <meta property="og:title" content="Marcin Smarzewski" />
@@ -18,3 +15,20 @@ const t = useTranslations(Astro.url);
 <meta property="og:url" content="https://msmarzewski.pl/" />
 <meta property="og:image" content="/svg/fox.svg" />
 <meta name="robots" content="index, follow" />
+
+<script type="application/ld+json">
+{
+	"@context": "http://schema.org",
+		"@type": "CreativeWork",
+			"name": "Frontend Portfolio",
+				"author": {
+		"@type": "Person",
+			"name": "Marcin Smarzewski"
+	},
+	"datePublished": "2023-09-08",
+		"dateModified": "2023-09-08",
+			"description": "This is a frontend portfolio showcasing the work of Marcin Smarzewski in web development and design.",
+				"url": "https://www.msmarzewski.pl/en", 
+					"inLanguage": "en"
+}
+</script>
