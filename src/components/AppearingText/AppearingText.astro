@@ -1,35 +1,43 @@
 ---
 import type { HTMLTag, Polymorphic } from "astro/types";
 import { playAudioContainerTooltip } from "./serverUtils";
+import type { CollectionEntry } from "astro:content";
+import transcriptDataToTimestamps from "@/utils/transcriptDataToTimestamps";
 
 type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
-	wordTimings: number[];
-	wordsReference: string[];
-	audioPath: string;
+	transcript: CollectionEntry<"transcripts"> | undefined;
+	id: string | undefined;
+	scrollPosition?: ScrollLogicalPosition;
+	noTooltip?: boolean;
 	isDebug?: boolean;
-	id: string;
 };
 
 const {
 	as: Tag = "p",
-	wordTimings,
-	audioPath,
-	wordsReference,
+	transcript,
 	isDebug,
+	noTooltip,
+	scrollPosition,
 	...other
-} = Astro.props;
+} = Astro.props as Props<HTMLTag>;
+
+const audioPath = transcript?.data.audio;
+
+const { timestamps = [], words = [] } =
+	(transcript && transcriptDataToTimestamps(transcript.data)) || {};
 
 const tooltipData =
-	audioPath && wordTimings.length > 0 && playAudioContainerTooltip;
+	!noTooltip && audioPath && timestamps.length > 0 && playAudioContainerTooltip;
 ---
 
 <!-- TODO: Fix typing error -->
 <Tag
 	{...other as any}
 	{...tooltipData}
-	data-audio-timings={wordTimings}
-	data-audio-reference={isDebug ? wordsReference : undefined}
+	data-audio-timings={timestamps}
+	data-audio-reference={isDebug ? words : undefined}
 	data-audio-path={audioPath}
+	data-audio-scroll={scrollPosition}
 	data-debug={isDebug}
 >
 	<slot />
