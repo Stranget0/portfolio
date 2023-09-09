@@ -1,4 +1,5 @@
 import { pointerMedia } from "@/medias";
+import runOnEachPage from "@/utils/runOnEachPage";
 import { stageSelector } from "@components/AppearingText/constants";
 import {
 	appearingTextState,
@@ -12,7 +13,10 @@ function cancelPlayingStage() {
 		);
 }
 
+runOnEachPage(cancelPlayingStage);
+
 if (pointerMedia.matches) {
+	window.addEventListener("wheel", cancelPlayingStage);
 	import("./lib").then(({ default: attachTooltipListeners }) => {
 		attachTooltipListeners(
 			{
@@ -40,5 +44,3 @@ if (pointerMedia.matches) {
 		window.addEventListener("touchmove", cancelPlayingStage, { once: true });
 	});
 }
-
-window.addEventListener("wheel", cancelPlayingStage)
