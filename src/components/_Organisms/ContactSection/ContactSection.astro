@@ -34,13 +34,13 @@ const waypointsData = {
 
 <section
 	id={mainpageTabs.contact.id}
-	class="relative mx-4 sm:mx-16 min-h-120vh text-primary-50 flex text-right prose important:max-w-none before:(pseudo-full -inset-x-16 -right-16 bg-primary-950 -z-3)"
+	class="relative min-h-120vh text-primary-50 flex text-right before:(pseudo-full bg-primary-950 -z-3)"
 	data-static-h="120vh"
 	data-static-h-type="min"
 	{...waypointsData}
 	{...forceFocusViewAttrObj}
 >
-	<div class="sticky mt-auto mb-4 bottom-4 w-full flex flex-col items-end">
+	<div class="sticky px-4 sm:px-16 mt-auto mb-4 bottom-4 w-full flex flex-col items-end">
 		<AppearingText
 			as="div"
 			transcript={titleTranscript}
