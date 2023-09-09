@@ -1,11 +1,12 @@
 ---
 type Props = { label: string; for: string, class?: string};
 const { label, for: forId,class:className } = Astro.props;
+import { tooltipIgnore } from "../Tooltip/serverUtils";
 ---
 
 <div
 	class:list={["input-wrapper flex flex-col dialog transition-interactive", className]}
->
+	{...tooltipIgnore}>
 	<label class="opacity-50 text-primary-50 text-label" for={forId}
 		>{label}</label
 	>
