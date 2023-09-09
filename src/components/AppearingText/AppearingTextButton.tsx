@@ -60,6 +60,11 @@ const AppearingTextButton: Component<Props> = (props) => {
 			onMouseEnter={load}
 			onTouchStart={load}
 			onClick={async () => {
+				if (appearingTextState() === "running") {
+					const { cancelPlayingStages } = await load();
+					cancelPlayingStages();
+					return;
+				}
 				setAppearingTextState("loading");
 				const stage =
 					stageId && document.querySelector<HTMLElement>(`#${stageId}`);
