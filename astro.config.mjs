@@ -8,15 +8,35 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [UnoCSS(), mdx(), solidJs(), partytown({config:{forward:["dataLayer.push", 'hj', 'hjBootstrap', 'hjLazyModules', 'hjSiteSettings', '_hjSettings']}})],
-  vite: {
-    plugins: [visualizer({
-      template: "sunburst",
-      gzipSize: true,
-      brotliSize: true,
-      filename: "generated/bundle.html"
-    })]
-  },
-  site: "https://msmarzewski.pl",
-  compressHTML: true
+	integrations: [
+		UnoCSS(),
+		mdx(),
+		solidJs(),
+		partytown({
+			config: {
+				forward: [
+					"dataLayer.push",
+					"hj",
+					"hjBootstrap",
+					"hjLazyModules",
+					"hjSiteSettings",
+					"_hjSettings",
+					"_hjSettings.hjid",
+					"_hjSettings.hjsv",
+				],
+			},
+		}),
+	],
+	vite: {
+		plugins: [
+			visualizer({
+				template: "sunburst",
+				gzipSize: true,
+				brotliSize: true,
+				filename: "generated/bundle.html",
+			}),
+		],
+	},
+	site: "https://msmarzewski.pl",
+	compressHTML: true,
 });
