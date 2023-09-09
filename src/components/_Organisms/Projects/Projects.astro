@@ -1,7 +1,7 @@
 ---
 import SlidedSection from "@components/SlidedSection/SlidedSection.astro";
 import Project from "./Project.astro";
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 
 const lang = getLangFromUrl(Astro.url);
@@ -13,10 +13,13 @@ const t = useTranslations(lang);
 
 import { mainpageTabs } from "src/constants";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const titleTranscript = await getEntry("transcripts", `${lang}/projects`);
 ---
 
 <SlidedSection
 	title={t("sections.projects")}
+	titleTranscript={titleTranscript}
 	id={mainpageTabs.projects.id}
 	class="pt-50"
 	{...foxObstacleAttrObj}

@@ -1,0 +1,281 @@
+{
+	"audio": "portfolio.mp3",
+	"results": [
+		{
+			"alternatives": [
+				{
+					"transcript": "how do you played website engineered to provide a blazingly fast immersive user experience without the interaction capabilities",
+					"confidence": 0.7625015,
+					"words": [
+						{
+							"startTime": "0.400s",
+							"endTime": "1.300s",
+							"word": "audio",
+							"confidence": 0.37288338
+						},
+						{
+							"startTime": "1.300s",
+							"endTime": "1.500s",
+							"word": "played",
+							"confidence": 0.10871918
+						},
+						{
+							"startTime": "1.500s",
+							"endTime": "1.800s",
+							"word": "website",
+							"confidence": 0.9632674
+						},
+						{
+							"startTime": "1.800s",
+							"endTime": "2.800s",
+							"word": "engineered",
+							"confidence": 0.8539748
+						},
+						{
+							"startTime": "2.800s",
+							"endTime": "3.300s",
+							"word": "to",
+							"confidence": 0.9683435
+						},
+						{
+							"startTime": "3.300s",
+							"endTime": "3.600s",
+							"word": "provide",
+							"confidence": 0.9831479
+						},
+						{
+							"startTime": "3.600s",
+							"endTime": "4s",
+							"word": "a",
+							"confidence": 0.72204715
+						},
+						{
+							"startTime": "4s",
+							"endTime": "4.500s",
+							"word": "blazingly",
+							"confidence": 0.7482262
+						},
+						{
+							"startTime": "4.500s",
+							"endTime": "4.800s",
+							"word": "fast",
+							"confidence": 0.9383638
+						},
+						{
+							"startTime": "4.800s",
+							"endTime": "5.700s",
+							"word": "immersive",
+							"confidence": 0.9268018
+						},
+						{
+							"startTime": "5.700s",
+							"endTime": "5.800s",
+							"word": "user",
+							"confidence": 0.96937704
+						},
+						{
+							"startTime": "5.800s",
+							"endTime": "6.400s",
+							"word": "experience",
+							"confidence": 0.9759856
+						},
+						{
+							"startTime": "6.400s",
+							"endTime": "7.200s",
+							"word": "without",
+							"confidence": 0.9762002
+						},
+						{
+							"startTime": "7.200s",
+							"endTime": "7.600s",
+							"word": "the",
+							"confidence": 0.87493736
+						},
+						{
+							"startTime": "7.600s",
+							"endTime": "7.900s",
+							"word": "interaction",
+							"confidence": 0.9156632
+						},
+						{
+							"startTime": "7.900s",
+							"endTime": "8.700s",
+							"word": "capabilities",
+							"confidence": 0.9462693
+						}
+					]
+				}
+			],
+			"resultEndTime": "9.190s",
+			"languageCode": "en-us"
+		},
+		{
+			"alternatives": [
+				{
+					"transcript": " in addition to its stunning 3D visuals this project boasts features such as beautiful interface support for multiple languages and more",
+					"confidence": 0.8984117,
+					"words": [
+						{
+							"startTime": "9.400s",
+							"endTime": "9.800s",
+							"word": "in",
+							"confidence": 0.38053396
+						},
+						{
+							"startTime": "9.800s",
+							"endTime": "10s",
+							"word": "addition",
+							"confidence": 0.98524946
+						},
+						{
+							"startTime": "10s",
+							"endTime": "10.100s",
+							"word": "to",
+							"confidence": 0.8791021
+						},
+						{
+							"startTime": "10.100s",
+							"endTime": "10.700s",
+							"word": "its",
+							"confidence": 0.7592397
+						},
+						{
+							"startTime": "10.700s",
+							"endTime": "11s",
+							"word": "stunning",
+							"confidence": 0.8696558
+						},
+						{
+							"startTime": "11s",
+							"endTime": "11.300s",
+							"word": "3D",
+							"confidence": 0.8411116
+						},
+						{
+							"startTime": "11.300s",
+							"endTime": "11.600s",
+							"word": "visuals",
+							"confidence": 0.9542098
+						},
+						{
+							"startTime": "11.600s",
+							"endTime": "12.300s",
+							"word": "this",
+							"confidence": 0.9087638
+						},
+						{
+							"startTime": "12.300s",
+							"endTime": "12.800s",
+							"word": "project",
+							"confidence": 0.9901913
+						},
+						{
+							"startTime": "12.800s",
+							"endTime": "13.700s",
+							"word": "boasts",
+							"confidence": 0.5649952
+						},
+						{
+							"startTime": "13.700s",
+							"endTime": "13.900s",
+							"word": "features",
+							"confidence": 0.9570575
+						},
+						{
+							"startTime": "13.900s",
+							"endTime": "14.600s",
+							"word": "such",
+							"confidence": 0.99753696
+						},
+						{
+							"startTime": "14.600s",
+							"endTime": "14.800s",
+							"word": "as",
+							"confidence": 0.9980162
+						},
+						{
+							"startTime": "14.800s",
+							"endTime": "15.700s",
+							"word": "beautiful",
+							"confidence": 0.99435055
+						},
+						{
+							"startTime": "15.700s",
+							"endTime": "16.300s",
+							"word": "interface",
+							"confidence": 0.9708008
+						},
+						{
+							"startTime": "16.300s",
+							"endTime": "17.400s",
+							"word": "support",
+							"confidence": 0.9390375
+						},
+						{
+							"startTime": "17.400s",
+							"endTime": "17.600s",
+							"word": "for",
+							"confidence": 0.99385506
+						},
+						{
+							"startTime": "17.600s",
+							"endTime": "18.200s",
+							"word": "multiple",
+							"confidence": 0.9831587
+						},
+						{
+							"startTime": "18.200s",
+							"endTime": "18.700s",
+							"word": "languages",
+							"confidence": 0.92037684
+						},
+						{
+							"startTime": "18.700s",
+							"endTime": "19.500s",
+							"word": "and",
+							"confidence": 0.99596953
+						},
+						{
+							"startTime": "19.500s",
+							"endTime": "19.800s",
+							"word": "more",
+							"confidence": 0.98343194
+						}
+					]
+				}
+			],
+			"resultEndTime": "20.510s",
+			"languageCode": "en-us"
+		},
+		{
+			"alternatives": [
+				{
+					"transcript": " Isn\u0027t that cool",
+					"confidence": 0.6605022,
+					"words": [
+						{
+							"startTime": "20.800s",
+							"endTime": "21.400s",
+							"word": "Isn\u0027t",
+							"confidence": 0.72199005
+						},
+						{
+							"startTime": "21.400s",
+							"endTime": "21.600s",
+							"word": "that",
+							"confidence": 0.4644973
+						},
+						{
+							"startTime": "21.600s",
+							"endTime": "21.700s",
+							"word": "cool",
+							"confidence": 0.7950193
+						}
+					]
+				}
+			],
+			"resultEndTime": "22.070s",
+			"languageCode": "en-us"
+		}
+	]
+}

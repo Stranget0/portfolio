@@ -1,17 +1,19 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import SectionTitle from "./_SectionTitle.astro"
+import type { CollectionEntry } from "astro:content";
 
 interface Props extends HTMLAttributes<"div">{
 	title:string;
+	titleTranscript: CollectionEntry<"transcripts"> | undefined
 }
 
-const { class: className, title, ...other } = Astro.props;
+const { class: className, title,titleTranscript, ...other } = Astro.props;
 ---
 
 <section class:list={["bg-primary-50", className]} {...other}>
 	<div class="text-center pt-4">
-		<SectionTitle title={title}/>
+		<SectionTitle title={title} transcript={titleTranscript}/>
 		<slot/>
 	</div>
 </section>

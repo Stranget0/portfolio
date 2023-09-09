@@ -16,14 +16,13 @@ import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 
-const { data: aboutMeAudio, id: entryId } = await getEntry({
+const transcript = await getEntry({
 	collection: "transcripts",
 	id: `${lang}/about-me`,
 });
 
-const stageId = entryId.split("/")[1];
+const stageId = transcript.id.split("/")[1];
 
-const aboutMeTranscript = transcriptDataToTimestamps(aboutMeAudio);
 const appearInView = classInView("opacity-0", "opacity-100", 1, true);
 const appearInViewScale = classInView(
 	"opacity-0 scale-0",
@@ -49,9 +48,7 @@ const t = useTranslations(lang);
 	</div>
 	<AppearingText
 		as="article"
-		wordsReference={aboutMeTranscript.words}
-		wordTimings={aboutMeTranscript.timestamps}
-		audioPath={aboutMeAudio.audio}
+		transcript={transcript}
 		class="flex flex-col flex-shrink align-end text-center prose md:(text-right basis-full)"
 		id={stageId}
 	>
@@ -75,12 +72,11 @@ const t = useTranslations(lang);
 			/>
 		</div>
 		{
-			aboutMeAudio.audio && (
+			transcript.data.audio && (
 				<div class="h-0 relative bottom-3">
 					<AppearingTextButton
 						client:visible
 						class="ml-auto motion-safe:transition-color-300 hover:text-tertiary-900 focus-visible:text-tertiary-900"
-						visualType="outline"
 						stageId={stageId}
 					/>
 				</div>

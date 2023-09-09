@@ -3,7 +3,7 @@ export function createAwaitSequence() {
 
 	async function runAwaitSequence<T>(
 		sequence: T[],
-		sequenceAwait: (el: T) => Promise<unknown>
+		sequenceAwait: (el: T, i: number) => Promise<unknown>,
 	) {
 		isCanceled = false;
 		for (
@@ -11,7 +11,7 @@ export function createAwaitSequence() {
 			groupIndex < sequence.length && !isCanceled;
 			groupIndex++
 		) {
-			await sequenceAwait(sequence[groupIndex]);
+			await sequenceAwait(sequence[groupIndex], groupIndex);
 		}
 	}
 	return {

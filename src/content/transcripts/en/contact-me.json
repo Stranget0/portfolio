@@ -1,0 +1,22 @@
+{
+	"audio": "contact-me.mp3",
+  "results": [{
+    "alternatives": [{
+      "transcript": "come back to me",
+      "confidence": 0.62092584,
+      "words": [{
+        "startTime": "0s",
+        "endTime": "0.600s",
+        "word": "contact",
+        "confidence": 0.47108832
+      }, {
+        "startTime": "0.600s",
+        "endTime": "0.700s",
+        "word": "me",
+        "confidence": 0.7707634
+      }]
+    }],
+    "resultEndTime": "0.780s",
+    "languageCode": "en-us"
+  }]
+}

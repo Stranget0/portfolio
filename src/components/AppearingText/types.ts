@@ -24,7 +24,7 @@ export type Sentence = WordData[];
 
 export type GroupEntry = [string, Sentence[]];
 
-export type WordsData = {
+export type WordsGroups = {
 	groups: GroupEntry[];
 	count: number;
 };

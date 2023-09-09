@@ -1,6 +1,6 @@
 import { createAwaitSequence } from "@utils/createAwaitSequence";
 import { stageSelector } from "./constants";
-import { playStage } from "./utils";
+import { isStageContentSmall, playStage } from "./utils";
 import createCleanFunction from "@utils/createCleanFunction";
 
 let globalClean: VoidFunction | null = null;
@@ -10,7 +10,7 @@ const runGlobalClean = () => {
 };
 
 const stages = Array.from(
-	document.querySelectorAll<HTMLElement>(stageSelector)
+	document.querySelectorAll<HTMLElement>(stageSelector),
 );
 
 export async function playSingleStage(stage: HTMLElement) {
@@ -38,8 +38,11 @@ export async function playAllStages() {
 
 		globalClean = cleanMenago.clean;
 
-		await runSequence(stages, (stage) => {
-			const { finished, clean } = playStage(stage);
+		await runSequence(stages, (stage, stageIndex) => {
+			let delay = stageIndex === 0 ? 0 : 2000;
+			if (delay > 0 && isStageContentSmall(stage)) delay = 500;
+
+			const { finished, clean } = playStage(stage, delay);
 			cleanMenago.push(clean);
 			return finished;
 		});
@@ -53,3 +56,4 @@ export async function playAllStages() {
 export function cancelPlayingStages() {
 	runGlobalClean();
 }
+

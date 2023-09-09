@@ -189,13 +189,14 @@ export default function initLerpScroll(
 }
 
 function partSize(size: number, offset: ScrollLogicalPosition) {
+	const defaultMargin = 32;
 	switch (offset) {
 		case "start":
-			return 0;
+			return defaultMargin;
 		case "center":
 			return -window.innerHeight / 2 + size / 2;
 		case "end":
-			return -window.innerHeight + size;
+			return -window.innerHeight + size - defaultMargin;
 		default:
 			console.warn(offset, "not supported");
 			return -window.innerHeight / 2 + size / 2;

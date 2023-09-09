@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntryBySlug } from "astro:content";
+import { getCollection, getEntry, getEntryBySlug } from "astro:content";
 import Technologies from "@components/Technologies.astro";
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
 import sortTechnologies from "@utils/sortTechnologies";
@@ -7,21 +7,24 @@ import partition from "lodash/partition";
 import chunk from "lodash/chunk";
 import { mainpageTabs } from "@/constants";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
-import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import AppearingText from "@/components/AppearingText/AppearingText.astro";
 
-const t = useTranslations(Astro.url)
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const techCollection = await getCollection("technologies");
+const titleTranscript = await getEntry("transcripts", `${lang}/skills`);
 
 const technologies = sortTechnologies(
 	await Promise.all(
-		techCollection.map(({ slug }) => getEntryBySlug("technologies", slug))
-	)
+		techCollection.map(({ slug }) => getEntryBySlug("technologies", slug)),
+	),
 );
 
 const techsArr = partition(
 	technologies,
-	({ data }) => data.importance < 10
+	({ data }) => data.importance < 10,
 ).flatMap((arr) => chunk(arr, 5));
 ---
 
@@ -38,12 +41,19 @@ const techsArr = partition(
 				class="relative w-full pt-4 pb-6 pb-40 text-center before:(bg-primary-300 pseudo-full inset-0 top-12 rounded-4 solid-shadow b-4 b-current)"
 				data-scroll-target-ref
 			>
-				<AppearingLine
-					as="h2"
-					text={t("sections.skills")}
-					class="text-subtitle-1 mb-20 mx-auto solid-text-shadow relative p-y-4 before:(pseudo-full left-16 right-16 b-t-4 b-b-4 b-current)"
-					lettersTransition
-				/>
+				<AppearingText
+					as="div"
+					id={titleTranscript?.id.split("/")[1]}
+					transcript={titleTranscript}
+					scrollPosition="start"
+				>
+					<AppearingLine
+						as="h2"
+						text={t("sections.skills")}
+						class="text-subtitle-1 mb-20 mx-auto solid-text-shadow relative p-y-4 before:(pseudo-full left-16 right-16 b-t-4 b-b-4 b-current)"
+						lettersTransition
+					/>
+				</AppearingText>
 				<div class="flex flex-wrap gap-8">
 					{techsArr.map((tech) => {
 						return (

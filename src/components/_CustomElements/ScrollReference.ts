@@ -20,8 +20,7 @@ export default class ScrollReference extends HTMLElement {
 	connectedCallback() {
 		if (!this.isConnected) return;
 		inView(this, () => {
-			const { scrollFeatureRefs } = this.dataset;
-			if (typeof scrollFeatureRefs !== "undefined") this.handleTargetsWithRef();
+			this.handleTargetsWithRef();
 			return this.cleanMenago.clean;
 		});
 	}

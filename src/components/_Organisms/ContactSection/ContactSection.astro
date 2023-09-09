@@ -10,9 +10,14 @@ import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { mainpageTabs } from "src/constants";
 import AnimatedText from "@/components/AnimatedText.astro";
 import { classInView } from "@/plugins/classInView/serverUtils";
-import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import AppearingText from "@/components/AppearingText/AppearingText.astro";
+import { getEntry } from "astro:content";
 
-const t = useTranslations(Astro.url);
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const titleTranscript = await getEntry("transcripts", `${lang}/contact-me`);
 
 const waypointsData = {
 	...waypoints
@@ -36,12 +41,19 @@ const waypointsData = {
 	{...forceFocusViewAttrObj}
 >
 	<div class="sticky mt-auto mb-4 bottom-4 w-full flex flex-col items-end">
-		<AppearingLine
-			as="h2"
-			text={t("common.contact-me")}
-			class="ml-auto max-w-10em pt-4 top-4 z-2 text-subtitle-1 solid-text-shadow"
-			animatedOnView
-		/>
+		<AppearingText
+			as="div"
+			transcript={titleTranscript}
+			id={titleTranscript?.id.split("/")[1]}
+			scrollPosition="start"
+		>
+			<AppearingLine
+				as="h2"
+				text={t("common.contact-me")}
+				class="ml-auto max-w-10em pt-4 top-4 z-2 text-subtitle-1 solid-text-shadow"
+				animatedOnView
+			/>
+		</AppearingText>
 		<ContactInputContainer>
 			<Input
 				name="name"
