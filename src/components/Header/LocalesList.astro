@@ -14,18 +14,22 @@ const t = useTranslations(pageLang);
 <ListTitle>{t("header.language")}</ListTitle>
 <ul class="absolute-center flex-col-center gap-6">
 	{
-		supportedLanguages.map((lang) => (
-			<li class="motion-safe:transition-transform">
-				<a
-					class:list={[
-						"animated-underline animated-underline-right font-light",
-						pageLang === lang && "before:important:scale-x-100",
-					]}
-					href={getTargetLangUrl(Astro.url, lang)}
-				>
-					{languages[lang]}
-				</a>
-			</li>
-		))
+		supportedLanguages.map((lang) => {
+			const langText = languages[lang];
+			return (
+				<li class="motion-safe:transition-transform">
+					<a
+						class:list={[
+							"animated-underline animated-underline-right font-light",
+							pageLang === lang && "before:important:scale-x-100",
+						]}
+						href={getTargetLangUrl(Astro.url, lang)}
+						title={langText}
+					>
+						{langText}
+					</a>
+				</li>
+			);
+		})
 	}
 </ul>

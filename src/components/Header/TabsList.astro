@@ -15,8 +15,9 @@ const t = useTranslations(Astro.url);
 <ListTitle>{t("header.menu")}</ListTitle>
 <ul class="absolute-center flex-col-center gap-6">
 	{
-		tabsEntries.map(
-			async ([_, { id, label, filter }]) =>
+		tabsEntries.map(async ([_, { id, label, filter }]) => {
+			const labelText = label(Astro.url);
+			return (
 				(!filter || (await filter(Astro.url))) && (
 					<li class="motion-safe:transition-transform">
 						<a
@@ -24,12 +25,14 @@ const t = useTranslations(Astro.url);
 							class="animated-underline animated-underline-right font-light"
 							href={`#${id}`}
 							data-tab-active-class="before:important:scale-x-100"
+							title={labelText}
 						>
-							{label(Astro.url)}
+							{labelText}
 						</a>
 					</li>
-				),
-		)
+				)
+			);
+		})
 	}
 </ul>
 
