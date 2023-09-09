@@ -7,6 +7,7 @@ import {
 } from "./constants";
 import type { Tooltip } from "./types";
 import { tooltipSignal } from "./utils";
+import runOnEachPage from "@/utils/runOnEachPage";
 
 type Handler = (target: HTMLElement) => void;
 type Checker = () => boolean;
@@ -25,49 +26,51 @@ export default function attachTooltipListeners(
 ) {
 	if (!pointerMedia.matches) return;
 	const [tooltip, setTooltip] = tooltipSignal;
-	const ignoredElements = document.querySelectorAll<HTMLElement>(
-		`[${tooltipIgnoreAttr}]`,
-	);
 
 	let ignoredNum = 0;
 
-	for (const target of document.querySelectorAll<HTMLElement>(
-		`[${tooltipAttr}]`,
-	)) {
-		const tooltipOption = target.dataset[tooltipDataKey] as Tooltip;
-		const checker = checkers?.[tooltipOption];
-		const tooltipParentSelector = target.dataset[tooltipParentDataKey];
-		const hasRequiredParentIfAny =
-			tooltipParentSelector && !target.closest(tooltipParentSelector);
-
-		const { enable, disable, onPrimary } = getActions(
-			checker,
-			target,
-			tooltipOption,
-			handlers,
+	runOnEachPage(() => {
+		const ignoredElements = document.querySelectorAll<HTMLElement>(
+			`[${tooltipIgnoreAttr}]`,
 		);
+		for (const target of document.querySelectorAll<HTMLElement>(
+			`[${tooltipAttr}]`,
+		)) {
+			const tooltipOption = target.dataset[tooltipDataKey] as Tooltip;
+			const checker = checkers?.[tooltipOption];
+			const tooltipParentSelector = target.dataset[tooltipParentDataKey];
+			const hasRequiredParentIfAny =
+				tooltipParentSelector && !target.closest(tooltipParentSelector);
 
-		if (hasRequiredParentIfAny) return;
-		target.addEventListener("mouseenter", enable);
-		target.addEventListener("mouseleave", disable);
-		target.addEventListener("mousedown", onPrimary);
-		target.addEventListener("mousemove", () => {
-			if (!ignoredNum && !tooltip()) {
-				enable();
-			}
-		});
-	}
+			const { enable, disable, onPrimary } = getActions(
+				checker,
+				target,
+				tooltipOption,
+				handlers,
+			);
 
-	for (const ignoredElement of ignoredElements) {
-		const { disable } = getActions();
-		ignoredElement.addEventListener("mouseenter", () => {
-			disable();
-			ignoredNum++;
-		});
-		ignoredElement.addEventListener("mouseleave", () => {
-			ignoredNum--;
-		});
-	}
+			if (hasRequiredParentIfAny) return;
+			target.addEventListener("mouseenter", enable);
+			target.addEventListener("mouseleave", disable);
+			target.addEventListener("mousedown", onPrimary);
+			target.addEventListener("mousemove", () => {
+				if (!ignoredNum && !tooltip()) {
+					enable();
+				}
+			});
+		}
+
+		for (const ignoredElement of ignoredElements) {
+			const { disable } = getActions();
+			ignoredElement.addEventListener("mouseenter", () => {
+				disable();
+				ignoredNum++;
+			});
+			ignoredElement.addEventListener("mouseleave", () => {
+				ignoredNum--;
+			});
+		}
+	});
 
 	function getActions(
 		checker?: Checker,
