@@ -2,6 +2,7 @@ import { createAwaitSequence } from "@utils/createAwaitSequence";
 import { stageSelector } from "./constants";
 import { isStageContentSmall, playStage } from "./utils";
 import createCleanFunction from "@utils/createCleanFunction";
+import runOnEachPage from "@/utils/runOnEachPage";
 
 let globalClean: VoidFunction | null = null;
 const runGlobalClean = () => {
@@ -9,9 +10,11 @@ const runGlobalClean = () => {
 	globalClean = null;
 };
 
-const stages = Array.from(
-	document.querySelectorAll<HTMLElement>(stageSelector),
-);
+let stages: HTMLElement[];
+
+runOnEachPage(() => {
+	stages = Array.from(document.querySelectorAll<HTMLElement>(stageSelector));
+});
 
 export async function playSingleStage(stage: HTMLElement) {
 	runGlobalClean();
@@ -56,4 +59,3 @@ export async function playAllStages() {
 export function cancelPlayingStages() {
 	runGlobalClean();
 }
-
