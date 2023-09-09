@@ -24,6 +24,7 @@ const t = useTranslations(Astro.url)
 					title={t(title as ProfileTranslations)}
 					aria-label={t(title as ProfileTranslations)}
 					target="_blank"
+					rel="noreferrer"
 					class:list={[
 						"block bg-primary-50 menu-opafocus-option mix-blend-difference",
 						isSmall ? "w-12 h-12" : "h-16 w-16",
