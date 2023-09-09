@@ -6,11 +6,13 @@ const backgroundImage = `url("${noise.src}")`;
 <div class="-z-100 fixed inset-0 bg-primary-50"></div>
 
 <div
+	transition:persist
 	style={{ "background-image": backgroundImage, "background-size": "150px" }}
 	class="z-100 fixed inset-0 pointer-events-none mix-blend-multiply opacity-5 motion-safe:animate-shake"
 >
 </div>
 <div
+	transition:persist
 	style={{ "background-image": backgroundImage, "background-size": "150px" }}
 	class="z-100 fixed inset-0 pointer-events-none mix-blend-screen opacity-5 motion-safe:animate-shake"
 >
