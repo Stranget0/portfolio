@@ -40,7 +40,7 @@ const { tabs } = Astro.props;
 	<TabsList tabs={tabs} />
 </Dialog>
 
-<Dialog dialogId={dialogIds.locales}>
+<Dialog dialogId={dialogIds.locales} transition:persist>
 	<LocalesList tabs={tabs} />
 </Dialog>
 
