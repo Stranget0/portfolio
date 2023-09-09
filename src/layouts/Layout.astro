@@ -24,25 +24,7 @@ const lang = getLangFromUrl(Astro.url);
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
 		<ViewTransitions />
-		<!-- Google tag (gtag.js) -->
-		<script
-			src="https://www.googletagmanager.com/gtag/js?id=G-317175ZQN9"
-			type="text/partytown"></script>
-
-		<script type="text/partytown">
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				// eslint-disable-next-line no-undef
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-
-			gtag("config", "G-317175ZQN9");
-		</script>
-		<script
-		type="text/partytown"
-			src="https://js.sentry-cdn.com/b95fd0cbd5c29e6d281ffa59e7de1742.min.js"
-			crossorigin="anonymous"></script>
+	
 
 		<script>
 			import "@/polyfills";
