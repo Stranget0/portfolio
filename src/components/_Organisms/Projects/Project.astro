@@ -9,10 +9,10 @@ import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionF
 import SectionLinks from "@components/SlidedSection/_SectionLinks.astro";
 import SectionHeading from "@components/SlidedSection/_SectionHeading.astro";
 import SectionYear from "@components/SlidedSection/_SectionYear.astro";
-import AppearingText from "@components/AppearingText/AppearingText.astro";
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { preloadImagesInContainer } from "@plugins/preloadImagesInContainer/serverUtils";
 import AppearingTextButton from "@/components/AppearingText/AppearingTextButton";
+import { scrollVelocityTransform } from "@plugins/scrollVelocityTransform/serverUtils";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -90,7 +90,7 @@ const { Content } = await render();
 		)
 	}
 
-	<div class="fixed bottom-4">
+	<div class="fixed bottom-4"  {...scrollVelocityTransform(5)}>
 		<SectionLinks github={github} class="w-full" />
 	</div>
 </SectionItem>
