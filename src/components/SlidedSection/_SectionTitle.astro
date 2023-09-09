@@ -1,18 +1,32 @@
 ---
 import AppearingLine from "@components/AppearingText/AppearingLine.astro";
-import type {HTMLAttributes} 	from "astro/types"
+import type { HTMLAttributes } from "astro/types";
+import type { CollectionEntry } from "astro:content";
+import AppearingText from "../AppearingText/AppearingText.astro";
 
-interface Props extends HTMLAttributes<"div">{ title: string }
+interface Props extends HTMLAttributes<"div"> {
+	title: string;
+	transcript: CollectionEntry<"transcripts"> | undefined;
+}
 
-const { title, ...other } = Astro.props;
+const { title, transcript, ...other } = Astro.props;
+const stageId = transcript?.id.split("/")[1];
 ---
+
 <!-- TODO: FIX TYPE -->
-<AppearingLine
-{...other as any}
-	tag="h2"
-	text={title}
-	class="sticky z-12 top-4 text-subtitle-1 mb-4 mix-blend-difference mt-1px solid-text-shadow  solid-text-shadow-primary-500 invert text-primary-950"
-	group={1}
-	lettersTransition
-	letterClass="hover:text-accent-200"
-/>
+<AppearingText
+	as="div"
+	id={stageId}
+	transcript={transcript}
+	scrollPosition="start"
+	class="sticky z-12 top-4 text-subtitle-1 mb-4 mix-blend-difference mt-1px solid-text-shadow solid-text-shadow-primary-500 invert text-primary-950"
+>
+	<AppearingLine
+		{...other as any}
+		tag="h2"
+		text={title}
+		group={1}
+		lettersTransition
+		letterClass="hover:text-accent-200"
+	/>
+</AppearingText>
