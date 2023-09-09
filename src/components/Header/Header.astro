@@ -56,13 +56,12 @@ const { tabs } = Astro.props;
 		const timeoutId = setTimeout(() => {
 			clean(
 				scroll(({ y }) => {
-					y.velocity > 0
-						? header.classList.add(hiddenClass)
-						: header.classList.remove(hiddenClass);
+					if (y.velocity > 0) header.classList.add(hiddenClass);
+					else if (y.velocity < 0) header.classList.remove(hiddenClass);
 				}),
 			);
 		}, 5000);
-		
+
 		clean(() => clearTimeout(timeoutId));
 	});
 </script>
