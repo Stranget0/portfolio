@@ -29,48 +29,49 @@ const waypointsData = {
 
 <section
 	id={mainpageTabs.contact.id}
-	class="relative mx-16 flex flex-col items-end min-h-100vh text-primary-50 text-right prose important:max-w-none before:(pseudo-full -inset-x-16 -right-16 bg-primary-950 -z-3)"
-	data-static-h="100vh"
+	class="relative mx-16 min-h-120vh text-primary-50 flex text-right prose important:max-w-none before:(pseudo-full -inset-x-16 -right-16 bg-primary-950 -z-3)"
+	data-static-h="120vh"
 	data-static-h-type="min"
 	{...waypointsData}
 	{...forceFocusViewAttrObj}
 >
-	<AppearingLine
-		as="h2"
-		text={t("common.contact-me")}
-		class="ml-auto max-w-10em pt-4 top-4  z-2 text-subtitle-1 solid-text-shadow"
-		animatedOnView
-	/>
-	<ContactInputContainer
-	>
-		<Input
-			name="name"
-			id="contact-name"
-			label={t("input.name")}
-			wrapperClass="bg-primary-950"
-			required
-			autocomplete
+	<div class="sticky mt-auto mb-4 bottom-4 w-full flex flex-col items-end">
+		<AppearingLine
+			as="h2"
+			text={t("common.contact-me")}
+			class="ml-auto max-w-10em pt-4 top-4 z-2 text-subtitle-1 solid-text-shadow"
+			animatedOnView
 		/>
-		<Input
-			id="contact-email"
-			name="email"
-			label={t("input.email")}
-			type="email"
-			wrapperClass="bg-primary-950"
-			required
-			autocomplete
-		/>
-		<TextArea
-			id="contact-message"
-			label={t("input.message")}
-			name="message"
-			wrapperClass="bg-primary-950 max-h-20 md:max-h-60"
-			required
-			minlength={10}
-			maxlength={1000}
-		/>
-		<Button as="button" type="submit" visualType="outline">
-			<AnimatedText word={t("input.submit")} />
-		</Button>
-	</ContactInputContainer>
+		<ContactInputContainer>
+			<Input
+				name="name"
+				id="contact-name"
+				label={t("input.name")}
+				wrapperClass="bg-primary-950"
+				required
+				autocomplete
+			/>
+			<Input
+				id="contact-email"
+				name="email"
+				label={t("input.email")}
+				type="email"
+				wrapperClass="bg-primary-950"
+				required
+				autocomplete
+			/>
+			<TextArea
+				id="contact-message"
+				label={t("input.message")}
+				name="message"
+				wrapperClass="bg-primary-950 max-h-20 md:max-h-60"
+				required
+				minlength={10}
+				maxlength={1000}
+			/>
+			<Button as="button" type="submit" visualType="outline">
+				<AnimatedText word={t("input.submit")} />
+			</Button>
+		</ContactInputContainer>
+	</div>
 </section>
