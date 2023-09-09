@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@unocss/core': ^0.55.7
-
 dependencies:
   '@astrojs/check':
     specifier: ^0.2.0
@@ -3633,6 +3630,10 @@ packages:
       unconfig: 0.3.10
     dev: true
 
+  /@unocss/core@0.51.8:
+    resolution: {integrity: sha512-myHRKBphEN3h0OnsUhg2JaFKjFGfqF/jmmzZCCMNU5UmxbheZomXANNLYXVgEP6LHvd4xAF0DEzrOBcDPLf0HQ==}
+    dev: true
+
   /@unocss/core@0.55.7:
     resolution: {integrity: sha512-c+bWe844Xjlwc1EPwHj0+n3LpntJG7ELPbEOOxNIG+CQdcEX0l1G0rkM8+nKstJ9WJmgpf1HdJQLVMF62HXvhw==}
     dev: true
@@ -3667,7 +3668,7 @@ packages:
   /@unocss/preset-attributify@0.51.8:
     resolution: {integrity: sha512-2JkGrutvVwvXAC48vCiEpiYLMXlV1rDigR1lwRrKxQC1s/1/j4Wei2RqY0649CkpWZBvdiJ5oPF38NV9pWOnKw==}
     dependencies:
-      '@unocss/core': 0.55.7
+      '@unocss/core': 0.51.8
     dev: true
 
   /@unocss/preset-attributify@0.55.7:
