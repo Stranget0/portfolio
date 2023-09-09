@@ -2,19 +2,25 @@ import { createAwaitSequence } from "@utils/createAwaitSequence";
 import { stageSelector } from "./constants";
 import { isStageContentSmall, playStage } from "./utils";
 import createCleanFunction from "@utils/createCleanFunction";
+import runOnEachPage from "@/utils/runOnEachPage";
+import { pointerMedia } from "@/medias";
+
+let stages: HTMLElement[];
+
+runOnEachPage(() => {
+	stages = Array.from(document.querySelectorAll<HTMLElement>(stageSelector));
+});
+
+addCleaningListeners();
 
 let globalClean: VoidFunction | null = null;
-const runGlobalClean = () => {
+export function cancelPlayingStages() {
 	globalClean?.();
 	globalClean = null;
-};
-
-const stages = Array.from(
-	document.querySelectorAll<HTMLElement>(stageSelector),
-);
+}
 
 export async function playSingleStage(stage: HTMLElement) {
-	runGlobalClean();
+	cancelPlayingStages();
 
 	try {
 		const { clean, finished } = playStage(stage);
@@ -23,12 +29,12 @@ export async function playSingleStage(stage: HTMLElement) {
 	} catch (e) {
 		console.error(e);
 	} finally {
-		runGlobalClean();
+		cancelPlayingStages();
 	}
 }
 
 export async function playAllStages() {
-	runGlobalClean();
+	cancelPlayingStages();
 
 	try {
 		const { runSequence, cancel } = createAwaitSequence();
@@ -49,11 +55,17 @@ export async function playAllStages() {
 	} catch (e) {
 		console.error(e);
 	} finally {
-		runGlobalClean();
+		cancelPlayingStages();
 	}
 }
 
-export function cancelPlayingStages() {
-	runGlobalClean();
+function addCleaningListeners() {
+	if (pointerMedia.matches) {
+		window.addEventListener("wheel", cancelPlayingStages);
+	} else {
+		window.addEventListener("click", cancelPlayingStages);
+		window.addEventListener("touchstart", () => {
+			window.addEventListener("touchmove", cancelPlayingStages, { once: true });
+		});
+	}
 }
-
