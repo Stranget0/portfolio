@@ -2,5 +2,22 @@
 <script
 	src="https://www.googletagmanager.com/gtag/js?id=G-317175ZQN9"
 	type="text/partytown"></script>
-<script src="./gtag.js" type="text/partytown"></script>
-<script src="./hotjar.js" ></script>
+<script type="text/partytown">
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+	// eslint-disable-next-line no-undef
+	dataLayer.push(arguments);
+}
+gtag("js", new Date());
+
+gtag("config", "G-317175ZQN9");
+</script>
+
+<script>
+	import Hotjar from "@hotjar/browser";
+
+	const siteId = 3647110;
+	const hotjarVersion = 6;
+
+	Hotjar.init(siteId, hotjarVersion);
+</script>

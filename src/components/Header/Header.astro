@@ -46,11 +46,23 @@ const { tabs } = Astro.props;
 
 <script>
 	import runOnEachPage from "@utils/runOnEachPage";
+	import { scroll } from "motion";
 
-	runOnEachPage(() => {
+	runOnEachPage((clean) => {
 		const hiddenClass = "-translate-y-50";
 		const header = document.querySelector<HTMLElement>("header");
-		header?.classList.remove(hiddenClass);
+		if (!header) return;
+		header.classList.remove(hiddenClass);
+		const timeoutId = setTimeout(() => {
+			clean(
+				scroll(({ y }) => {
+					if (y.velocity > 0) header.classList.add(hiddenClass);
+					else if (y.velocity < 0) header.classList.remove(hiddenClass);
+				}),
+			);
+		}, 5000);
+
+		clean(() => clearTimeout(timeoutId));
 	});
 </script>
 

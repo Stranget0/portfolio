@@ -2,7 +2,7 @@ import createCleanFunction from "@/utils/createCleanFunction";
 import type { CloseType } from "./types";
 import runOnEachPage from "@/utils/runOnEachPage";
 
-runOnEachPage(() => {
+runOnEachPage((clean) => {
 	for (const target of document.querySelectorAll<HTMLElement>(
 		"[data-target-selector]",
 	)) {
@@ -11,6 +11,7 @@ runOnEachPage(() => {
 		const pointedElement =
 			targetSelector && document.querySelector<HTMLElement>(targetSelector);
 		const cleanMenago = createCleanFunction();
+		clean(cleanMenago.clean);
 
 		if (!pointedElement || !targetSelector) {
 			if (!pointedElement) {
