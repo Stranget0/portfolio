@@ -18,7 +18,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 		seo: {
 			title: "Marcin Smarzewski - Web Development",
 			description:
-				"Web Development is my craft. Want to build an awesome website? Give me a visit",
+				"I'm a web development expert dedicated to crafting exceptional websites. Visit me to create your amazing online presence and hire a programmer!",
 			keywords:
 				"web developer, freelance web developer, frontend developer, web development, web design, UX/UI design, frontend, front-end",
 		},
@@ -77,7 +77,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 		seo: {
 			title: "Marcin Smarzewski - Tworzenie stron internetowych",
 			description:
-				"Hej! Jestem Marcin i tworzę unikalne strony internetowe. Chcesz zbudować wspaniałą stronę internetową? Napisz do mnie!.",
+				"Jestem ekspertem w dziedzinie tworzenia stron internetowych oddanym tworzeniu wyjątkowych witryn. Odwiedź mnie, aby stworzyć swoją niesamowitą tożsamość online i zatrudnij programistę!",
 			keywords:
 				"web developer, niezależny twórca stron internetowych, programista front-end, tworzenie stron internetowych, projektowanie stron internetowych, projektowanie UX/UI, frontend, front-end",
 		},
@@ -109,7 +109,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			"profile-alt": "Picture of me",
 			text: [
 				"MIŁO MI CIĘ POZNAĆ!",
-				"Nazywam się Marcin i jestem tak zwanym Web Developerem.",
+				"Nazywam się Marcin i jestem profesjonalnym Web Developerem.",
 				"Tworzę funkcjonalne, dynamiczne strony internetowe, które wyróżnią się spośród tych, które widzisz na co dzień.",
 				"Wierzę, że sprawienie dobrego wrażenia u klienta sprawi, że Twoja marka się wyróżni.",
 				"Więc jak tam, chcesz stworzyć coś ",
