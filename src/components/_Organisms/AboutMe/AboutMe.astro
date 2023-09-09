@@ -55,8 +55,8 @@ const t = useTranslations(lang);
 		class="flex flex-col flex-shrink align-end text-center prose md:(text-right basis-full)"
 		id={stageId}
 	>
+		<h2 class="text-label">{t("sections.about-me")}</h2>
 		<AppearingLine
-			as="h2"
 			class="text-subtitle-1 solid-text-shadow"
 			text={t("about-me.text.0")}
 			group={1}
@@ -87,7 +87,8 @@ const t = useTranslations(lang);
 			)
 		}
 		<AppearingLine
-			class="text-primary-600 text-8 text-balance motion-safe:transition-opacity-1000"
+			as="h3"
+			class="text-primary-600 text-subtitle-3 text-8 text-balance motion-safe:transition-opacity-1000"
 			text={t("about-me.text.1")}
 			group={2}
 			{...appearInView}
