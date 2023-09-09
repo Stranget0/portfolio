@@ -8,7 +8,7 @@ export const projectSchema = z.object({
 	description: z.string().optional(),
 	floatingImages: imagesSchema.optional(),
 	fullscreenImages: imagesSchema.optional(),
-	audioTextTimings: z.array(z.number()).optional(),
+	transcript: reference("transcripts").optional(),
 	class: z.string().optional(),
 	titleClass: z.string().optional(),
 	technologies: z.array(reference("technologies")).optional(),

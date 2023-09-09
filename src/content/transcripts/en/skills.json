@@ -1,0 +1,23 @@
+{
+	"audio": "skills.mp3",
+	"results": [
+		{
+			"alternatives": [
+				{
+					"transcript": "skills",
+					"confidence": 0.96078,
+					"words": [
+						{
+							"startTime": "0.100s",
+							"endTime": "0.600s",
+							"word": "skills",
+							"confidence": 0.96078
+						}
+					]
+				}
+			],
+			"resultEndTime": "0.910s",
+			"languageCode": "en-us"
+		}
+	]
+}
