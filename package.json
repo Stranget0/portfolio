@@ -22,8 +22,6 @@
     "@astrojs/partytown": "^2.0.0",
     "@astrojs/solid-js": "^3.0.0",
     "@motionone/solid": "^10.16.2",
-    "@sentry/browser": "^7.68.0",
-    "@sentry/cli": "^2.20.6",
     "@solid-primitives/keyed": "^1.2.0",
     "@unseenco/taxi": "^1.2.2",
     "astro": "^3.0.7",

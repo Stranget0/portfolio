@@ -8,7 +8,7 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [UnoCSS(), mdx(), solidJs(), partytown({config:{forward:["dataLayer.push"]}})],
+  integrations: [UnoCSS(), mdx(), solidJs(), partytown({config:{forward:["dataLayer.push", 'hj', 'hjBootstrap', 'hjLazyModules', 'hjSiteSettings', '_hjSettings']}})],
   vite: {
     plugins: [visualizer({
       template: "sunburst",

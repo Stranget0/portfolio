@@ -8,12 +8,15 @@ import type { HeaderProps } from "@components/Header/Header.astro";
 import Header from "@components/Header/Header.astro";
 import { mainpageTabs } from "src/constants";
 import { ViewTransitions } from "astro:transitions";
+import { getLangFromUrl } from "@/i18n/utils";
 
 type Props = HeaderProps;
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -21,25 +24,7 @@ type Props = HeaderProps;
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
 		<ViewTransitions />
-		<!-- Google tag (gtag.js) -->
-		<script
-			src="https://www.googletagmanager.com/gtag/js?id=G-317175ZQN9"
-			type="text/partytown"></script>
-
-		<script type="text/partytown">
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				// eslint-disable-next-line no-undef
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-
-			gtag("config", "G-317175ZQN9");
-		</script>
-		<script
-			src="https://js.sentry-cdn.com/b95fd0cbd5c29e6d281ffa59e7de1742.min.js"
-			crossorigin="anonymous"></script>
-
+	
 
 		<script>
 			import "@/polyfills";
