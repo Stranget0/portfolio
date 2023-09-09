@@ -1,27 +1,41 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import AppearingText from "../AppearingText/AppearingText.astro";
+import type { CollectionEntry } from "astro:content";
+import classNames from "classnames";
+import { classInView } from "@/plugins/classInView/serverUtils";
 
-type Props = HTMLAttributes<"div">;
+type Props = HTMLAttributes<"div"> & {
+	transcript: CollectionEntry<"transcripts"> | undefined;
+	id: string | undefined;
+};
 
-const { class: className, ...other } = Astro.props;
+const { class: className, id, transcript, ...other } = Astro.props;
+
+const ignoreTransform = classInView("important:transform-none", "");
 ---
 
 <div
 	class="text-balance flex-col-center justify-center items-center prose h-max text-center mx-auto mt-50 max-w-full right-4 left-4 bottom-4 top-0 motion-safe:transition-300 lg:(right-36 left-36 bottom-8)"
 >
-	<div
-		{...other}
+	<AppearingText
+		{...other as any}
+		as="div"
+		transcript={transcript}
+		id={id}
 		data-scroll-target-keyframes={JSON.stringify({
 			transform: ["translate3d(0,300px,0) scale3d(0,0,0)", "none", null],
 			opacity: [0, 0, 1, 0, 0],
 		})}
 		data-scroll-target
 		data-scroll-target-ref
-		class:list={[
-			"no-transform-mobile text-body prose appear-item transition-transform-10000",
+		isDebug
+		class={classNames([
+			"no-transform-mobile text-body prose appear-item",
 			className,
-		]}
+		])}
+		{...ignoreTransform}
 	>
 		<slot />
-	</div>
+	</AppearingText>
 </div>

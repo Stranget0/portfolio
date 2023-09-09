@@ -4,7 +4,7 @@ import SectionFullscreenImages from "@components/SlidedSection/_SectionFullscree
 import SectionItem from "@components/SlidedSection/_SectionItem.astro";
 import SectionItemDescription from "@components/SlidedSection/_SectionItemDescription.astro";
 import SectionItemTitle from "@components/SlidedSection/_SectionItemTitle.astro";
-import type {  CollectionEntry } from "astro:content";
+import { getEntry, type CollectionEntry } from "astro:content";
 import SectionFloatingImagesReferences from "@components/SlidedSection/_SectionFloatingImagesReferences.astro";
 import SectionLinks from "@components/SlidedSection/_SectionLinks.astro";
 import SectionHeading from "@components/SlidedSection/_SectionHeading.astro";
@@ -12,19 +12,20 @@ import SectionYear from "@components/SlidedSection/_SectionYear.astro";
 import AppearingText from "@components/AppearingText/AppearingText.astro";
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { preloadImagesInContainer } from "@plugins/preloadImagesInContainer/serverUtils";
+import AppearingTextButton from "@/components/AppearingText/AppearingTextButton";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
 }
 
 const { frontmatter } = Astro.props;
-const { data, render, slug, id } = frontmatter;
+const { data, render, slug } = frontmatter;
 const {
 	fullscreenImages,
 	floatingImages,
 	title,
-	description:_description,
-	audioTextTimings,
+	description: _description,
+	transcript: projectTranscript,
 	startYear,
 	endYear,
 	class: className = "bg-primary-50 color-var-primary-900",
@@ -33,12 +34,14 @@ const {
 	website,
 } = data;
 
+const transcript =
+	projectTranscript &&
+	(await getEntry(projectTranscript.collection, projectTranscript.id));
 
 const hasFullscreenImages = !!fullscreenImages?.length;
 const hasFloatingImages = !!floatingImages?.length;
 
-const isScrollRefFeature = true;
-
+const stageId = transcript?.id.split("/")[1];
 
 const { Content } = await render();
 ---
@@ -46,38 +49,40 @@ const { Content } = await render();
 <SectionItem
 	id={slug}
 	class={className}
-	data-scroll-feature-refs={isScrollRefFeature ? true : undefined}
 	{...preloadImagesInContainer}
 	{...forceFocusViewAttrObj}
 >
-	<!-- <SectionTopFixed>
-		<SectionYear startYear={startYear} endYear={endYear} />
-	</SectionTopFixed> -->
-	<AppearingText
-		wordTimings={audioTextTimings || []}
-		wordsReference={[]}
-		audioPath=""
-		id={id}
-	>
-		{title && <SectionItemTitle title={title} class={titleClass} />}
-		<SectionItemDescription>
-			<SectionYear startYear={startYear} endYear={endYear} />
-			<Content
-				components={{
-					h1: SectionHeading,
-				}}
+	{
+		title && (
+			<SectionItemTitle
+				title={title}
+				class={titleClass}
+				href={website || github}
 			/>
-		</SectionItemDescription>
-	</AppearingText>
-	
+		)
+	}
+	<SectionItemDescription id={stageId} transcript={transcript}>
+		<SectionYear startYear={startYear} endYear={endYear} />
+		{
+			stageId && (
+				<AppearingTextButton client:visible stageId={stageId} class="mx-auto" />
+			)
+		}
+		<Content
+			components={{
+				h1: SectionHeading,
+			}}
+		/>
+	</SectionItemDescription>
+
 	{
 		hasFullscreenImages && (
 			<SectionFullscreenImages
-			images={fullscreenImages}
+				images={fullscreenImages}
 				floatingImages={floatingImages}
-				/>
-				)
-			}
+			/>
+		)
+	}
 	{hasFloatingImages && <SectionFloatingImages images={floatingImages} />}
 	{
 		hasFloatingImages && (
@@ -86,14 +91,13 @@ const { Content } = await render();
 	}
 
 	<div class="fixed bottom-4">
-		<SectionLinks website={website} github={github} class="w-full" />
+		<SectionLinks github={github} class="w-full" />
 	</div>
 </SectionItem>
 
 <script>
 	import importInView from "@utils/importInView/importInView";
-	importInView(
-		"scroll-reference",
-		() => import("@components/_CustomElements/ScrollReference")
+	importInView("scroll-reference", () =>
+		import("@components/_CustomElements/ScrollReference"),
 	);
 </script>

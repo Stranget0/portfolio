@@ -1,3 +1,9 @@
-<div class:list={["sticky top-font-4xl pt-4 z-5 pb-4 w-full"]} >
-	<slot/>
-</div>
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+type Props<T extends HTMLTag> = Polymorphic<{ as: T }>;
+const {as:Tag="div", class:className, ...other} = Astro.props;
+---
+
+<Tag {...other} class:list={["block sticky top-font-4xl pt-4 z-5 pb-4 w-full", className]}>
+	<slot />
+</Tag>

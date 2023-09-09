@@ -7,14 +7,18 @@ import classNames from "classnames";
 
 interface Props extends Omit<HTMLAttributes<"h3">, "title"> {
 	title: string;
+	href?: string;
 }
-const { title, class: className, ...other } = Astro.props;
+
+const { title, class: className, href, ...other } = Astro.props;
+const Tag = href ? "a" : "h3";
 ---
 
-<SectionTopSticky>
+<SectionTopSticky as={Tag === "a" ? "h2" : undefined}>
 	<AppearingLine
 		{...other as any}
-		as="h3"
+		as={Tag}
+		href={href}
 		text={title}
 		class={classNames("text-subtitle-2 solid-text-shadow", className)}
 		group={2}
