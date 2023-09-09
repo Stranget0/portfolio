@@ -7,7 +7,7 @@ import { appearingTextState, setAppearingTextState } from "./state";
 import { tooltipIgnore } from "../Tooltip/serverUtils";
 
 interface Props extends ButtonProps<"button"> {
-	stageId?: string;
+	stageId: string | undefined;
 	mainLabel?: string;
 	direction?: "row" | "column";
 	iconClass?: string;
@@ -22,7 +22,7 @@ const AppearingTextButton: Component<Props> = (props) => {
 		classOverride,
 		invertColor,
 		size = "small",
-		visualType,
+		visualType = "outline",
 		mainLabel = "Play audio",
 		direction = "row",
 		iconClass = "w-6 h-6",
