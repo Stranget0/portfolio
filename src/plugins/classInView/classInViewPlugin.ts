@@ -8,8 +8,11 @@ import {
 import isInViewport from "@/utils/isInViewport";
 import getUserAgent from "@/utils/getUserAgent";
 import runOnEachPage from "@/utils/runOnEachPage";
+import createCleanFunction from "@/utils/createCleanFunction";
 
+const cleanMenago = createCleanFunction();
 runOnEachPage(() => {
+	cleanMenago.clean();
 	const isEdge = getUserAgent() === "edge";
 	const targets = document.querySelectorAll<HTMLElement>(
 		`[${classInViewAttr}]`,
@@ -21,18 +24,20 @@ runOnEachPage(() => {
 		);
 		if (!isInViewport(target)) toggleTargetOff(target);
 
-		inView(
-			target,
-			({ target }) => {
-				toggleTargetOn(target as HTMLElement);
-				return ({ target }) => toggleTargetOff(target as HTMLElement);
-			},
-			{ amount: Number.isNaN(threshold) ? 0 : threshold },
+		cleanMenago.push(
+			inView(
+				target,
+				({ target }) => {
+					toggleTargetOn(target as HTMLElement);
+					return ({ target }) => toggleTargetOff(target as HTMLElement);
+				},
+				{ amount: Number.isNaN(threshold) ? 0 : threshold },
+			),
 		);
 	}
 	function toggleTargetOff(target: HTMLElement): void {
 		const isWorkaround = classInViewWorkaroundDataKey in target.dataset;
-	
+
 		if (isWorkaround && isEdge && isInViewport(target)) return;
 		const [outClass, inClass] = getToggledClassName(target);
 		switchClasses(target, inClass, outClass);
@@ -50,8 +55,6 @@ function toggleTargetOn(target: HTMLElement): void {
 	} else if (hasClassName) return;
 	switchClasses(target, outClass, inClass);
 }
-
-
 
 function getToggledClassName(target: HTMLElement): string[][] {
 	return (
