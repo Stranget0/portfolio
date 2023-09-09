@@ -29,27 +29,27 @@ const waypointsData = {
 
 <section
 	id={mainpageTabs.contact.id}
-	class="min-h-120vh text-primary-50 relative text-right before:(pseudo-full bg-primary-950 -z-3)"
-	data-static-h="120vh"
+	class="min-h-100vh text-primary-50 relative text-right before:(pseudo-full bg-primary-950 -z-3)"
+	data-static-h="100vh"
 	data-static-h-type="min"
 	{...waypointsData}
 	{...forceFocusViewAttrObj}
 >
 	<SectionClip class="absolute inset-0">
-		<div class="absolute inset-0 -top-screen important:-top-100svh">
+		<AppearingLine
+			as="h2"
+			text={t("common.contact-me")}
+			class="relative ml-auto mt-4 mr-4 top-4 lg:(mr-16 top-16) w-min z-1000 text-subtitle-1 solid-text-shadow"
+			animatedOnView
+		/>
+		<div class="absolute inset-0 -top-100vh important:-top-100svh">
 			<div
-				class="sticky section pb-4 top-0 h-screen important:h-100svh justify-end items-center lg:items-end"
+				class="sticky section px-16 pb-4 top-0 h-screen important:h-100svh justify-end items-center lg:items-end"
 			>
 				<ContactInputContainer
 					class="motion-safe:transition-300"
-					{...classInView("opacity-0 scale-0", "", 0.33)}
+					{...classInView("opacity-0 scale-0", "", 0.5)}
 				>
-					<AppearingLine
-						as="h2"
-						text={t("common.contact-me")}
-						class="text-subtitle-1 solid-text-shadow"
-						animatedOnView
-					/>
 					<Input
 						name="name"
 						id="contact-name"
