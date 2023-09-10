@@ -14,7 +14,7 @@ export default defineConfig({
 		solidJs(),
 		partytown({
 			config: {
-				forward: ["dataLayer.push", "gtag", "window.gtag"],
+				forward: ["dataLayer.push", "gtag"],
 			},
 		}),
 	],
