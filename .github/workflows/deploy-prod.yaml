@@ -27,37 +27,14 @@ jobs:
           pnpm i -g @bahmutov/print-env@2
           print-env GITHUB BUILD ACTIONS || true
 
-      # Restore the previous NPM modules and Cypress binary archives.
-      # Any updated archives will be saved automatically after the entire
-      # workflow successfully finishes.
-      # See https://github.com/actions/cache
-      # we use exact restore key to avoid NPM module snowballing
-      # https://glebbahmutov.com/blog/do-not-let-npm-cache-snowball/
-     
-      # we use the exact restore key to avoid Cypress binary snowballing
-      # https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/
-      - name: Cache Cypress binary
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Cypress install
+        run: npx playwright install-deps webkit
 
       - name: Cypress install
         uses: cypress-io/github-action@v6
         with:
           # Disable running of tests within install job
           runTests: false
-          build: npx playwright install-deps webkit
-
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
-        with:
-          # Disable running of tests within install job
-          runTests: false
-          # Dont install cypress
-          install: false
           # Build app
           build: npm run build
 
