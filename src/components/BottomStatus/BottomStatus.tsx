@@ -3,7 +3,6 @@ import { bottomStatus } from "./state";
 import MouseIcon from "@/components/MouseIcon.tsx";
 import type { SupportedLanguage } from "@/i18n/types";
 import classNames from "classnames";
-import { createEffect } from "solid-js";
 
 export default function BottomStatus({ lang }: { lang: SupportedLanguage }) {
 	const t = useTranslations(lang);
