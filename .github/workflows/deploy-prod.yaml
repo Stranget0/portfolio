@@ -1,7 +1,7 @@
 name: Deploy prod
 on: [push]
 jobs:
-  tests-chrome:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -9,51 +9,81 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      # https://github.com/cypress-io/github-action
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: npm run build
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          if-no-files-found: error
+          path: dist
+
+  tests-chrome:
+    runs-on: ubuntu-20.04
+    needs: [build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
       - name: Cypress run (Chrome)
         uses: cypress-io/github-action@v6
         with:
-          # check the spec types
-          build: npm run lint
-          # start the application before running Cypress
-          start: npm run start-quiet
+          start: npx astro preview
           browser: chrome
 
   tests-firefox:
     runs-on: ubuntu-20.04
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      # https://github.com/cypress-io/github-action
+      
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
       - name: Cypress run (Firefox)
         uses: cypress-io/github-action@v6
         with:
-          # check the spec types
-          build: npm run lint
-          # start the application before running Cypress
-          start: npm run start-quiet
+          start: npx astro preview
           browser: firefox
-          # cy.dblclick did not work in headless FF mode
-          headed: true
 
   tests-webkit:
     runs-on: ubuntu-20.04
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      # https://github.com/cypress-io/github-action
+      
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
       - name: Install dependencies
         uses: cypress-io/github-action@v6
         with:
@@ -66,12 +96,21 @@ jobs:
         with:
           # we have already installed everything
           install: false
-          # check the spec types
-          build: npm run lint
-          # start the application before running Cypress
-          start: npm run start-quiet
+          start: npx astro preview
           browser: webkit
-      
+
+  type-check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: check types
+        run: npm run test:files
+
   deploy:
     name: Deploy
     runs-on: ubuntu-22.04
@@ -82,8 +121,6 @@ jobs:
         with:
           version: 8
 
-      # install a specific version of Node using
-      # https://github.com/actions/setup-node
       - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
