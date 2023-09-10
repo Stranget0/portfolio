@@ -49,9 +49,6 @@
 	report-uri = "https://64fa655c15b491ee727135ca.endpoint.csper.io/?v=0;"
 	worker-src = "blob:;"
 
-[build]
-	command = "cypress install && npx playwright install webkit && npm run test && npm run build"
-
 [[redirects]]
   from = "/"
   to = "/pl"
