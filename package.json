@@ -16,7 +16,9 @@
 		"test:files": "npm run lint && npm run type-check",
 		"prettier": "prettier --write ./src/**",
 		"lint": "eslint src/** --fix",
-		"type-check": "astro check && tsc --noEmit"
+		"type-check": "astro check && tsc --noEmit",
+		"deploy:dev": "netlify deploy --dir=dist",
+		"deploy:prod": "netlify deploy --dir=dist --prod"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.2.0",

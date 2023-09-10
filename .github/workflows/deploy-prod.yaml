@@ -1,0 +1,223 @@
+name: Cypress parallel tests
+
+on: 
+  push:
+    branches: 
+      - master
+
+jobs:
+  install:
+    name: Install PNPM and Cypress
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+        
+      # just so we learn about available environment variables GitHub provides
+      - name: Print CI env variables
+        run: |
+          pnpm i -g @bahmutov/print-env@2
+          print-env GITHUB BUILD ACTIONS || true
+
+      # Restore the previous NPM modules and Cypress binary archives.
+      # Any updated archives will be saved automatically after the entire
+      # workflow successfully finishes.
+      # See https://github.com/actions/cache
+      # we use exact restore key to avoid NPM module snowballing
+      # https://glebbahmutov.com/blog/do-not-let-npm-cache-snowball/
+      - name: Cache central NPM modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      # we use the exact restore key to avoid Cypress binary snowballing
+      # https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      # Cache local node_modules to pass to testing jobs
+      - name: Cache local node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-${{ github.ref }}-
+
+      - name: install dependencies and verify Cypress
+        env:
+          # make sure every Cypress install prints minimal information
+          CI: 1
+        run: |
+          pnpm install
+          npx cypress cache path
+          npx cypress cache list
+          npx cypress verify
+          npx cypress info
+
+  # Duplicate job definitions - GitHub YAML does not support
+  # anchor definitions yet, thus we cannot put same steps into a template object yet
+  test1:
+    name: Cypress test 1
+    runs-on: ubuntu-22.04
+    needs: install
+    steps:
+      - uses: actions/checkout@v3
+
+      # install a specific version of Node using
+      # https://github.com/actions/setup-node
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Restore just local node_modules and the Cypress binary archives.
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Cache local node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-${{ github.ref }}-
+
+      # check the restored Cypress binary
+      - name: Check binary
+        run: |
+          npx cypress cache path
+          npx cypress cache list
+
+      # Starts local server, then runs Cypress tests and records results on Cypress Cloud
+      - name: Cypress tests
+        run: |
+          npm start &
+          npx cypress run --record --parallel --group "Parallel 2x"
+        env:
+          # place your secret record key at
+          # https://github.com/cypress-io/cypress-example-kitchensink/settings/secrets
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          TERM: xterm
+
+      # Save videos and screenshots as test artifacts
+      # https://github.com/actions/upload-artifact
+      - uses: actions/upload-artifact@v3
+        # there might be no screenshots created when:
+        # - there are no test failures
+        # so only upload screenshots if previous step has failed
+        if: failure()
+        with:
+          name: screenshots
+          path: cypress/screenshots
+      # video should always be generated
+      - uses: actions/upload-artifact@v3
+        with:
+          name: videos
+          path: cypress/videos
+
+  test2:
+    name: Cypress test 2
+    runs-on: ubuntu-22.04
+    needs: install
+    steps:
+      - uses: actions/checkout@v3
+
+      # install a specific version of Node using
+      # https://github.com/actions/setup-node
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Restore just local node_modules and the Cypress binary archives.
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-cypress-${{ github.ref }}-
+
+      - name: Cache local node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      # check the restored Cypress binary
+      - name: Check binary
+        run: |
+          npx cypress cache path
+          npx cypress cache list
+
+      # Starts local server, then runs Cypress tests and records results on Cypress Cloud
+      - name: Cypress tests
+        run: |
+          npm start &
+          npx cypress run --record --parallel --group "Parallel 2x"
+        env:
+          # place your secret record key at
+          # https://github.com/cypress-io/cypress-example-kitchensink/settings/secrets
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          TERM: xterm
+
+      # Save videos and screenshots as test artifacts
+      # https://github.com/actions/upload-artifact
+      - uses: actions/upload-artifact@v3
+        # there might be no screenshots created when:
+        # - there are no test failures
+        # so only upload screenshots if previous step has failed
+        if: failure()
+        with:
+          name: screenshots
+          path: cypress/screenshots
+      # video should always be generated
+      - uses: actions/upload-artifact@v3
+        with:
+          name: videos
+          path: cypress/videos
+      
+  deploy:
+    name: Cypress test 2
+    runs-on: ubuntu-22.04
+    needs: install
+    steps:
+      - uses: actions/checkout@v3
+
+      # install a specific version of Node using
+      # https://github.com/actions/setup-node
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Deploy
+        run: pnpm run deploy:prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
