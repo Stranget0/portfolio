@@ -1,6 +1,14 @@
 name: Deploy prod
 on: [push]
 jobs:
+  check-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Record Key
+        env:
+          CYPRESS_RECORD_KEY: ${{env.CYPRESS_RECORD_KEY}}
+        run: echo "$CYPRESS_RECORD_KEY"
+
   build:
     runs-on: ubuntu-20.04
     steps:
