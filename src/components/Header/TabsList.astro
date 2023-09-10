@@ -1,6 +1,7 @@
 ---
 import ListTitle from "./ListTitle.astro";
-import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import tabFilters from "@utils/tabFilters";
 import type { Tabs } from "@/types";
 interface Props {
 	tabs: Tabs;
@@ -9,28 +10,30 @@ interface Props {
 const { tabs } = Astro.props;
 const tabsEntries = Object.entries(tabs);
 
-const t = useTranslations(Astro.url);
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <ListTitle>{t("header.menu")}</ListTitle>
 <ul class="absolute-center flex-col-center gap-6">
 	{
-		tabsEntries.map(async ([_, { id, label, filter }]) => {
+		tabsEntries.map(async ([_, { id, label }]) => {
 			const labelText = label(Astro.url);
+			const tabFilter = tabFilters[id];
+
+			if (tabFilter && !(await tabFilter(lang))) return;
 			return (
-				(!filter || (await filter(Astro.url))) && (
-					<li class="motion-safe:transition-transform">
-						<a
-							is="nav-tab"
-							class="animated-underline animated-underline-right font-light"
-							href={`#${id}`}
-							data-tab-active-class="before:important:scale-x-100"
-							title={labelText}
-						>
-							{labelText}
-						</a>
-					</li>
-				)
+				<li class="motion-safe:transition-transform">
+					<a
+						is="nav-tab"
+						class="animated-underline animated-underline-right font-light"
+						href={`#${id}`}
+						data-tab-active-class="before:important:scale-x-100"
+						title={labelText}
+					>
+						{labelText}
+					</a>
+				</li>
 			);
 		})
 	}

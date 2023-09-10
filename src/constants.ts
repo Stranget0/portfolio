@@ -1,6 +1,5 @@
-import { getLangFromUrl, useTranslations } from "./i18n/utils";
+import { useTranslations } from "./i18n/utils";
 import type { Tabs } from "./types";
-import hasTranscripts from "./utils/hasTranscripts";
 
 export const TEXT_NODE = 3;
 
@@ -12,8 +11,6 @@ export const mainpageTabs = {
 	play: {
 		id: "play-website-tab",
 		label: (url) => useTranslations(url)("sections.play"),
-		filter: (url) =>
-			hasTranscripts(typeof url === "string" ? url : getLangFromUrl(url)),
 	},
 	aboutMe: {
 		id: "about-me-tab",
