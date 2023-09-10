@@ -1,0 +1,1 @@
+export type BottomStatusState = "spinner" | "scroll" | null

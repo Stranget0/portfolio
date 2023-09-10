@@ -14,17 +14,7 @@ const removeOnFoxLoaded = classOnFoxLoaded("hidden");
 		{...appearOnFoxLoaded}
 		id={threeCanvasId}></canvas>
 </div>
-<div
-	role="region"
-	aria-label="loading fox model"
-	aria-hidden="true"
-	{...appearOnFoxLoading}
-	{...removeOnFoxLoaded}
-	class="mix-blend-difference text-primary-50 i-svg-spinners-12-dots-scale-rotate?mask z-20 pointer-events-none h-60 max-h-10vh w-full fixed bottom-4 opacity-0 motion-safe:transition-opacity-900"
-	aria-hidden="true"
-	transition:persist
->
-</div>
+
 <script>
 	import "./foxApi";
 </script>

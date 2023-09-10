@@ -1,0 +1,31 @@
+---
+interface Props {
+	texts?: string[];
+}
+
+const { texts: spinnedTexts = [] } = Astro.props;
+---
+
+{
+	spinnedTexts.map((text, i, { length }) => {
+		const deg = ((i - 0.15) / (length - 1)) * 200;
+		return (
+			<div
+				class="hidden sm:block menu-opafocus-option transform-origin-l text-subtitle-4 solid-text-shadow text-5 opacity-50 font-serif absolute -translate-50% mix-blend-difference"
+				style={{
+					left: `calc(50% + min(200px, 25vmin) * cos(${deg}deg))`,
+					top: `calc(50% + min(200px, 25vmin) * sin(${deg}deg))`,
+				}}
+			>
+				<p
+					class="motion-safe:animate-bounce-in important:animate-fill-both"
+					style={{
+						"animation-delay": `${(length - i) * 150}ms`,
+					}}
+				>
+					{text}
+				</p>
+			</div>
+		);
+	})
+}

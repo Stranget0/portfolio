@@ -1,20 +1,14 @@
-import initHeroController from "./foxRoot";
-import elementWaypointsInit from "./modules/waypoints/elementWaypoints";
-import fog from "./modules/fog";
-import loadFox from "./modules/fox/fox";
-import addLeaves from "./modules/leaves/leaves";
-import lights from "./modules/lights";
-import orbit from "./modules/orbit";
-import renderObstacles from "./modules/renderObstacles/renderObstaclesInit";
-import {
-	foxClassOnLoadedAttr,
-	foxClassOnLoadedDataKey,
-	foxClassOnLoadingAttr,
-	foxClassOnLoadingDataKey,
-	foxObstacleAttr,
-} from "./constants";
-import { foxHandleOnClasses } from "./serverUtils";
+import initHeroController from "./_root";
+import elementWaypointsInit from "../modules/waypoints/elementWaypoints";
+import fog from "../modules/fog";
+import loadFox from "../modules/fox/fox";
+import addLeaves from "../modules/leaves/leaves";
+import lights from "../modules/lights";
+import orbit from "../modules/orbit";
+import renderObstacles from "../modules/renderObstacles/renderObstaclesInit";
+import { foxObstacleAttr } from "../constants";
 import runOnEachPage from "@/utils/runOnEachPage";
+import { handleLoadedStatus } from "../utils";
 
 const controller = initHeroController(
 	loadFox,
@@ -54,17 +48,7 @@ Promise.all([controller.fox, controller.leafs])
 		controller.setObstacleSelector(`[${foxObstacleAttr}]`);
 	})
 	.catch((e) => console.error("Failed to load scene", e))
-	.finally(() => {
-		// TODO handle errors better
-		foxHandleOnClasses(
-			foxClassOnLoadingAttr,
-			foxClassOnLoadingDataKey,
-			"remove",
-		);
-		runOnEachPage(() => {
-			foxHandleOnClasses(foxClassOnLoadedAttr, foxClassOnLoadedDataKey);
-		});
-	});
+	.finally(handleLoadedStatus);
 
 export type FoxControllerType = typeof controller;
 export default controller;

@@ -1,14 +1,14 @@
-import { foxClassOnLoadingAttr, foxClassOnLoadingDataKey } from "./constants";
-import type { FoxControllerType } from "./foxController";
-import { foxHandleOnClasses } from "./serverUtils";
+import { setBottomStatus } from "../BottomStatus/state";
+import type { FoxControllerType } from "./controller/controller";
 
 let foxPromise: null | Promise<FoxControllerType> = null;
 
+setBottomStatus("scroll");
 document.addEventListener("scroll", load, { once: true });
 
 function load() {
-	foxHandleOnClasses(foxClassOnLoadingAttr, foxClassOnLoadingDataKey);
-	foxPromise = import("./foxController").then(({ default: d }) => d);
+	setBottomStatus("spinner");
+	foxPromise = import("./controller/controller").then(({ default: d }) => d);
 }
 
 export default function getFoxController() {
