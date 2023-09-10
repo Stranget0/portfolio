@@ -14,16 +14,7 @@ export default defineConfig({
 		solidJs(),
 		partytown({
 			config: {
-				forward: [
-					"dataLayer.push",
-					// "hj",
-					// "hjBootstrap",
-					// "hjLazyModules",
-					// "hjSiteSettings",
-					// "_hjSettings",
-					// "_hjSettings.hjid",
-					// "_hjSettings.hjsv",
-				],
+				forward: ["dataLayer.push", "gtag", "window.gtag"],
 			},
 		}),
 	],
