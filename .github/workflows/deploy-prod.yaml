@@ -6,6 +6,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       # https://github.com/cypress-io/github-action
@@ -23,6 +24,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       # https://github.com/cypress-io/github-action
@@ -42,6 +44,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       # https://github.com/cypress-io/github-action
@@ -69,6 +72,7 @@ jobs:
     needs: [tests-chrome, tests-firefox, tests-webkit]
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
 
       # install a specific version of Node using
       # https://github.com/actions/setup-node
