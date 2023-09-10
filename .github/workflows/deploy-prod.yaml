@@ -34,14 +34,6 @@ jobs:
       # we use exact restore key to avoid NPM module snowballing
       # https://glebbahmutov.com/blog/do-not-let-npm-cache-snowball/
      
-
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
-        with:
-          # Disable running of tests within install job
-          runTests: false
-          build: npm run build
-
       # we use the exact restore key to avoid Cypress binary snowballing
       # https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/
       - name: Cache Cypress binary
@@ -51,6 +43,14 @@ jobs:
           key: cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: npx playwright install-deps webkit && npm run build
+
 
       - name: verify Cypress
         env:
