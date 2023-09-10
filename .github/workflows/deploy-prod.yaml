@@ -1,9 +1,6 @@
 name: Cypress parallel tests
 
-on: 
-  push:
-    branches: 
-      - master
+on: push
 
 jobs:
   install:
