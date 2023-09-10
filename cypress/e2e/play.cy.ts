@@ -2,7 +2,7 @@ import { wordClasses } from "@/components/AppearingText/constants";
 import { mainpageTabs } from "@/constants";
 
 beforeEach(() => {
-	cy.intercept("/src/components/AppearingText/AppearingTextButton.tsx").as(
+	cy.intercept("*AppearingTextButton*").as(
 		"button",
 	);
 	cy.visit("/en");
