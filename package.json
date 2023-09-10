@@ -62,7 +62,7 @@
 		"autoprefixer": "^10.4.14",
 		"color": "^4.2.3",
 		"cssnano": "^6.0.0",
-		"cypress": "^13.1.0",
+		"cypress": "^12.17.4",
 		"dat.gui": "^0.7.9",
 		"eslint": "^8.41.0",
 		"eslint-config-airbnb-base": "^15.0.0",
