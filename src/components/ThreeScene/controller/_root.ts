@@ -1,5 +1,5 @@
 import ThreeController, { type ThreeModule } from "@utils/ThreeController";
-import { threeCanvasId } from "./constants";
+import { threeCanvasId } from "../constants";
 
 import { ACESFilmicToneMapping, PerspectiveCamera, VSMShadowMap } from "three";
 import { breakpoints } from "@/medias";
