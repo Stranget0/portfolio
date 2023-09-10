@@ -56,6 +56,9 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
+          # Dont install cypress
+          install: false
+          # Build app
           build: npm run build
 
 
