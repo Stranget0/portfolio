@@ -11,9 +11,19 @@ runOnEachPage(() => {
 		);
 
 		for (const navigable of navigables) {
-			navigable.addEventListener("focus", () =>
-				scrollToElement(container, { behavior: "instant" }),
-			);
+			let isIgnored = false;
+
+			const ignore = () => {
+				isIgnored = true;
+			};
+			const handleScrollTo = () => {
+				if (!isIgnored) scrollToElement(container, { behavior: "instant" });
+				isIgnored = false;
+			};
+
+			navigable.addEventListener("mousedown", ignore);
+			navigable.addEventListener("touchstart", ignore);
+			navigable.addEventListener("focus", handleScrollTo);
 		}
 	}
 });

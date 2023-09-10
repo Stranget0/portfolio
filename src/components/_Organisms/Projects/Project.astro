@@ -13,6 +13,7 @@ import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { preloadImagesInContainer } from "@plugins/preloadImagesInContainer/serverUtils";
 import AppearingTextButton from "@/components/AppearingText/AppearingTextButton";
 import { scrollVelocityTransform } from "@plugins/scrollVelocityTransform/serverUtils";
+import SectionTopSticky from "@/components/SlidedSection/_SectionTopSticky.astro";
 
 interface Props {
 	frontmatter: CollectionEntry<"projects">;
@@ -54,20 +55,31 @@ const { Content } = await render();
 >
 	{
 		title && (
-			<SectionItemTitle
-				title={title}
-				class={titleClass}
-				href={website || github}
+			<SectionTopSticky>
+				<SectionItemTitle
+					title={title}
+					class={titleClass}
+					href={website || github}
+				/>
+			</SectionTopSticky>
+		)
+	}
+	{
+		stageId && (
+			<AppearingTextButton
+				client:visible
+				stageId={stageId}
+				class="mx-auto mt-8"
+				data-scroll-target-keyframes={JSON.stringify({
+					opacity: [0, 0, 1, 1, 1, 1, 0, 0],
+				})}
+				data-scroll-target
+				data-scroll-target-ref
 			/>
 		)
 	}
 	<SectionItemDescription id={stageId} transcript={transcript}>
 		<SectionYear startYear={startYear} endYear={endYear} />
-		{
-			stageId && (
-				<AppearingTextButton client:visible stageId={stageId} class="mx-auto" />
-			)
-		}
 		<Content
 			components={{
 				h1: SectionHeading,
@@ -90,7 +102,7 @@ const { Content } = await render();
 		)
 	}
 
-	<div class="fixed bottom-4"  {...scrollVelocityTransform(5)}>
+	<div class="fixed bottom-4" {...scrollVelocityTransform(5)}>
 		<SectionLinks github={github} class="w-full" />
 	</div>
 </SectionItem>
