@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "astro/config";
 import UnoCSS from "unocss/astro";
 import { visualizer } from "rollup-plugin-visualizer";
@@ -37,17 +36,9 @@ export default defineConfig({
 				brotliSize: true,
 				filename: "generated/bundle.html",
 			}),
-			sentryVitePlugin({
-				org: "marcin-smarzewski-e894af586",
-				project: "portfolio",
-			}),
 		],
 	},
 
 	site: "https://msmarzewski.pl",
 	compressHTML: true,
-
-	build: {
-		sourcemap: true,
-	},
 });
