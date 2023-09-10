@@ -29,6 +29,6 @@
       ]
     },
     "jsx": "react-jsx",
-    "jsxImportSource": "solid-js"
+    "jsxImportSource": "solid-js","types": ["astro/client"]
   }
 }

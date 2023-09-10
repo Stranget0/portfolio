@@ -3,6 +3,7 @@ import type { HTMLTag, Polymorphic } from "astro/types";
 import { playAudioContainerTooltip } from "./serverUtils";
 import type { CollectionEntry } from "astro:content";
 import transcriptDataToTimestamps from "@/utils/transcriptDataToTimestamps";
+import { isDev } from "@/constants";
 
 type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 	transcript: CollectionEntry<"transcripts"> | undefined;
@@ -15,7 +16,7 @@ type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 const {
 	as: Tag = "p",
 	transcript,
-	isDebug,
+	isDebug = isDev,
 	noTooltip,
 	scrollPosition,
 	...other

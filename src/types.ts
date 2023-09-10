@@ -4,7 +4,6 @@ import type { SupportedLanguage } from "./i18n/types";
 export interface Tab {
 	id: string;
 	label: (urlOrLang: URL | SupportedLanguage) => string;
-	filter?: (urlOrLang: URL | SupportedLanguage) => Promise<boolean>;
 }
 export interface Tabs {
 	[k: string]: Tab;

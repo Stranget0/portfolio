@@ -53,7 +53,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 				"My name is Marcin and I am a Web Developer with a UX/UI side.",
 				"My goal is to deliver functional, dynamic websites that will stand out from the ones that you see everyday.",
 				"I believe that leaving good customer experience will make your brand recognizable.",
-				"Now, wanna make some ",
+				"Now, wanna  make some ",
 				"good shit?",
 			],
 		},

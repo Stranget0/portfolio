@@ -2,16 +2,21 @@
 import AppearingTextButton from "@components/AppearingText/AppearingTextButton";
 import { mainpageTabs } from "src/constants";
 import { classInView } from "@plugins/classInView/serverUtils";
-import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import tabFilters from "@/utils/tabFilters";
 
+const tabId = mainpageTabs.play.id
 const appear = classInView("appear-container", "", 1);
-const t = useTranslations(Astro.url);
 
-const isShown = !mainpageTabs.play.filter || await mainpageTabs.play.filter(Astro.url)
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang);
+
+const tabFilter = tabFilters[tabId];
+const isShown = !tabFilter || await tabFilter(lang)
 ---
 
 {isShown && <section
-	id={mainpageTabs.play.id}
+	id={tabId}
 	class="section relative py-40 flex-center before:(pseudo-full bg-primary-950 -z-3) after:(pseudo-full bg-primary-950 opacity-75 -z-1)"
 >
 	<div {...appear}>

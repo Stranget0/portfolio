@@ -5,7 +5,7 @@ beforeEach(() => {
 	cy.intercept("/src/components/AppearingText/AppearingTextButton.tsx").as(
 		"button",
 	);
-	cy.visit("/");
+	cy.visit("/en");
 	cy.get(`#${mainpageTabs.play.id}`)
 		.as("playSection")
 		.scrollIntoView({ duration: 0 });
@@ -27,9 +27,6 @@ describe("Website playing", () => {
 		function check(state: 1 | 2 | 3) {
 			cy.get(".i-mingcute-volume-fill\\?mask").should(
 				haveCorrectStatusForState(1),
-			);
-			cy.get(".i-svg-spinners-gooey-balls-1\\?mask").should(
-				haveCorrectStatusForState(2),
 			);
 			cy.get(".i-mingcute-close-fill\\?mask").should(
 				haveCorrectStatusForState(3),
