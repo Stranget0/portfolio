@@ -61,11 +61,17 @@ export async function playAllStages() {
 
 function addCleaningListeners() {
 	if (pointerMedia.matches) {
-		window.addEventListener("wheel", cancelPlayingStages);
+		window.addEventListener("wheel", cancelPlayingStages, { passive: true });
 	} else {
 		window.addEventListener("click", cancelPlayingStages);
-		window.addEventListener("touchstart", () => {
-			window.addEventListener("touchmove", cancelPlayingStages, { once: true });
-		});
+		window.addEventListener(
+			"touchstart",
+			() => {
+				window.addEventListener("touchmove", cancelPlayingStages, {
+					once: true,
+				});
+			},
+			{ passive: true },
+		);
 	}
 }
