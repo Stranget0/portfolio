@@ -12,7 +12,7 @@
 		"test:build": "start-server-and-test start http://localhost:4321 test:cypress:parallel:build",
 		"test:cypress": "cypress run --record -b webkit --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0",
 		"test:cypress:parallel": "cypress run --record -b webkit --parallel --ci-build-id netlify --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0",
-		"test:cypress:parallel:build": "cypress run --record -b webkit --parallel --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0 && npm run build",
+		"test:cypress:parallel:build": "cypress run --record -b webkit --parallel --ci-build-id netlify --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0 && npm run build",
 		"test:files": "npm run lint && npm run type-check",
 		"prettier": "prettier --write ./src/**",
 		"lint": "eslint src/** --fix",
