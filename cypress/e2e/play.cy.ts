@@ -19,6 +19,7 @@ beforeEach(() => {
 describe("Website playing", () => {
 	it("lines should appear correctly", () => {
 		cy.get("@playButton").click();
+		cy.wait(300)
 		cy.get("." + wordClasses.high).should("have.length", 1);
 		cy.get("." + wordClasses.semi).should("exist");
 	});
@@ -46,7 +47,7 @@ describe("Website playing", () => {
 		const playButton = cy.get("@playButton");
 
 		playButton.click();
-		cy.wait(6000);
+		cy.wait(8000);
 		cy.get("." + wordClasses.low).should("exist");
 		playButton.click({force:true});
 		cy.get("." + wordClasses.low).should("not.exist");
