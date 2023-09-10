@@ -1,0 +1,66 @@
+---
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import SectionClip from "../../SectionClip.astro";
+import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
+import { getCollection } from "astro:content";
+
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { mainpageTabs } from "@/constants";
+import SpinnedTexts from "@/components/SpinnedTexts.astro";
+import type { HTMLTag, Polymorphic } from "astro/types";
+import SectionFixed from "@/components/SectionFixed.astro";
+
+type Props<T extends HTMLTag> = Polymorphic<{ as: T }>;
+
+const { class: className, ...other } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const projects = await getCollection("projects", ({ slug }) =>
+	slug.startsWith(lang),
+);
+const technologies = await getCollection(
+	"technologies",
+	({ data }) => data.importance < 10,
+);
+
+const spinnedTexts = [
+	t("info.projects", [projects.length]),
+	t("info.experience"),
+	t("info.design"),
+	t("info.technologies", [technologies.length]),
+];
+---
+
+<SectionFixed
+	{...other}
+	id={mainpageTabs.hero.id}
+	as="section"
+	class:list={["section min-h-md text-center", className]}
+	{...waypoints.foxWaypointCameraSpatial(3.316, 1.264, -0.321).waypoint()}
+	{...waypoints.foxWaypointTarget(0.5, -0.3, -1).waypoint()}
+	{...waypoints.foxWaypointStiffness(1, 1).waypoint()}
+>
+	<div
+		class="fox-bg fixed flex-col-center inset-0 h-100svh z-2 text-primary-100 bg-primary-50"
+	>
+		<div class="menu-opafocus">
+			<AppearingLine
+				as="h1"
+				class="w-min text-subtitle-1 solid-text-shadow mix-blend-difference menu-opafocus-option"
+				text={t("titles.loader")}
+				lettersTransition
+			/>
+			<SpinnedTexts texts={spinnedTexts} />
+		</div>
+	</div>
+</SectionFixed>
+
+<style lang="scss">
+	.fox-bg {
+		@apply bg-no-repeat bg-center;
+		background-image: url("/svg/fox-no-bg.svg");
+		background-size: min(20rem, 50vmin);
+	}
+</style>

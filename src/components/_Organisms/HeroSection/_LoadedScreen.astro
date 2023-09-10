@@ -1,0 +1,57 @@
+---
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import SectionFixed from "../../SectionFixed.astro";
+import { classInView } from "@/plugins/classInView/serverUtils";
+
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<T extends HTMLTag> = Polymorphic<{ as: T }>;
+
+const { class: className, ...other } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const appearInView = classInView("opacity-0 scale-0", "opacity-100 scale-100");
+---
+
+<SectionFixed
+	as="p"
+	class:list={["w-full h-screen important:h-100svh flex flex-col justify-between py-8", className]}
+	{...appearInView}
+	{...other}
+>
+	<span class="flex-col-center">
+		<AppearingLine
+			as="span"
+			class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
+			text={t("titles.3d.0")}
+			lettersTransition
+			{...appearInView}
+		/>
+
+		<AppearingLine
+			as="span"
+			class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
+			text={t("titles.3d.1")}
+			lettersTransition
+			{...appearInView}
+		/>
+	</span>
+	<span class="flex-col-center">
+		<AppearingLine
+			as="span"
+			class="text-title-2 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear important:(animate-duration-600)"
+			text={t("titles.3d.2")}
+			lettersTransition
+			{...appearInView}
+		/>
+		<AppearingLine
+			as="span"
+			class="text-title-1 solid-text-shadow motion-safe:transition-600 motion-safe:animate-appear"
+			text={t("titles.3d.3")}
+			lettersTransition
+			{...appearInView}
+		/>
+	</span>
+</SectionFixed>
