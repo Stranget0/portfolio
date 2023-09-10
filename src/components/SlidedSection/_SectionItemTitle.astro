@@ -12,9 +12,11 @@ interface Props extends Omit<HTMLAttributes<"h3">, "title"> {
 
 const { title, class: className, href, ...other } = Astro.props;
 const Tag = href ? "a" : "h3";
+const WrapperTag = Tag === "a" ? "h3" : "div";
+
 ---
 
-<SectionTopSticky as={Tag === "a" ? "h2" : undefined}>
+<WrapperTag>
 	<AppearingLine
 		{...other as any}
 		as={Tag}
@@ -24,4 +26,4 @@ const Tag = href ? "a" : "h3";
 		group={2}
 		animatedOnView
 	/>
-</SectionTopSticky>
+</WrapperTag>
