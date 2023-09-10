@@ -25,6 +25,7 @@
     "@motionone/solid": "^10.16.2",
     "@netlify/integrations": "^0.6.0",
     "@netlify/sentry": "^0.0.8",
+    "@sentry/vite-plugin": "^2.7.1",
     "@solid-primitives/keyed": "^1.2.0",
     "@unseenco/taxi": "^1.2.2",
     "astro": "^3.0.7",

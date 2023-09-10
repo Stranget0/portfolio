@@ -25,3 +25,6 @@ cypress/videos
 cypress/screenshots
 # Sentry Auth Token
 .sentryclirc
+
+# Sentry Auth Token
+.env.sentry-build-plugin
