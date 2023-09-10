@@ -1,10 +1,8 @@
 ---
 import { threeCanvasId } from "./constants";
-import { classOnFoxLoaded, classOnFoxLoading } from "./serverUtils";
-const appearOnFoxLoaded = classOnFoxLoaded("opacity-100");
+import { classOnFoxLoaded } from "./serverUtils";
 
-const appearOnFoxLoading = classOnFoxLoading("important:opacity-100");
-const removeOnFoxLoaded = classOnFoxLoaded("hidden");
+const appearOnFoxLoaded = classOnFoxLoaded("opacity-100");
 ---
 
 <div class="inset-0 h-screen important:h-100svh fixed -z-2" transition:persist>
