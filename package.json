@@ -15,7 +15,7 @@
 		"test:cypress:parallel:build": "cypress run --record -b webkit --parallel --ci-build-id netlify --key 5a5ad3de-c676-4620-a212-0c5ba2c429f0 && npm run build",
 		"test:files": "npm run lint && npm run type-check",
 		"prettier": "prettier --write ./src/**",
-		"lint": "eslint src/** --fix",
+		"lint": "eslint \"src/**.{ts,tsx,js}\" --fix",
 		"type-check": "astro check && tsc --noEmit",
 		"deploy:dev": "netlify deploy --dir=dist",
 		"deploy:prod": "netlify deploy --dir=dist --prod"
