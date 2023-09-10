@@ -5,11 +5,13 @@ beforeEach(() => {
 	cy.intercept("*AppearingTextButton*").as(
 		"button",
 	);
+	cy.intercept("*cubic-bezier*").as("motion")
 	cy.visit("/en");
 	cy.get(`#${mainpageTabs.play.id}`)
 		.as("playSection")
 		.scrollIntoView({ duration: 0 });
 	cy.wait("@button");
+	cy.wait("@motion");
 	cy.get(`#${mainpageTabs.play.id} button`)
 		.invoke("removeClass", "appear-item")
 		.as("playButton");
