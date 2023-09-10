@@ -85,6 +85,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          install: false
           record: true
           parallel: true
           browser: webkit
