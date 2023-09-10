@@ -11,10 +11,26 @@ import {
 } from "@components/ThreeScene/serverUtils";
 import { getCollection } from "astro:content";
 
-import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import { mainpageTabs } from "@/constants";
 
-const t = useTranslations(Astro.url);
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const projects = await getCollection("projects", ({ slug }) =>
+	slug.startsWith(lang),
+);
+const technologies = await getCollection(
+	"technologies",
+	({ data }) => data.importance < 10,
+);
+
+const spinnedTexts = [
+	t("info.projects", [projects.length]),
+	t("info.experience"),
+	t("info.design"),
+	t("info.technologies", [technologies.length]),
+];
 
 const appearInView = classInView("opacity-0 scale-0", "opacity-100 scale-100");
 const appearOnFoxLoaded = classOnFoxLoaded("important:(opacity-100 scale-100)");
@@ -24,19 +40,6 @@ const disappearOnFoxLoading = {
 	...classOnFoxLoaded("hidden"),
 };
 const removeOnFoxLoaded = classOnFoxLoaded("hidden");
-
-const projects = await getCollection("projects");
-const techs = await getCollection(
-	"technologies",
-	({ data }) => data.importance < 10,
-);
-
-const spinnedTexts = [
-	t("info.projects", [projects.length]),
-	t("info.experience"),
-	t("info.design"),
-	t("info.technologies", [techs.length]),
-];
 ---
 
 <SectionClip

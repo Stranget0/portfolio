@@ -5,11 +5,11 @@ import { getCollection, getEntry } from "astro:content";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
 
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const projects = await getCollection("projects", ({ slug }) =>
 	slug.startsWith(lang),
 );
 
-const t = useTranslations(lang);
 
 import { mainpageTabs } from "src/constants";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
