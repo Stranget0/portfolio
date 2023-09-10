@@ -29,7 +29,6 @@ export default function BottomStatus({ lang }: { lang: SupportedLanguage }) {
 			<div
 				role="region"
 				aria-hidden={!isScroll()}
-				// {...disappearOnFoxLoading}
 				class={classNames(
 					generalClass,
 					"flex-col-center",
