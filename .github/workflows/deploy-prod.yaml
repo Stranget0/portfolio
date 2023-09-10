@@ -1,13 +1,6 @@
 name: Deploy prod
 on: [push]
 jobs:
-  check-env:
-    environment: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Record Key
-        run: echo 1:${{env.CYPRESS_RECORD_KEY}} 2:${{env.CYPRESS_RECORD_KEY}}
-
   build:
     runs-on: ubuntu-20.04
     steps:
@@ -55,7 +48,7 @@ jobs:
           browser: chrome
           record: true
         env:
-          CYPRESS_RECORD_KEY: ${{env.CYPRESS_RECORD_KEY}}
+          CYPRESS_RECORD_KEY: 5a5ad3de-c676-4620-a212-0c5ba2c429f0
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   tests-firefox:
@@ -82,7 +75,7 @@ jobs:
           browser: firefox
           record: true
         env:
-          CYPRESS_RECORD_KEY: ${{env.CYPRESS_RECORD_KEY}}
+          CYPRESS_RECORD_KEY: 5a5ad3de-c676-4620-a212-0c5ba2c429f0
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   tests-webkit:
     runs-on: ubuntu-20.04
@@ -117,7 +110,7 @@ jobs:
           browser: webkit
           record: true
         env:
-          CYPRESS_RECORD_KEY: ${{env.CYPRESS_RECORD_KEY}}
+          CYPRESS_RECORD_KEY: 5a5ad3de-c676-4620-a212-0c5ba2c429f0
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   type-check:
     runs-on: ubuntu-20.04
