@@ -45,6 +45,10 @@ jobs:
         with:
           start: npx astro preview
           browser: chrome
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   tests-firefox:
     runs-on: ubuntu-20.04
@@ -67,7 +71,10 @@ jobs:
         with:
           start: npx astro preview
           browser: firefox
-
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   tests-webkit:
     runs-on: ubuntu-20.04
     needs: [build]
@@ -98,7 +105,10 @@ jobs:
           install: false
           start: npx astro preview
           browser: webkit
-
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   type-check:
     runs-on: ubuntu-20.04
     steps:
@@ -136,5 +146,3 @@ jobs:
       - name: Deploy
         run: npm run deploy:prod
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
