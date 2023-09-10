@@ -10,10 +10,7 @@ const { class: className, ...props } = Astro.props;
 	name="contact"
 	method="post"
 	action="#"
-	class:list={[
-		"flex flex-col gap-4 w-full lg:(w-40% max-w-xl)",
-		className,
-	]}
+	class:list={["flex flex-col gap-4 w-full lg:(w-40% max-w-xl)", className]}
 >
 	<slot />
 </form>
@@ -54,9 +51,11 @@ const { class: className, ...props } = Astro.props;
 				prepareToUnlockButton(submitter);
 			});
 
-		foxController?.then(({ foxAnimations }) =>
-			foxAnimations.then((fox) => fox?.smile())
-		);
+		foxController
+			?.then(({ foxAnimations }) => {
+				foxAnimations.then((fox) => fox?.smile());
+			})
+			.catch(() => {});
 	});
 
 	function prepareToUnlockButton(submitter: HTMLButtonElement) {

@@ -23,6 +23,8 @@
     "@astrojs/solid-js": "^3.0.0",
     "@hotjar/browser": "^1.0.9",
     "@motionone/solid": "^10.16.2",
+    "@netlify/integrations": "^0.6.0",
+    "@netlify/sentry": "^0.0.8",
     "@solid-primitives/keyed": "^1.2.0",
     "@unseenco/taxi": "^1.2.2",
     "astro": "^3.0.7",

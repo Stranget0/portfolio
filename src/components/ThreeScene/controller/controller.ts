@@ -9,6 +9,7 @@ import renderObstacles from "../modules/renderObstacles/renderObstaclesInit";
 import { foxObstacleAttr } from "../constants";
 import runOnEachPage from "@/utils/runOnEachPage";
 import { handleLoadedStatus } from "../utils";
+import { setBottomStatus } from "@/components/BottomStatus/state";
 
 const controller = initHeroController(
 	loadFox,
@@ -46,9 +47,12 @@ Promise.all([controller.fox, controller.leafs])
 		controller.startLoop();
 		// initialize obstacles stopping loop
 		controller.setObstacleSelector(`[${foxObstacleAttr}]`);
+		handleLoadedStatus();
 	})
-	.catch((e) => console.error("Failed to load scene", e))
-	.finally(handleLoadedStatus);
+	.catch((e) => {
+		setBottomStatus(null);
+		console.error("Failed to load scene", e);
+	});
 
 export type FoxControllerType = typeof controller;
 export default controller;

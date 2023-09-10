@@ -8,7 +8,12 @@ document.addEventListener("scroll", load, { once: true });
 
 function load() {
 	setBottomStatus("spinner");
-	foxPromise = import("./controller/controller").then(({ default: d }) => d);
+	foxPromise = import("./controller/controller")
+		.then(({ default: d }) => d)
+		.catch((e) => {
+			console.error(e);
+			return Promise.reject(e);
+		});
 }
 
 export default function getFoxController() {

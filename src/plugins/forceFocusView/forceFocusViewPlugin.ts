@@ -22,7 +22,7 @@ runOnEachPage(() => {
 			};
 
 			navigable.addEventListener("mousedown", ignore);
-			navigable.addEventListener("touchstart", ignore);
+			navigable.addEventListener("touchstart", ignore, { passive: true });
 			navigable.addEventListener("focus", handleScrollTo);
 		}
 	}
