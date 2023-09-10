@@ -2,6 +2,7 @@ name: Deploy prod
 on: [push]
 jobs:
   check-env:
+    environment: build
     runs-on: ubuntu-latest
     steps:
       - name: Check Record Key
