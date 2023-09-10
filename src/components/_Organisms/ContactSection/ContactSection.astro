@@ -1,5 +1,4 @@
 ---
-import SectionClip from "@components/SectionClip.astro";
 import Input from "@components/Input/Input.astro";
 import TextArea from "@components/Input/TextArea.astro";
 import Button from "@components/Button/Button.astro";
@@ -9,7 +8,6 @@ import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerA
 import { forceFocusViewAttrObj } from "@plugins/forceFocusView/constants";
 import { mainpageTabs } from "src/constants";
 import AnimatedText from "@/components/AnimatedText.astro";
-import { classInView } from "@/plugins/classInView/serverUtils";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import AppearingText from "@/components/AppearingText/AppearingText.astro";
 import { getEntry } from "astro:content";

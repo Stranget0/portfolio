@@ -81,9 +81,9 @@ const t = useTranslations(Astro.url);
 			this.classList.add(getActiveClass(Tab.activeTab));
 
 			// Update fox position
-			getFoxController()?.then((controller) =>
-				controller.updateWaypointsPositions(),
-			);
+			getFoxController()
+				?.then((controller) => controller.updateWaypointsPositions())
+				.catch(() => {});
 		}
 	}
 
