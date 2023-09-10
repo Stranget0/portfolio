@@ -88,19 +88,25 @@ export function playStage(stage: HTMLElement, delay?: number) {
 	): Promise<void> {
 		const sentencesPromises = sentences.flatMap((sentence, sentenceIndex) => {
 			const sentencePromise = Promise.all(
-				sentence.map((word, wordIndex) =>
+				sentence.map((word, wordIndex) => {
+					const isFirstWord = wordIndex === 0;
 					// It resolves when is shown
-					queueShowWord(word, scrollPosition, cleanMenago, delay).then(() => {
+					return queueShowWord(
+						word,
+						scrollPosition,
+						cleanMenago,
+						delay,
+						isFirstWord,
+					).then(() => {
 						const lastSentence = sentences[sentenceIndex - 1];
-						const isFirstWord = wordIndex === 0;
 						const shouldNotHideLastSentence = !isFirstWord || !lastSentence;
 
 						if (shouldNotHideLastSentence) return;
 						lastSentence.forEach((w) => {
-							fadeOutWordMore(w);
+							hideWord(w);
 						});
-					}),
-				),
+					});
+				}),
 			);
 			return sentencePromise;
 		});
@@ -108,13 +114,12 @@ export function playStage(stage: HTMLElement, delay?: number) {
 	}
 }
 
-
-
 function queueShowWord(
 	word: WordData,
 	scrollPosition: ScrollLogicalPosition | undefined,
 	cleanMenago: CleanMenago,
 	delay = 0,
+	forceScroll = false,
 ) {
 	return new Promise<void>((resolve) => {
 		// Scroll if end of sentence
@@ -122,6 +127,7 @@ function queueShowWord(
 			word,
 			scrollPosition,
 			word.timestamp,
+			forceScroll,
 		);
 
 		const { cancel: cancelShowTimeout } = wait(() => {
@@ -152,7 +158,7 @@ function showWord(word: WordData) {
 	word.node.classList.remove("opacity-0");
 	word.node.classList.add(...wordClasses.high);
 }
-function fadeOutWordMore(w: WordData) {
+function hideWord(w: WordData) {
 	w.node.classList.remove(...wordClasses.all);
 	w.node.classList.add(...wordClasses.low);
 }
@@ -161,8 +167,9 @@ function handleScrollToLineOfWord(
 	word: WordData,
 	scrollPosition?: ScrollLogicalPosition,
 	delay = 0,
+	forceScroll = false,
 ) {
-	if (hasEndOfSentence(word.node.textContent || "")) return;
+	if (!word.isEndOfSentence && !forceScroll) return;
 	const timeout = setTimeout(() => {
 		scrollToElement(word.node, {
 			block: scrollPosition,
@@ -267,14 +274,18 @@ function groupWordsToSentences(words: WordData[]) {
 	for (let i = 0; i < words.length; i++) {
 		const w = words[i];
 		sentences[sentences.length - 1].push(w);
-		if (
+
+		const isEndOfSentence =
 			words[i + 1] &&
 			hasEndOfSentence(
 				w.node.textContent || "",
 				sentences[sentences.length - 1].length,
-			)
-		)
+			);
+
+		if (isEndOfSentence) {
 			sentences.push([]);
+			w.isEndOfSentence = true;
+		}
 	}
 
 	return sentences;

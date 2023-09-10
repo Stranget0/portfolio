@@ -18,6 +18,7 @@ export type TextTag =
 export type WordData = {
 	node: HTMLElement;
 	timestamp: number;
+	isEndOfSentence?: boolean;
 };
 
 export type Sentence = WordData[];
