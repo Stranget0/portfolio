@@ -1,120 +1,72 @@
-name: Cypress parallel tests
-
-on: push
-
+name: Deploy prod
+on: [push]
 jobs:
-  install:
-    name: Install PNPM and Cypress
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        node-version: [18]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-
-        
-      # just so we learn about available environment variables GitHub provides
-      - name: Print CI env variables
-        run: |
-          pnpm i -g @bahmutov/print-env@2
-          print-env GITHUB BUILD ACTIONS || true
-
-      - name: Cypress install
-        run: npx playwright install-deps webkit
-
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
-        with:
-          # Disable running of tests within install job
-          runTests: false
-          # Build app
-          build: npm run build
-
-
-      - name: verify Cypress
-        env:
-          # make sure every Cypress install prints minimal information
-          CI: 1
-        run: |
-          npx cypress cache path
-          npx cypress cache list
-          npx cypress verify
-          npx cypress info      
-          
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          if-no-files-found: error
-          path: dist
-
-  # Duplicate job definitions - GitHub YAML does not support
-  # anchor definitions yet, thus we cannot put same steps into a template object yet
-  test:
-    runs-on: ubuntu-22.04
-    needs: [install]
-    strategy:
-      # don't fail the entire matrix on failure
-      fail-fast: false
-      matrix:
-        # run copies of the current job in parallel
-        containers: [1, 2, 3, 4, 5]
+  tests-chrome:
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Download the build folder
-        uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: dist
-
-      - name: Cypress run
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      # https://github.com/cypress-io/github-action
+      - name: Cypress run (Chrome)
         uses: cypress-io/github-action@v6
         with:
-          install: false
-          record: true
-          parallel: true
-          browser: webkit
-          start: npx astro preview
-          wait-on: 'https://localhost:4321'
-        env:
-          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          # check the spec types
+          build: npm run lint
+          # start the application before running Cypress
+          start: npm run start-quiet
+          browser: chrome
 
-      # Save videos and screenshots as test artifacts
-      # https://github.com/actions/upload-artifact
-      - uses: actions/upload-artifact@v3
-        # there might be no screenshots created when:
-        # - there are no test failures
-        # so only upload screenshots if previous step has failed
-        if: failure()
+  tests-firefox:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      # https://github.com/cypress-io/github-action
+      - name: Cypress run (Firefox)
+        uses: cypress-io/github-action@v6
         with:
-          name: screenshots
-          path: cypress/screenshots
-      # video should always be generated
-      - uses: actions/upload-artifact@v3
+          # check the spec types
+          build: npm run lint
+          # start the application before running Cypress
+          start: npm run start-quiet
+          browser: firefox
+          # cy.dblclick did not work in headless FF mode
+          headed: true
+
+  tests-webkit:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      # https://github.com/cypress-io/github-action
+      - name: Install dependencies
+        uses: cypress-io/github-action@v6
         with:
-          name: videos
-          path: cypress/videos
+          # install WebKit browser dependencies
+          build: npx playwright install-deps webkit
+          runTests: false
+
+      - name: Cypress run (WebKit)
+        uses: cypress-io/github-action@v6
+        with:
+          # we have already installed everything
+          install: false
+          # check the spec types
+          build: npm run lint
+          # start the application before running Cypress
+          start: npm run start-quiet
+          browser: webkit
       
   deploy:
     name: Deploy
     runs-on: ubuntu-22.04
-    needs: [install, test]
+    needs: [tests-chrome, tests-firefox, tests-webkit]
     steps:
       - uses: actions/checkout@v3
 
