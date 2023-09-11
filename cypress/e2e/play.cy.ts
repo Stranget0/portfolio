@@ -2,18 +2,17 @@ import { wordClasses } from "@/components/AppearingText/constants";
 import { mainpageTabs } from "@/constants";
 
 beforeEach(() => {
-	cy.intercept("*AppearingTextButton*").as(
-		"button",
+	cy.intercept("*").as(
+		"allRequests",
 	);
 	cy.visit("/en");
 	cy.get(`#${mainpageTabs.play.id}`)
 		.as("playSection")
 		.scrollIntoView({ duration: 0 });
-	cy.wait("@button");
+	cy.wait("@allRequests");
 	cy.get(`#${mainpageTabs.play.id} button`)
 		.invoke("removeClass", "appear-item")
 		.as("playButton");
-	cy.wait(500);
 });
 
 describe("Website playing", () => {
