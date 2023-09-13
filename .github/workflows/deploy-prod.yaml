@@ -147,4 +147,7 @@ jobs:
           path: dist
 
       - name: Deploy
-        run: npm run deploy:prod
+        run: | 
+          netlify env:list
+          netlify link 
+          npm run deploy:prod
