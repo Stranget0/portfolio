@@ -148,7 +148,6 @@ jobs:
 
       - name: Deploy
         run: | 
-          netlify env:list
           netlify link --name portfolio
           npm run deploy:prod
         env:
