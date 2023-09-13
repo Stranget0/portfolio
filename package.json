@@ -19,7 +19,7 @@
 		"prettier": "prettier --write ./src/**",
 		"lint": "eslint \"src/**.{ts,tsx,js}\" --fix",
 		"type-check": "astro check && tsc --noEmit",
-		"deploy:dev": "netlify deploy --dir=dist",
+		"deploy:dev": "netlify deploy --dir=dist --alias dev",
 		"deploy:prod": "netlify deploy --dir=dist --prod"
 	},
 	"dependencies": {

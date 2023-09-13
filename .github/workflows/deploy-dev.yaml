@@ -1,7 +1,7 @@
 name: Deploy prod
 on: 
   push:
-    branches: master
+    branches-ignore: master
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -151,7 +151,7 @@ jobs:
       - name: Deploy
         run: | 
           netlify link
-          npm run deploy:prod
+          npm run deploy:dev
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
