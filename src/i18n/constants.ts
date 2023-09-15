@@ -85,7 +85,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 		info: {
 			design: "projektowanie",
 			experience: "doświadczenie",
-			projects: "{0} projektów",
+			projects: "{0} projekty",
 			technologies: "{0} technologii",
 		},
 		common: {
@@ -111,7 +111,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 				"MIŁO MI CIĘ POZNAĆ!",
 				"Nazywam się Marcin i jestem profesjonalnym Web Developerem.",
 				"Tworzę funkcjonalne, dynamiczne strony internetowe, które wyróżnią się spośród tych, które widzisz na co dzień.",
-				"Wierzę, że sprawienie dobrego wrażenia u klienta sprawi, że Twoja marka się wyróżni.",
+				"Wierzę, że sprawienie dobrego wrażenia u klienta umożliwi Twojej marce na wyróżnienie się.",
 				"Więc jak tam, chcesz stworzyć coś ",
 				"ciekawego?",
 			],
