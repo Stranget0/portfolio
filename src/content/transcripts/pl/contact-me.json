@@ -1,0 +1,27 @@
+{
+"audio":"pl/contact-me.mp3",
+  "results": [{
+    "alternatives": [{
+      "transcript": "Napisz do mnie",
+      "confidence": 0.91898555,
+      "words": [{
+        "startTime": "0s",
+        "endTime": "0.500s",
+        "word": "Napisz",
+        "confidence": 0.9189855
+      }, {
+        "startTime": "0.500s",
+        "endTime": "0.700s",
+        "word": "do",
+        "confidence": 0.9189855
+      }, {
+        "startTime": "0.700s",
+        "endTime": "0.900s",
+        "word": "mnie",
+        "confidence": 0.9189855
+      }]
+    }],
+    "resultEndTime": "0.900s",
+    "languageCode": "pl-pl"
+  }]
+}

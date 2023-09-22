@@ -1,0 +1,17 @@
+{
+	"audio":"pl/skills.mp3",
+  "results": [{
+    "alternatives": [{
+      "transcript": "umiejętności",
+      "confidence": 0.9189855,
+      "words": [{
+        "startTime": "0s",
+        "endTime": "1s",
+        "word": "umiejętności",
+        "confidence": 0.9189855
+      }]
+    }],
+    "resultEndTime": "1.080s",
+    "languageCode": "pl-pl"
+  }]
+}
