@@ -2,23 +2,23 @@ import { wordClasses } from "@/components/AppearingText/constants";
 import { mainpageTabs } from "@/constants";
 
 beforeEach(() => {
-	cy.intercept("/src/components/AppearingText/AppearingTextButton.tsx").as(
-		"button",
+	cy.intercept("*").as(
+		"allRequests",
 	);
 	cy.visit("/en");
 	cy.get(`#${mainpageTabs.play.id}`)
 		.as("playSection")
 		.scrollIntoView({ duration: 0 });
-	cy.wait("@button");
+	cy.wait("@allRequests");
 	cy.get(`#${mainpageTabs.play.id} button`)
 		.invoke("removeClass", "appear-item")
 		.as("playButton");
-	cy.wait(150);
 });
 
 describe("Website playing", () => {
 	it("lines should appear correctly", () => {
 		cy.get("@playButton").click();
+		cy.wait(300)
 		cy.get("." + wordClasses.high).should("have.length", 1);
 		cy.get("." + wordClasses.semi).should("exist");
 	});
@@ -46,7 +46,7 @@ describe("Website playing", () => {
 		const playButton = cy.get("@playButton");
 
 		playButton.click();
-		cy.wait(6000);
+		cy.wait(8000);
 		cy.get("." + wordClasses.low).should("exist");
 		playButton.click({force:true});
 		cy.get("." + wordClasses.low).should("not.exist");

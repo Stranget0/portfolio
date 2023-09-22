@@ -1,0 +1,19 @@
+---
+import Snippets from "./Snippets.html"
+import { useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(Astro.url);
+---
+
+<title>{t("seo.title")}</title>
+<link rel="icon" type="image/svg+xml" href="/svg/fox.svg" />
+<meta name="description" content={t("seo.description")} />
+<meta name="keywords" content={t("seo.keywords")} />
+<meta name="author" content="Marcin Smarzewski" />
+
+<meta property="og:title" content="Marcin Smarzewski" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://msmarzewski.pl/" />
+<meta property="og:image" content="/svg/fox.svg" />
+<meta name="robots" content="index, follow" />
+<Snippets />

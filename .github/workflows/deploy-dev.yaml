@@ -1,0 +1,157 @@
+name: Deploy prod
+on: 
+  push:
+    branches-ignore: master
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: npm run build
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          if-no-files-found: error
+          path: dist
+
+  tests-chrome:
+    runs-on: ubuntu-20.04
+    needs: [build]
+    environment: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
+      - name: Cypress run (Chrome)
+        uses: cypress-io/github-action@v6
+        with:
+          start: npx astro preview
+          browser: chrome
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: 5a5ad3de-c676-4620-a212-0c5ba2c429f0
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  tests-firefox:
+    runs-on: ubuntu-20.04
+    needs: [build]
+    environment: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
+      - name: Cypress run (Firefox)
+        uses: cypress-io/github-action@v6
+        with:
+          start: npx astro preview
+          browser: firefox
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: 5a5ad3de-c676-4620-a212-0c5ba2c429f0
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  tests-webkit:
+    runs-on: ubuntu-20.04
+    needs: [build]
+    environment: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
+      - name: Install dependencies
+        uses: cypress-io/github-action@v6
+        with:
+          # install WebKit browser dependencies
+          build: npx playwright install-deps webkit
+          runTests: false
+
+      - name: Cypress run (WebKit)
+        uses: cypress-io/github-action@v6
+        with:
+          # we have already installed everything
+          install: false
+          start: npx astro preview
+          browser: webkit
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: 5a5ad3de-c676-4620-a212-0c5ba2c429f0
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  type-check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
+      - name: check types
+        run: npm run test:files
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-22.04
+    needs: [build, type-check]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
+      - name: Deploy
+        run: | 
+          netlify link
+          npm run deploy:dev
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

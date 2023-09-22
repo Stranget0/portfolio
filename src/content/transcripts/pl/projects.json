@@ -1,0 +1,17 @@
+{
+	"audio":"pl/projects.mp3",
+  "results": [{
+    "alternatives": [{
+      "transcript": "projekty",
+      "confidence": 0.9118693,
+      "words": [{
+        "startTime": "0s",
+        "endTime": "0.700s",
+        "word": "projekty",
+        "confidence": 0.9118693
+      }]
+    }],
+    "resultEndTime": "0.780s",
+    "languageCode": "pl-pl"
+  }]
+}
