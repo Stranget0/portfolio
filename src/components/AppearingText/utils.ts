@@ -35,51 +35,54 @@ export function playStage(stage: HTMLElement, delay?: number) {
 		changeWordsVisibility(wordData, "visible"),
 	);
 
-	const finished = new Promise<void>((resolve, reject) => {
-		async function onAudioReady() {
-			try {
-				const { cancel: cancelPlayTimeout } = wait(() => {
-					audio.play();
-				}, delay);
+	const audioFinished = startAudio();
 
-				cleanMenago.push(() => {
-					audio.pause();
-					cancelPlayTimeout();
-				});
-
-				if (!isStageContentSmall(stage))
-					changeWordsVisibility(wordData, "invisible");
-
-				const groupsFinishedPromise = Promise.all(
-					wordData.groups.map(([_, sentences]) =>
-						playWords(sentences, scrollPosition, delay),
-					),
-				).then(() => {
-					const { finished, cancel } = wait(
-						() => changeWordsVisibility(wordData, "visible"),
-						1000,
-					);
-					cleanMenago.push(cancel);
-					return finished;
-				});
-
-				await groupsFinishedPromise;
-				resolve();
-			} catch (e) {
-				reject(e);
-			}
-		}
-
-		const cancel = whenAudioReady(audio, onAudioReady, resolve);
-		cleanMenago.push(cancel);
-	});
-
-	finished.finally(() => dewordifyStage(stage));
+	audioFinished.finally(() => dewordifyStage(stage));
 
 	return {
 		clean: cleanMenago.clean,
-		finished,
+		finished: audioFinished,
 	};
+
+	function startAudio() {
+		return new Promise<void>((resolve, reject) => {
+			async function onAudioReady() {
+				try {
+					const { cancel: cancelPlayTimeout } = wait(() => {
+						audio.play();
+					}, delay);
+
+					cleanMenago.push(() => {
+						audio.pause();
+						cancelPlayTimeout();
+					});
+
+					if (!isStageContentSmall(stage))
+						changeWordsVisibility(wordData, "invisible");
+
+					const groupsFinishedPromise = Promise.all(
+						wordData.groups.map(([_, sentences]) => playWords(sentences, scrollPosition, delay)
+						)
+					).then(() => {
+						const { finished, cancel } = wait(
+							() => changeWordsVisibility(wordData, "visible"),
+							1000
+						);
+						cleanMenago.push(cancel);
+						return finished;
+					});
+
+					await groupsFinishedPromise;
+					resolve();
+				} catch (e) {
+					reject(e);
+				}
+			}
+
+			const cancel = whenAudioReady(audio, onAudioReady, resolve);
+			cleanMenago.push(cancel);
+		});
+	}
 
 	async function playWords(
 		sentences: Sentence[],
