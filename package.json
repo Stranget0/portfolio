@@ -21,14 +21,14 @@
 		"type-check": "astro check && tsc --noEmit",
 		"deploy:dev": "netlify deploy --dir=dist --alias dev",
 		"deploy:prod": "netlify deploy --dir=dist --prod",
-    "lhci:mobile": "lhci autorun",
-    "lhci:desktop": "lhci autorun --collect.settings.preset=desktop"
+		"lhci:mobile": "lhci autorun",
+		"lhci:desktop": "lhci autorun --collect.settings.preset=desktop"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.2.0",
 		"@astrojs/mdx": "^1.0.0",
 		"@astrojs/partytown": "^2.0.0",
-		"@astrojs/solid-js": "^3.0.0",
+		"@astrojs/solid-js": "^3.0.1",
 		"@hotjar/browser": "^1.0.9",
 		"@motionone/solid": "^10.16.2",
 		"@netlify/integrations": "^0.6.0",
@@ -36,7 +36,7 @@
 		"@sentry/vite-plugin": "^2.7.1",
 		"@solid-primitives/keyed": "^1.2.0",
 		"@unseenco/taxi": "^1.2.2",
-		"astro": "^3.0.7",
+		"astro": "^3.1.4",
 		"balance-text": "^3.3.1",
 		"classnames": "^2.3.2",
 		"gltf-pipeline": "^4.1.0",
@@ -62,8 +62,7 @@
 		"@types/three": "^0.152.0",
 		"@typescript-eslint/eslint-plugin": "^5.59.7",
 		"@typescript-eslint/parser": "^5.59.7",
-		"@unocss/preset-attributify": "^0.51.8",
-		"@unocss/reset": "^0.51.8",
+		"@unocss/reset": "^0.56.4",
 		"autoprefixer": "^10.4.14",
 		"color": "^4.2.3",
 		"cssnano": "^6.0.0",
@@ -86,7 +85,7 @@
 		"start-server-and-test": "^2.0.0",
 		"storybook": "^7.0.7",
 		"typescript": "^5.2.2",
-		"unocss": "^0.54.1",
+		"unocss": "^0.56.4",
 		"vite": "^4.4.9",
 		"vitest": "^0.30.1"
 	}
