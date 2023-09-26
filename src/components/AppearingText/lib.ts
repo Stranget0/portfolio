@@ -6,6 +6,9 @@ import runOnEachPage from "@/utils/runOnEachPage";
 import { pointerMedia } from "@/medias";
 
 let stages: HTMLElement[];
+let scrollCount = 0;
+let scrollTimeout = -1;
+let globalClean: VoidFunction | null = null;
 
 runOnEachPage(() => {
 	stages = Array.from(document.querySelectorAll<HTMLElement>(stageSelector));
@@ -13,8 +16,8 @@ runOnEachPage(() => {
 
 addCleaningListeners();
 
-let globalClean: VoidFunction | null = null;
 export function cancelPlayingStages() {
+	scrollCount = 0;
 	globalClean?.();
 	globalClean = null;
 }
@@ -61,9 +64,21 @@ export async function playAllStages() {
 
 function addCleaningListeners() {
 	if (pointerMedia.matches) {
-		window.addEventListener("wheel", cancelPlayingStages, { passive: true });
+		window.addEventListener(
+			"wheel",
+			() => {
+				clearTimeout(scrollTimeout);
+				scrollCount++;
+				if (scrollCount > 6) cancelPlayingStages();
+				else {
+					scrollTimeout = window.setTimeout(() => {
+						scrollCount = 0;
+					}, 2500);
+				}
+			},
+			{ passive: true },
+		);
 	} else {
-		window.addEventListener("click", cancelPlayingStages);
 		window.addEventListener(
 			"touchstart",
 			() => {
