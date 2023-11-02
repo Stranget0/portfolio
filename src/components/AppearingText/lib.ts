@@ -1,6 +1,6 @@
 import { createAwaitSequence } from "@utils/createAwaitSequence";
 import { stageSelector } from "./constants";
-import { isStageContentSmall, playStage } from "./utils";
+import { getWordClasses, isStageContentSmall, playStage } from "./utils";
 import createCleanFunction from "@utils/createCleanFunction";
 import runOnEachPage from "@/utils/runOnEachPage";
 import { pointerMedia } from "@/medias";
@@ -10,11 +10,17 @@ let scrollCount = 0;
 let scrollTimeout = -1;
 let globalClean: VoidFunction | null = null;
 
+const wordClasses = getWordClasses(
+	["transform-scale-150"],
+	["opacity-50"],
+	["opacity-10", "filter-blur-2"],
+);
+
 runOnEachPage(() => {
 	stages = Array.from(document.querySelectorAll<HTMLElement>(stageSelector));
 });
 
-addCleaningListeners();
+addCancelListeners();
 
 export function cancelPlayingStages() {
 	scrollCount = 0;
@@ -26,7 +32,7 @@ export async function playSingleStage(stage: HTMLElement) {
 	cancelPlayingStages();
 
 	try {
-		const { clean, finished } = playStage(stage);
+		const { clean, finished } = playStage(stage, { classes: wordClasses });
 		globalClean = clean;
 		await finished;
 	} catch (e) {
@@ -51,7 +57,10 @@ export async function playAllStages() {
 			let delay = stageIndex === 0 ? 0 : 2000;
 			if (delay > 0 && isStageContentSmall(stage)) delay = 500;
 
-			const { finished, clean } = playStage(stage, delay);
+			const { finished, clean } = playStage(stage, {
+				classes: wordClasses,
+				delay,
+			});
 			cleanMenago.push(clean);
 			return finished;
 		});
@@ -62,31 +71,40 @@ export async function playAllStages() {
 	}
 }
 
-function addCleaningListeners() {
+function addCancelListeners() {
+	// If has pointer
 	if (pointerMedia.matches) {
-		window.addEventListener(
-			"wheel",
-			() => {
-				clearTimeout(scrollTimeout);
-				scrollCount++;
-				if (scrollCount > 6) cancelPlayingStages();
-				else {
-					scrollTimeout = window.setTimeout(() => {
-						scrollCount = 0;
-					}, 2500);
-				}
-			},
-			{ passive: true },
-		);
+		cancelOnWheel();
 	} else {
-		window.addEventListener(
-			"touchstart",
-			() => {
-				window.addEventListener("touchmove", cancelPlayingStages, {
-					once: true,
-				});
-			},
-			{ passive: true },
-		);
+		cancelOnTouch();
 	}
+}
+
+function cancelOnTouch() {
+	window.addEventListener(
+		"touchstart",
+		() => {
+			window.addEventListener("touchmove", cancelPlayingStages, {
+				once: true,
+			});
+		},
+		{ passive: true },
+	);
+}
+
+function cancelOnWheel() {
+	window.addEventListener(
+		"wheel",
+		() => {
+			clearTimeout(scrollTimeout);
+			scrollCount++;
+			if (scrollCount > 6) cancelPlayingStages();
+			else {
+				scrollTimeout = window.setTimeout(() => {
+					scrollCount = 0;
+				}, 2500);
+			}
+		},
+		{ passive: true },
+	);
 }
