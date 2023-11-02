@@ -25,9 +25,6 @@ export function playStage(stage: HTMLElement, delay?: number) {
 	const audio = new Audio(`/audio/${audioPath}`);
 	const scrollPosition = stage.dataset["audioScroll"] as ScrollLogicalPosition;
 
-	// TODO change on sound files
-	audio.volume = 0.25;
-
 	wordifyStage(stage);
 	const wordData = getWordsFromStage(stage);
 
