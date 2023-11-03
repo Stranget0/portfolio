@@ -3,12 +3,15 @@ import createCleanFunction, {
 	type CleanMenago,
 } from "@utils/createCleanFunction";
 import groupBy from "lodash/groupBy";
-import {
-	nonWordifiedAttr,
-	nonWordifiedDataKey,
-	wordClasses,
-} from "./constants";
-import type { GroupEntry, Sentence, WordData, WordsGroups } from "./types";
+import { nonWordifiedAttr, nonWordifiedDataKey } from "./constants";
+import type {
+	AppearingTextClasses,
+	AppearingTextOptions,
+	GroupEntry,
+	Sentence,
+	WordData,
+	WordsGroups,
+} from "./types";
 import wait from "@utils/wait";
 import { transformLineToWords } from "./transform";
 
@@ -20,69 +23,78 @@ export function isStageContentSmall(stage: HTMLElement): boolean {
 	return contentLength < 12;
 }
 
-export function playStage(stage: HTMLElement, delay?: number) {
+export function playStage(stage: HTMLElement, options: AppearingTextOptions) {
 	const audioPath = stage.dataset.audioPath;
 	const audio = new Audio(`/audio/${audioPath}`);
 	const scrollPosition = stage.dataset["audioScroll"] as ScrollLogicalPosition;
-
-	// TODO change on sound files
-	audio.volume = 0.25;
 
 	wordifyStage(stage);
 	const wordData = getWordsFromStage(stage);
 
 	const cleanMenago = createCleanFunction(() =>
-		changeWordsVisibility(wordData, "visible"),
+		changeWordsVisibility(wordData, "visible", options.classes),
 	);
 
-	const finished = new Promise<void>((resolve, reject) => {
-		async function onAudioReady() {
-			try {
-				const { cancel: cancelPlayTimeout } = wait(() => {
-					audio.play();
-				}, delay);
-
-				cleanMenago.push(() => {
-					audio.pause();
-					cancelPlayTimeout();
-				});
-
-				if (!isStageContentSmall(stage))
-					changeWordsVisibility(wordData, "invisible");
-
-				const groupsFinishedPromise = Promise.all(
-					wordData.groups.map(([_, sentences]) =>
-						playWords(sentences, scrollPosition, delay),
-					),
-				).then(() => {
-					const { finished, cancel } = wait(
-						() => changeWordsVisibility(wordData, "visible"),
-						1000,
-					);
-					cleanMenago.push(cancel);
-					return finished;
-				});
-
-				await groupsFinishedPromise;
-				resolve();
-			} catch (e) {
-				reject(e);
-			}
-		}
-
-		const cancel = whenAudioReady(audio, onAudioReady, resolve);
-		cleanMenago.push(cancel);
-	});
-
-	finished.finally(() => dewordifyStage(stage));
+	const audioFinished = startAudio(options.classes);
+	audioFinished.finally(() => dewordifyStage(stage));
 
 	return {
 		clean: cleanMenago.clean,
-		finished,
+		finished: audioFinished,
 	};
+
+	function startAudio(wordClasses: AppearingTextClasses) {
+		try{
+			if (options.audioMiddleware) {
+				cleanMenago.push(options.audioMiddleware(audio));
+			}
+		}catch(e){console.error(e);}
+
+		return new Promise<void>((resolve, reject) => {
+			async function onAudioReady() {
+				try {
+					const { cancel: cancelPlayTimeout } = wait(() => {
+						audio.play();
+					}, options.delay);
+
+					cleanMenago.push(() => {
+						audio.pause();
+						cancelPlayTimeout();
+					});
+
+					if (!isStageContentSmall(stage))
+						changeWordsVisibility(wordData, "invisible", wordClasses);
+
+					const groupsFinishedPromise = Promise.all(
+						wordData.groups.map(([_, sentences]) =>
+							playWords(sentences, wordClasses, scrollPosition, options.delay),
+						),
+					).then(() => {
+						const { finished, cancel } = wait(
+							() => changeWordsVisibility(wordData, "visible", wordClasses),
+							1000,
+						);
+						cleanMenago.push(cancel);
+						return finished;
+					});
+
+					await groupsFinishedPromise;
+					resolve();
+				} catch (e) {
+					reject(e);
+				}
+
+				
+			}
+
+			const cancel = whenAudioReady(audio, onAudioReady, resolve);
+			cleanMenago.push(cancel);
+		});
+	}
 
 	async function playWords(
 		sentences: Sentence[],
+		wordClasses: AppearingTextClasses,
 		scrollPosition?: ScrollLogicalPosition,
 		delay?: number,
 	): Promise<void> {
@@ -97,13 +109,14 @@ export function playStage(stage: HTMLElement, delay?: number) {
 						cleanMenago,
 						delay,
 						isFirstWord,
+						wordClasses,
 					).then(() => {
 						const lastSentence = sentences[sentenceIndex - 1];
 						const shouldNotHideLastSentence = !isFirstWord || !lastSentence;
 
 						if (shouldNotHideLastSentence) return;
 						lastSentence.forEach((w) => {
-							hideWord(w);
+							hideWord(w, wordClasses);
 						});
 					});
 				}),
@@ -114,12 +127,25 @@ export function playStage(stage: HTMLElement, delay?: number) {
 	}
 }
 
+export function getWordClasses(
+	high: string[],
+	semi: string[],
+	low: string[],
+): AppearingTextClasses {
+	return {
+		low,
+		semi,
+		high,
+		all: [low, semi, high].flat(),
+	};
+}
 function queueShowWord(
 	word: WordData,
 	scrollPosition: ScrollLogicalPosition | undefined,
 	cleanMenago: CleanMenago,
 	delay = 0,
 	forceScroll = false,
+	wordClasses: AppearingTextClasses,
 ) {
 	return new Promise<void>((resolve) => {
 		// Scroll if end of sentence
@@ -132,11 +158,11 @@ function queueShowWord(
 
 		const { cancel: cancelShowTimeout } = wait(() => {
 			// Show word
-			showWord(word);
+			showWord(word, wordClasses);
 
 			// Fade out
 			const { cancel: fadeOutTimeout } = wait(() => {
-				fadeOutWord(word);
+				fadeOutWord(word, wordClasses);
 			}, appearDuration);
 
 			cleanMenago.push(fadeOutTimeout);
@@ -148,17 +174,17 @@ function queueShowWord(
 	});
 }
 
-function fadeOutWord(word: WordData) {
+function fadeOutWord(word: WordData, wordClasses: AppearingTextClasses) {
 	word.node.style.transitionDuration = "";
 	word.node.classList.remove(...wordClasses.all);
 	word.node.classList.add(...wordClasses.semi);
 }
-function showWord(word: WordData) {
+function showWord(word: WordData, wordClasses: AppearingTextClasses) {
 	word.node.style.transitionDuration = `${appearDuration}ms`;
 	word.node.classList.remove("opacity-0");
 	word.node.classList.add(...wordClasses.high);
 }
-function hideWord(w: WordData) {
+function hideWord(w: WordData, wordClasses: AppearingTextClasses) {
 	w.node.classList.remove(...wordClasses.all);
 	w.node.classList.add(...wordClasses.low);
 }
@@ -183,6 +209,7 @@ function handleScrollToLineOfWord(
 function changeWordsVisibility(
 	wordData: WordsGroups,
 	visibility: "visible" | "invisible",
+	wordClasses: AppearingTextClasses,
 ) {
 	wordData.groups.forEach(([_, sentences]) => {
 		sentences.forEach((words) => {

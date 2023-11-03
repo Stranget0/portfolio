@@ -1,0 +1,16 @@
+---
+import { barsAmount, audioBarAttr } from "./constants";
+
+const arr = new Array(barsAmount).fill(null);
+const barDataAttributes = { [audioBarAttr]: true };
+---
+
+<section
+	class="fixed w-full inset-0 z-2 pointer-events-none flex justify-between opacity-3"
+>
+	{
+		arr.map((_) => (
+			<div {...barDataAttributes} class="bg-black h-full w-2 scale-y-0" ></div>
+		))
+	}
+</section>

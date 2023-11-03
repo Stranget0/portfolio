@@ -12,12 +12,12 @@ const { class: className, ...other } = Astro.props;
 <scroll-reference
 	{...other}
 	class:list={[
-		"relative pt-0 pb-0 w-full block last:pb-font-3xl",
+		"relative pt-0 pb-0 w-full block last:pb-font-3xl overflow-hidden",
 		className,
 	]}
 >
 	<SectionClip
-		class="section pb-0 flex flex-col items-center justify-start w-full min-h-150vh"
+		class="section pb-0 flex flex-col items-center justify-start w-full min-h-150vh relative z-5"
 		data-static-h="150vh"
 		data-static-h-type="min"
 	>

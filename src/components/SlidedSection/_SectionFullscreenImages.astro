@@ -19,7 +19,7 @@ const { images } = Astro.props;
 					data-scroll-ref-offsets=".1 .5"
 				>
 					<Image
-						style={{ "z-index": length - i }}
+						// style={{ "z-index": length - i }}
 						src={resolveImageImport(name)}
 						alt={alt || ""}
 						sizes="(max-width: 768px) 768px, (max-width:1428px) 1428px, (max-width:1920px) 1920px, (max-width:3840px) 3840px"

@@ -31,3 +31,16 @@ export type WordsGroups = {
 };
 
 export type States = "default" | "loading" | "running";
+
+export interface AppearingTextClasses {
+	low: string[];
+	semi: string[];
+	high: string[];
+	all: string[];
+}
+
+export interface AppearingTextOptions {
+	classes: AppearingTextClasses;
+	delay?: number;
+	audioMiddleware?: (audio: HTMLAudioElement) => VoidFunction;
+}
