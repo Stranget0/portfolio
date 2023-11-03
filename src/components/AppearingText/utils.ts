@@ -36,7 +36,6 @@ export function playStage(stage: HTMLElement, options: AppearingTextOptions) {
 	);
 
 	const audioFinished = startAudio(options.classes);
-
 	audioFinished.finally(() => dewordifyStage(stage));
 
 	return {
@@ -45,6 +44,12 @@ export function playStage(stage: HTMLElement, options: AppearingTextOptions) {
 	};
 
 	function startAudio(wordClasses: AppearingTextClasses) {
+		try{
+			if (options.audioMiddleware) {
+				cleanMenago.push(options.audioMiddleware(audio));
+			}
+		}catch(e){console.error(e);}
+
 		return new Promise<void>((resolve, reject) => {
 			async function onAudioReady() {
 				try {
@@ -78,6 +83,8 @@ export function playStage(stage: HTMLElement, options: AppearingTextOptions) {
 				} catch (e) {
 					reject(e);
 				}
+
+				
 			}
 
 			const cancel = whenAudioReady(audio, onAudioReady, resolve);
@@ -382,4 +389,3 @@ function whenAudioReady(
 	};
 	return cancel;
 }
-

@@ -42,4 +42,5 @@ export interface AppearingTextClasses {
 export interface AppearingTextOptions {
 	classes: AppearingTextClasses;
 	delay?: number;
+	audioMiddleware?: (audio: HTMLAudioElement) => VoidFunction;
 }

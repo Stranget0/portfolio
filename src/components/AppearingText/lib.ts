@@ -4,17 +4,25 @@ import { getWordClasses, isStageContentSmall, playStage } from "./utils";
 import createCleanFunction from "@utils/createCleanFunction";
 import runOnEachPage from "@/utils/runOnEachPage";
 import { pointerMedia } from "@/medias";
+import type { AppearingTextOptions } from "./types";
+import visualizeAudio from "../AudioVisualizer/lib";
 
 let stages: HTMLElement[];
 let scrollCount = 0;
 let scrollTimeout = -1;
 let globalClean: VoidFunction | null = null;
 
-const wordClasses = getWordClasses(
-	["transform-scale-150"],
-	["opacity-50"],
-	["opacity-10", "filter-blur-2"],
-);
+const playStageOptions: AppearingTextOptions = {
+	classes: getWordClasses(
+		["transform-scale-150"],
+		["opacity-50"],
+		["opacity-10", "filter-blur-2"],
+	),
+	audioMiddleware(audio) {
+		const cancel = visualizeAudio(audio);
+		return cancel;
+	},
+};
 
 runOnEachPage(() => {
 	stages = Array.from(document.querySelectorAll<HTMLElement>(stageSelector));
@@ -32,7 +40,7 @@ export async function playSingleStage(stage: HTMLElement) {
 	cancelPlayingStages();
 
 	try {
-		const { clean, finished } = playStage(stage, { classes: wordClasses });
+		const { clean, finished } = playStage(stage, playStageOptions);
 		globalClean = clean;
 		await finished;
 	} catch (e) {
@@ -58,9 +66,10 @@ export async function playAllStages() {
 			if (delay > 0 && isStageContentSmall(stage)) delay = 500;
 
 			const { finished, clean } = playStage(stage, {
-				classes: wordClasses,
+				...playStageOptions,
 				delay,
 			});
+
 			cleanMenago.push(clean);
 			return finished;
 		});
