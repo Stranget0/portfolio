@@ -16,6 +16,10 @@ export const mainpageTabs = {
 		id: "about-me-tab",
 		label: (url) => useTranslations(url)("sections.about-me"),
 	},
+	services: {
+		id: "services-tab",
+		label: (url) => useTranslations(url)("sections.services"),
+	},
 	projects: {
 		id: "projects-tab",
 		label: (url) => useTranslations(url)("sections.projects"),

@@ -40,11 +40,12 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 		},
 		sections: {
 			hero: "Fox",
-			"about-me": "About me",
-			"contact-me": "Contact me",
 			play: "Play",
+			"about-me": "About me",
+			services: "Services",
 			projects: "Projects",
 			skills: "Skills",
+			"contact-me": "Contact me",
 		},
 		"about-me": {
 			"profile-alt": "Picture of me",
@@ -100,6 +101,7 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 		sections: {
 			hero: "Lis",
 			"about-me": "O mnie",
+			services: "Usługi",
 			"contact-me": "Kontakt",
 			play: "Odtwórz stronę",
 			projects: "Projekty",

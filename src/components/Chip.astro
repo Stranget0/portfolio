@@ -7,7 +7,7 @@ type Props<T extends HTMLTag> = Polymorphic<{ as: T }> & {
 };
 
 const {
-	as: Tag,
+	as: Tag = "div",
 	color='',
 	bg: background='',
 	class: className = "text-body",

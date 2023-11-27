@@ -64,6 +64,11 @@ export const transcriptSchema = z.object({
 	),
 });
 
+export const serviceSchema = z.object({
+	order: z.number()
+})
+
 export type Transcript = z.infer<typeof transcriptSchema>;
 export type Project = z.infer<typeof projectSchema>;
 export type ProfileTranslations = z.infer<typeof linkTitle>;
+export type Service = z.infer<typeof serviceSchema>

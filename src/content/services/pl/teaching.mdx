@@ -1,0 +1,74 @@
+---
+order: 1
+---
+
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import Chip from "@components/Chip.astro";
+import Button from "@components/Button/Button.astro";
+import { mainpageTabs } from "src/constants";
+
+<AppearingLine
+	as="h3"
+	class="text-subtitle-1 solid-text-shadow text-center md:text-left"
+	animatedOnView
+	text="Nauka programowania"
+/>
+<AppearingLine
+	class="text-subtitle-3"
+	text="Z chęcią zarażę Cię pasją do programowania i przeprowadzę zajęcia, bądź udzielę korepetycji z zakresu programowania stron internetowych, lub python'a."
+/>
+<Button
+	as="a"
+	href={`#${mainpageTabs.contact.id}`}
+	class="flex gap-2 max-w-max mb-4 font-serif important:bg-accent-200 LOREMIPSUMLOL"
+>
+	<div class="i-mingcute-book-6-fill w-8 h-8"></div>
+	<AppearingLine
+		text="Umów się na zajęcia!"
+		class="inline-block my-2 text-body"
+		animatedOnView
+	/>
+</Button>
+<Chip
+	class="bg-green-400 solid-shadow w-fit not-prose grayscale-30 LOREMIPSUMLOL"
+	color="black"
+>
+	80zł / godzinę
+</Chip>
+<p>
+	<AppearingLine
+		as="strong"
+		text="Sposób przeprowadzania i treść lekcji jest do przystosowania dla indywidualnych potrzeb ucznia, ale generalnie trwa 1.5 godziny i będzie przeprowadzana według konkretnego planu:"
+	/>
+</p>
+
+- <AppearingLine text="15 min luźna rozmowa przed lekcją właściwą (bezpłatna)." />
+- <AppearingLine text="Przypomnienie wiadomości z poprzednich zajęć (w ciągu tygodnia ilość zdobytej wiedzy zaciera się w 70%!), omówienie pracy nad osobistym projektem." />
+- <AppearingLine text="Omówienie efektów dzisiejszych zajęć." />
+- <AppearingLine text="Wspólna praca nad zadaniami mającymi nauczyć konkretnego paradygmatu, funkcji bądź tematu." />
+- <AppearingLine text="Podsumowanie i udzielenie wskazówek o wykorzystaniu zdobytej wiedzy w projekcie." />
+
+<AppearingLine text="Lekcja będzie nagrywana, więc na spokojnie będzie można wrócić do materiałów później 😉" />
+
+<AppearingLine class="text-subtitle-3 font-bold" text="Przykładowe kursy:" />
+<p>
+	<AppearingLine as="strong" text="Python (10+ lat, początkujący)" />
+</p>
+
+- <AppearingLine text="Nauka podstaw języka." />
+- <AppearingLine text="Tworzenie aplikacji konsolowych." />
+- <AppearingLine text="Nauka pyGameZero oraz wykonanie własnej gry. 😉" />
+
+<p>
+	<AppearingLine
+		as="strong"
+		text="Web (13+ lat, początkujący, średniozaawansowany):"
+	/>
+</p>
+
+- <AppearingLine text="Nauka o HTML, później dodatkowo CSS." />
+- <AppearingLine text="Nauka o JavaScript, modułach i bibliotekach." />
+- <AppearingLine text="Integracje (analityka, sprawdzanie błędów)." />
+- <AppearingLine text="Hosting." />
+- <AppearingLine text="Frameworki JS (dodatkowo, wedle preferencji)." />
+- <AppearingLine text="Wykonanie własnej strony internetowej." />
