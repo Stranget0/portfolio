@@ -53,7 +53,7 @@ let letterCount = offset;
 <!-- TODO: FIX TYPE -->
 <Tag
 	{...other as any}
-	class:list={[className, "max-w-prose", balance && "text-balance"]}
+	class:list={[className, !className.includes("max-w") && "max-w-prose", balance && "text-balance"]}
 	data-appearing-group={ignoreAudio ? undefined : group}
 	data-non-wordified={!isWordified && !ignoreAudio
 		? JSON.stringify(commonProps)
