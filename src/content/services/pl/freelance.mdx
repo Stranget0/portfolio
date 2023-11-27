@@ -1,0 +1,36 @@
+---
+order: 2
+---
+import AppearingLine from "@components/AppearingText/AppearingLine.astro";
+import Chip from "@components/Chip.astro";
+import Button from "@components/Button/Button.astro";
+import { mainpageTabs } from "src/constants";
+
+<AppearingLine
+    as="h3"
+    class="text-subtitle-1 solid-text-shadow text-center md:text-left"
+		animatedOnView
+    text="Freelance"
+/>
+- <AppearingLine text="Tworzenie stron internetowych"/>
+- <AppearingLine text="Projektowanie stron internetowych"/>
+- <AppearingLine text="Tworzenie CV, wizytówki, bądź plakatu"/>
+
+<Button
+	as="a"
+	size="small"
+	href={`#${mainpageTabs.contact.id}`}
+	class="flex gap-2 max-w-max mb-4 font-serif important:bg-accent-200 LOREMIPSUMLOL"
+>
+	<div class="i-mingcute-message-3-fill w-8 h-8"></div>
+	<AppearingLine
+		text="Napisz do mnie!"
+		class="inline-block my-2 text-body"
+	/>
+</Button>
+<Chip
+	class="bg-blue-400 solid-shadow w-fit not-prose grayscale-30 LOREMIPSUMLOL"
+	color="black"
+>
+	Kwota do ustalenia
+</Chip>

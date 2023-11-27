@@ -3,13 +3,19 @@ import SectionClip from "@/components/SectionClip.astro";
 import InitialScreen from "./_InitialScreen.astro";
 import LoadedScreen from "./_LoadedScreen.astro";
 import { classOnFoxLoaded } from "@components/ThreeScene/serverUtils";
+import { mainpageTabs } from "@/constants";
+import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
 
 const removeOnFoxLoaded = classOnFoxLoaded("hidden");
 
 const appearOnFoxLoaded = classOnFoxLoaded("important:(opacity-100 scale-100)");
 ---
 
-<SectionClip class="h-120vh" data-static-h="120vh">
+<SectionClip class="h-120vh" data-static-h="120vh" id={mainpageTabs.hero.id}
+{...waypoints.foxWaypointCameraSpatial(3.316, 1.264, -0.321).waypoint()}
+{...waypoints.foxWaypointTarget(0.5, -0.3, -1).waypoint()}
+{...waypoints.foxWaypointStiffness(1, 1).waypoint()}
+>
 	<InitialScreen {...removeOnFoxLoaded} />
 	<LoadedScreen
 		{...appearOnFoxLoaded}

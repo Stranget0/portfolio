@@ -3,6 +3,8 @@ import SlidedSection from "@components/SlidedSection/SlidedSection.astro";
 import Project from "./Project.astro";
 import { getCollection, getEntry } from "astro:content";
 import { foxObstacleAttrObj } from "@components/ThreeScene/constants";
+import { mainpageTabs } from "src/constants";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -11,8 +13,6 @@ const projects = await getCollection("projects", ({ slug }) =>
 );
 
 
-import { mainpageTabs } from "src/constants";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const titleTranscript = await getEntry("transcripts", `${lang}/projects`);
 ---

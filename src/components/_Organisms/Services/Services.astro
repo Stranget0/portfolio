@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import AppearingText from "@/components/AppearingText/AppearingText.astro";
+import AppearingLine from "@/components/AppearingText/AppearingLine.astro";
+import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
+import { mainpageTabs } from "@/constants";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const services = (
+	await getCollection("services", ({ slug }) => slug.startsWith(lang))
+).sort(({ data: a }, { data: b }) => a.order - b.order);
+---
+
+<AppearingText
+	id={mainpageTabs.services.id}
+	as="section"
+	class="section bg-white bg-opacity-80"
+	transcript={undefined}
+	id={undefined}
+>
+	<scroll-reference class="block prose">
+		<AppearingLine
+			as="h2"
+			class="text-subtitle-1 solid-text-shadow text-center md:text-left"
+			lettersTransition
+			letterClass="hover:text-accent-200"
+			text={t("sections.services")}
+			{...waypoints
+				.foxWaypointCameraSpatial(3.316, 1.264, -0.321)
+				.addBreakpoint(1024, 3.316, 1.264, 0.5)
+				.waypoint()}
+			{...waypoints
+				.foxWaypointTarget(0.5, 1, -1)
+				.addBreakpoint(1024, -6, -0.3, -1)
+				.waypoint()}
+			{...waypoints
+				.foxWaypointStiffness(2, 2)
+				.addBreakpoint(1024, 1, 1)
+				.waypoint()}
+		/>
+		{
+			services.map(async ({ render }) => {
+				const { Content } = await render();
+				return (
+					<article
+						class="transform-origin-top-left"
+						data-scroll-target-keyframes={JSON.stringify({
+							y: [200, 0],
+							opacity: [0, 0, 1],
+							scale: [0, 1],
+						})}
+						data-scroll-ref-offsets="0 0 1 .5"
+						data-scroll-target
+						data-scroll-target-ref
+					>
+						<Content />
+					</article>
+				);
+			})
+		}
+	</scroll-reference>
+</AppearingText>

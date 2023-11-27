@@ -13,6 +13,7 @@ import { mainpageTabs } from "src/constants";
 import PlayStagesSection from "@/components/_Organisms/PlayStagesSection/PlayStagesSection.astro";
 import { supportedLanguages } from "@/i18n/constants";
 import AudioVisualizer from "@/components/AudioVisualizer/AudioVisualizer.astro";
+import Services from "@/components/_Organisms/Services/Services.astro";
 
 export const getStaticPaths = (() => {
 	return supportedLanguages.map((lang) => ({ params: { lang } }));
@@ -33,6 +34,7 @@ export const getStaticPaths = (() => {
 		<HeroSection />
 		<PlayStagesSection />
 		<AboutMe />
+		<Services />
 		<Projects />
 		<OtherTechnologies />
 		<ContactSection />

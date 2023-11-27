@@ -28,6 +28,7 @@ export interface TranslationObject {
 	sections: {
 		play: string;
 		"about-me": string;
+		services: string;
 		projects: string;
 		skills: string;
 		"contact-me": string;
