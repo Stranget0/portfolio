@@ -16,6 +16,7 @@ type Props<T extends TextTag = "p"> = Polymorphic<{ as: T }> & {
 	letterClass?: string;
 	ignoreAudio?: boolean;
 	offset?: number;
+	balance?: boolean;
 };
 
 export type AppearingTextProps = Props;
@@ -27,8 +28,9 @@ const {
 	group,
 	animatedOnView,
 	animatedInitially,
-	offset = 0,
 	letterClass,
+	balance = !className.includes("title"),
+	offset = 0,
 	lettersTransition = animatedInitially || animatedOnView,
 	...other
 } = Astro.props;
@@ -51,9 +53,11 @@ let letterCount = offset;
 <!-- TODO: FIX TYPE -->
 <Tag
 	{...other as any}
-	class:list={[className]}
+	class:list={[className, "max-w-prose", balance && "text-balance"]}
 	data-appearing-group={ignoreAudio ? undefined : group}
-	data-non-wordified={!isWordified && !ignoreAudio ? JSON.stringify(commonProps) : undefined}
+	data-non-wordified={!isWordified && !ignoreAudio
+		? JSON.stringify(commonProps)
+		: undefined}
 	{...calculatedData}
 >
 	{
