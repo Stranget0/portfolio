@@ -4,14 +4,12 @@ import Copyright from "./Copyright.astro";
 ---
 
 <footer
-	class="bg-primary-950 px-8 pb-2 pt-4 op-98 z-100"
+	class="bg-primary-950 px-8 pb-2 pt-4 op-98 z-100 overflox-x-hidden"
 >
-<nav class="ml-auto mb-4 flex gap-2 menu-opafocus w-max"><SocialLinks small /></nav>
-<div class="flex justify-between items-center ">
-	<Copyright />
-	<div class="flex flex-col items-end gap-4 text-primary-50 font-100 text-right md:(flex-row justify-end items-center)">
-		<a aria-label="tel" href="https://wa.me/48505075020">+48 505 075 020</a>
-		<a aria-label="email" href="mailto:m.smarzewski.ts@gmail.com">m.<wbr>smarzewski.<wbr>ts@<wbr>gmail.<wbr>com</a>
-	</div>
+	<div class="grid gap-4 items-center justify-center text-center">
+		<a class="text-primary-50 font-100" aria-label="tel" href="https://wa.me/48505075020">+48 505 075 020</a>
+		<a class="text-primary-50 font-100" aria-label="email" href="mailto:m.smarzewski.ts@gmail.com">m.<wbr>smarzewski.<wbr>ts@<wbr>gmail.<wbr>com</a>
+		<nav class="flex gap-2 menu-opafocus items-center justify-center"><SocialLinks small /></nav>
+		<Copyright />
 	</div>
 </footer>
