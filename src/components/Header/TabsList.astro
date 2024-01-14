@@ -66,10 +66,7 @@ const t = useTranslations(lang);
 			this.idRef = /#(.+)$/i.exec(this.href)?.[1] || "";
 			const pointedElement =
 				this.idRef && document.querySelector(`#${this.idRef}`);
-			if (!pointedElement) {
-				console.error(`No element with id ${this.idRef} found`, this);
-				return;
-			}
+			
 			observer.observe(pointedElement as HTMLElement);
 			Tab.tabs[this.idRef] = this;
 		}
