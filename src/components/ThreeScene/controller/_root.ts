@@ -21,7 +21,7 @@ export default function initHeroController<Ms extends ThreeModule[]>(
 	);
 
 	heroController.renderer.toneMapping = ACESFilmicToneMapping;
-	heroController.renderer.toneMappingExposure = 5;
+	heroController.renderer.toneMappingExposure = 2;
 	heroController.renderer.shadowMap.type = VSMShadowMap;
 
 	let { innerWidth: lastWidth, innerHeight: lastHeight } = window;
