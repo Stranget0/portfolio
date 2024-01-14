@@ -7,6 +7,7 @@ import { getMaxPos } from "@utils/getMaxPos";
 import createCleanFunction from "@utils/createCleanFunction";
 import isomorphicScrollToElement from "./isomorphicScrollToElement";
 import runOnEachPage from "@/utils/runOnEachPage";
+import getFoxController from "@/components/ThreeScene/foxApi";
 
 export type Target = Window | HTMLElement;
 
@@ -81,6 +82,9 @@ export default function initLerpScroll(
 	function synchronizeValues() {
 		xLerp.value = lastTargetX = getScrollPos(target, "x");
 		yLerp.value = lastTargetY = getScrollPos(target, "y");
+		getFoxController()?.then((c) => {
+			c.updateWaypointsPositions();
+		});
 	}
 
 	function handleAnchorsScroll() {

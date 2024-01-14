@@ -19,7 +19,7 @@ const t = useTranslations(lang);
 	{
 		tabsEntries.map(async ([_, { id, label }]) => {
 			const labelText = label(Astro.url);
-			const tabFilter = tabFilters[id];
+			const tabFilter = id && tabFilters[id];
 
 			if (tabFilter && !(await tabFilter(lang))) return;
 			return (
@@ -40,8 +40,6 @@ const t = useTranslations(lang);
 </ul>
 
 <script>
-	import getFoxController from "../ThreeScene/foxApi";
-
 	const observer = new IntersectionObserver(
 		(targets) => {
 			for (const { isIntersecting, target } of targets) {
@@ -82,11 +80,6 @@ const t = useTranslations(lang);
 			Tab.activeTab?.classList.remove(getActiveClass(Tab.activeTab));
 			Tab.activeTab = this;
 			this.classList.add(getActiveClass(Tab.activeTab));
-
-			// Update fox position
-			getFoxController()
-				?.then((controller) => controller.updateWaypointsPositions())
-				.catch(() => {});
 		}
 	}
 
