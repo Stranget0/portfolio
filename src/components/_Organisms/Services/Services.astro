@@ -1,22 +1,26 @@
 ---
-import { getCollection } from "astro:content";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import AppearingText from "@/components/AppearingText/AppearingText.astro";
 import AppearingLine from "@/components/AppearingText/AppearingLine.astro";
 import waypoints from "@components/ThreeScene/modules/waypoints/waypointsServerApi";
 import { mainpageTabs } from "@/constants";
+import getServicesContent from "@/utils/getServicesContent";
+
+interface Props{
+	class?: string
+}
+
+const {class:className} = Astro.props
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const services = (
-	await getCollection("services", ({ slug }) => slug.startsWith(lang))
-).sort(({ data: a }, { data: b }) => a.order - b.order);
+const services = await getServicesContent(lang)
 ---
 
 <AppearingText
 	id={mainpageTabs.services.id}
 	as="section"
-	class="section bg-white bg-opacity-80"
+	class:list={["section", className]}
 	transcript={undefined}
 >
 	<scroll-reference class="block prose">
@@ -36,15 +40,17 @@ const services = (
 				.waypoint()}
 			{...waypoints
 				.foxWaypointStiffness(2, 2)
-				.addBreakpoint(1024, 1, 1)
+				.addBreakpoint(1024, 3, 3)
 				.waypoint()}
 		/>
 		{
-			services.map(async ({ render }) => {
+			services.map(async ({ render, slug:slugWithLang }) => {
+				const slug = slugWithLang.split("/")[1]
 				const { Content } = await render();
 				return (
 					<article
-						class="transform-origin-top-left"
+						class="transform-origin-top-left no-transform-mobile"
+						id={slug}
 						data-scroll-target-keyframes={JSON.stringify({
 							y: [200, 0],
 							opacity: [0, 0, 1],
