@@ -2,7 +2,8 @@ import type { availableBreakpoints } from "./constants";
 import type { SupportedLanguage } from "./i18n/types";
 
 export interface Tab {
-	id: string;
+	id?: string
+	href?: string;
 	label: (urlOrLang: URL | SupportedLanguage) => string;
 }
 export interface Tabs {

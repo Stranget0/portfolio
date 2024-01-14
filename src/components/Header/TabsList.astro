@@ -17,17 +17,18 @@ const t = useTranslations(lang);
 <ListTitle>{t("header.menu")}</ListTitle>
 <ul class="absolute-center flex-col-center gap-6">
 	{
-		tabsEntries.map(async ([_, { id, label }]) => {
+		tabsEntries.map(async ([tabKey, { href, label }]) => {
 			const labelText = label(Astro.url);
-			const tabFilter = id && tabFilters[id];
+			const tabFilter = tabFilters[tabKey];
 
 			if (tabFilter && !(await tabFilter(lang))) return;
+			
 			return (
 				<li class="motion-safe:transition-transform">
 					<a
 						is="nav-tab"
 						class="animated-underline animated-underline-right font-light"
-						href={`#${id}`}
+						href={`/${lang}${href}`}
 						data-tab-active-class="before:important:scale-x-100"
 						title={labelText}
 					>

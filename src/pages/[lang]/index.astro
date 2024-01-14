@@ -1,0 +1,44 @@
+---
+import type { GetStaticPaths } from "astro";
+import Footer from "@components/Footer.astro";
+import ThreeScene from "@components/ThreeScene/ThreeScene.astro";
+import Layout from "@layouts/Layout.astro";
+import Projects from "@components/_Organisms/Projects/Projects.astro";
+import HeroSection from "@components/_Organisms/HeroSection/HeroSection.astro";
+import OtherTechnologies from "@/components/_Organisms/TechnologiesSection/TechnologiesSection.astro";
+import ContactSection from "@components/_Organisms/ContactSection/ContactSection.astro";
+import AboutMe from "@components/_Organisms/AboutMe/AboutMe.astro";
+import { Toaster } from "solid-toast";
+import { dialogTabs, mainpageTabs } from "src/constants";
+import PlayStagesSection from "@/components/_Organisms/PlayStagesSection/PlayStagesSection.astro";
+import { supportedLanguages } from "@/i18n/constants";
+import AudioVisualizer from "@/components/AudioVisualizer/AudioVisualizer.astro";
+
+export const getStaticPaths = (() => {
+	return supportedLanguages.map((lang) => ({ params: { lang } }));
+}) satisfies GetStaticPaths;
+---
+
+<Layout tabs={dialogTabs}>
+	<div data-taxi-view class="w-full">
+		<Toaster
+			client:idle
+			position="bottom-left"
+			toastOptions={{
+				className: "text-primary-950",
+			}}
+		/>
+		<ThreeScene />
+		<AudioVisualizer />
+		<HeroSection />
+		<PlayStagesSection />
+		<div class="bg-white">
+			<AboutMe />
+			<!-- <Services /> -->
+			<Projects />
+			<OtherTechnologies />
+		</div>
+		<ContactSection />
+		<Footer />
+	</div>
+</Layout>

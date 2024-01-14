@@ -46,6 +46,8 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			projects: "Projects",
 			skills: "Skills",
 			"contact-me": "Contact me",
+			freelance: "Freelance",
+			teaching: "Programming teaching",
 		},
 		"about-me": {
 			"profile-alt": "Picture of me",
@@ -106,6 +108,8 @@ export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 			play: "Odtwórz stronę",
 			projects: "Projekty",
 			skills: "Umiejętności",
+			freelance: "Freelancing",
+			teaching: "Nauka programowania",
 		},
 		"about-me": {
 			"profile-alt": "Picture of me",

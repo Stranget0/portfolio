@@ -88,9 +88,15 @@ export default function initLerpScroll(
 	}
 
 	function handleAnchorsScroll() {
-		for (const anchor of document.querySelectorAll<HTMLAnchorElement>(
-			'a[href^="#"]',
-		)) {
+		const anchors =
+			document.querySelectorAll<HTMLAnchorElement>(`a[href*="#"]`);
+
+		for (const anchor of anchors) {
+			const hrefURL = new URL(anchor.href);
+			const isSamePage = location.pathname === hrefURL.pathname;
+			// Shouldn't prevent default when navigating to other page
+			if (!isSamePage) continue;
+
 			const handleAnchorScroll = (e: MouseEvent): void => {
 				e.preventDefault();
 				const clickTarget = e.target as HTMLElement | undefined;
@@ -98,12 +104,15 @@ export default function initLerpScroll(
 					clickTarget?.tagName === "a"
 						? (clickTarget as HTMLAnchorElement)
 						: clickTarget?.closest<HTMLAnchorElement>("a");
-				if (!anchor?.href) return;
-				const index = anchor.href.lastIndexOf("#");
-				const selector = anchor.href.substring(index);
-				const scrollTarget = document.querySelector<HTMLElement>(selector);
-				if (!scrollTarget) return;
 
+				if (!anchor?.href) return;
+
+				location.replace(hrefURL.href);
+				
+				const scrollTarget = document.querySelector<HTMLElement>(hrefURL.hash);
+				
+				if (!scrollTarget) return;
+				
 				isomorphicScrollToElement(lerpScrollToElement, scrollTarget, {
 					behavior: "instant",
 					onInstantScroll: synchronizeValues,

@@ -5,7 +5,6 @@ import Background from "@components/Background.astro";
 import Plugins from "@plugins/Plugins.astro";
 import type { HeaderProps } from "@components/Header/Header.astro";
 import Header from "@components/Header/Header.astro";
-import { mainpageTabs } from "src/constants";
 import { ViewTransitions } from "astro:transitions";
 import { getLangFromUrl } from "@/i18n/utils";
 import Analytics from "@/components/Analytics/Analytics.astro";
@@ -14,6 +13,7 @@ import BottomStatus from "@/components/BottomStatus/BottomStatus";
 type Props = HeaderProps;
 
 const lang = getLangFromUrl(Astro.url);
+const {tabs} = Astro.props
 ---
 
 <!doctype html>
@@ -66,7 +66,7 @@ const lang = getLangFromUrl(Astro.url);
 		class="theme-default text-primary-800 font-sans overflow-y-auto overflow-x-hidden drop-shadow-color-black drop-shadow-color-opacity-50"
 	>
 		<Background />
-		<Header tabs={mainpageTabs} />
+		<Header tabs={tabs} />
 		<Plugins />
 		<BottomStatus lang={lang} client:load/>
 		<main data-taxi class="relative">

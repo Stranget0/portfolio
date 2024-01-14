@@ -33,6 +33,8 @@ export interface TranslationObject {
 		skills: string;
 		"contact-me": string;
 		hero: string;
+		teaching: string;
+		freelance: string;
 	};
 
 	"about-me": { "profile-alt": string; text: string[] };
