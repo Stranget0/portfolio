@@ -36,7 +36,7 @@ const t = useTranslations(lang);
 	class="section font-serif relative flex flex-col justify-between gap-12 md:flex-row relative bg-primary-50 shadow-2xl"
 	{...foxObstacleAttrObj}
 >
-	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block">
+	<div class="w-50% min-w-80 max-w-5xl ml-auto hidden md:block content-visibility-auto">
 		<Image
 			src={myImage}
 			alt="Picture of me"
@@ -53,7 +53,7 @@ const t = useTranslations(lang);
 	>
 		<h2 class="text-label">{t("sections.about-me")}</h2>
 		<AppearingLine
-			class="text-subtitle-1 solid-text-shadow"
+			class="text-subtitle-1 solid-text-shadow content-visibility-auto"
 			text={t("about-me.text.0")}
 			group={1}
 			lettersTransition
@@ -66,13 +66,13 @@ const t = useTranslations(lang);
 				alt={t("about-me.profile-alt")}
 				aspect-ratio="1:1"
 				sizes="200px"
-				class="rounded-full object-contain motion-safe:transition-600 p-4 aspect-square"
+				class="rounded-full object-contain motion-safe:transition-600 p-4 aspect-square content-visibility-auto"
 				{...appearInViewScale}
 			/>
 		</div>
 		{
 			transcript.data.audio && (
-				<div class="h-0 relative bottom-3">
+				<div class="h-0 relative bottom-3 content-visibility-auto">
 					<AppearingTextButton
 						client:visible
 						class="ml-auto motion-safe:transition-color-300 hover:text-tertiary-900 focus-visible:text-tertiary-900"
@@ -90,16 +90,16 @@ const t = useTranslations(lang);
 		/>
 		<AppearingLine
 			text={t("about-me.text.2")}
-			class="text-primary-600 text-6 text-balance motion-safe:transition-opacity-1000"
+			class="text-primary-600 text-6 text-balance motion-safe:transition-opacity-1000 content-visibility-auto"
 			{...appearInView}
 		/>
 		<AppearingLine
-			class="text-primary-600 text-6 text-balance motion-safe:transition-opacity-1000"
+			class="text-primary-600 text-6 text-balance motion-safe:transition-opacity-1000 content-visibility-auto"
 			text={t("about-me.text.3")}
 			{...appearInView}
 		/>
 		<p
-			class="text-subtitle-3 text-balance text-9 mb-0 text-center solid-text-shadow motion-safe:transition-opacity-1000 sm:(text-right text-12 ml-auto max-w-80%)"
+			class="text-subtitle-3 text-balance text-9 mb-0 text-center solid-text-shadow content-visibility-auto motion-safe:transition-opacity-1000 sm:(text-right text-12 ml-auto max-w-80%)"
 			{...appearInView}
 		>
 			<AppearingLine as="span" text={t("about-me.text.4")} />
@@ -120,7 +120,7 @@ const t = useTranslations(lang);
 				class="text-right max-w-max"
 				invertColor
 			>
-				<div class="inline-block i-mingcute-message-3-fill w-8 h-8 mr-2"></div>
+				<div class="inline-block i-mingcute-message-3-fill w-8 h-8 mr-2 content-visibility-auto"></div>
 				<AppearingLine
 					text={t("common.contact-me")}
 					class="inline-block my-2"
