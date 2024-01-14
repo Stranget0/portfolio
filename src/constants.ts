@@ -59,6 +59,7 @@ export const dialogTabs = {
 		id: "freelance",
 		href: "/services#freelance",
 	},
+	contact: mainpageTabs.contact
 } satisfies Tabs;
 
 export const availableBreakpoints = [756, 1024] as const;
