@@ -32,7 +32,7 @@ const shortcuts = {
 	"text-label": "text-3.5 font-thin tracking-2 lowercase",
 	"text-sm": "text-3.75 font-thin",
 	"text-xs": "text-3.5 font-thin",
-	section: "px-4 py-10 lg:px-16 flex flex-col justify-center",
+	section: "px-4 py-10 lg:px-16 flex flex-col justify-center content-visibility-auto",
 	"aspect-card": "aspect-[63/88]",
 	"aspect-card-rotated": "aspect-[88/63]",
 	"pseudo-full": "absolute inset-0 content",
