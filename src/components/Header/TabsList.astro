@@ -22,13 +22,16 @@ const t = useTranslations(lang);
 			const tabFilter = tabFilters[tabKey];
 
 			if (tabFilter && !(await tabFilter(lang))) return;
-			
+
+			const isElementLink = href?.startsWith("#");
+			const resultHref = href && (isElementLink ? href : `/${lang}${href}`);
+
 			return (
 				<li class="motion-safe:transition-transform">
 					<a
 						is="nav-tab"
 						class="animated-underline animated-underline-right font-light"
-						href={`/${lang}${href}`}
+						href={resultHref}
 						data-tab-active-class="before:important:scale-x-100"
 						title={labelText}
 					>
@@ -66,7 +69,7 @@ const t = useTranslations(lang);
 			this.idRef = /#(.+)$/i.exec(this.href)?.[1] || "";
 			const pointedElement =
 				this.idRef && document.querySelector(`#${this.idRef}`);
-			
+
 			observer.observe(pointedElement as HTMLElement);
 			Tab.tabs[this.idRef] = this;
 		}
