@@ -28,6 +28,7 @@
 		"@astrojs/check": "^0.2.0",
 		"@astrojs/mdx": "^1.0.0",
 		"@astrojs/partytown": "^2.0.0",
+		"@astrojs/sitemap": "^3.0.5",
 		"@astrojs/solid-js": "^3.0.1",
 		"@hotjar/browser": "^1.0.9",
 		"@motionone/solid": "^10.16.2",

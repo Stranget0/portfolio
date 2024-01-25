@@ -3,8 +3,10 @@ import UnoCSS from "unocss/astro";
 import { visualizer } from "rollup-plugin-visualizer";
 import mdx from "@astrojs/mdx";
 import solidJs from "@astrojs/solid-js";
-
 import partytown from "@astrojs/partytown";
+
+import sitemap from "@astrojs/sitemap";
+import { defaultLang, languageKeys } from "./src/i18n/constants";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,8 +19,13 @@ export default defineConfig({
 				forward: ["dataLayer.push", "gtag"],
 			},
 		}),
+		sitemap({
+			i18n: {
+				defaultLocale: defaultLang,
+				locales: languageKeys,
+			},
+		}),
 	],
-
 	vite: {
 		plugins: [
 			visualizer({
@@ -29,7 +36,6 @@ export default defineConfig({
 			}),
 		],
 	},
-
 	site: "https://msmarzewski.pl",
 	compressHTML: true,
 });

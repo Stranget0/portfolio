@@ -9,6 +9,10 @@ export const languages: { [k in SupportedLanguage]: string } = {
 	pl: "Polski",
 };
 
+export const languageKeys:{ [k in SupportedLanguage]: string } = {
+	en: "en-us",pl:"pl"
+}
+
 export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 	en: {
 		titles: {
