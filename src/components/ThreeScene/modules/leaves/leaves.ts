@@ -1,7 +1,7 @@
 import randomColorBetween from "@utils/randomColorBetween";
 import randomSpherePointsFromTo from "@utils/randomPoints";
 import {
-	BufferGeometry,
+	type BufferGeometry,
 	Color,
 	DoubleSide,
 	Euler,
