@@ -20,7 +20,7 @@ jobs:
           build: npm run build
 
       - name: Save build folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           if-no-files-found: error
@@ -38,7 +38,7 @@ jobs:
           version: 8
       
       - name: Download the build folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: dist
@@ -65,7 +65,7 @@ jobs:
           version: 8
       
       - name: Download the build folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: dist
@@ -91,7 +91,7 @@ jobs:
           version: 8
       
       - name: Download the build folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: dist
@@ -143,7 +143,7 @@ jobs:
           node-version: 18
 
       - name: Download the build folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: dist
