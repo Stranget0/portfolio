@@ -28,6 +28,11 @@ const spinnedTexts = [
 	t("info.design"),
 	t("info.technologies", [technologies.length]),
 ];
+
+const loaderText = [
+	t("titles.loader.0"),
+	t("titles.loader.1"),
+]
 ---
 
 <SectionFixed
@@ -39,12 +44,17 @@ const spinnedTexts = [
 		class="fox-bg fixed flex-col-center inset-0 h-100svh z-2 text-primary-100 bg-primary-50"
 	>
 		<div class="menu-opafocus">
+			{
+			loaderText.map((text)=>{
+			return (
 			<AppearingLine
 				as="h1"
-				class="w-min text-subtitle-1 solid-text-shadow mix-blend-difference menu-opafocus-option"
-				text={t("titles.loader")}
+				class="w-full text-subtitle-1 solid-text-shadow mix-blend-difference menu-opafocus-option"
+				text={text}
 				lettersTransition
-			/>
+			/>)
+			})
+			}
 			<SpinnedTexts texts={spinnedTexts} />
 		</div>
 	</div>

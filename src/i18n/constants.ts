@@ -16,7 +16,7 @@ export const languageKeys:{ [k in SupportedLanguage]: string } = {
 export const translations: { [k in SupportedLanguage]: TranslationObject } = {
 	en: {
 		titles: {
-			loader: "Web development",
+			loader: ["Web","development"],
 			"3d": ["My website", "my choice", "your website", "your choice"],
 		},
 		seo: {
