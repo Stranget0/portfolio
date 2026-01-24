@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import UnoCSS from "unocss/astro";
 import { visualizer } from "rollup-plugin-visualizer";
 import mdx from "@astrojs/mdx";
@@ -38,4 +38,7 @@ export default defineConfig({
 	},
 	site: "https://msmarzewski.pl",
 	compressHTML: true,
+	image: {
+		service: passthroughImageService(),
+	},
 });
