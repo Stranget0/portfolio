@@ -31,4 +31,9 @@ export default defineConfig({
 	},
 	site: "https://msmarzewski.pl",
 	compressHTML: true,
+  image: {
+     service: {
+       entrypoint: 'astro/assets/services/noop'
+    }
+	}
 });
