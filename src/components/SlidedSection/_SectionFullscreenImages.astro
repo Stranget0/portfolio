@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 // import SectionClip from "@components/SectionClip.astro";
 // import SectionFixed from "@components/SectionFixed.astro";
 import type { ImageString } from "src/utilTypes/image";
@@ -17,7 +18,7 @@ const { images } = Astro.props;
 					data-scroll-target-ref
 					data-scroll-ref-offsets=".1 .5"
 				>
-					<img
+					<Image
 						// style={{ "z-index": length - i }}
 						src={resolveImageImport(name)}
 						alt={alt || ""}
