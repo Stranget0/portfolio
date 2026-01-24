@@ -5,7 +5,6 @@ import mdx from "@astrojs/mdx";
 import solidJs from "@astrojs/solid-js";
 import partytown from "@astrojs/partytown";
 
-import sitemap from "@astrojs/sitemap";
 import { defaultLang, languageKeys } from "./src/i18n/constants";
 
 // https://astro.build/config
@@ -17,12 +16,6 @@ export default defineConfig({
 		partytown({
 			config: {
 				forward: ["dataLayer.push", "gtag"],
-			},
-		}),
-		sitemap({
-			i18n: {
-				defaultLocale: defaultLang,
-				locales: languageKeys,
 			},
 		}),
 	],
